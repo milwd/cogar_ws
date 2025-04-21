@@ -29,11 +29,22 @@ class SensorFusionNode:
             fused.ranges = self.merge_data()
             self.pub.publish(fused)
 # This class is responsible for the sensor fusion process.
+# It subscribes to both LIDAR and sonar data, processes the data,
+# and publishes the fused data to a new topic.
+# The `merge_data` method combines the LIDAR and sonar data,
+# while the `publish_fused` method publishes the fused data.
+# The `lidar_callback` and `sonar_callback` methods handle incoming data
+# from the respective sensors and trigger the fusion process.
+# The `Adapter` class is used to adapt the sonar data to fit into the LIDAR data format.
+# The `publish_fused` method checks if both LIDAR and sonar data are available
+# before proceeding with the fusion and publishing process.
+# The `merge_data` method combines the LIDAR and sonar data by adding
+# the sonar data to the LIDAR data at each corresponding index.
 
 class Adapter:
     def __call__(self, sonar_data, length=0):
         new_data = [0] * length
-        new_data[length // 2] = sonar_data.range
+        new_data[length // 2] = sonar_data
         return new_data
 # This adapter takes sonar data and creates a new list of zeros with the length specified.
 # It places the sonar range value in the middle of the list, effectively
@@ -42,4 +53,7 @@ class Adapter:
 
 if __name__ == '__main__':
     SensorFusionNode()
-    rospy.spin()
+    while not rospy.is_shutdown():
+        SensorFusionNode().publish_fused()
+        rospy.Rate(10).sleep()
+

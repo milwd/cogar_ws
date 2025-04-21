@@ -173,6 +173,7 @@ catkin_install_python(PROGRAMS
   scripts/sonar.py
   scripts/lidar.py
   scripts/sensor_fusion.py
+  scripts/slam.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -140,6 +140,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/root/cogar_ws/src/tiago1/package.xml"
   "/root/cogar_ws/src/tiago1/scripts/lidar.py"
   "/root/cogar_ws/src/tiago1/scripts/sensor_fusion.py"
+  "/root/cogar_ws/src/tiago1/scripts/slam.py"
   "/root/cogar_ws/src/tiago1/scripts/sonar.py"
   "/usr/share/cmake-3.16/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
   "/usr/share/cmake-3.16/Modules/CMakeCInformation.cmake"
