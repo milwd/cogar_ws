@@ -139,6 +139,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/root/cogar_ws/src/tiago1/CMakeLists.txt"
   "/root/cogar_ws/src/tiago1/package.xml"
   "/root/cogar_ws/src/tiago1/scripts/lidar.py"
+  "/root/cogar_ws/src/tiago1/scripts/path_planning.py"
   "/root/cogar_ws/src/tiago1/scripts/sensor_fusion.py"
   "/root/cogar_ws/src/tiago1/scripts/slam.py"
   "/root/cogar_ws/src/tiago1/scripts/sonar.py"

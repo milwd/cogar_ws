@@ -52,8 +52,8 @@ class Adapter:
         
 
 if __name__ == '__main__':
-    SensorFusionNode()
+    fused = SensorFusionNode()
     while not rospy.is_shutdown():
-        SensorFusionNode().publish_fused()
+        fused.publish_fused()
         rospy.Rate(10).sleep()
 

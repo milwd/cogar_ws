@@ -68,3 +68,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/tiago1" TYPE PROGRAM FILES "/root/cogar_ws/build/tiago1/catkin_generated/installspace/slam.py")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/tiago1" TYPE PROGRAM FILES "/root/cogar_ws/build/tiago1/catkin_generated/installspace/path_planning.py")
+endif()
+
