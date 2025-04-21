@@ -1,0 +1,8 @@
+prefix=/root/cogar_ws/devel
+
+Name: tiago1
+Description: Description of tiago1
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

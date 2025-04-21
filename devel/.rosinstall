@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /root/cogar_ws/devel/setup.sh
