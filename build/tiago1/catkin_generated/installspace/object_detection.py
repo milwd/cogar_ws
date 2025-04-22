@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from sensor_msgs.msg import Image
 from std_msgs.msg import String  
@@ -9,7 +9,7 @@ class ObjectDetector:
         self.image_sub = rospy.Subscriber("/camera_preprocessed", Image, self.image_callback)
         self.detect_pub = rospy.Publisher("/camera_detections", String, queue_size=10)
 
-    def image_callback(self):
+    def image_callback(self, msg):
         detection = String(data="Detected: Table, Plate, Position")
         self.detect_pub.publish(detection)
 
@@ -18,11 +18,9 @@ if __name__ == '__main__':
     rospy.init_node('object_detection_node')
     detector = ObjectDetector()
     try:
-        while not rospy.is_shutdown():
-            detector.image_callback()
-            rospy.Rate(1).sleep() 
+        detector.image_callback()
+        rospy.spin()
     except rospy.ROSInterruptException:
-        rospy.loginfo("Object detection node terminated.")
         pass
 # This script subscribes to the preprocessed camera images and publishes
 # the detected objects. The detection logic is currently a placeholder and
