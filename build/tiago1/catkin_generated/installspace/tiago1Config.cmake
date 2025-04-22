@@ -67,14 +67,14 @@ set(tiago1_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(tiago1_SOURCE_PREFIX /root/cogar_ws/src/tiago1)
-  set(tiago1_DEVEL_PREFIX /root/cogar_ws/devel)
+  set(tiago1_SOURCE_PREFIX /root/Desktop/cogar_ass1/cogar_ws/src/tiago1)
+  set(tiago1_DEVEL_PREFIX /root/Desktop/cogar_ass1/cogar_ws/devel)
   set(tiago1_INSTALL_PREFIX "")
   set(tiago1_PREFIX ${tiago1_DEVEL_PREFIX})
 else()
   set(tiago1_SOURCE_PREFIX "")
   set(tiago1_DEVEL_PREFIX "")
-  set(tiago1_INSTALL_PREFIX /root/cogar_ws/install)
+  set(tiago1_INSTALL_PREFIX /root/Desktop/cogar_ass1/cogar_ws/install)
   set(tiago1_PREFIX ${tiago1_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(tiago1_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT " " STREQUAL " ")
+if(NOT "include " STREQUAL " ")
   set(tiago1_INCLUDE_DIRS "")
-  set(_include_dirs "")
+  set(_include_dirs "include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -116,7 +116,7 @@ if(NOT " " STREQUAL " ")
   endforeach()
 endif()
 
-set(libraries "")
+set(libraries "tiago1")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /root/cogar_ws/install/lib;/root/cogar_ws/devel/lib;/root/gaz_ws/devel/lib;/root/ros_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /root/Desktop/cogar_ass1/cogar_ws/install/lib;/root/Desktop/cogar_ass1/cogar_ws/devel/lib;/root/ros_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(tiago1_EXPORTED_TARGETS "")
+set(tiago1_EXPORTED_TARGETS "tiago1_generate_messages_cpp;tiago1_generate_messages_eus;tiago1_generate_messages_lisp;tiago1_generate_messages_nodejs;tiago1_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${tiago1_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -185,7 +185,7 @@ foreach(t ${tiago1_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "")
+set(depends "geometry_msgs;message_runtime;nav_msgs;roscpp;rospy;rostest;sensor_msgs;std_msgs;std_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   list(APPEND tiago1_EXPORTED_TARGETS ${${tiago1_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "tiago1-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${tiago1_DIR}/${extra})
