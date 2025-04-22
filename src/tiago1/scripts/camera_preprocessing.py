@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+import rospy
+from sensor_msgs.msg import Image
+
+class CameraPreprocessing:
+    def __init__(self):
+        self.rgb_sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.rgb_callback)
+        self.depth_sub = rospy.Subscriber("/camera/depth/image_raw", Image, self.depth_callback)
+        self.rgb_pub = rospy.Publisher("/vision/rgb/filtered", Image, queue_size=10)
+        self.depth_pub = rospy.Publisher("/vision/depth/filtered", Image, queue_size=10)
+
+    def rgb_callback(self, msg):
+        # processing
+        self.rgb_pub.publish(msg)
+
+    def depth_callback(self, msg):
+        # processing
+        self.depth_pub.publish(msg)
+
+if __name__ == '__main__':
+    rospy.init_node('camera_preprocessing_node')
+    processor = CameraPreprocessing()
+    try:
+        while not rospy.is_shutdown():
+            processor.rgb_callback(None)
+            processor.depth_callback(None)
+            rospy.sleep(1)
+    except rospy.ROSInterruptException:
+        pass
+# This script subscribes to RGB and depth camera images, processes them, and publishes the filtered images.
+# The processing logic is currently a placeholder and should be replaced with actual image processing code.
+# The script uses ROS to handle the camera data and publish the results.
+# The script is designed to run as a ROS node and will keep running until it is interrupted.
+# The script uses rospy to handle the ROS communication and threading.
+# The script uses the Image message type from the sensor_msgs package to handle the camera data.
+

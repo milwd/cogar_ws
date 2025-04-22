@@ -175,6 +175,7 @@ catkin_install_python(PROGRAMS
   scripts/sensor_fusion.py
   scripts/slam.py
   scripts/path_planning.py
+  scripts/camera.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
