@@ -1,2 +1,2 @@
-set(tiago1_MESSAGE_FILES "msg/MovementControlAction.msg;msg/MovementControlActionGoal.msg;msg/MovementControlActionResult.msg;msg/MovementControlActionFeedback.msg;msg/MovementControlGoal.msg;msg/MovementControlResult.msg;msg/MovementControlFeedback.msg")
+set(tiago1_MESSAGE_FILES "msg/MovementControlAction.msg;msg/MovementControlActionGoal.msg;msg/MovementControlActionResult.msg;msg/MovementControlActionFeedback.msg;msg/MovementControlGoal.msg;msg/MovementControlResult.msg;msg/MovementControlFeedback.msg;msg/ArmControlAction.msg;msg/ArmControlActionGoal.msg;msg/ArmControlActionResult.msg;msg/ArmControlActionFeedback.msg;msg/ArmControlGoal.msg;msg/ArmControlResult.msg;msg/ArmControlFeedback.msg")
 set(tiago1_SERVICE_FILES "")

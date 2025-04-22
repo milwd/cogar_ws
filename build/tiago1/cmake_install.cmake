@@ -38,7 +38,10 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/tiago1/action" TYPE FILE FILES "/root/cogar_ws/src/tiago1/action/MovementControl.action")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/tiago1/action" TYPE FILE FILES
+    "/root/cogar_ws/src/tiago1/action/MovementControl.action"
+    "/root/cogar_ws/src/tiago1/action/ArmControl.action"
+    )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -50,6 +53,18 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg"
     "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
     "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/tiago1/msg" TYPE FILE FILES
+    "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg"
     )
 endif()
 
@@ -138,5 +153,9 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/tiago1" TYPE PROGRAM FILES "/root/cogar_ws/build/tiago1/catkin_generated/installspace/control_wheel.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/tiago1" TYPE PROGRAM FILES "/root/cogar_ws/build/tiago1/catkin_generated/installspace/control_arm.py")
 endif()
 

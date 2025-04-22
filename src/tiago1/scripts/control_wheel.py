@@ -24,6 +24,7 @@ class ControlMovementServer:
 
         rospy.loginfo(f"[ControlMovement] Received path with {1} points")
 
+        # should be a loop maybe
         if self.server.is_preempt_requested():
             rospy.logwarn("[ControlMovement] Preempted")
             self.server.set_preempted()

@@ -1,4 +1,11 @@
 file(REMOVE_RECURSE
+  "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py"
+  "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py"
+  "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionGoal.py"
+  "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py"
+  "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlFeedback.py"
+  "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlGoal.py"
+  "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlResult.py"
   "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py"
   "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py"
   "/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py"

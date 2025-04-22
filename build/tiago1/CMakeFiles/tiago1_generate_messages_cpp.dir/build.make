@@ -60,38 +60,45 @@ tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tia
 tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h
 tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlResult.h
 tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlFeedback.h
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlAction.h
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlGoal.h
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlResult.h
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlFeedback.h
 
 
 /root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlAction.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from tiago1/MovementControlAction.msg"
 	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
 
 /root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from tiago1/MovementControlActionGoal.msg"
 	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
@@ -109,8 +116,8 @@ tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tia
 /root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from tiago1/MovementControlActionFeedback.msg"
@@ -118,12 +125,12 @@ tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tia
 
 /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating C++ code from tiago1/MovementControlGoal.msg"
 	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
@@ -140,6 +147,68 @@ tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tia
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating C++ code from tiago1/MovementControlFeedback.msg"
 	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlAction.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating C++ code from tiago1/ArmControlAction.msg"
+	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating C++ code from tiago1/ArmControlActionGoal.msg"
+	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating C++ code from tiago1/ArmControlActionResult.msg"
+	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating C++ code from tiago1/ArmControlActionFeedback.msg"
+	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/root/cogar_ws/devel/include/tiago1/ArmControlGoal.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/cogar_ws/devel/include/tiago1/ArmControlGoal.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlGoal.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating C++ code from tiago1/ArmControlGoal.msg"
+	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/root/cogar_ws/devel/include/tiago1/ArmControlResult.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/cogar_ws/devel/include/tiago1/ArmControlResult.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlResult.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating C++ code from tiago1/ArmControlResult.msg"
+	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/root/cogar_ws/devel/include/tiago1/ArmControlFeedback.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/cogar_ws/devel/include/tiago1/ArmControlFeedback.h: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/cogar_ws/devel/include/tiago1/ArmControlFeedback.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating C++ code from tiago1/ArmControlFeedback.msg"
+	cd /root/cogar_ws/src/tiago1 && /root/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
 tiago1_generate_messages_cpp: tiago1/CMakeFiles/tiago1_generate_messages_cpp
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlAction.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h
@@ -148,6 +217,13 @@ tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementContro
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlGoal.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlResult.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlFeedback.h
+tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlAction.h
+tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h
+tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h
+tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h
+tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlGoal.h
+tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlResult.h
+tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlFeedback.h
 tiago1_generate_messages_cpp: tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build.make
 
 .PHONY : tiago1_generate_messages_cpp

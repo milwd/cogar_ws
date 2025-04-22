@@ -1,4 +1,11 @@
 file(REMOVE_RECURSE
+  "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp"
+  "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp"
+  "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp"
+  "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp"
+  "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlFeedback.lisp"
+  "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlGoal.lisp"
+  "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlResult.lisp"
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp"
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp"
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp"

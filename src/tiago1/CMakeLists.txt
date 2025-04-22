@@ -74,7 +74,7 @@ find_package(catkin REQUIRED COMPONENTS
 #   Action1.action
 #   Action2.action
 # )
-add_action_files(DIRECTORY action FILES MovementControl.action)
+add_action_files(DIRECTORY action FILES MovementControl.action ArmControl.action)
 
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
@@ -184,6 +184,7 @@ catkin_install_python(PROGRAMS
   scripts/object_detection.py
   scripts/distance_estimation.py
   scripts/control_wheel.py
+  scripts/control_arm.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

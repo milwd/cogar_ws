@@ -22,8 +22,9 @@ class ControlMovementServer:
         feedback = MovementControlFeedback()
         result = MovementControlResult()
 
-        rospy.loginfo(f"[ControlMovement] Received path with {len(path.poses)} points")
+        rospy.loginfo(f"[ControlMovement] Received path with {1} points")
 
+        # should be a loop maybe
         if self.server.is_preempt_requested():
             rospy.logwarn("[ControlMovement] Preempted")
             self.server.set_preempted()
@@ -31,11 +32,11 @@ class ControlMovementServer:
 
         # silly p-controller
         cmd = Twist()
-        cmd.linear.x = path.poses[0].pose.x * 0.01  
-        cmd.linear.y = path.poses[0].pose.y * 0.01
+        cmd.linear.x = path.path.poses[0].pose.position.x * 0.01  
+        cmd.linear.y = path.path.poses[0].pose.position.x * 0.01
         self.cmd_pub.publish(cmd)
 
-        feedback.status = f"Moving to point {1}/{len(path.poses)}"
+        feedback.status = f"Moving to point {1}/{len(path.path.poses)}"
         self.server.publish_feedback(feedback)
         rospy.sleep(2)  # time to reach each point
 

@@ -1,4 +1,11 @@
 file(REMOVE_RECURSE
+  "/root/cogar_ws/devel/include/tiago1/ArmControlAction.h"
+  "/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h"
+  "/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h"
+  "/root/cogar_ws/devel/include/tiago1/ArmControlActionResult.h"
+  "/root/cogar_ws/devel/include/tiago1/ArmControlFeedback.h"
+  "/root/cogar_ws/devel/include/tiago1/ArmControlGoal.h"
+  "/root/cogar_ws/devel/include/tiago1/ArmControlResult.h"
   "/root/cogar_ws/devel/include/tiago1/MovementControlAction.h"
   "/root/cogar_ws/devel/include/tiago1/MovementControlActionFeedback.h"
   "/root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h"

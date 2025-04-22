@@ -1,4 +1,11 @@
 file(REMOVE_RECURSE
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js"
   "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js"
   "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js"
   "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js"

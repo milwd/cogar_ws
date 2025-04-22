@@ -1,5 +1,12 @@
 file(REMOVE_RECURSE
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l"
+  "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l"
+  "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l"
+  "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l"
+  "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l"
+  "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l"
+  "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l"
+  "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l"
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l"
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l"
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l"

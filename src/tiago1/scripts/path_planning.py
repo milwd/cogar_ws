@@ -17,7 +17,6 @@ class PathPlanner:
 
         self.path_pub = rospy.Publisher('/planned_path', Path, queue_size=1)
 
-        # Action Client
         self.client = actionlib.SimpleActionClient('movement_control', MovementControlAction)
         rospy.loginfo("[PathPlanner] Waiting for movement_control action server...")
         self.client.wait_for_server()
@@ -35,14 +34,11 @@ class PathPlanner:
         if self.map and self.odom and not self.goal_sent:
             path = Path()
             pose = PoseStamped()
-            pose.pose.position.x = 1.0
+            pose.pose.position.x = 1.0  # dummy work
             pose.pose.position.y = 1.0
             path.poses.append(pose)
 
-            # Publish for visualization
             self.path_pub.publish(path)
-
-            # Send as goal to action server
             goal = MovementControlGoal()
             goal.path = path
 
@@ -73,62 +69,4 @@ if __name__ == '__main__':
         pp.loop()
     except rospy.ROSInterruptException:
         pass
-
-# #!/usr/bin/env python
-# import rospy
-# import actionlib
-# from nav_msgs.msg import Path, OccupancyGrid, Odometry
-# from geometry_msgs.msg import PoseStamped
-# from tiago1.msg import MovementControlAction, MovementControlGoal
-
-# class PathPlanner:
-#     def __init__(self):
-#         rospy.init_node('path_planning_node')
-
-#         self.map = None
-#         self.odom = None
-#         self.new_goal_ready = False
-
-#         rospy.Subscriber('/map', OccupancyGrid, self.map_callback)
-#         rospy.Subscriber('/odom', Odometry, self.odom_callback)
-
-#         self.client = actionlib.SimpleActionClient('movement_control', MovementControlAction)
-#         rospy.loginfo("[PathPlanner] Waiting for movement_control action server...")
-#         self.client.wait_for_server()
-#         rospy.loginfo("[PathPlanner] Connected to movement_control action server")
-
-#     def map_callback(self, msg):
-#         self.map = msg
-#         self.new_goal_ready = True
-
-#     def odom_callback(self, msg):
-#         self.odom = msg
-#         self.new_goal_ready = True
-
-#     def plan_path(self):
-#         if self.map and self.odom and self.new_goal_ready:
-#             # Create a dummy path
-#             path = Path()
-#             pose = PoseStamped()
-#             pose.pose.position.x = 1.0
-#             pose.pose.position.y = 1.0
-#             path.poses.append(pose)
-
-#             # Prepare action goal
-#             goal = MovementControlGoal()
-#             goal.path = path
-
-#             rospy.loginfo("[PathPlanner] Sending path to movement_control...")
-#             self.client.send_goal(goal)
-#             self.new_goal_ready = False
-
-# if __name__ == '__main__':
-#     try:
-#         pp = PathPlanner()
-#         rate = rospy.Rate(1)
-#         while not rospy.is_shutdown():
-#             pp.plan_path()
-#             rate.sleep()
-#     except rospy.ROSInterruptException:
-#         pass
 
