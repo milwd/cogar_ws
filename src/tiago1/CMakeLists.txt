@@ -16,7 +16,9 @@ find_package(catkin REQUIRED COMPONENTS
   rostest
   sensor_msgs
   std_msgs
-  std_msgs
+  actionlib
+  actionlib_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -72,12 +74,14 @@ find_package(catkin REQUIRED COMPONENTS
 #   Action1.action
 #   Action2.action
 # )
+add_action_files(DIRECTORY action FILES MovementControl.action)
 
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
 #   geometry_msgs#   nav_msgs#   sensor_msgs#   std_msgs#   std_msgs
 # )
+generate_messages(DEPENDENCIES std_msgs actionlib_msgs nav_msgs)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -179,6 +183,7 @@ catkin_install_python(PROGRAMS
   scripts/camera_preprocessing.py
   scripts/object_detection.py
   scripts/distance_estimation.py
+  scripts/control_wheel.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

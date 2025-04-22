@@ -1,0 +1,2 @@
+set(tiago1_MESSAGE_FILES "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg")
+set(tiago1_SERVICE_FILES "")
