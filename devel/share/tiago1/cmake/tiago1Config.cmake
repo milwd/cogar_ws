@@ -91,9 +91,15 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(tiago1_FOUND_CATKIN_PROJECT TRUE)
 
+<<<<<<< HEAD
 if(NOT "/root/Desktop/cogar_ass1/cogar_ws/devel/include;/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/include " STREQUAL " ")
   set(tiago1_INCLUDE_DIRS "")
   set(_include_dirs "/root/Desktop/cogar_ass1/cogar_ws/devel/include;/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/include")
+=======
+if(NOT "/root/cogar_ws/devel/include " STREQUAL " ")
+  set(tiago1_INCLUDE_DIRS "")
+  set(_include_dirs "/root/cogar_ws/devel/include")
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")

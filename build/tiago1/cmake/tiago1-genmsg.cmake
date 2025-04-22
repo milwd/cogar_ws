@@ -1,8 +1,14 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
+<<<<<<< HEAD
 message(STATUS "tiago1: 1 messages, 0 services")
 
 set(MSG_I_FLAGS "-Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg")
+=======
+message(STATUS "tiago1: 14 messages, 0 services")
+
+set(MSG_I_FLAGS "-Itiago1:/root/cogar_ws/devel/share/tiago1/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg;-Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg")
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,9 +23,80 @@ add_custom_target(tiago1_generate_messages ALL)
 
 
 
+<<<<<<< HEAD
 get_filename_component(_filename "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg" NAME_WE)
 add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg" ""
+=======
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg" "nav_msgs/Path:tiago1/MovementControlFeedback:tiago1/MovementControlResult:geometry_msgs/Quaternion:actionlib_msgs/GoalID:geometry_msgs/Pose:tiago1/MovementControlActionResult:tiago1/MovementControlActionFeedback:geometry_msgs/PoseStamped:geometry_msgs/Point:actionlib_msgs/GoalStatus:tiago1/MovementControlGoal:tiago1/MovementControlActionGoal:std_msgs/Header"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg" "nav_msgs/Path:geometry_msgs/Quaternion:actionlib_msgs/GoalID:geometry_msgs/Pose:geometry_msgs/PoseStamped:geometry_msgs/Point:tiago1/MovementControlGoal:std_msgs/Header"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg" "actionlib_msgs/GoalStatus:actionlib_msgs/GoalID:std_msgs/Header:tiago1/MovementControlResult"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg" "actionlib_msgs/GoalStatus:tiago1/MovementControlFeedback:actionlib_msgs/GoalID:std_msgs/Header"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg" "nav_msgs/Path:geometry_msgs/Quaternion:geometry_msgs/Pose:geometry_msgs/PoseStamped:geometry_msgs/Point:std_msgs/Header"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg" ""
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg" ""
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg" "tiago1/ArmControlActionGoal:actionlib_msgs/GoalID:tiago1/ArmControlGoal:tiago1/ArmControlFeedback:tiago1/ArmControlActionFeedback:tiago1/ArmControlActionResult:actionlib_msgs/GoalStatus:std_msgs/Header:tiago1/ArmControlResult"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg" "actionlib_msgs/GoalID:tiago1/ArmControlGoal:std_msgs/Header"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg" "actionlib_msgs/GoalStatus:actionlib_msgs/GoalID:std_msgs/Header:tiago1/ArmControlResult"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg" "tiago1/ArmControlFeedback:actionlib_msgs/GoalStatus:actionlib_msgs/GoalID:std_msgs/Header"
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg" ""
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg" ""
+)
+
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg" NAME_WE)
+add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "tiago1" "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg" ""
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 )
 
 #
@@ -29,7 +106,89 @@ add_custom_target(_tiago1_generate_messages_check_deps_${_filename}
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(tiago1
+<<<<<<< HEAD
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg"
+=======
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
+)
+_generate_msg_cpp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/tiago1
@@ -49,7 +208,37 @@ add_custom_target(tiago1_generate_messages_cpp
 add_dependencies(tiago1_generate_messages tiago1_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
+<<<<<<< HEAD
 get_filename_component(_filename "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg" NAME_WE)
+=======
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg" NAME_WE)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 add_dependencies(tiago1_generate_messages_cpp _tiago1_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -62,7 +251,89 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS tiago1_generate_messages_cpp)
 ### Section generating for lang: geneus
 ### Generating Messages
 _generate_msg_eus(tiago1
+<<<<<<< HEAD
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg"
+=======
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
+)
+_generate_msg_eus(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1
@@ -82,7 +353,37 @@ add_custom_target(tiago1_generate_messages_eus
 add_dependencies(tiago1_generate_messages tiago1_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
+<<<<<<< HEAD
 get_filename_component(_filename "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg" NAME_WE)
+=======
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg" NAME_WE)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 add_dependencies(tiago1_generate_messages_eus _tiago1_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -95,7 +396,89 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS tiago1_generate_messages_eus)
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(tiago1
+<<<<<<< HEAD
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg"
+=======
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
+)
+_generate_msg_lisp(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1
@@ -115,7 +498,37 @@ add_custom_target(tiago1_generate_messages_lisp
 add_dependencies(tiago1_generate_messages tiago1_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
+<<<<<<< HEAD
 get_filename_component(_filename "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg" NAME_WE)
+=======
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg" NAME_WE)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 add_dependencies(tiago1_generate_messages_lisp _tiago1_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -128,7 +541,89 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS tiago1_generate_messages_lisp)
 ### Section generating for lang: gennodejs
 ### Generating Messages
 _generate_msg_nodejs(tiago1
+<<<<<<< HEAD
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg"
+=======
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
+)
+_generate_msg_nodejs(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1
@@ -148,7 +643,37 @@ add_custom_target(tiago1_generate_messages_nodejs
 add_dependencies(tiago1_generate_messages tiago1_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
+<<<<<<< HEAD
 get_filename_component(_filename "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg" NAME_WE)
+=======
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg" NAME_WE)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 add_dependencies(tiago1_generate_messages_nodejs _tiago1_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -161,7 +686,89 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS tiago1_generate_messages_nodejs)
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(tiago1
+<<<<<<< HEAD
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg"
+=======
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/nav_msgs/cmake/../msg/Path.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg"
+  "${MSG_I_FLAGS}"
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalStatus.msg;/opt/ros/noetic/share/actionlib_msgs/cmake/../msg/GoalID.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
+)
+_generate_msg_py(tiago1
+  "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1
@@ -181,7 +788,37 @@ add_custom_target(tiago1_generate_messages_py
 add_dependencies(tiago1_generate_messages tiago1_generate_messages_py)
 
 # add dependencies to all check dependencies targets
+<<<<<<< HEAD
 get_filename_component(_filename "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg" NAME_WE)
+=======
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg" NAME_WE)
+add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg" NAME_WE)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 add_dependencies(tiago1_generate_messages_py _tiago1_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -203,8 +840,16 @@ endif()
 if(TARGET std_msgs_generate_messages_cpp)
   add_dependencies(tiago1_generate_messages_cpp std_msgs_generate_messages_cpp)
 endif()
+<<<<<<< HEAD
 if(TARGET geometry_msgs_generate_messages_cpp)
   add_dependencies(tiago1_generate_messages_cpp geometry_msgs_generate_messages_cpp)
+=======
+if(TARGET actionlib_msgs_generate_messages_cpp)
+  add_dependencies(tiago1_generate_messages_cpp actionlib_msgs_generate_messages_cpp)
+endif()
+if(TARGET nav_msgs_generate_messages_cpp)
+  add_dependencies(tiago1_generate_messages_cpp nav_msgs_generate_messages_cpp)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 endif()
 
 if(geneus_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/tiago1)
@@ -217,8 +862,16 @@ endif()
 if(TARGET std_msgs_generate_messages_eus)
   add_dependencies(tiago1_generate_messages_eus std_msgs_generate_messages_eus)
 endif()
+<<<<<<< HEAD
 if(TARGET geometry_msgs_generate_messages_eus)
   add_dependencies(tiago1_generate_messages_eus geometry_msgs_generate_messages_eus)
+=======
+if(TARGET actionlib_msgs_generate_messages_eus)
+  add_dependencies(tiago1_generate_messages_eus actionlib_msgs_generate_messages_eus)
+endif()
+if(TARGET nav_msgs_generate_messages_eus)
+  add_dependencies(tiago1_generate_messages_eus nav_msgs_generate_messages_eus)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 endif()
 
 if(genlisp_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/tiago1)
@@ -231,8 +884,16 @@ endif()
 if(TARGET std_msgs_generate_messages_lisp)
   add_dependencies(tiago1_generate_messages_lisp std_msgs_generate_messages_lisp)
 endif()
+<<<<<<< HEAD
 if(TARGET geometry_msgs_generate_messages_lisp)
   add_dependencies(tiago1_generate_messages_lisp geometry_msgs_generate_messages_lisp)
+=======
+if(TARGET actionlib_msgs_generate_messages_lisp)
+  add_dependencies(tiago1_generate_messages_lisp actionlib_msgs_generate_messages_lisp)
+endif()
+if(TARGET nav_msgs_generate_messages_lisp)
+  add_dependencies(tiago1_generate_messages_lisp nav_msgs_generate_messages_lisp)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 endif()
 
 if(gennodejs_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/tiago1)
@@ -245,8 +906,16 @@ endif()
 if(TARGET std_msgs_generate_messages_nodejs)
   add_dependencies(tiago1_generate_messages_nodejs std_msgs_generate_messages_nodejs)
 endif()
+<<<<<<< HEAD
 if(TARGET geometry_msgs_generate_messages_nodejs)
   add_dependencies(tiago1_generate_messages_nodejs geometry_msgs_generate_messages_nodejs)
+=======
+if(TARGET actionlib_msgs_generate_messages_nodejs)
+  add_dependencies(tiago1_generate_messages_nodejs actionlib_msgs_generate_messages_nodejs)
+endif()
+if(TARGET nav_msgs_generate_messages_nodejs)
+  add_dependencies(tiago1_generate_messages_nodejs nav_msgs_generate_messages_nodejs)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 endif()
 
 if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/tiago1)
@@ -260,6 +929,14 @@ endif()
 if(TARGET std_msgs_generate_messages_py)
   add_dependencies(tiago1_generate_messages_py std_msgs_generate_messages_py)
 endif()
+<<<<<<< HEAD
 if(TARGET geometry_msgs_generate_messages_py)
   add_dependencies(tiago1_generate_messages_py geometry_msgs_generate_messages_py)
+=======
+if(TARGET actionlib_msgs_generate_messages_py)
+  add_dependencies(tiago1_generate_messages_py actionlib_msgs_generate_messages_py)
+endif()
+if(TARGET nav_msgs_generate_messages_py)
+  add_dependencies(tiago1_generate_messages_py nav_msgs_generate_messages_py)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 endif()

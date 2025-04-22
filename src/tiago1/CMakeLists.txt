@@ -16,7 +16,8 @@ find_package(catkin REQUIRED COMPONENTS
   rostest
   sensor_msgs
   std_msgs
-  std_msgs
+  actionlib
+  actionlib_msgs
   message_generation
 )
 
@@ -72,13 +73,14 @@ add_message_files(
 #   Action1.action
 #   Action2.action
 # )
+add_action_files(DIRECTORY action FILES MovementControl.action ArmControl.action)
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-  geometry_msgs#   nav_msgs#   sensor_msgs#   std_msgs#   std_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   geometry_msgs#   nav_msgs#   sensor_msgs#   std_msgs#   std_msgs
+# )
+generate_messages(DEPENDENCIES std_msgs actionlib_msgs nav_msgs)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -176,6 +178,12 @@ catkin_install_python(PROGRAMS
   scripts/sensor_fusion.py
   scripts/slam.py
   scripts/path_planning.py
+  scripts/camera.py
+  scripts/camera_preprocessing.py
+  scripts/object_detection.py
+  scripts/distance_estimation.py
+  scripts/control_wheel.py
+  scripts/control_arm.py
   scripts/microphone.py
   scripts/reasoning_order_verification.py
   scripts/speaker.py

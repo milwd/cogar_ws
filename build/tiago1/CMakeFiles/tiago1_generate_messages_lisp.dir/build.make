@@ -43,16 +43,24 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+=======
+CMAKE_SOURCE_DIR = /root/cogar_ws/src
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /root/cogar_ws/build
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_generate_messages_lisp.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/progress.make
 
+<<<<<<< HEAD
 tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp
 
 
@@ -63,6 +71,165 @@ tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/Desktop/cogar_ass1/cogar_
 
 tiago1_generate_messages_lisp: tiago1/CMakeFiles/tiago1_generate_messages_lisp
 tiago1_generate_messages_lisp: /root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp
+=======
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlResult.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlFeedback.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlGoal.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlResult.lisp
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlFeedback.lisp
+
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from tiago1/MovementControlAction.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Lisp code from tiago1/MovementControlActionGoal.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Lisp code from tiago1/MovementControlActionResult.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Lisp code from tiago1/MovementControlActionFeedback.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Lisp code from tiago1/MovementControlGoal.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlResult.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlResult.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Lisp code from tiago1/MovementControlResult.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlFeedback.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlFeedback.lisp: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Lisp code from tiago1/MovementControlFeedback.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Lisp code from tiago1/ArmControlAction.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating Lisp code from tiago1/ArmControlActionGoal.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating Lisp code from tiago1/ArmControlActionResult.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating Lisp code from tiago1/ArmControlActionFeedback.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlGoal.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlGoal.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating Lisp code from tiago1/ArmControlGoal.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlResult.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlResult.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating Lisp code from tiago1/ArmControlResult.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlFeedback.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlFeedback.lisp: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating Lisp code from tiago1/ArmControlFeedback.msg"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+tiago1_generate_messages_lisp: tiago1/CMakeFiles/tiago1_generate_messages_lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionFeedback.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlResult.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlFeedback.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionResult.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlGoal.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlResult.lisp
+tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlFeedback.lisp
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 tiago1_generate_messages_lisp: tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build.make
 
 .PHONY : tiago1_generate_messages_lisp
@@ -73,10 +240,18 @@ tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build: tiago1_generate_messa
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/clean:
+<<<<<<< HEAD
 	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/depend:
 	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+=======
+	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_lisp.dir/cmake_clean.cmake
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/clean
+
+tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/depend:
+	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/depend
 

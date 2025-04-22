@@ -1,5 +1,22 @@
 file(REMOVE_RECURSE
+<<<<<<< HEAD
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js"
+=======
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js"
+  "/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "CMakeFiles/tiago1_generate_messages_nodejs"
 )
 
