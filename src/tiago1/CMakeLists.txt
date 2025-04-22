@@ -178,6 +178,7 @@ catkin_install_python(PROGRAMS
   scripts/camera.py
   scripts/camera_preprocessing.py
   scripts/object_detection.py
+  scripts/distance_estimation.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
