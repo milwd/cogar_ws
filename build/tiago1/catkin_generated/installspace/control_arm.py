@@ -8,7 +8,7 @@ from std_msgs.msg import Int32
 
 class ControlArmServer:
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.cmd_pub = rospy.Publisher('/cmd_vel/arm', Twist, queue_size=10)
         self.encoder_sub = rospy.Subscriber('/encoder_arm', Int32, self.encoder_callback)
         self.server = actionlib.SimpleActionServer(
             'arm_control',

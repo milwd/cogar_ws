@@ -41,6 +41,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/tiago1/action" TYPE FILE FILES
     "/root/cogar_ws/src/tiago1/action/MovementControl.action"
     "/root/cogar_ws/src/tiago1/action/ArmControl.action"
+    "/root/cogar_ws/src/tiago1/action/GripperControl.action"
     )
 endif()
 
@@ -65,6 +66,18 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg"
     "/root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg"
     "/root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/tiago1/msg" TYPE FILE FILES
+    "/root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg"
+    "/root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg"
     )
 endif()
 

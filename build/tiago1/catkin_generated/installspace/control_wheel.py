@@ -8,7 +8,7 @@ from tiago1.msg import MovementControlAction, MovementControlFeedback, MovementC
 
 class ControlMovementServer:
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.cmd_pub = rospy.Publisher('/cmd_vel/wheel', Twist, queue_size=10)
         self.server = actionlib.SimpleActionServer(
             'movement_control',
             MovementControlAction,
@@ -22,7 +22,7 @@ class ControlMovementServer:
         feedback = MovementControlFeedback()
         result = MovementControlResult()
 
-        rospy.loginfo(f"[ControlMovement] Received path with {1} points")
+        rospy.loginfo(f"[ControlMovement] Received degree command")
 
         # should be a loop maybe
         if self.server.is_preempt_requested():
