@@ -175,19 +175,25 @@ include_directories(
 catkin_install_python(PROGRAMS
   scripts/sonar.py
   scripts/lidar.py
+  scripts/camera.py
+  scripts/microphone.py
+  scripts/speaker.py
+
+  scripts/voice_recognition.py
+  
   scripts/sensor_fusion.py
   scripts/slam.py
   scripts/path_planning.py
-  scripts/camera.py
   scripts/camera_preprocessing.py
   scripts/object_detection.py
   scripts/distance_estimation.py
+  
   scripts/control_wheel.py
   scripts/control_arm.py
-  scripts/microphone.py
+  scripts/control_gripper.py
+  
+  scripts/reasoning_action.py
   scripts/reasoning_order_verification.py
-  scripts/speaker.py
-  scripts/voice_recognition.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

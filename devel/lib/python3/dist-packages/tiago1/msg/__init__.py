@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-from ._Voice_rec import *
-=======
 from ._ArmControlAction import *
 from ._ArmControlActionFeedback import *
 from ._ArmControlActionGoal import *
@@ -22,4 +19,4 @@ from ._MovementControlActionResult import *
 from ._MovementControlFeedback import *
 from ._MovementControlGoal import *
 from ._MovementControlResult import *
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
+from ._Voice_rec import *

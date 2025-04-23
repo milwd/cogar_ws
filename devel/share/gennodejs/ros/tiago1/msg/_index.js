@@ -1,12 +1,7 @@
 
 "use strict";
 
-<<<<<<< HEAD
 let Voice_rec = require('./Voice_rec.js');
-
-module.exports = {
-  Voice_rec: Voice_rec,
-=======
 let ArmControlActionGoal = require('./ArmControlActionGoal.js');
 let GripperControlAction = require('./GripperControlAction.js');
 let MovementControlActionResult = require('./MovementControlActionResult.js');
@@ -30,6 +25,7 @@ let GripperControlActionResult = require('./GripperControlActionResult.js');
 let GripperControlActionGoal = require('./GripperControlActionGoal.js');
 
 module.exports = {
+  Voice_rec: Voice_rec,
   ArmControlActionGoal: ArmControlActionGoal,
   GripperControlAction: GripperControlAction,
   MovementControlActionResult: MovementControlActionResult,
@@ -49,10 +45,6 @@ module.exports = {
   ArmControlAction: ArmControlAction,
   GripperControlResult: GripperControlResult,
   MovementControlActionGoal: MovementControlActionGoal,
-<<<<<<< HEAD
   GripperControlActionResult: GripperControlActionResult,
   GripperControlActionGoal: GripperControlActionGoal,
-=======
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
->>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 };

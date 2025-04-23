@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/root/Desktop/cogar_ass1/cogar_ws/build'
+export PWD='/root/cogar_ws/build'

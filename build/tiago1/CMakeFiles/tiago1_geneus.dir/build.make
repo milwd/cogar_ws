@@ -43,17 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-<<<<<<< HEAD
-CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
-=======
 CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/cogar_ws/build
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_geneus.
 
@@ -70,18 +63,10 @@ tiago1/CMakeFiles/tiago1_geneus.dir/build: tiago1_geneus
 .PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/build
 
 tiago1/CMakeFiles/tiago1_geneus.dir/clean:
-<<<<<<< HEAD
-	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_geneus.dir/cmake_clean.cmake
-.PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/clean
-
-tiago1/CMakeFiles/tiago1_geneus.dir/depend:
-	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_geneus.dir/DependInfo.cmake --color=$(COLOR)
-=======
 	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_geneus.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/clean
 
 tiago1/CMakeFiles/tiago1_geneus.dir/depend:
 	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_geneus.dir/DependInfo.cmake --color=$(COLOR)
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/depend
 

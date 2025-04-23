@@ -43,42 +43,17 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-<<<<<<< HEAD
-CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
-=======
 CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/cogar_ws/build
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_generate_messages_py.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_py.dir/progress.make
 
-<<<<<<< HEAD
-tiago1/CMakeFiles/tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
-tiago1/CMakeFiles/tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py
-
-
-/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG tiago1/Voice_rec"
-	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
-
-/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for tiago1"
-	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg --initpy
-
-tiago1_generate_messages_py: tiago1/CMakeFiles/tiago1_generate_messages_py
-tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
-tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py
-=======
+tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
 tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py
 tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py
 tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py
@@ -103,188 +78,194 @@ tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/
 tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py
 
 
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py: /root/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG tiago1/Voice_rec"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG tiago1/MovementControlAction"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG tiago1/MovementControlAction"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG tiago1/MovementControlActionGoal"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python from MSG tiago1/MovementControlActionGoal"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python from MSG tiago1/MovementControlActionResult"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python from MSG tiago1/MovementControlActionResult"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python from MSG tiago1/MovementControlActionFeedback"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python from MSG tiago1/MovementControlActionFeedback"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python from MSG tiago1/MovementControlGoal"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlGoal.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python from MSG tiago1/MovementControlGoal"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlResult.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlResult.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python from MSG tiago1/MovementControlResult"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python from MSG tiago1/MovementControlResult"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlFeedback.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python from MSG tiago1/MovementControlFeedback"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Python from MSG tiago1/MovementControlFeedback"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Python from MSG tiago1/ArmControlAction"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating Python from MSG tiago1/ArmControlAction"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionGoal.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionGoal.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionGoal.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionGoal.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionGoal.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionGoal.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating Python from MSG tiago1/ArmControlActionGoal"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating Python from MSG tiago1/ArmControlActionGoal"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating Python from MSG tiago1/ArmControlActionResult"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating Python from MSG tiago1/ArmControlActionResult"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlActionFeedback.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating Python from MSG tiago1/ArmControlActionFeedback"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating Python from MSG tiago1/ArmControlActionFeedback"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlGoal.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlGoal.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating Python from MSG tiago1/ArmControlGoal"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating Python from MSG tiago1/ArmControlGoal"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlResult.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlResult.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating Python from MSG tiago1/ArmControlResult"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating Python from MSG tiago1/ArmControlResult"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlFeedback.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_ArmControlFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating Python from MSG tiago1/ArmControlFeedback"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating Python from MSG tiago1/ArmControlFeedback"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating Python from MSG tiago1/GripperControlAction"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlAction.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating Python from MSG tiago1/GripperControlAction"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionGoal.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionGoal.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionGoal.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionGoal.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionGoal.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating Python from MSG tiago1/GripperControlActionGoal"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionGoal.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating Python from MSG tiago1/GripperControlActionGoal"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating Python from MSG tiago1/GripperControlActionResult"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionResult.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Generating Python from MSG tiago1/GripperControlActionResult"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionFeedback.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionFeedback.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionFeedback.py: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlActionFeedback.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Generating Python from MSG tiago1/GripperControlActionFeedback"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Generating Python from MSG tiago1/GripperControlActionFeedback"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlGoal.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlGoal.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Generating Python from MSG tiago1/GripperControlGoal"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Generating Python from MSG tiago1/GripperControlGoal"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlResult.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlResult.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Generating Python from MSG tiago1/GripperControlResult"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Generating Python from MSG tiago1/GripperControlResult"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlFeedback.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlFeedback.py: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Generating Python from MSG tiago1/GripperControlFeedback"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Generating Python from MSG tiago1/GripperControlFeedback"
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
 
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py
@@ -306,10 +287,11 @@ tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlGoal.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlResult.py
 /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlFeedback.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Generating Python msg __init__.py for tiago1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Generating Python msg __init__.py for tiago1"
 	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg --initpy
 
 tiago1_generate_messages_py: tiago1/CMakeFiles/tiago1_generate_messages_py
+tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py
@@ -332,7 +314,6 @@ tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiag
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlResult.py
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlFeedback.py
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 tiago1_generate_messages_py: tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build.make
 
 .PHONY : tiago1_generate_messages_py
@@ -343,18 +324,10 @@ tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build: tiago1_generate_message
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/clean:
-<<<<<<< HEAD
-	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_py.dir/cmake_clean.cmake
-.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/clean
-
-tiago1/CMakeFiles/tiago1_generate_messages_py.dir/depend:
-	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
-=======
 	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/depend:
 	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/depend
 

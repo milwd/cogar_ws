@@ -57,13 +57,10 @@
   <build_depend>rostest</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
-<<<<<<< HEAD
   <build_depend>message_runtime</build_depend>
-=======
   <build_depend>actionlib</build_depend>
   <build_depend>actionlib_msgs</build_depend>
 
->>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>nav_msgs</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>

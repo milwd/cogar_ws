@@ -50,7 +50,9 @@ if __name__ == "__main__":
         dish_list = ["ragu", "sugo", "pasta", "kebab", "sushi"]
         server_robots =1
         reasonerOrderVerification = ReasoningOrderVerification(server_robots,dish_list)
+        rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             reasonerOrderVerification.parse_order()
+            rate.sleep()
     except rospy.ROSInterruptException:
         pass     
