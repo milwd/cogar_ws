@@ -1,4 +1,7 @@
 file(REMOVE_RECURSE
+<<<<<<< HEAD
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp"
+=======
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlAction.lisp"
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionFeedback.lisp"
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlActionGoal.lisp"
@@ -20,6 +23,7 @@ file(REMOVE_RECURSE
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlFeedback.lisp"
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp"
   "/root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlResult.lisp"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "CMakeFiles/tiago1_generate_messages_lisp"
 )
 

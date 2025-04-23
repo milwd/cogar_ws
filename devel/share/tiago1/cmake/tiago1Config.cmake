@@ -67,14 +67,14 @@ set(tiago1_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(tiago1_SOURCE_PREFIX /root/cogar_ws/src/tiago1)
-  set(tiago1_DEVEL_PREFIX /root/cogar_ws/devel)
+  set(tiago1_SOURCE_PREFIX /root/Desktop/cogar_ass1/cogar_ws/src/tiago1)
+  set(tiago1_DEVEL_PREFIX /root/Desktop/cogar_ass1/cogar_ws/devel)
   set(tiago1_INSTALL_PREFIX "")
   set(tiago1_PREFIX ${tiago1_DEVEL_PREFIX})
 else()
   set(tiago1_SOURCE_PREFIX "")
   set(tiago1_DEVEL_PREFIX "")
-  set(tiago1_INSTALL_PREFIX /root/cogar_ws/install)
+  set(tiago1_INSTALL_PREFIX /root/Desktop/cogar_ass1/cogar_ws/install)
   set(tiago1_PREFIX ${tiago1_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,15 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(tiago1_FOUND_CATKIN_PROJECT TRUE)
 
+<<<<<<< HEAD
+if(NOT "/root/Desktop/cogar_ass1/cogar_ws/devel/include;/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/include " STREQUAL " ")
+  set(tiago1_INCLUDE_DIRS "")
+  set(_include_dirs "/root/Desktop/cogar_ass1/cogar_ws/devel/include;/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/include")
+=======
 if(NOT "/root/cogar_ws/devel/include " STREQUAL " ")
   set(tiago1_INCLUDE_DIRS "")
   set(_include_dirs "/root/cogar_ws/devel/include")
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,13 +116,13 @@ if(NOT "/root/cogar_ws/devel/include " STREQUAL " ")
         message(FATAL_ERROR "Project 'tiago1' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'tiago1' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/root/cogar_ws/src/tiago1/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'tiago1' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/${idir}'.  ${_report}")
     endif()
     _list_append_unique(tiago1_INCLUDE_DIRS ${include})
   endforeach()
 endif()
 
-set(libraries "")
+set(libraries "tiago1")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
@@ -154,7 +160,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /root/cogar_ws/devel/lib;/root/cogar_ws/devel/lib;/root/gaz_ws/devel/lib;/root/ros_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /root/Desktop/cogar_ass1/cogar_ws/devel/lib;/root/Desktop/cogar_ass1/cogar_ws/devel/lib;/root/ros_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -185,7 +191,7 @@ foreach(t ${tiago1_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "")
+set(depends "geometry_msgs;message_runtime;nav_msgs;roscpp;rospy;rostest;sensor_msgs;std_msgs;std_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/cogar_ws/build
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,9 +137,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles /root/cogar_ws/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -285,7 +285,102 @@ gtest/fast:
 .PHONY : gtest/fast
 
 #=============================================================================
+<<<<<<< HEAD
+# Target rules for targets named tiago1_generate_messages_py
+
+# Build rule for target.
+tiago1_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_generate_messages_py
+.PHONY : tiago1_generate_messages_py
+
+# fast build rule for target.
+tiago1_generate_messages_py/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build
+.PHONY : tiago1_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named tiago1_generate_messages_lisp
+
+# Build rule for target.
+tiago1_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_generate_messages_lisp
+.PHONY : tiago1_generate_messages_lisp
+
+# fast build rule for target.
+tiago1_generate_messages_lisp/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build
+.PHONY : tiago1_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named tiago1_geneus
+
+# Build rule for target.
+tiago1_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_geneus
+.PHONY : tiago1_geneus
+
+# fast build rule for target.
+tiago1_geneus/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_geneus.dir/build.make tiago1/CMakeFiles/tiago1_geneus.dir/build
+.PHONY : tiago1_geneus/fast
+
+#=============================================================================
+# Target rules for targets named tiago1_gencpp
+
+# Build rule for target.
+tiago1_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_gencpp
+.PHONY : tiago1_gencpp
+
+# fast build rule for target.
+tiago1_gencpp/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_gencpp.dir/build.make tiago1/CMakeFiles/tiago1_gencpp.dir/build
+.PHONY : tiago1_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named tiago1_generate_messages_cpp
+
+# Build rule for target.
+tiago1_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_generate_messages_cpp
+.PHONY : tiago1_generate_messages_cpp
+
+# fast build rule for target.
+tiago1_generate_messages_cpp/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build
+.PHONY : tiago1_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named _tiago1_generate_messages_check_deps_Voice_rec
+
+# Build rule for target.
+_tiago1_generate_messages_check_deps_Voice_rec: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _tiago1_generate_messages_check_deps_Voice_rec
+.PHONY : _tiago1_generate_messages_check_deps_Voice_rec
+
+# fast build rule for target.
+_tiago1_generate_messages_check_deps_Voice_rec/fast:
+	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/build
+.PHONY : _tiago1_generate_messages_check_deps_Voice_rec/fast
+
+#=============================================================================
+# Target rules for targets named tiago1_generate_messages
+
+# Build rule for target.
+tiago1_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_generate_messages
+.PHONY : tiago1_generate_messages
+
+# fast build rule for target.
+tiago1_generate_messages/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages.dir/build
+.PHONY : tiago1_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named sensor_msgs_generate_messages_nodejs
+=======
 # Target rules for targets named tiago1_genpy
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Build rule for target.
 tiago1_genpy: cmake_check_build_system
@@ -454,7 +549,24 @@ nav_msgs_generate_messages_cpp/fast:
 .PHONY : nav_msgs_generate_messages_cpp/fast
 
 #=============================================================================
+<<<<<<< HEAD
+# Target rules for targets named tiago1_genlisp
+
+# Build rule for target.
+tiago1_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_genlisp
+.PHONY : tiago1_genlisp
+
+# fast build rule for target.
+tiago1_genlisp/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_genlisp.dir/build.make tiago1/CMakeFiles/tiago1_genlisp.dir/build
+.PHONY : tiago1_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_lisp
+=======
 # Target rules for targets named roscpp_generate_messages_py
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Build rule for target.
 roscpp_generate_messages_py: cmake_check_build_system
@@ -961,7 +1073,24 @@ _tiago1_generate_messages_check_deps_MovementControlActionFeedback/fast:
 .PHONY : _tiago1_generate_messages_check_deps_MovementControlActionFeedback/fast
 
 #=============================================================================
+<<<<<<< HEAD
+# Target rules for targets named tiago1_genpy
+
+# Build rule for target.
+tiago1_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_genpy
+.PHONY : tiago1_genpy
+
+# fast build rule for target.
+tiago1_genpy/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_genpy.dir/build.make tiago1/CMakeFiles/tiago1_genpy.dir/build
+.PHONY : tiago1_genpy/fast
+
+#=============================================================================
+# Target rules for targets named geometry_msgs_generate_messages_lisp
+=======
 # Target rules for targets named sensor_msgs_generate_messages_nodejs
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Build rule for target.
 sensor_msgs_generate_messages_nodejs: cmake_check_build_system
@@ -1039,7 +1168,24 @@ actionlib_msgs_generate_messages_eus/fast:
 .PHONY : actionlib_msgs_generate_messages_eus/fast
 
 #=============================================================================
+<<<<<<< HEAD
+# Target rules for targets named tiago1_generate_messages_eus
+
+# Build rule for target.
+tiago1_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_generate_messages_eus
+.PHONY : tiago1_generate_messages_eus
+
+# fast build rule for target.
+tiago1_generate_messages_eus/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build
+.PHONY : tiago1_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named roscpp_generate_messages_lisp
+=======
 # Target rules for targets named _tiago1_generate_messages_check_deps_MovementControlAction
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Build rule for target.
 _tiago1_generate_messages_check_deps_MovementControlAction: cmake_check_build_system
@@ -1052,7 +1198,24 @@ _tiago1_generate_messages_check_deps_MovementControlAction/fast:
 .PHONY : _tiago1_generate_messages_check_deps_MovementControlAction/fast
 
 #=============================================================================
+<<<<<<< HEAD
+# Target rules for targets named tiago1_generate_messages_nodejs
+
+# Build rule for target.
+tiago1_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_generate_messages_nodejs
+.PHONY : tiago1_generate_messages_nodejs
+
+# fast build rule for target.
+tiago1_generate_messages_nodejs/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build
+.PHONY : tiago1_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_nodejs
+=======
 # Target rules for targets named _tiago1_generate_messages_check_deps_MovementControlActionGoal
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Build rule for target.
 _tiago1_generate_messages_check_deps_MovementControlActionGoal: cmake_check_build_system
@@ -1117,7 +1280,24 @@ roscpp_generate_messages_nodejs/fast:
 .PHONY : roscpp_generate_messages_nodejs/fast
 
 #=============================================================================
+<<<<<<< HEAD
+# Target rules for targets named tiago1_gennodejs
+
+# Build rule for target.
+tiago1_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tiago1_gennodejs
+.PHONY : tiago1_gennodejs
+
+# fast build rule for target.
+tiago1_gennodejs/fast:
+	$(MAKE) -f tiago1/CMakeFiles/tiago1_gennodejs.dir/build.make tiago1/CMakeFiles/tiago1_gennodejs.dir/build
+.PHONY : tiago1_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named nav_msgs_generate_messages_nodejs
+=======
 # Target rules for targets named _tiago1_generate_messages_check_deps_ArmControlFeedback
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Build rule for target.
 _tiago1_generate_messages_check_deps_ArmControlFeedback: cmake_check_build_system
@@ -1242,6 +1422,41 @@ help:
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
+<<<<<<< HEAD
+	@echo "... tiago1_generate_messages_py"
+	@echo "... tiago1_generate_messages_lisp"
+	@echo "... tiago1_geneus"
+	@echo "... tiago1_gencpp"
+	@echo "... tiago1_generate_messages_cpp"
+	@echo "... _tiago1_generate_messages_check_deps_Voice_rec"
+	@echo "... tiago1_generate_messages"
+	@echo "... sensor_msgs_generate_messages_nodejs"
+	@echo "... sensor_msgs_generate_messages_lisp"
+	@echo "... sensor_msgs_generate_messages_cpp"
+	@echo "... rosgraph_msgs_generate_messages_py"
+	@echo "... nav_msgs_generate_messages_lisp"
+	@echo "... sensor_msgs_generate_messages_eus"
+	@echo "... roscpp_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_py"
+	@echo "... tiago1_genlisp"
+	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... sensor_msgs_generate_messages_py"
+	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... nav_msgs_generate_messages_py"
+	@echo "... actionlib_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_eus"
+	@echo "... tiago1_genpy"
+	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... roscpp_generate_messages_nodejs"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... geometry_msgs_generate_messages_nodejs"
+	@echo "... geometry_msgs_generate_messages_cpp"
+	@echo "... tiago1_generate_messages_eus"
+	@echo "... roscpp_generate_messages_lisp"
+	@echo "... tiago1_generate_messages_nodejs"
+	@echo "... std_msgs_generate_messages_nodejs"
+=======
 	@echo "... tiago1_genpy"
 	@echo "... tiago1_gennodejs"
 	@echo "... tiago1_genlisp"
@@ -1263,6 +1478,7 @@ help:
 	@echo "... tiago1_generate_messages_eus"
 	@echo "... nav_msgs_generate_messages_eus"
 	@echo "... _tiago1_generate_messages_check_deps_MovementControlFeedback"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... _tiago1_generate_messages_check_deps_GripperControlFeedback"
@@ -1273,6 +1489,9 @@ help:
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_nodejs"
+<<<<<<< HEAD
+	@echo "... tiago1_gennodejs"
+=======
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... _tiago1_generate_messages_check_deps_MovementControlResult"
@@ -1289,6 +1508,7 @@ help:
 	@echo "... _tiago1_generate_messages_check_deps_ArmControlActionFeedback"
 	@echo "... nav_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_py"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 	@echo "... nav_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_eus"

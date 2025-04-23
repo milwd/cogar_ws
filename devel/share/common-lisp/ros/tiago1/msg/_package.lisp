@@ -1,6 +1,10 @@
 (cl:defpackage tiago1-msg
   (:use )
   (:export
+<<<<<<< HEAD
+   "<VOICE_REC>"
+   "VOICE_REC"
+=======
    "<ARMCONTROLACTION>"
    "ARMCONTROLACTION"
    "<ARMCONTROLACTIONFEEDBACK>"
@@ -43,5 +47,6 @@
    "MOVEMENTCONTROLGOAL"
    "<MOVEMENTCONTROLRESULT>"
    "MOVEMENTCONTROLRESULT"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   ))
 

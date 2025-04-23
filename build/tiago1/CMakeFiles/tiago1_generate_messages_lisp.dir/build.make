@@ -43,16 +43,35 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+=======
 CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/cogar_ws/build
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_generate_messages_lisp.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/progress.make
 
+<<<<<<< HEAD
+tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp
+
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from tiago1/Voice_rec.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg
+
+tiago1_generate_messages_lisp: tiago1/CMakeFiles/tiago1_generate_messages_lisp
+tiago1_generate_messages_lisp: /root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp
+=======
 tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlAction.lisp
 tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionGoal.lisp
 tiago1/CMakeFiles/tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlActionResult.lisp
@@ -272,6 +291,7 @@ tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlGoal.lisp
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlResult.lisp
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/ArmControlFeedback.lisp
+<<<<<<< HEAD
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/GripperControlAction.lisp
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/GripperControlActionGoal.lisp
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/GripperControlActionResult.lisp
@@ -279,6 +299,9 @@ tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/GripperControlGoal.lisp
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/GripperControlResult.lisp
 tiago1_generate_messages_lisp: /root/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/GripperControlFeedback.lisp
+=======
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 tiago1_generate_messages_lisp: tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build.make
 
 .PHONY : tiago1_generate_messages_lisp
@@ -289,10 +312,18 @@ tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build: tiago1_generate_messa
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/clean:
+<<<<<<< HEAD
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_lisp.dir/cmake_clean.cmake
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/clean
+
+tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/depend:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+=======
 	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/depend:
 	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/depend
 

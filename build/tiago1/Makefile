@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/cogar_ws/build
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,14 +137,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles /root/cogar_ws/build/tiago1/CMakeFiles/progress.marks
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/progress.marks
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/clean
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/clean
 .PHONY : clean
 
 # The main clean target
@@ -154,20 +154,21 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/preinstall
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/preinstall
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
+<<<<<<< HEAD
 tiago1/CMakeFiles/tiago1_genpy.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_genpy.dir/rule
 .PHONY : tiago1/CMakeFiles/tiago1_genpy.dir/rule
@@ -201,20 +202,25 @@ tiago1_gennodejs/fast:
 tiago1/CMakeFiles/tiago1_genlisp.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_genlisp.dir/rule
 .PHONY : tiago1/CMakeFiles/tiago1_genlisp.dir/rule
+=======
+tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 
 # Convenience name for target.
-tiago1_genlisp: tiago1/CMakeFiles/tiago1_genlisp.dir/rule
+tiago1_generate_messages_py: tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule
 
-.PHONY : tiago1_genlisp
+.PHONY : tiago1_generate_messages_py
 
 # fast build rule for target.
-tiago1_genlisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_genlisp.dir/build.make tiago1/CMakeFiles/tiago1_genlisp.dir/build
-.PHONY : tiago1_genlisp/fast
+tiago1_generate_messages_py/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build
+.PHONY : tiago1_generate_messages_py/fast
 
 # Convenience name for target.
 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/rule
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/rule
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -224,11 +230,12 @@ tiago1_generate_messages_lisp: tiago1/CMakeFiles/tiago1_generate_messages_lisp.d
 
 # fast build rule for target.
 tiago1_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build
 .PHONY : tiago1_generate_messages_lisp/fast
 
 # Convenience name for target.
 tiago1/CMakeFiles/tiago1_geneus.dir/rule:
+<<<<<<< HEAD
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_geneus.dir/rule
 .PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/rule
 
@@ -366,63 +373,68 @@ nav_msgs_generate_messages_cpp/fast:
 tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule
+=======
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_geneus.dir/rule
+.PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/rule
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 
 # Convenience name for target.
-roscpp_generate_messages_py: tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule
+tiago1_geneus: tiago1/CMakeFiles/tiago1_geneus.dir/rule
 
-.PHONY : roscpp_generate_messages_py
+.PHONY : tiago1_geneus
 
 # fast build rule for target.
-roscpp_generate_messages_py/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_py.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_py.dir/build
-.PHONY : roscpp_generate_messages_py/fast
+tiago1_geneus/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_geneus.dir/build.make tiago1/CMakeFiles/tiago1_geneus.dir/build
+.PHONY : tiago1_geneus/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
-.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+tiago1/CMakeFiles/tiago1_gencpp.dir/rule:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_gencpp.dir/rule
+.PHONY : tiago1/CMakeFiles/tiago1_gencpp.dir/rule
 
 # Convenience name for target.
-rosgraph_msgs_generate_messages_lisp: tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+tiago1_gencpp: tiago1/CMakeFiles/tiago1_gencpp.dir/rule
 
-.PHONY : rosgraph_msgs_generate_messages_lisp
+.PHONY : tiago1_gencpp
 
 # fast build rule for target.
-rosgraph_msgs_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_lisp/fast
+tiago1_gencpp/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_gencpp.dir/build.make tiago1/CMakeFiles/tiago1_gencpp.dir/build
+.PHONY : tiago1_gencpp/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/rule
+tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/rule:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
-_tiago1_generate_messages_check_deps_MovementControlGoal: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/rule
+tiago1_generate_messages_cpp: tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/rule
 
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlGoal
+.PHONY : tiago1_generate_messages_cpp
 
 # fast build rule for target.
-_tiago1_generate_messages_check_deps_MovementControlGoal/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlGoal/fast
+tiago1_generate_messages_cpp/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build
+.PHONY : tiago1_generate_messages_cpp/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/actionlib_generate_messages_py.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_py.dir/rule
-.PHONY : tiago1/CMakeFiles/actionlib_generate_messages_py.dir/rule
+tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/rule:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/rule
+.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/rule
 
 # Convenience name for target.
-actionlib_generate_messages_py: tiago1/CMakeFiles/actionlib_generate_messages_py.dir/rule
+_tiago1_generate_messages_check_deps_Voice_rec: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/rule
 
-.PHONY : actionlib_generate_messages_py
+.PHONY : _tiago1_generate_messages_check_deps_Voice_rec
 
 # fast build rule for target.
-actionlib_generate_messages_py/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_py.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_py.dir/build
-.PHONY : actionlib_generate_messages_py/fast
+_tiago1_generate_messages_check_deps_Voice_rec/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/build
+.PHONY : _tiago1_generate_messages_check_deps_Voice_rec/fast
 
 # Convenience name for target.
+<<<<<<< HEAD
 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule
@@ -471,48 +483,54 @@ nav_msgs_generate_messages_eus/fast:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/rule
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/rule
+=======
+tiago1/CMakeFiles/tiago1_generate_messages.dir/rule:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages.dir/rule
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages.dir/rule
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 
 # Convenience name for target.
-_tiago1_generate_messages_check_deps_MovementControlFeedback: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/rule
+tiago1_generate_messages: tiago1/CMakeFiles/tiago1_generate_messages.dir/rule
 
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlFeedback
+.PHONY : tiago1_generate_messages
 
 # fast build rule for target.
-_tiago1_generate_messages_check_deps_MovementControlFeedback/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlFeedback/fast
+tiago1_generate_messages/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages.dir/build
+.PHONY : tiago1_generate_messages/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
-.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
+tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
+.PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
-geometry_msgs_generate_messages_eus: tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
+tiago1_genpy: tiago1/CMakeFiles/tiago1_genpy.dir/rule
 
-.PHONY : geometry_msgs_generate_messages_eus
+.PHONY : tiago1_genpy
 
 # fast build rule for target.
-geometry_msgs_generate_messages_eus/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
-.PHONY : geometry_msgs_generate_messages_eus/fast
+sensor_msgs_generate_messages_nodejs/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build
+.PHONY : sensor_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
+.PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
-std_msgs_generate_messages_nodejs: tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+tiago1_gennodejs: tiago1/CMakeFiles/tiago1_gennodejs.dir/rule
 
-.PHONY : std_msgs_generate_messages_nodejs
+.PHONY : tiago1_gennodejs
 
 # fast build rule for target.
-std_msgs_generate_messages_nodejs/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
-.PHONY : std_msgs_generate_messages_nodejs/fast
+sensor_msgs_generate_messages_lisp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
+.PHONY : sensor_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
+<<<<<<< HEAD
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/rule
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/rule
@@ -531,6 +549,212 @@ _tiago1_generate_messages_check_deps_GripperControlFeedback/fast:
 tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+=======
+tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
+
+# Convenience name for target.
+tiago1_generate_messages_nodejs: tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/rule
+
+.PHONY : tiago1_generate_messages_nodejs
+
+# fast build rule for target.
+sensor_msgs_generate_messages_cpp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
+.PHONY : sensor_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+tiago1_genlisp: tiago1/CMakeFiles/tiago1_genlisp.dir/rule
+
+.PHONY : tiago1_genlisp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_py/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
+.PHONY : rosgraph_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+<<<<<<< HEAD
+tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+=======
+tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
+.PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+tiago1_generate_messages_lisp: tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/rule
+
+.PHONY : tiago1_generate_messages_lisp
+
+# fast build rule for target.
+nav_msgs_generate_messages_lisp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build
+.PHONY : nav_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
+.PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+actionlib_msgs_generate_messages_py: tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
+
+.PHONY : actionlib_msgs_generate_messages_py
+
+# fast build rule for target.
+sensor_msgs_generate_messages_eus/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build
+.PHONY : sensor_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_eus: tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_eus
+
+# fast build rule for target.
+roscpp_generate_messages_cpp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/build
+.PHONY : roscpp_generate_messages_cpp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
+
+# Convenience name for target.
+nav_msgs_generate_messages_cpp: tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : nav_msgs_generate_messages_cpp
+
+# fast build rule for target.
+std_msgs_generate_messages_py/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/build
+.PHONY : std_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_py: tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule
+
+.PHONY : roscpp_generate_messages_py
+
+# fast build rule for target.
+std_msgs_generate_messages_lisp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+.PHONY : std_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_lisp: tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_lisp
+
+# fast build rule for target.
+sensor_msgs_generate_messages_py/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
+.PHONY : sensor_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+_tiago1_generate_messages_check_deps_MovementControlGoal: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/rule
+
+.PHONY : _tiago1_generate_messages_check_deps_MovementControlGoal
+
+# fast build rule for target.
+geometry_msgs_generate_messages_py/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
+.PHONY : geometry_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_py: tiago1/CMakeFiles/actionlib_generate_messages_py.dir/rule
+
+.PHONY : actionlib_generate_messages_py
+
+# fast build rule for target.
+nav_msgs_generate_messages_py/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/build
+.PHONY : nav_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+_tiago1_generate_messages_check_deps_MovementControlFeedback: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/rule
+
+.PHONY : _tiago1_generate_messages_check_deps_MovementControlFeedback
+
+# fast build rule for target.
+actionlib_msgs_generate_messages_cpp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build
+.PHONY : actionlib_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_eus: tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
+
+.PHONY : geometry_msgs_generate_messages_eus
+
+# fast build rule for target.
+std_msgs_generate_messages_eus/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+.PHONY : std_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_nodejs: tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : std_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+geometry_msgs_generate_messages_lisp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
+.PHONY : geometry_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
+.PHONY : tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
 roscpp_generate_messages_lisp: tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
@@ -538,14 +762,14 @@ roscpp_generate_messages_lisp: tiago1/CMakeFiles/roscpp_generate_messages_lisp.d
 .PHONY : roscpp_generate_messages_lisp
 
 # fast build rule for target.
-roscpp_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/build
-.PHONY : roscpp_generate_messages_lisp/fast
+roscpp_generate_messages_nodejs/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
+.PHONY : roscpp_generate_messages_nodejs/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
-.PHONY : tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
 actionlib_generate_messages_lisp: tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
@@ -553,13 +777,43 @@ actionlib_generate_messages_lisp: tiago1/CMakeFiles/actionlib_generate_messages_
 .PHONY : actionlib_generate_messages_lisp
 
 # fast build rule for target.
-actionlib_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/build
-.PHONY : actionlib_generate_messages_lisp/fast
+rosgraph_msgs_generate_messages_cpp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+tiago1_generate_messages_py: tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule
+
+.PHONY : tiago1_generate_messages_py
+
+# fast build rule for target.
+std_msgs_generate_messages_cpp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+.PHONY : std_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
+.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+nav_msgs_generate_messages_eus: tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule
+
+.PHONY : nav_msgs_generate_messages_eus
+
+# fast build rule for target.
+geometry_msgs_generate_messages_nodejs/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build
+.PHONY : geometry_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
 tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -569,13 +823,28 @@ geometry_msgs_generate_messages_cpp: tiago1/CMakeFiles/geometry_msgs_generate_me
 
 # fast build rule for target.
 geometry_msgs_generate_messages_cpp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
 .PHONY : geometry_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
-.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
+tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/rule:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/rule
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+tiago1_generate_messages_eus: tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/rule
+
+.PHONY : tiago1_generate_messages_eus
+
+# fast build rule for target.
+tiago1_generate_messages_eus/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build
+.PHONY : tiago1_generate_messages_eus/fast
+
+# Convenience name for target.
+tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+.PHONY : tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
 geometry_msgs_generate_messages_nodejs: tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
@@ -583,191 +852,12 @@ geometry_msgs_generate_messages_nodejs: tiago1/CMakeFiles/geometry_msgs_generate
 .PHONY : geometry_msgs_generate_messages_nodejs
 
 # fast build rule for target.
-geometry_msgs_generate_messages_nodejs/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build
-.PHONY : geometry_msgs_generate_messages_nodejs/fast
+roscpp_generate_messages_lisp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+.PHONY : roscpp_generate_messages_lisp/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_cpp: tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-geometry_msgs_generate_messages_lisp: tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : geometry_msgs_generate_messages_lisp
-
-# fast build rule for target.
-geometry_msgs_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
-.PHONY : geometry_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
-.PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_nodejs: tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_nodejs/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build
-.PHONY : actionlib_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
-.PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_lisp: tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_lisp
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build
-.PHONY : actionlib_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_eus: tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/rule
-
-# Convenience name for target.
-_tiago1_generate_messages_check_deps_MovementControlResult: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/rule
-
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlResult
-
-# fast build rule for target.
-_tiago1_generate_messages_check_deps_MovementControlResult/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlResult/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
-.PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-actionlib_msgs_generate_messages_cpp: tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : actionlib_msgs_generate_messages_cpp
-
-# fast build rule for target.
-actionlib_msgs_generate_messages_cpp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build
-.PHONY : actionlib_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_cpp: tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-.PHONY : tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_eus: tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-
-.PHONY : actionlib_generate_messages_eus
-
-# fast build rule for target.
-actionlib_generate_messages_eus/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/build
-.PHONY : actionlib_generate_messages_eus/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-.PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-nav_msgs_generate_messages_py: tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-
-.PHONY : nav_msgs_generate_messages_py
-
-# fast build rule for target.
-nav_msgs_generate_messages_py/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/build
-.PHONY : nav_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-.PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_py: tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_py
-
-# fast build rule for target.
-sensor_msgs_generate_messages_py/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
-.PHONY : sensor_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_lisp: tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : std_msgs_generate_messages_lisp
-
-# fast build rule for target.
-std_msgs_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
-.PHONY : std_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
+<<<<<<< HEAD
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/rule
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/rule
@@ -801,80 +891,85 @@ _tiago1_generate_messages_check_deps_GripperControlAction/fast:
 tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
 	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+=======
+tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+.PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 
 # Convenience name for target.
-std_msgs_generate_messages_py: tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+std_msgs_generate_messages_cpp: tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 
-.PHONY : std_msgs_generate_messages_py
+.PHONY : std_msgs_generate_messages_cpp
 
 # fast build rule for target.
-std_msgs_generate_messages_py/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/build
-.PHONY : std_msgs_generate_messages_py/fast
+std_msgs_generate_messages_nodejs/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
+.PHONY : std_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-.PHONY : tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
+.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-roscpp_generate_messages_cpp: tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+geometry_msgs_generate_messages_lisp: tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
 
-.PHONY : roscpp_generate_messages_cpp
+.PHONY : geometry_msgs_generate_messages_lisp
 
 # fast build rule for target.
-roscpp_generate_messages_cpp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/build
-.PHONY : roscpp_generate_messages_cpp/fast
+geometry_msgs_generate_messages_eus/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
+.PHONY : geometry_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/rule
+tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule
+.PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-_tiago1_generate_messages_check_deps_ArmControlActionFeedback: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/rule
+actionlib_msgs_generate_messages_nodejs: tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
 
-.PHONY : _tiago1_generate_messages_check_deps_ArmControlActionFeedback
+.PHONY : actionlib_msgs_generate_messages_nodejs
 
 # fast build rule for target.
-_tiago1_generate_messages_check_deps_ArmControlActionFeedback/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_ArmControlActionFeedback/fast
+nav_msgs_generate_messages_eus/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/build
+.PHONY : nav_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
-.PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
+tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
+.PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
-nav_msgs_generate_messages_lisp: tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
+actionlib_msgs_generate_messages_lisp: tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
 
-.PHONY : nav_msgs_generate_messages_lisp
+.PHONY : actionlib_msgs_generate_messages_lisp
 
 # fast build rule for target.
-nav_msgs_generate_messages_lisp/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build
-.PHONY : nav_msgs_generate_messages_lisp/fast
+actionlib_msgs_generate_messages_lisp/fast:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build
+.PHONY : actionlib_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
+.PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
-rosgraph_msgs_generate_messages_py: tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+std_msgs_generate_messages_eus: tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 
-.PHONY : rosgraph_msgs_generate_messages_py
+.PHONY : std_msgs_generate_messages_eus
 
 # fast build rule for target.
-rosgraph_msgs_generate_messages_py/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
-.PHONY : rosgraph_msgs_generate_messages_py/fast
+actionlib_msgs_generate_messages_nodejs/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build
+.PHONY : actionlib_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
 tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -884,7 +979,7 @@ nav_msgs_generate_messages_nodejs: tiago1/CMakeFiles/nav_msgs_generate_messages_
 
 # fast build rule for target.
 nav_msgs_generate_messages_nodejs/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build
 .PHONY : nav_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
@@ -1024,7 +1119,7 @@ tiago1_generate_messages/fast:
 
 # Convenience name for target.
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -1034,13 +1129,13 @@ actionlib_msgs_generate_messages_eus: tiago1/CMakeFiles/actionlib_msgs_generate_
 
 # fast build rule for target.
 actionlib_msgs_generate_messages_eus/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build
 .PHONY : actionlib_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/rule
+tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
 _tiago1_generate_messages_check_deps_MovementControlAction: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/rule
@@ -1048,43 +1143,13 @@ _tiago1_generate_messages_check_deps_MovementControlAction: tiago1/CMakeFiles/_t
 .PHONY : _tiago1_generate_messages_check_deps_MovementControlAction
 
 # fast build rule for target.
-_tiago1_generate_messages_check_deps_MovementControlAction/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlAction/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/rule
-
-# Convenience name for target.
-_tiago1_generate_messages_check_deps_MovementControlActionGoal: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/rule
-
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlActionGoal
-
-# fast build rule for target.
-_tiago1_generate_messages_check_deps_MovementControlActionGoal/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlActionGoal/fast
-
-# Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/rule
-
-# Convenience name for target.
-_tiago1_generate_messages_check_deps_MovementControlActionResult: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/rule
-
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlActionResult
-
-# fast build rule for target.
-_tiago1_generate_messages_check_deps_MovementControlActionResult/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_MovementControlActionResult/fast
+rosgraph_msgs_generate_messages_lisp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
 tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/rule
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -1094,13 +1159,13 @@ roscpp_generate_messages_eus: tiago1/CMakeFiles/roscpp_generate_messages_eus.dir
 
 # fast build rule for target.
 roscpp_generate_messages_eus/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/build
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/build
 .PHONY : roscpp_generate_messages_eus/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/rule
+tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule
 
 # Convenience name for target.
 _tiago1_generate_messages_check_deps_ArmControlAction: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/rule
@@ -1108,14 +1173,14 @@ _tiago1_generate_messages_check_deps_ArmControlAction: tiago1/CMakeFiles/_tiago1
 .PHONY : _tiago1_generate_messages_check_deps_ArmControlAction
 
 # fast build rule for target.
-_tiago1_generate_messages_check_deps_ArmControlAction/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_ArmControlAction/fast
+roscpp_generate_messages_py/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_py.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_py.dir/build
+.PHONY : roscpp_generate_messages_py/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
-.PHONY : tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
+tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule
+.PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
 roscpp_generate_messages_nodejs: tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
@@ -1123,14 +1188,14 @@ roscpp_generate_messages_nodejs: tiago1/CMakeFiles/roscpp_generate_messages_node
 .PHONY : roscpp_generate_messages_nodejs
 
 # fast build rule for target.
-roscpp_generate_messages_nodejs/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
-.PHONY : roscpp_generate_messages_nodejs/fast
+nav_msgs_generate_messages_cpp/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/build
+.PHONY : nav_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/rule
+tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
+.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
 _tiago1_generate_messages_check_deps_ArmControlFeedback: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/rule
@@ -1138,14 +1203,14 @@ _tiago1_generate_messages_check_deps_ArmControlFeedback: tiago1/CMakeFiles/_tiag
 .PHONY : _tiago1_generate_messages_check_deps_ArmControlFeedback
 
 # fast build rule for target.
-_tiago1_generate_messages_check_deps_ArmControlFeedback/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_ArmControlFeedback/fast
+rosgraph_msgs_generate_messages_eus/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
+.PHONY : rosgraph_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/rule
-.PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/rule
+tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
+.PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
 _tiago1_generate_messages_check_deps_ArmControlActionGoal: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/rule
@@ -1153,14 +1218,14 @@ _tiago1_generate_messages_check_deps_ArmControlActionGoal: tiago1/CMakeFiles/_ti
 .PHONY : _tiago1_generate_messages_check_deps_ArmControlActionGoal
 
 # fast build rule for target.
-_tiago1_generate_messages_check_deps_ArmControlActionGoal/fast:
-	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/build
-.PHONY : _tiago1_generate_messages_check_deps_ArmControlActionGoal/fast
+actionlib_msgs_generate_messages_py/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build
+.PHONY : actionlib_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule:
-	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
-.PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule:
+	cd /root/cogar_ws/build && $(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
+.PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
 geometry_msgs_generate_messages_py: tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
@@ -1168,6 +1233,7 @@ geometry_msgs_generate_messages_py: tiago1/CMakeFiles/geometry_msgs_generate_mes
 .PHONY : geometry_msgs_generate_messages_py
 
 # fast build rule for target.
+<<<<<<< HEAD
 geometry_msgs_generate_messages_py/fast:
 	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
 .PHONY : geometry_msgs_generate_messages_py/fast
@@ -1246,6 +1312,11 @@ _tiago1_generate_messages_check_deps_GripperControlActionFeedback: tiago1/CMakeF
 _tiago1_generate_messages_check_deps_GripperControlActionFeedback/fast:
 	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/build
 .PHONY : _tiago1_generate_messages_check_deps_GripperControlActionFeedback/fast
+=======
+rosgraph_msgs_generate_messages_nodejs/fast:
+	cd /root/cogar_ws/build && $(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
+.PHONY : rosgraph_msgs_generate_messages_nodejs/fast
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 
 # Help Target
 help:
@@ -1256,6 +1327,7 @@ help:
 	@echo "... install/strip"
 	@echo "... install"
 	@echo "... list_install_components"
+<<<<<<< HEAD
 	@echo "... rebuild_cache"
 	@echo "... tiago1_genpy"
 	@echo "... tiago1_gennodejs"
@@ -1280,6 +1352,32 @@ help:
 	@echo "... tiago1_generate_messages_eus"
 	@echo "... nav_msgs_generate_messages_eus"
 	@echo "... _tiago1_generate_messages_check_deps_MovementControlFeedback"
+=======
+	@echo "... edit_cache"
+	@echo "... sensor_msgs_generate_messages_nodejs"
+	@echo "... sensor_msgs_generate_messages_lisp"
+	@echo "... sensor_msgs_generate_messages_cpp"
+	@echo "... rosgraph_msgs_generate_messages_py"
+	@echo "... nav_msgs_generate_messages_lisp"
+	@echo "... sensor_msgs_generate_messages_eus"
+	@echo "... roscpp_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_py"
+	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... sensor_msgs_generate_messages_py"
+	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... nav_msgs_generate_messages_py"
+	@echo "... actionlib_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_eus"
+	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... roscpp_generate_messages_nodejs"
+	@echo "... test"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... geometry_msgs_generate_messages_nodejs"
+	@echo "... geometry_msgs_generate_messages_cpp"
+	@echo "... roscpp_generate_messages_lisp"
+	@echo "... std_msgs_generate_messages_nodejs"
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... _tiago1_generate_messages_check_deps_GripperControlFeedback"
@@ -1290,6 +1388,7 @@ help:
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_nodejs"
+<<<<<<< HEAD
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... _tiago1_generate_messages_check_deps_MovementControlResult"
@@ -1306,6 +1405,8 @@ help:
 	@echo "... _tiago1_generate_messages_check_deps_ArmControlActionFeedback"
 	@echo "... nav_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_py"
+=======
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 	@echo "... nav_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_eus"
@@ -1343,6 +1444,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

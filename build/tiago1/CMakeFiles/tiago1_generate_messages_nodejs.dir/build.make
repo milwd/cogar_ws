@@ -43,16 +43,35 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+=======
 CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/cogar_ws/build
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_generate_messages_nodejs.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/progress.make
 
+<<<<<<< HEAD
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js
+
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from tiago1/Voice_rec.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+
+tiago1_generate_messages_nodejs: tiago1/CMakeFiles/tiago1_generate_messages_nodejs
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js
+=======
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js
@@ -272,6 +291,7 @@ tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js
+<<<<<<< HEAD
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js
@@ -279,6 +299,9 @@ tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js
 tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js
+=======
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 tiago1_generate_messages_nodejs: tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build.make
 
 .PHONY : tiago1_generate_messages_nodejs
@@ -289,10 +312,18 @@ tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build: tiago1_generate_mes
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/clean:
+<<<<<<< HEAD
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_nodejs.dir/cmake_clean.cmake
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/clean
+
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/depend:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
+=======
 	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_nodejs.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/depend:
 	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/depend
 

@@ -43,16 +43,36 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+=======
 CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/cogar_ws/build
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_generate_messages_cpp.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/progress.make
 
+<<<<<<< HEAD
+tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/Voice_rec.h
+
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/Voice_rec.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/Voice_rec.h: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/Voice_rec.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from tiago1/Voice_rec.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 && /root/Desktop/cogar_ass1/cogar_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1 -e /opt/ros/noetic/share/gencpp/cmake/..
+
+tiago1_generate_messages_cpp: tiago1/CMakeFiles/tiago1_generate_messages_cpp
+tiago1_generate_messages_cpp: /root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/Voice_rec.h
+=======
 tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlAction.h
 tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlActionGoal.h
 tiago1/CMakeFiles/tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/MovementControlActionResult.h
@@ -293,6 +313,7 @@ tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlActi
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlGoal.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlResult.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/ArmControlFeedback.h
+<<<<<<< HEAD
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/GripperControlAction.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/GripperControlActionGoal.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/GripperControlActionResult.h
@@ -300,6 +321,9 @@ tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/GripperControl
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/GripperControlGoal.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/GripperControlResult.h
 tiago1_generate_messages_cpp: /root/cogar_ws/devel/include/tiago1/GripperControlFeedback.h
+=======
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
+>>>>>>> aca6529c9f600548f857dc744acf75bc94567623
 tiago1_generate_messages_cpp: tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build.make
 
 .PHONY : tiago1_generate_messages_cpp
@@ -310,10 +334,18 @@ tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build: tiago1_generate_messag
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/clean:
+<<<<<<< HEAD
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_cpp.dir/cmake_clean.cmake
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/clean
+
+tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/depend:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/DependInfo.cmake --color=$(COLOR)
+=======
 	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_cpp.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/depend:
 	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/DependInfo.cmake --color=$(COLOR)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/depend
 

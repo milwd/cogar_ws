@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+<<<<<<< HEAD
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l"
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l"
+=======
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l"
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l"
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l"
@@ -21,6 +25,7 @@ file(REMOVE_RECURSE
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l"
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l"
   "/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "CMakeFiles/tiago1_generate_messages_eus"
 )
 

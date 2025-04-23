@@ -54,12 +54,11 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
-## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+# Generate messages in the 'msg' folder
+add_message_files(
+  FILES
+  Voice_rec.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -113,10 +112,10 @@ generate_messages(DEPENDENCIES std_msgs actionlib_msgs nav_msgs)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES tiago1
-#  CATKIN_DEPENDS geometry_msgs message_runtime nav_msgs roscpp rospy rostest sensor_msgs std_msgs std_msgs
-#  DEPENDS system_lib
+ INCLUDE_DIRS include
+ LIBRARIES tiago1
+ CATKIN_DEPENDS geometry_msgs message_runtime nav_msgs roscpp rospy rostest sensor_msgs std_msgs std_msgs
+ DEPENDS system_lib
 )
 
 ###########
@@ -185,6 +184,10 @@ catkin_install_python(PROGRAMS
   scripts/distance_estimation.py
   scripts/control_wheel.py
   scripts/control_arm.py
+  scripts/microphone.py
+  scripts/reasoning_order_verification.py
+  scripts/speaker.py
+  scripts/voice_recognition.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

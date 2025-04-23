@@ -43,16 +43,41 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+=======
 CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/cogar_ws/build
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_generate_messages_eus.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/progress.make
 
+<<<<<<< HEAD
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l
+
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from tiago1/Voice_rec.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp manifest code for tiago1"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1 tiago1 std_msgs geometry_msgs
+
+tiago1_generate_messages_eus: tiago1/CMakeFiles/tiago1_generate_messages_eus
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l
+=======
 tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l
 tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l
 tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l
@@ -285,6 +310,7 @@ tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/G
 tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l
 tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l
 tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 tiago1_generate_messages_eus: tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build.make
 
 .PHONY : tiago1_generate_messages_eus
@@ -295,10 +321,18 @@ tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build: tiago1_generate_messag
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/clean:
+<<<<<<< HEAD
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_eus.dir/cmake_clean.cmake
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/clean
+
+tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/depend:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
+=======
 	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_eus.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/depend:
 	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/depend
 

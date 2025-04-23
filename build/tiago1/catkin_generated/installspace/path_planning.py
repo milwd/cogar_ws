@@ -5,6 +5,7 @@ from nav_msgs.msg import Path, OccupancyGrid, Odometry
 from geometry_msgs.msg import PoseStamped
 from tiago1.msg import MovementControlAction, MovementControlGoal
 
+
 class PathPlanner:
     def __init__(self):
         rospy.init_node('path_planning_node')
@@ -16,6 +17,9 @@ class PathPlanner:
         rospy.Subscriber('/odom', Odometry, self.odom_callback)
 
         self.path_pub = rospy.Publisher('/planned_path', Path, queue_size=1)
+<<<<<<< HEAD
+        # rospy.Timer(rospy.Duration(5), self.plan_path)
+=======
 
         self.client = actionlib.SimpleActionClient('movement_control', MovementControlAction)
         rospy.loginfo("[PathPlanner] Waiting for movement_control action server...")
@@ -23,6 +27,7 @@ class PathPlanner:
         rospy.loginfo("[PathPlanner] Connected to movement_control action server.")
 
         self.goal_sent = False
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
     def map_callback(self, msg):
         self.map = msg
@@ -61,6 +66,7 @@ class PathPlanner:
                     self.goal_sent = False
 
             rate.sleep()
+
 
 
 if __name__ == '__main__':

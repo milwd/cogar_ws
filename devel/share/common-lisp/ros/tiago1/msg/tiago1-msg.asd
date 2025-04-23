@@ -2,6 +2,12 @@
 (cl:in-package :asdf)
 
 (defsystem "tiago1-msg"
+<<<<<<< HEAD
+  :depends-on (:roslisp-msg-protocol :roslisp-utils )
+  :components ((:file "_package")
+    (:file "Voice_rec" :depends-on ("_package_Voice_rec"))
+    (:file "_package_Voice_rec" :depends-on ("_package"))
+=======
   :depends-on (:roslisp-msg-protocol :roslisp-utils :actionlib_msgs-msg
                :nav_msgs-msg
                :std_msgs-msg
@@ -49,4 +55,5 @@
     (:file "_package_MovementControlGoal" :depends-on ("_package"))
     (:file "MovementControlResult" :depends-on ("_package_MovementControlResult"))
     (:file "_package_MovementControlResult" :depends-on ("_package"))
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   ))

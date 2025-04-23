@@ -1,4 +1,7 @@
 file(REMOVE_RECURSE
+<<<<<<< HEAD
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/Voice_rec.h"
+=======
   "/root/cogar_ws/devel/include/tiago1/ArmControlAction.h"
   "/root/cogar_ws/devel/include/tiago1/ArmControlActionFeedback.h"
   "/root/cogar_ws/devel/include/tiago1/ArmControlActionGoal.h"
@@ -20,6 +23,7 @@ file(REMOVE_RECURSE
   "/root/cogar_ws/devel/include/tiago1/MovementControlFeedback.h"
   "/root/cogar_ws/devel/include/tiago1/MovementControlGoal.h"
   "/root/cogar_ws/devel/include/tiago1/MovementControlResult.h"
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
   "CMakeFiles/tiago1_generate_messages_cpp"
 )
 

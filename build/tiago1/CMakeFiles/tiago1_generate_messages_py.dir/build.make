@@ -43,16 +43,42 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+=======
 CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /root/cogar_ws/build
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 
 # Utility rule file for tiago1_generate_messages_py.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_py.dir/progress.make
 
+<<<<<<< HEAD
+tiago1/CMakeFiles/tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
+tiago1/CMakeFiles/tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py
+
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG tiago1/Voice_rec"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for tiago1"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg --initpy
+
+tiago1_generate_messages_py: tiago1/CMakeFiles/tiago1_generate_messages_py
+tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py
+tiago1_generate_messages_py: /root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py
+=======
 tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlAction.py
 tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionGoal.py
 tiago1/CMakeFiles/tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlActionResult.py
@@ -306,6 +332,7 @@ tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiag
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlResult.py
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_GripperControlFeedback.py
 tiago1_generate_messages_py: /root/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 tiago1_generate_messages_py: tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build.make
 
 .PHONY : tiago1_generate_messages_py
@@ -316,10 +343,18 @@ tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build: tiago1_generate_message
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/clean:
+<<<<<<< HEAD
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_py.dir/cmake_clean.cmake
+.PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/clean
+
+tiago1/CMakeFiles/tiago1_generate_messages_py.dir/depend:
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+=======
 	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/depend:
 	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+>>>>>>> 12be1fcab963b329af0649c4075d9d1835a9ee03
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/depend
 
