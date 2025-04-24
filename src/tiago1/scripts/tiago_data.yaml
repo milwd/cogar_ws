@@ -763,3 +763,47 @@ orders:
 - food_list:
   - pasta
   id_client: 67
+- food_list:
+  - pasta
+  id_client: 68
+- food_list:
+  - pasta
+  id_client: 69
+- food_list:
+  - pasta
+  - sushi
+  id_client: 69
+- food_list:
+  - pasta
+  id_client: 70
+- food_list:
+  - pasta
+  - sushi
+  id_client: 70
+- food_list:
+  - pasta
+  id_client: 71
+- food_list:
+  - pasta
+  id_client: 72
+- food_list:
+  - pasta
+  - sushi
+  id_client: 72
+- food_list:
+  - pasta
+  id_client: 73
+- food_list:
+  - pasta
+  - sushi
+  id_client: 73
+- food_list:
+  - pasta
+  id_client: 74
+- food_list:
+  - pasta
+  id_client: 75
+- food_list:
+  - pasta
+  - sushi
+  id_client: 75
