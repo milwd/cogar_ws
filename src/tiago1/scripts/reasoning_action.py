@@ -16,6 +16,7 @@ class ReasoningAction:
         self.path_msg = None
 
         rospy.Subscriber('/planned_path', Path, self.path_callback)
+        rospy.Subscriber("/table_reasoning_commands", String, self.table_command_callback)
         self.task_feedback_pub = rospy.Publisher('task_feedback', String, queue_size=1)
 
         self.movement_client = actionlib.SimpleActionClient('movement_control', MovementControlAction)
@@ -44,6 +45,14 @@ class ReasoningAction:
     def path_callback(self, msg):
         self.path_received = True
         self.path_msg = msg
+    
+    def perform_table_command(self, decision):
+        pass
+
+    def table_command_callback(self, msg):
+        decision = msg.data
+        rospy.loginfo(f"[ReasoningAction] Received table command: {decision}")
+        self.perform_table_command(decision)
 
     def loop(self):
         rate = rospy.Rate(1)
@@ -70,7 +79,7 @@ class ReasoningAction:
                     rospy.logwarn("[ReasoningAction] Movement failed, not sending arm/gripper commands.")
                     self.task_feedback_pub.publish("Movement failed, not sending arm/gripper commands.")
 
-                self.path_received = False  # reset
+                self.path_received = False 
             rate.sleep()
 
 
