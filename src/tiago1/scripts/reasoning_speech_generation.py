@@ -2,12 +2,12 @@
 import rospy
 from std_msgs.msg import String
 
-class Speaker:
+class SpeechGenerator:
     def __init__(self):
-        rospy.init_node("speaker_node")
+        rospy.init_node("speech_gen_node")
         self.msg = None
-        rospy.Subscriber('/speaker_channel',String, self.speaker_callback)
-        self.pub_speak = rospy.Publisher('/speaker_output',String,queue_size=10)
+        rospy.Subscriber('/task_speech_command', String, self.speaker_callback)
+        self.pub_speak = rospy.Publisher('/speaker_channel', String, queue_size=10)
         
     def speaker_callback(self,msg):
         self.msg = msg
@@ -18,8 +18,10 @@ class Speaker:
         
 if __name__ == "__main__":
     try:
-        speaker = Speaker()
+        speecher = SpeechGenerator()
+        rate = rospy.Rate(1)  # 1 Hz
         while not rospy.is_shutdown():
-            speaker.publish_msg()
+            speecher.publish_msg()
+            rate.sleep()
     except rospy.ROSInterruptException:
         pass
