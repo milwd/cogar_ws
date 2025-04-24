@@ -12,7 +12,7 @@ def publish():
     pub_depth = rospy.Publisher('/depth', Image, queue_size=10)
     rate = rospy.Rate(10)  
     while not rospy.is_shutdown():
-        original = cv2.imread('/root/cogar_ws/src/tiago1/scripts/image.jpg')
+        original = cv2.imread('/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg')
         bridge = CvBridge()
         image = bridge.cv2_to_imgmsg(original, encoding="bgr8")
         image.header.stamp = rospy.Time.now()
