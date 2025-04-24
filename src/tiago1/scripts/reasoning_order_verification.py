@@ -13,8 +13,8 @@ class ReasoningOrderVerification:
         self.server = server_robots
         self.food_list = food_list
         rospy.Subscriber('/voice_recogn',String,self.string_callback)
-        rospy.wait_for_service('/robot_state_decision')  
-        self.server_client = rospy.ServiceProxy('/robot_state_decision', send_order)  
+        rospy.wait_for_service('/robot_state_decision_add')  
+        self.server_client = rospy.ServiceProxy('/robot_state_decision_add', send_order)  
         self.error_notification = rospy.Publisher('/error_from_interaction', Int32, queue_size=10)
         self.verific_taskmanager = rospy.Publisher('/verif_T_manager', Voice_rec, queue_size = 10)
         self.counter_id =0

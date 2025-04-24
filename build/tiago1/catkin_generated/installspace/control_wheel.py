@@ -22,7 +22,7 @@ class ControlMovementServer:
         feedback = MovementControlFeedback()
         result = MovementControlResult()
 
-        rospy.loginfo(f"[ControlMovement] Received degree command")
+        rospy.loginfo(f"[ControlMovement] Received movement command")
 
         # should be a loop maybe
         if self.server.is_preempt_requested():

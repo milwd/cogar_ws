@@ -4,7 +4,7 @@ import actionlib
 from geometry_msgs.msg import Twist
 from tiago1.msg import ArmControlAction, ArmControlFeedback, ArmControlResult
 from std_msgs.msg import Int32
-
+import time
 
 class ControlArmServer:
     def __init__(self):
@@ -23,31 +23,51 @@ class ControlArmServer:
     def encoder_callback(self, value):
         self.encoder_val = value.data
 
-    def execute_cb(self, degree):
+    def execute_cb(self, goal):
         feedback = ArmControlFeedback()
         result = ArmControlResult()
+        target = goal.degree
+        tolerance = 5
+        timeout = 10  # seconds
+        start_time = time.time()
 
-        rospy.loginfo(f"[ControlArm] Received path with {1} points")
+        rospy.loginfo(f"[ControlArm] Target degree: {target}")
 
-        while (self.encoder_val != degree):
+        rate = rospy.Rate(10)
+        while abs(self.encoder_val - target) > tolerance:
+            if rospy.is_shutdown():
+                rospy.logwarn("[ControlArm] ROS shutdown detected")
+                return
+
             if self.server.is_preempt_requested():
                 rospy.logwarn("[ControlArm] Preempted")
                 self.server.set_preempted()
                 return
 
-            # silly p-controller
+            if time.time() - start_time > timeout:
+                rospy.logwarn("[ControlArm] Timeout reached")
+                result.success = False
+                self.server.set_aborted(result)
+                return
+
             cmd = Twist()
-            cmd.angular.z = degree * 0.01  
+            error = target - self.encoder_val
+            cmd.angular.z = 0.01 * error
             self.cmd_pub.publish(cmd)
 
-            feedback.status = f"Moving to angle {1}"
+            feedback.status = f"Moving to angle {target}, current: {self.encoder_val}"
             self.server.publish_feedback(feedback)
-            rospy.sleep(1)  # time to reach each point
 
+            rate.sleep()
+
+        rospy.loginfo("[ControlArm] Target reached")
         result.success = True
         self.server.set_succeeded(result)
 
 if __name__ == '__main__':
-    rospy.init_node('control_movement_node')
-    ControlArmServer()
-    rospy.spin()
+    try:
+        rospy.init_node('control_arm_node')
+        ControlArmServer()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass

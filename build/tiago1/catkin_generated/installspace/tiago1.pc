@@ -1,4 +1,4 @@
-prefix=/root/cogar_ws/install
+prefix=/root/Desktop/cogar_ass1/cogar_ws/install
 
 Name: tiago1
 Description: Description of tiago1

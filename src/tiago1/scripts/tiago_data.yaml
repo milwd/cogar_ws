@@ -1,0 +1,32 @@
+orders:
+- food_list:
+  - pasta
+  id_client: 0
+- food_list:
+  - pasta
+  - sushi
+  id_client: 0
+- food_list:
+  - pasta
+  id_client: 1
+- food_list:
+  - pasta
+  - sushi
+  id_client: 1
+- food_list:
+  - pasta
+  id_client: 2
+- food_list:
+  - pasta
+  - sushi
+  id_client: 2
+- food_list:
+  - pasta
+  id_client: 3
+- food_list:
+  - pasta
+  id_client: 4
+- food_list:
+  - pasta
+  - sushi
+  id_client: 4

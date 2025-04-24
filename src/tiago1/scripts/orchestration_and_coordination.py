@@ -158,8 +158,8 @@ class orchestration_and_coordination():
 
     def handle_request_new_order(self, req):
         new_order = {
-            "id_client": req.id_client,
-            "food_list": list(req.order)  # assume order is a list of strings
+            "id_client": req.order.id_client,
+            "food_list": list(req.order.list_of_orders)  # assume order is a list of strings
         }
         self.load_data()
         self.data["orders"].append(new_order)

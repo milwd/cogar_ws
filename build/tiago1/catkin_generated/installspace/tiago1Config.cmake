@@ -67,14 +67,14 @@ set(tiago1_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(tiago1_SOURCE_PREFIX /root/cogar_ws/src/tiago1)
-  set(tiago1_DEVEL_PREFIX /root/cogar_ws/devel)
+  set(tiago1_SOURCE_PREFIX /root/Desktop/cogar_ass1/cogar_ws/src/tiago1)
+  set(tiago1_DEVEL_PREFIX /root/Desktop/cogar_ass1/cogar_ws/devel)
   set(tiago1_INSTALL_PREFIX "")
   set(tiago1_PREFIX ${tiago1_DEVEL_PREFIX})
 else()
   set(tiago1_SOURCE_PREFIX "")
   set(tiago1_DEVEL_PREFIX "")
-  set(tiago1_INSTALL_PREFIX /root/cogar_ws/install)
+  set(tiago1_INSTALL_PREFIX /root/Desktop/cogar_ass1/cogar_ws/install)
   set(tiago1_PREFIX ${tiago1_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /root/cogar_ws/install/lib;/root/cogar_ws/devel/lib;/root/gaz_ws/devel/lib;/root/ros_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /root/Desktop/cogar_ass1/cogar_ws/install/lib;/root/Desktop/cogar_ass1/cogar_ws/devel/lib;/root/ros_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

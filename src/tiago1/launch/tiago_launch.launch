@@ -1,0 +1,26 @@
+<launch>
+  <node pkg="tiago1" type="sonar.py" name="sonar_node"/>
+  <node pkg="tiago1" type="lidar.py" name="lidar_node"/>
+  <node pkg="tiago1" type="camera.py" name="camera_node"/>
+  <node pkg="tiago1" type="microphone.py" name="microphone_node"/>
+  <node pkg="tiago1" type="speaker.py" name="speaker_node"/>
+
+  <node pkg="tiago1" type="voice_recognition.py" name="voice_recognition_node"/>
+
+  <node pkg="tiago1" type="task_manager.py" name="task_manager_node"/>
+  <node pkg="tiago1" type="orchestration_and_coordination.py" name="orchestration_and_coordination_node"/>
+    <!--
+  <node pkg="tiago1" type="sensor_fusion.py" name="sensor_fusion_node"/>
+  <node pkg="tiago1" type="slam.py" name="slam_node"/>
+  <node pkg="tiago1" type="path_planning.py" name="path_planning_node"/>
+  <node pkg="tiago1" type="camera_preprocessing.py" name="camera_preprocessing_node"/>
+  <node pkg="tiago1" type="object_detection.py" name="object_detection_node"/>
+  <node pkg="tiago1" type="distance_estimation.py" name="distance_estimation_node"/>
+
+  <node pkg="tiago1" type="control_wheel.py" name="control_wheel_node"/>
+  <node pkg="tiago1" type="control_arm.py" name="control_arm_node"/>
+  <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node"/>
+    -->
+  <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node"/>
+  <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node"/>
+</launch>

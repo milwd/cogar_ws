@@ -1,0 +1,215 @@
+// Auto-generated. Do not edit!
+
+// (in-package tiago1.srv)
+
+
+"use strict";
+
+const _serializer = _ros_msg_utils.Serialize;
+const _arraySerializer = _serializer.Array;
+const _deserializer = _ros_msg_utils.Deserialize;
+const _arrayDeserializer = _deserializer.Array;
+const _finder = _ros_msg_utils.Find;
+const _getByteLength = _ros_msg_utils.getByteLength;
+
+//-----------------------------------------------------------
+
+
+//-----------------------------------------------------------
+
+class robotstatedecisionRequest {
+  constructor(initObj={}) {
+    if (initObj === null) {
+      // initObj === null is a special case for deserialization where we don't initialize fields
+      this.state_input = null;
+    }
+    else {
+      if (initObj.hasOwnProperty('state_input')) {
+        this.state_input = initObj.state_input
+      }
+      else {
+        this.state_input = '';
+      }
+    }
+  }
+
+  static serialize(obj, buffer, bufferOffset) {
+    // Serializes a message object of type robotstatedecisionRequest
+    // Serialize message field [state_input]
+    bufferOffset = _serializer.string(obj.state_input, buffer, bufferOffset);
+    return bufferOffset;
+  }
+
+  static deserialize(buffer, bufferOffset=[0]) {
+    //deserializes a message object of type robotstatedecisionRequest
+    let len;
+    let data = new robotstatedecisionRequest(null);
+    // Deserialize message field [state_input]
+    data.state_input = _deserializer.string(buffer, bufferOffset);
+    return data;
+  }
+
+  static getMessageSize(object) {
+    let length = 0;
+    length += _getByteLength(object.state_input);
+    return length + 4;
+  }
+
+  static datatype() {
+    // Returns string type for a service object
+    return 'tiago1/robotstatedecisionRequest';
+  }
+
+  static md5sum() {
+    //Returns md5sum for a message object
+    return '88ec6b5132252a36d6685298a06667f7';
+  }
+
+  static messageDefinition() {
+    // Returns full string definition for message
+    return `
+    string state_input 
+    
+    `;
+  }
+
+  static Resolve(msg) {
+    // deep-construct a valid message object instance of whatever was passed in
+    if (typeof msg !== 'object' || msg === null) {
+      msg = {};
+    }
+    const resolved = new robotstatedecisionRequest(null);
+    if (msg.state_input !== undefined) {
+      resolved.state_input = msg.state_input;
+    }
+    else {
+      resolved.state_input = ''
+    }
+
+    return resolved;
+    }
+};
+
+class robotstatedecisionResponse {
+  constructor(initObj={}) {
+    if (initObj === null) {
+      // initObj === null is a special case for deserialization where we don't initialize fields
+      this.state_output = null;
+      this.order = null;
+      this.success = null;
+    }
+    else {
+      if (initObj.hasOwnProperty('state_output')) {
+        this.state_output = initObj.state_output
+      }
+      else {
+        this.state_output = '';
+      }
+      if (initObj.hasOwnProperty('order')) {
+        this.order = initObj.order
+      }
+      else {
+        this.order = [];
+      }
+      if (initObj.hasOwnProperty('success')) {
+        this.success = initObj.success
+      }
+      else {
+        this.success = false;
+      }
+    }
+  }
+
+  static serialize(obj, buffer, bufferOffset) {
+    // Serializes a message object of type robotstatedecisionResponse
+    // Serialize message field [state_output]
+    bufferOffset = _serializer.string(obj.state_output, buffer, bufferOffset);
+    // Serialize message field [order]
+    bufferOffset = _arraySerializer.string(obj.order, buffer, bufferOffset, null);
+    // Serialize message field [success]
+    bufferOffset = _serializer.bool(obj.success, buffer, bufferOffset);
+    return bufferOffset;
+  }
+
+  static deserialize(buffer, bufferOffset=[0]) {
+    //deserializes a message object of type robotstatedecisionResponse
+    let len;
+    let data = new robotstatedecisionResponse(null);
+    // Deserialize message field [state_output]
+    data.state_output = _deserializer.string(buffer, bufferOffset);
+    // Deserialize message field [order]
+    data.order = _arrayDeserializer.string(buffer, bufferOffset, null)
+    // Deserialize message field [success]
+    data.success = _deserializer.bool(buffer, bufferOffset);
+    return data;
+  }
+
+  static getMessageSize(object) {
+    let length = 0;
+    length += _getByteLength(object.state_output);
+    object.order.forEach((val) => {
+      length += 4 + _getByteLength(val);
+    });
+    return length + 9;
+  }
+
+  static datatype() {
+    // Returns string type for a service object
+    return 'tiago1/robotstatedecisionResponse';
+  }
+
+  static md5sum() {
+    //Returns md5sum for a message object
+    return 'c81b3a5eeba79e683979489f11c6ecfa';
+  }
+
+  static messageDefinition() {
+    // Returns full string definition for message
+    return `
+    string state_output
+    string[] order
+    bool success
+    
+    
+    
+    
+    `;
+  }
+
+  static Resolve(msg) {
+    // deep-construct a valid message object instance of whatever was passed in
+    if (typeof msg !== 'object' || msg === null) {
+      msg = {};
+    }
+    const resolved = new robotstatedecisionResponse(null);
+    if (msg.state_output !== undefined) {
+      resolved.state_output = msg.state_output;
+    }
+    else {
+      resolved.state_output = ''
+    }
+
+    if (msg.order !== undefined) {
+      resolved.order = msg.order;
+    }
+    else {
+      resolved.order = []
+    }
+
+    if (msg.success !== undefined) {
+      resolved.success = msg.success;
+    }
+    else {
+      resolved.success = false
+    }
+
+    return resolved;
+    }
+};
+
+module.exports = {
+  Request: robotstatedecisionRequest,
+  Response: robotstatedecisionResponse,
+  md5sum() { return '26c301d5da14bdddfe3b9fdfb6c1eca2'; },
+  datatype() { return 'tiago1/robotstatedecision'; }
+};

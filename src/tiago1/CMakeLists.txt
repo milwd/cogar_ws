@@ -61,11 +61,11 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  send_order.srv
+  robotstatedecision.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -180,6 +180,10 @@ catkin_install_python(PROGRAMS
   scripts/speaker.py
 
   scripts/voice_recognition.py
+
+  scripts/task_manager.py
+  scripts/orchestration_and_coordination.py
+
   
   scripts/sensor_fusion.py
   scripts/slam.py

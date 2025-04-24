@@ -43,255 +43,270 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/cogar_ws/build
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
 
 # Utility rule file for tiago1_generate_messages_eus.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/progress.make
 
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l
-tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/send_order.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/robotstatedecision.l
+tiago1/CMakeFiles/tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l
 
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l: /root/cogar_ws/src/tiago1/msg/Voice_rec.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from tiago1/Voice_rec.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from tiago1/Voice_rec.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from tiago1/MovementControlAction.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from tiago1/MovementControlAction.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from tiago1/MovementControlActionGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from tiago1/MovementControlActionGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from tiago1/MovementControlActionResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from tiago1/MovementControlActionResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp code from tiago1/MovementControlActionFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp code from tiago1/MovementControlActionFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating EusLisp code from tiago1/MovementControlGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating EusLisp code from tiago1/MovementControlGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating EusLisp code from tiago1/MovementControlResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating EusLisp code from tiago1/MovementControlResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating EusLisp code from tiago1/MovementControlFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating EusLisp code from tiago1/MovementControlFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating EusLisp code from tiago1/ArmControlAction.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating EusLisp code from tiago1/ArmControlAction.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating EusLisp code from tiago1/ArmControlActionGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating EusLisp code from tiago1/ArmControlActionGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating EusLisp code from tiago1/ArmControlActionResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating EusLisp code from tiago1/ArmControlActionResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating EusLisp code from tiago1/ArmControlActionFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating EusLisp code from tiago1/ArmControlActionFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating EusLisp code from tiago1/ArmControlGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating EusLisp code from tiago1/ArmControlGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating EusLisp code from tiago1/ArmControlResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating EusLisp code from tiago1/ArmControlResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating EusLisp code from tiago1/ArmControlFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating EusLisp code from tiago1/ArmControlFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating EusLisp code from tiago1/GripperControlAction.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating EusLisp code from tiago1/GripperControlAction.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating EusLisp code from tiago1/GripperControlActionGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating EusLisp code from tiago1/GripperControlActionGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Generating EusLisp code from tiago1/GripperControlActionResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Generating EusLisp code from tiago1/GripperControlActionResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Generating EusLisp code from tiago1/GripperControlActionFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Generating EusLisp code from tiago1/GripperControlActionFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Generating EusLisp code from tiago1/GripperControlGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Generating EusLisp code from tiago1/GripperControlGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Generating EusLisp code from tiago1/GripperControlResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Generating EusLisp code from tiago1/GripperControlResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Generating EusLisp code from tiago1/GripperControlFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/roseus/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Generating EusLisp code from tiago1/GripperControlFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Generating EusLisp manifest code for tiago1"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /root/cogar_ws/devel/share/roseus/ros/tiago1 tiago1 std_msgs actionlib_msgs nav_msgs
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/send_order.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/send_order.l: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/send_order.srv
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/send_order.l: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Generating EusLisp code from tiago1/send_order.srv"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/send_order.srv -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/robotstatedecision.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/robotstatedecision.l: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/robotstatedecision.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Generating EusLisp code from tiago1/robotstatedecision.srv"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/robotstatedecision.srv -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv
+
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Generating EusLisp manifest code for tiago1"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1 tiago1 std_msgs actionlib_msgs nav_msgs
 
 tiago1_generate_messages_eus: tiago1/CMakeFiles/tiago1_generate_messages_eus
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l
-tiago1_generate_messages_eus: /root/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlAction.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionGoal.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionResult.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlActionFeedback.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlFeedback.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlAction.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionGoal.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionResult.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlActionFeedback.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlGoal.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlResult.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/ArmControlFeedback.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlAction.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionGoal.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionResult.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlActionFeedback.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlGoal.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlResult.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/GripperControlFeedback.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/send_order.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/robotstatedecision.l
+tiago1_generate_messages_eus: /root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/manifest.l
 tiago1_generate_messages_eus: tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build.make
 
 .PHONY : tiago1_generate_messages_eus
@@ -302,10 +317,10 @@ tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build: tiago1_generate_messag
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/clean:
-	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_eus.dir/cmake_clean.cmake
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_eus.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/depend:
-	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/depend
 
