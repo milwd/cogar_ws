@@ -2,6 +2,7 @@
 import rospy
 import actionlib
 from nav_msgs.msg import Path
+from std_msgs.msg import String
 from tiago1.msg import MovementControlAction, MovementControlGoal
 from tiago1.msg import ArmControlAction, ArmControlGoal
 from tiago1.msg import GripperControlAction, GripperControlGoal
@@ -15,6 +16,7 @@ class ReasoningAction:
         self.path_msg = None
 
         rospy.Subscriber('/planned_path', Path, self.path_callback)
+        self.task_feedback_pub = rospy.Publisher('task_feedback', String, queue_size=1)
 
         self.movement_client = actionlib.SimpleActionClient('movement_control', MovementControlAction)
         self.arm_client = actionlib.SimpleActionClient('arm_control', ArmControlAction)
@@ -62,8 +64,11 @@ class ReasoningAction:
                     gripper_goal = GripperControlGoal(gripnogrip=True)
                     self.gripper_client.send_goal(gripper_goal)
                     self.gripper_client.wait_for_result()
+
+                    self.task_feedback_pub.publish("Movement and arm/gripper control succeeded.")
                 else:
                     rospy.logwarn("[ReasoningAction] Movement failed, not sending arm/gripper commands.")
+                    self.task_feedback_pub.publish("Movement failed, not sending arm/gripper commands.")
 
                 self.path_received = False  # reset
             rate.sleep()
