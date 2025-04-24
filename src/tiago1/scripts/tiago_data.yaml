@@ -669,3 +669,97 @@ orders:
   - pasta
   - sushi
   id_client: 49
+- food_list:
+  - pasta
+  id_client: 50
+- food_list:
+  - pasta
+  - sushi
+  id_client: 50
+- food_list:
+  - pasta
+  id_client: 51
+- food_list:
+  - pasta
+  - sushi
+  id_client: 51
+- food_list:
+  - pasta
+  id_client: 52
+- food_list:
+  - pasta
+  id_client: 53
+- food_list:
+  - pasta
+  id_client: 54
+- food_list:
+  - pasta
+  - sushi
+  id_client: 54
+- food_list:
+  - pasta
+  id_client: 55
+- food_list:
+  - pasta
+  - sushi
+  id_client: 55
+- food_list:
+  - pasta
+  id_client: 56
+- food_list:
+  - pasta
+  - sushi
+  id_client: 56
+- food_list:
+  - pasta
+  id_client: 57
+- food_list:
+  - pasta
+  - sushi
+  id_client: 57
+- food_list:
+  - pasta
+  id_client: 58
+- food_list:
+  - pasta
+  id_client: 59
+- food_list:
+  - pasta
+  - sushi
+  id_client: 59
+- food_list:
+  - pasta
+  id_client: 60
+- food_list:
+  - pasta
+  - sushi
+  id_client: 60
+- food_list:
+  - pasta
+  id_client: 61
+- food_list:
+  - pasta
+  id_client: 62
+- food_list:
+  - pasta
+  id_client: 63
+- food_list:
+  - pasta
+  - sushi
+  id_client: 63
+- food_list:
+  - pasta
+  id_client: 64
+- food_list:
+  - pasta
+  id_client: 65
+- food_list:
+  - pasta
+  id_client: 66
+- food_list:
+  - pasta
+  - sushi
+  id_client: 66
+- food_list:
+  - pasta
+  id_client: 67
