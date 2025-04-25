@@ -7,6 +7,7 @@
 # new environment variables
 
 # modified environment variables
+export LD_LIBRARY_PATH='/root/ros_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'
 export PKG_CONFIG_PATH='/root/ros_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig'
 export PWD='/root/Desktop/cogar_ass1/cogar_ws/build'
-export ROS_PACKAGE_PATH='/root/Desktop/cogar_ass1/cogar_ws/src:/root/ros_ws/src:/opt/ros/noetic/share'
+export PYTHONPATH='/root/ros_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'
