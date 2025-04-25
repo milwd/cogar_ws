@@ -8,19 +8,19 @@ from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import Range
 
 def arm_jointstate_callback(msg):
-    pub = rospy.Publisher('/tuo_progetto/arm_right_controller/state', JointTrajectoryControllerState, queue_size=10)
+    pub = rospy.Publisher('', JointTrajectoryControllerState, queue_size=10)
     pub.publish(msg)
 
 def depth_raw_callback(msg):
-    pub = rospy.Publisher('/tuo_progetto/xtion/depth/image_raw', Image, queue_size=10)
+    pub = rospy.Publisher('', Image, queue_size=10)
     pub.publish(msg)
 
 def force_sensor_callback(msg):
-    pub = rospy.Publisher('/tuo_progetto/wrist_right_ft', WrenchStamped, queue_size=10)
+    pub = rospy.Publisher('', WrenchStamped, queue_size=10)
     pub.publish(msg)
 
 def odometry_callback(msg):
-    pub = rospy.Publisher('/tuo_progetto/mobile_base_controller/odom', Odometry, queue_size=10)
+    pub = rospy.Publisher('/odom', Odometry, queue_size=10)
     pub.publish(msg)
 
 def rgb_raw_callback(msg):
