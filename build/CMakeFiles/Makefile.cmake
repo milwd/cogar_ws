@@ -171,7 +171,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/orchestration_and_coordination.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/path_planning.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/reasoning_action.py"
-  "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/reasoning_order_verification.py"
+  "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/reasoning_order_verif.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/sensor_fusion.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/slam.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/sonar.py"

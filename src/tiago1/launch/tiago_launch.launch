@@ -21,5 +21,5 @@
   <node pkg="tiago1" type="control_arm.py" name="control_arm_node"/>
   <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node"/>
   <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node"/>
-  <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node"/>
+  <node pkg="tiago1" type="reasoning_order_verif.py" name="reasoning_order_verification_node"/>
 </launch>

@@ -6,18 +6,18 @@ from sensor_msgs.msg import Range
 def publish():
     pub = rospy.Publisher("/sonar", Range, queue_size=10)
     rospy.init_node("sonar_node", anonymous=True)
-    rate = rospy.Rate(10)  # 10hz
-    while not rospy.is_shutdown():
-        sonar = Range()
-        sonar.header.stamp = rospy.Time.now()
-        sonar.header.frame_id = "sonar"
-        sonar.radiation_type = Range.ULTRASOUND
-        sonar.field_of_view = 0.1
-        sonar.min_range = 0.2
-        sonar.max_range = 4.0
-        sonar.range = 3.0
-        pub.publish(sonar)
-        rate.sleep()
+    # rate = rospy.Rate(10)  # 10hz
+    # while not rospy.is_shutdown():
+    #     sonar = Range()
+    #     sonar.header.stamp = rospy.Time.now()
+    #     sonar.header.frame_id = "sonar"
+    #     sonar.radiation_type = Range.ULTRASOUND
+    #     sonar.field_of_view = 0.1
+    #     sonar.min_range = 0.2
+    #     sonar.max_range = 4.0
+    #     sonar.range = 3.0
+    #     pub.publish(sonar)
+    #     rate.sleep()
 
 
 if __name__ == "__main__":

@@ -9,14 +9,17 @@ class TaskManager:
         rospy.wait_for_service('/robot_state_decision')  
         self.server_client = rospy.ServiceProxy('/robot_state_decision', robotstatedecision)  
         rospy.Subscriber("/feedback_acion",String,self.feed_callback_state)
+        rospy.Subscriber("/verif_T_manager",String,self.feed_callback)
         self.state = None
+        self.m = None
     def feed_callback_state(self,msg):
         self.state=msg.data
         
     def change_state(self):
         self.send_request()
         
-        
+    def feed_callback(self,msg):
+        self.m = msg
         
     def send_request(self):
         if self.state is not None:

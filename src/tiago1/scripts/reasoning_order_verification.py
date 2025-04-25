@@ -19,16 +19,16 @@ class ReasoningOrderVerification:
         self.verific_taskmanager = rospy.Publisher('/verif_T_manager', Voice_rec, queue_size = 10)
         self.counter_id =0
         self.error_code =0 # 0-> no error, 1-> no dish in order, 2-> order doesnt have "can I have"
-        # rospy.Timer(rospy.Duration(1.0), self.timer_callback)
+        rospy.Timer(rospy.Duration(1.0), self.timer_callback)
 
                
     def string_callback(self,msg):
         # rospy.loginfo(f"[CALLBACK] Ricevuto messaggio vocale: {msg.data}")
         self.msg=msg
         
-    # def timer_callback(self, event):
-      
-    #     self.parse_orderr()
+    def timer_callback(self, event):
+
+        self.parse_order()
             
     def parse_order(self):
         rospy.loginfo(f"Received voice message: {self.msg}")
@@ -72,10 +72,8 @@ if __name__ == "__main__":
         dish_list = ["ragu", "sugo", "pasta", "kebab", "sushi"]
         server_robots =1
         reasonerOrderVerification = ReasoningOrderVerification(server_robots,dish_list)
-        rate = rospy.Rate(1)
-        while not rospy.is_shutdown():
-            reasonerOrderVerification.parse_order()
-            rate.sleep()
+       
+        reasonerOrderVerification.parse_order()
     except rospy.ROSInterruptException:
         rospy.logerr(f"node failed")
         pass     
