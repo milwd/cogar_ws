@@ -23,6 +23,7 @@ class send_orderRequest {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.order = null;
+      this.robot_id = null;
     }
     else {
       if (initObj.hasOwnProperty('order')) {
@@ -31,6 +32,12 @@ class send_orderRequest {
       else {
         this.order = new Voice_rec();
       }
+      if (initObj.hasOwnProperty('robot_id')) {
+        this.robot_id = initObj.robot_id
+      }
+      else {
+        this.robot_id = '';
+      }
     }
   }
 
@@ -38,6 +45,8 @@ class send_orderRequest {
     // Serializes a message object of type send_orderRequest
     // Serialize message field [order]
     bufferOffset = Voice_rec.serialize(obj.order, buffer, bufferOffset);
+    // Serialize message field [robot_id]
+    bufferOffset = _serializer.string(obj.robot_id, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -47,13 +56,16 @@ class send_orderRequest {
     let data = new send_orderRequest(null);
     // Deserialize message field [order]
     data.order = Voice_rec.deserialize(buffer, bufferOffset);
+    // Deserialize message field [robot_id]
+    data.robot_id = _deserializer.string(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
     length += Voice_rec.getMessageSize(object.order);
-    return length;
+    length += _getByteLength(object.robot_id);
+    return length + 4;
   }
 
   static datatype() {
@@ -63,13 +75,14 @@ class send_orderRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'c4f6fe1e5b6183c9cba764c155d0803b';
+    return 'd56ba497c9b776350b5159a4a79a8008';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     tiago1/Voice_rec order
+    string robot_id
     
     ================================================================================
     MSG: tiago1/Voice_rec
@@ -89,6 +102,13 @@ class send_orderRequest {
     }
     else {
       resolved.order = new Voice_rec()
+    }
+
+    if (msg.robot_id !== undefined) {
+      resolved.robot_id = msg.robot_id;
+    }
+    else {
+      resolved.robot_id = ''
     }
 
     return resolved;
@@ -171,6 +191,6 @@ class send_orderResponse {
 module.exports = {
   Request: send_orderRequest,
   Response: send_orderResponse,
-  md5sum() { return '741481bb0a1ea48957f004257c6bcdd4'; },
+  md5sum() { return '54d692335fd48f1476d58fcf2615595d'; },
   datatype() { return 'tiago1/send_order'; }
 };

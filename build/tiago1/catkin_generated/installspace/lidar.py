@@ -3,11 +3,13 @@ import rospy
 from sensor_msgs.msg import LaserScan
 from math import pi
 from std_msgs.msg import Header
+import sys
 
 
 def publish():
-    pub = rospy.Publisher("/lidar", LaserScan, queue_size=10)
-    rospy.init_node("lidar_node", anonymous=True)
+    robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+    rospy.init_node(f"{robot_number}_lidar_node", anonymous=True)
+    pub = rospy.Publisher(f"/{robot_number}/lidar", LaserScan, queue_size=10)
     # rate = rospy.Rate(10)  
     # while not rospy.is_shutdown():
     #     scan = LaserScan()

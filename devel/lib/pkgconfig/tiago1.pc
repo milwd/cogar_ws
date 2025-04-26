@@ -1,8 +1,8 @@
-prefix=/root/Desktop/cogar_ass1/cogar_ws/devel
+prefix=/root/cogar_ws/devel
 
 Name: tiago1
 Description: Description of tiago1
 Version: 0.0.0
-Cflags: -I/root/Desktop/cogar_ass1/cogar_ws/devel/include -I/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/include
+Cflags: -I/root/cogar_ws/devel/include -I/root/cogar_ws/src/tiago1/include
 Libs: -L${prefix}/lib -ltiago1
 Requires: geometry_msgs message_runtime nav_msgs roscpp rospy rostest sensor_msgs std_msgs

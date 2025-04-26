@@ -24,10 +24,12 @@ struct robotstatedecisionRequest_
   typedef robotstatedecisionRequest_<ContainerAllocator> Type;
 
   robotstatedecisionRequest_()
-    : state_input()  {
+    : state_input()
+    , robot_id()  {
     }
   robotstatedecisionRequest_(const ContainerAllocator& _alloc)
-    : state_input(_alloc)  {
+    : state_input(_alloc)
+    , robot_id(_alloc)  {
   (void)_alloc;
     }
 
@@ -35,6 +37,9 @@ struct robotstatedecisionRequest_
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _state_input_type;
   _state_input_type state_input;
+
+   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _robot_id_type;
+  _robot_id_type robot_id;
 
 
 
@@ -65,7 +70,8 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::tiago1::robotstatedecisionRequest_<ContainerAllocator1> & lhs, const ::tiago1::robotstatedecisionRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.state_input == rhs.state_input;
+  return lhs.state_input == rhs.state_input &&
+    lhs.robot_id == rhs.robot_id;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -122,12 +128,12 @@ struct MD5Sum< ::tiago1::robotstatedecisionRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "88ec6b5132252a36d6685298a06667f7";
+    return "474dfee8de6c5b142980ea7175d700ee";
   }
 
   static const char* value(const ::tiago1::robotstatedecisionRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x88ec6b5132252a36ULL;
-  static const uint64_t static_value2 = 0xd6685298a06667f7ULL;
+  static const uint64_t static_value1 = 0x474dfee8de6c5b14ULL;
+  static const uint64_t static_value2 = 0x2980ea7175d700eeULL;
 };
 
 template<class ContainerAllocator>
@@ -147,6 +153,7 @@ struct Definition< ::tiago1::robotstatedecisionRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "string state_input \n"
+"string robot_id\n"
 ;
   }
 
@@ -166,6 +173,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.state_input);
+      stream.next(m.robot_id);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -186,6 +194,8 @@ struct Printer< ::tiago1::robotstatedecisionRequest_<ContainerAllocator> >
   {
     s << indent << "state_input: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.state_input);
+    s << indent << "robot_id: ";
+    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.robot_id);
   }
 };
 

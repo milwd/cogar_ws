@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::tiago1::robotstatedecision > {
   static const char* value()
   {
-    return "0ab1128539f620d6fb5a0f6e99d11fa7";
+    return "33ec071b72a9a044f86da64824d0e481";
   }
 
   static const char* value(const ::tiago1::robotstatedecision&) { return value(); }

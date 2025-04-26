@@ -5,7 +5,7 @@ import os
 from tiago1.srv import robotstatedecision, robotstatedecisionResponse
 from tiago1.srv import send_order, send_orderResponse
 
-# --- State Machine Base Classes ---
+# -- State Machine Base Classes --
 
 class State:
     def handle(self, context, req):
@@ -14,47 +14,65 @@ class State:
 class FreeState(State):
     def handle(self, context, req):
         order = context.obtain_order()
+        robot_id = req.robot_id
         if order:
-            context.set_state(BusyState())
+            context.set_state(robot_id, BusyState())
             return robotstatedecisionResponse(state_output="Busy", id_client=order["id_client"], order=order["food_list"], success=True)
         else:
-            context.set_state(WaitState())
+            context.set_state(robot_id, WaitState())
             return robotstatedecisionResponse(state_output="Wait", id_client=None, order=[], success=False)
 
 class WaitState(State):
     def handle(self, context, req):
         order = context.obtain_order()
+        robot_id = req.robot_id
         if order:
-            context.set_state(BusyState())
+            context.set_state(robot_id, BusyState())
             return robotstatedecisionResponse(state_output="Busy", id_client=order["id_client"], order=order["food_list"], success=True)
         else:
             return robotstatedecisionResponse(state_output="Wait", id_client=None, order=[], success=False)
 
 class BusyState(State):
     def handle(self, context, req):
-        # Robot remains busy until external change
-        context.set_state(FreeState())
+        # it is still a dummy implementation
+        robot_id = req.robot_id
+        context.set_state(robot_id, FreeState())
         return robotstatedecisionResponse(state_output="Busy", id_client=None, order=[], success=True)
 
-# --- Orchestration Node ---
+# -- Orchestration Node --
 
 class orchestration_and_coordination:
     def __init__(self):
         rospy.init_node("orchestration_and_coordination_node")
-        
+        self.number_of_robots = int(rospy.get_param("number_of_robots"))
+
         self.yaml_path = os.path.join(os.path.dirname(__file__), "tiago_data.yaml")
         
-        self.service = rospy.Service("/robot_state_decision", robotstatedecision, self.handle_request)
-        self.service_order = rospy.Service("/robot_state_decision_add", send_order, self.handle_request_new_order)
+        self.robot_list = [str(i) for i in range(1, self.number_of_robots + 1)]
+        self.services       = {}
+        self.services_order = {}
+        self.robot_states = {robot_id: FreeState() for robot_id in self.robot_list}
+
+        for robot_id in self.robot_list:
+            self.services[robot_id] = rospy.Service(
+                f"/{robot_id}/robot_state_decision",
+                robotstatedecision,
+                self.handle_request
+            )
+            self.services_order[robot_id] = rospy.Service(
+                f"/{robot_id}/robot_state_decision_add",
+                send_order,
+                self.handle_request_new_order
+            )
+
+        print(self.robot_states)
         
         self.data = {"orders": []}
         self.load_data()
         
-        self.state = FreeState()  # Start in Free state
-
-    def set_state(self, state):
+    def set_state(self, robot_id, state):
         rospy.loginfo(f"Transitioning to state: {state.__class__.__name__}")
-        self.state = state
+        self.robot_states[robot_id] = state
 
     def load_data(self):
         if os.path.exists(self.yaml_path):
@@ -81,7 +99,8 @@ class orchestration_and_coordination:
             return None
 
     def handle_request(self, req):
-        return self.state.handle(self, req)
+        robot_id = req.robot_id
+        return self.robot_states[robot_id].handle(self, req)
 
     def handle_request_new_order(self, req):
         new_order = {

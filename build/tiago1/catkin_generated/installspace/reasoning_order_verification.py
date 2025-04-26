@@ -4,21 +4,23 @@ from std_msgs.msg import String, Int32
 from tiago1.msg import Voice_rec
 
 from tiago1.srv import send_order,send_orderRequest
+import sys
 
 
 class ReasoningOrderVerification:
     def __init__(self, server_robots,food_list):
-        rospy.init_node('reasoning_order_verification_node')
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_reasoning_order_verification_node')
         self.msg=None
         self.server = server_robots
         self.food_list = food_list
-        rospy.Subscriber('/voice_recogn',String,self.string_callback)
-        rospy.wait_for_service('/robot_state_decision_add')  
-        self.server_client = rospy.ServiceProxy('/robot_state_decision_add', send_order)  
-        self.error_notification = rospy.Publisher('/error_from_interaction', Int32, queue_size=10)
-        self.verific_taskmanager = rospy.Publisher('/verif_T_manager', Voice_rec, queue_size = 10)
-        self.counter_id =0
-        self.error_code =0 # 0-> no error, 1-> no dish in order, 2-> order doesnt have "can I have"
+        rospy.Subscriber(f'/{self.robot_number}/voice_recogn',String,self.string_callback)
+        rospy.wait_for_service(f'/{self.robot_number}/robot_state_decision_add')  
+        self.server_client = rospy.ServiceProxy(f'/{self.robot_number}/robot_state_decision_add', send_order)  
+        self.error_notification = rospy.Publisher(f'/{self.robot_number}/error_from_interaction', Int32, queue_size=10)
+        self.verific_taskmanager = rospy.Publisher(f'/{self.robot_number}/verif_T_manager', Voice_rec, queue_size = 10)
+        self.counter_id = 0
+        self.error_code = 0 # 0-> no error, 1-> no dish in order, 2-> order doesnt have "can I have"
 
                
     def string_callback(self,msg):

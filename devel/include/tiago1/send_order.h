@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::tiago1::send_order > {
   static const char* value()
   {
-    return "741481bb0a1ea48957f004257c6bcdd4";
+    return "54d692335fd48f1476d58fcf2615595d";
   }
 
   static const char* value(const ::tiago1::send_order&) { return value(); }

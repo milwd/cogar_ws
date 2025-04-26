@@ -2,15 +2,17 @@
 import rospy
 from std_msgs.msg import Int32, String
 # from tiago1.msg import Voice_rec
+import sys
 
 
 class VoiceRecognition:
     def __init__(self, voice_strings):
-        rospy.init_node("voice_recognition_node")
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_voice_recognition_node')
         self.data = None
         self.stringDS = voice_strings
-        rospy.Subscriber('/mic_channel', Int32, self.mic_callback)
-        self.voice_recognized_pub =rospy.Publisher('/voice_recogn', String, queue_size = 10)
+        rospy.Subscriber(f'/{self.robot_number}/mic_channel', Int32, self.mic_callback)
+        self.voice_recognized_pub =rospy.Publisher(f'/{self.robot_number}/voice_recogn', String, queue_size = 10)
         # self.voice_rec_message = Voice_rec()
     def mic_callback(self, msg):
         self.data = msg  # Access the value of the number inside the callback

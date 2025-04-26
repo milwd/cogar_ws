@@ -7,13 +7,16 @@ from nav_msgs.msg import Path, OccupancyGrid, Odometry
 from geometry_msgs.msg import PoseStamped
 from tiago1.msg import GripperControlAction, GripperControlFeedback, GripperControlResult
 import time
+import sys
 
 
 class ControlGripperServer:
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel/gripper', Bool, queue_size=10)
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_control_gripper_node')
+        self.cmd_pub = rospy.Publisher(f'/{self.robot_number}/cmd_vel/gripper', Bool, queue_size=10)
         self.server = actionlib.SimpleActionServer(
-            'gripper_control',
+            f'/{self.robot_number}/gripper_control',
             GripperControlAction,
             execute_cb=self.execute_cb,
             auto_start=False
@@ -43,6 +46,5 @@ class ControlGripperServer:
         self.server.set_succeeded(result)
 
 if __name__ == '__main__':
-    rospy.init_node('control_gripper_node')
     ControlGripperServer()
     rospy.spin()

@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
+import sys
+
 
 class ReasoningTablePlacement:
     def __init__(self):
-        rospy.init_node("reasoning_table_placement_node")
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f"{self.robot_number}_reasoning_table_placement_node")
 
-        self.decision_sub = rospy.Subscriber("/placement_decision", String, self.decision_callback)
-        self.command_pub = rospy.Publisher("/table_reasoning_commands", String, queue_size=10)
+        self.decision_sub = rospy.Subscriber(f"/{self.robot_number}/placement_decision", String, self.decision_callback)
+        self.command_pub = rospy.Publisher(f"/{self.robot_number}/table_reasoning_commands", String, queue_size=10)
 
         rospy.loginfo("[ReasoningTablePlacement] Node started.")
 

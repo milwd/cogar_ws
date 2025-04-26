@@ -3,17 +3,19 @@ import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import cv2
+import sys
 
 class CameraPreprocessing:
     def __init__(self):
-        rospy.init_node('camera_preprocessing_node')
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_camera_preprocessing_node')
         self.bridge = CvBridge()
 
-        self.rgb_sub = rospy.Subscriber("/camera", Image, self.rgb_callback)
-        self.depth_sub = rospy.Subscriber("/depth", Image, self.depth_callback)
+        self.rgb_sub = rospy.Subscriber(f"/{self.robot_number}/camera", Image, self.rgb_callback)
+        self.depth_sub = rospy.Subscriber(f"/{self.robot_number}/depth", Image, self.depth_callback)
 
-        self.rgb_pub = rospy.Publisher("/camera_processed", Image, queue_size=10)
-        self.depth_pub = rospy.Publisher("/depth_processed", Image, queue_size=10)
+        self.rgb_pub = rospy.Publisher(f"/{self.robot_number}/camera_processed", Image, queue_size=10)
+        self.depth_pub = rospy.Publisher(f"/{self.robot_number}/depth_processed", Image, queue_size=10)
 
     def rgb_callback(self, msg):
         try:

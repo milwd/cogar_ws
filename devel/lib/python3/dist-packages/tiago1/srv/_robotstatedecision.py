@@ -8,13 +8,14 @@ import struct
 
 
 class robotstatedecisionRequest(genpy.Message):
-  _md5sum = "88ec6b5132252a36d6685298a06667f7"
+  _md5sum = "474dfee8de6c5b142980ea7175d700ee"
   _type = "tiago1/robotstatedecisionRequest"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """string state_input 
+string robot_id
 """
-  __slots__ = ['state_input']
-  _slot_types = ['string']
+  __slots__ = ['state_input','robot_id']
+  _slot_types = ['string','string']
 
   def __init__(self, *args, **kwds):
     """
@@ -24,7 +25,7 @@ class robotstatedecisionRequest(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       state_input
+       state_input,robot_id
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -35,8 +36,11 @@ class robotstatedecisionRequest(genpy.Message):
       # message fields cannot be None, assign default values for those that are
       if self.state_input is None:
         self.state_input = ''
+      if self.robot_id is None:
+        self.robot_id = ''
     else:
       self.state_input = ''
+      self.robot_id = ''
 
   def _get_types(self):
     """
@@ -51,6 +55,12 @@ class robotstatedecisionRequest(genpy.Message):
     """
     try:
       _x = self.state_input
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.robot_id
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -76,6 +86,15 @@ class robotstatedecisionRequest(genpy.Message):
         self.state_input = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.state_input = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.robot_id = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.robot_id = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -89,6 +108,12 @@ class robotstatedecisionRequest(genpy.Message):
     """
     try:
       _x = self.state_input
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.robot_id
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -115,6 +140,15 @@ class robotstatedecisionRequest(genpy.Message):
         self.state_input = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.state_input = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.robot_id = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.robot_id = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -346,6 +380,6 @@ def _get_struct_i():
     return _struct_i
 class robotstatedecision(object):
   _type          = 'tiago1/robotstatedecision'
-  _md5sum = '0ab1128539f620d6fb5a0f6e99d11fa7'
+  _md5sum = '33ec071b72a9a044f86da64824d0e481'
   _request_class  = robotstatedecisionRequest
   _response_class = robotstatedecisionResponse

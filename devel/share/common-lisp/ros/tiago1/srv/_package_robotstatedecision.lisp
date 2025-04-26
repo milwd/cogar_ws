@@ -1,6 +1,8 @@
 (cl:in-package tiago1-srv)
 (cl:export '(STATE_INPUT-VAL
           STATE_INPUT
+          ROBOT_ID-VAL
+          ROBOT_ID
           STATE_OUTPUT-VAL
           STATE_OUTPUT
           ID_CLIENT-VAL

@@ -1,11 +1,13 @@
 #! /usr/bin/env python
 import rospy
 from sensor_msgs.msg import Range
+import sys
 
 
 def publish():
-    pub = rospy.Publisher("/sonar", Range, queue_size=10)
-    rospy.init_node("sonar_node", anonymous=True)
+    robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+    rospy.init_node(f'{robot_number}_sonar_node', anonymous=True)
+    pub = rospy.Publisher(f'/{robot_number}/sonar', Range, queue_size=10)
     # rate = rospy.Rate(10)  # 10hz
     # while not rospy.is_shutdown():
     #     sonar = Range()

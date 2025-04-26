@@ -2,17 +2,22 @@
 import rospy
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import OccupancyGrid, Odometry
+import sys
+
 
 class SLAM:
     def __init__(self):
-        rospy.init_node('slam_node')
-        rospy.Subscriber('/fused_scan', LaserScan, self.callback)
-        rospy.Subscriber('/odom_proc', Odometry, self.callback_odom)
-        self.map_pub = rospy.Publisher('/map', OccupancyGrid, queue_size=1)
-        self.odom_pub = rospy.Publisher('/odom_slam', Odometry, queue_size=1)
-
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_slam_node')
+        rospy.Subscriber(f'/{self.robot_number}/fused_scan', LaserScan, self.callback)
+        rospy.Subscriber(f'/{self.robot_number}/odom_proc', Odometry, self.callback_odom)
+        self.map_pub = rospy.Publisher(f'/{self.robot_number}/map', OccupancyGrid, queue_size=1)
+        self.odom_pub = rospy.Publisher(f'/{self.robot_number}/odom_slam', Odometry, queue_size=1)
+        self.vel = Odometry()
     def callback_odom(self, data):
-        self.odom_pub.publish(data)
+        self.vel = data
+        # self.odom_pub.publish(data)
+        
 
     def callback(self, data):
         map_msg = OccupancyGrid()
@@ -53,7 +58,7 @@ class SLAM:
         # map_msg.data = self.update_map(data)
         # odom_msg.pose.pose.position.x = self.update_position(data)
         # odom_msg.pose.pose.orientation.z = self.update_orientation(data)
-
+        self.odom_pub.publish(self.vel)
         self.map_pub.publish(map_msg)
 
 if __name__ == '__main__':

@@ -3,18 +3,22 @@ import rospy
 from std_msgs.msg import String
 from tiago1.msg import Voice_rec
 from tiago1.srv import robotstatedecision, robotstatedecisionRequest
+import sys
 
 
 class TaskManager:
     def __init__(self):
-        rospy.init_node("task_manager_node")
-        rospy.wait_for_service('/robot_state_decision')  
-        self.server_client = rospy.ServiceProxy('/robot_state_decision', robotstatedecision)  
-        rospy.Subscriber("/feedback_acion",String,self.feed_callback_state)
-        self.dialogue_pub = rospy.Publisher("/speaker_channel", String, queue_size=0)
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_task_manager_node')
+        rospy.wait_for_service(f'/{self.robot_number}/robot_state_decision')  
+        self.server_client = rospy.ServiceProxy(f'/{self.robot_number}/robot_state_decision', robotstatedecision)  
+        rospy.Subscriber(f'/{self.robot_number}/feedback_acion',String,self.feed_callback_state)
+        self.dialogue_pub = rospy.Publisher(f'/{self.robot_number}/speaker_channel', String, queue_size=0)
         self.state = None
+        print("heyyyyyy")
 
     def feed_callback_state(self,msg):
+        rospy.loginfo(f"Response from server: {msg}")
         self.state=msg
         
     def change_state(self):
@@ -25,6 +29,7 @@ class TaskManager:
             try:
                 request = robotstatedecisionRequest() 
                 request.state_input = str(self.state.data)
+                request.robot_id = self.robot_number
                 response = self.server_client(request)  
                 rospy.loginfo(f"Response from server: {response.success}")
                 
@@ -46,7 +51,7 @@ class TaskManager:
 if __name__ == "__main__":
     try:
         task_manager = TaskManager()
-        rate = rospy.Rate(0.3)
+        rate = rospy.Rate(0.5)
         while not rospy.is_shutdown():
             task_manager.change_state()
             rate.sleep()

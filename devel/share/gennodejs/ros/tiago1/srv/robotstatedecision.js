@@ -22,6 +22,7 @@ class robotstatedecisionRequest {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.state_input = null;
+      this.robot_id = null;
     }
     else {
       if (initObj.hasOwnProperty('state_input')) {
@@ -30,6 +31,12 @@ class robotstatedecisionRequest {
       else {
         this.state_input = '';
       }
+      if (initObj.hasOwnProperty('robot_id')) {
+        this.robot_id = initObj.robot_id
+      }
+      else {
+        this.robot_id = '';
+      }
     }
   }
 
@@ -37,6 +44,8 @@ class robotstatedecisionRequest {
     // Serializes a message object of type robotstatedecisionRequest
     // Serialize message field [state_input]
     bufferOffset = _serializer.string(obj.state_input, buffer, bufferOffset);
+    // Serialize message field [robot_id]
+    bufferOffset = _serializer.string(obj.robot_id, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -46,13 +55,16 @@ class robotstatedecisionRequest {
     let data = new robotstatedecisionRequest(null);
     // Deserialize message field [state_input]
     data.state_input = _deserializer.string(buffer, bufferOffset);
+    // Deserialize message field [robot_id]
+    data.robot_id = _deserializer.string(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
     length += _getByteLength(object.state_input);
-    return length + 4;
+    length += _getByteLength(object.robot_id);
+    return length + 8;
   }
 
   static datatype() {
@@ -62,13 +74,14 @@ class robotstatedecisionRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '88ec6b5132252a36d6685298a06667f7';
+    return '474dfee8de6c5b142980ea7175d700ee';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     string state_input 
+    string robot_id
     
     `;
   }
@@ -84,6 +97,13 @@ class robotstatedecisionRequest {
     }
     else {
       resolved.state_input = ''
+    }
+
+    if (msg.robot_id !== undefined) {
+      resolved.robot_id = msg.robot_id;
+    }
+    else {
+      resolved.robot_id = ''
     }
 
     return resolved;
@@ -230,6 +250,6 @@ class robotstatedecisionResponse {
 module.exports = {
   Request: robotstatedecisionRequest,
   Response: robotstatedecisionResponse,
-  md5sum() { return '0ab1128539f620d6fb5a0f6e99d11fa7'; },
+  md5sum() { return '33ec071b72a9a044f86da64824d0e481'; },
   datatype() { return 'tiago1/robotstatedecision'; }
 };

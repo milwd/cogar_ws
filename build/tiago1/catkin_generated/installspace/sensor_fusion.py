@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 import rospy
 from sensor_msgs.msg import LaserScan, Range
+import sys
 
 
 class SensorFusionNode:
     def __init__(self):
-        rospy.init_node('sensor_fusion_node')
-        self.lidar_sub = rospy.Subscriber('/lidar', LaserScan, self.lidar_callback)
-        self.sonar_sub = rospy.Subscriber('/sonar', Range, self.sonar_callback)
-        self.pub = rospy.Publisher('/fused_scan', LaserScan, queue_size=10)
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_sensor_fusion_node')
+        self.lidar_sub = rospy.Subscriber(f'/{self.robot_number}/lidar', LaserScan, self.lidar_callback)
+        self.sonar_sub = rospy.Subscriber(f'/{self.robot_number}/sonar', Range, self.sonar_callback)
+        self.pub = rospy.Publisher(f'/{self.robot_number}/fused_scan', LaserScan, queue_size=10)
         self.lidar_data = None
         self.sonar_data = None
 
@@ -43,6 +45,7 @@ class SensorFusionNode:
 
 class Adapter:
     def __call__(self, sonar_data, length=0):
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
         new_data = [0] * length
         new_data[length // 2] = sonar_data
         return new_data

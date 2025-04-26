@@ -5,13 +5,16 @@ from geometry_msgs.msg import Twist
 from tiago1.msg import ArmControlAction, ArmControlFeedback, ArmControlResult
 from std_msgs.msg import Int32
 import time
+import sys
 
 class ControlArmServer:
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel/arm', Twist, queue_size=10)
-        self.encoder_sub = rospy.Subscriber('/encoder_arm', Int32, self.encoder_callback)
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_control_arm_node')
+        self.cmd_pub = rospy.Publisher(f'/{self.robot_number}/cmd_vel/arm', Twist, queue_size=10)
+        self.encoder_sub = rospy.Subscriber(f'/{self.robot_number}/encoder_arm', Int32, self.encoder_callback)
         self.server = actionlib.SimpleActionServer(
-            'arm_control',
+            f'/{self.robot_number}/arm_control',
             ArmControlAction,
             execute_cb=self.execute_cb,
             auto_start=False
@@ -68,7 +71,6 @@ class ControlArmServer:
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('control_arm_node')
         ControlArmServer()
         rospy.spin()
     except rospy.ROSInterruptException:

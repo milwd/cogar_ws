@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+CMAKE_BINARY_DIR = /root/cogar_ws/build
 
 # Utility rule file for _tiago1_generate_messages_check_deps_GripperControlActionGoal.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
 include tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/progress.make
 
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal:
-	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py tiago1 /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg tiago1/GripperControlGoal:std_msgs/Header:actionlib_msgs/GoalID
+	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py tiago1 /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg tiago1/GripperControlGoal:actionlib_msgs/GoalID:std_msgs/Header
 
 _tiago1_generate_messages_check_deps_GripperControlActionGoal: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal
 _tiago1_generate_messages_check_deps_GripperControlActionGoal: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/build.make
@@ -67,10 +67,10 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/build
 
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/clean:
-	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/cmake_clean.cmake
+	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/clean
 
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/depend:
-	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/depend
 

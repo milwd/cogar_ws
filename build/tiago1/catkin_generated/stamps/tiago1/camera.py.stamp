@@ -4,10 +4,12 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
+import sys
 
 
 def publish():
-    rospy.init_node('camera')
+    robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+    rospy.init_node(f'{robot_number}_camera')
     # pub_rgb = rospy.Publisher('/camera', Image, queue_size=10)
     # pub_depth = rospy.Publisher('/depth', Image, queue_size=10)
     # rate = rospy.Rate(10)  

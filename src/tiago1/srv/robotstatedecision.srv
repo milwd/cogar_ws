@@ -1,4 +1,5 @@
 string state_input 
+string robot_id
 ---
 string state_output
 int32 id_client

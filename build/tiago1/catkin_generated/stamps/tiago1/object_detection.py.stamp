@@ -2,12 +2,15 @@
 import rospy
 from sensor_msgs.msg import Image
 from std_msgs.msg import String  
+import sys
 
 
 class ObjectDetector:
     def __init__(self):
-        self.image_sub = rospy.Subscriber("/camera_preprocessed", Image, self.image_callback)
-        self.detect_pub = rospy.Publisher("/camera_detections", String, queue_size=10)
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_object_detection_node')
+        self.image_sub = rospy.Subscriber(f"/{self.robot_number}/camera_preprocessed", Image, self.image_callback)
+        self.detect_pub = rospy.Publisher(f"/{self.robot_number}/camera_detections", String, queue_size=10)
 
     def image_callback(self):
         detection = String(data="Detected: Table, Plate, Position")
@@ -15,7 +18,6 @@ class ObjectDetector:
 
 
 if __name__ == '__main__':
-    rospy.init_node('object_detection_node')
     detector = ObjectDetector()
     try:
         while not rospy.is_shutdown():

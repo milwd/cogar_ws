@@ -11,6 +11,11 @@
     :reader state_input
     :initarg :state_input
     :type cl:string
+    :initform "")
+   (robot_id
+    :reader robot_id
+    :initarg :robot_id
+    :type cl:string
     :initform ""))
 )
 
@@ -26,6 +31,11 @@
 (cl:defmethod state_input-val ((m <robotstatedecision-request>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader tiago1-srv:state_input-val is deprecated.  Use tiago1-srv:state_input instead.")
   (state_input m))
+
+(cl:ensure-generic-function 'robot_id-val :lambda-list '(m))
+(cl:defmethod robot_id-val ((m <robotstatedecision-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader tiago1-srv:robot_id-val is deprecated.  Use tiago1-srv:robot_id instead.")
+  (robot_id m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <robotstatedecision-request>) ostream)
   "Serializes a message object of type '<robotstatedecision-request>"
   (cl:let ((__ros_str_len (cl:length (cl:slot-value msg 'state_input))))
@@ -34,6 +44,12 @@
     (cl:write-byte (cl:ldb (cl:byte 8 16) __ros_str_len) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_str_len) ostream))
   (cl:map cl:nil #'(cl:lambda (c) (cl:write-byte (cl:char-code c) ostream)) (cl:slot-value msg 'state_input))
+  (cl:let ((__ros_str_len (cl:length (cl:slot-value msg 'robot_id))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) __ros_str_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) __ros_str_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) __ros_str_len) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_str_len) ostream))
+  (cl:map cl:nil #'(cl:lambda (c) (cl:write-byte (cl:char-code c) ostream)) (cl:slot-value msg 'robot_id))
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <robotstatedecision-request>) istream)
   "Deserializes a message object of type '<robotstatedecision-request>"
@@ -45,6 +61,14 @@
       (cl:setf (cl:slot-value msg 'state_input) (cl:make-string __ros_str_len))
       (cl:dotimes (__ros_str_idx __ros_str_len msg)
         (cl:setf (cl:char (cl:slot-value msg 'state_input) __ros_str_idx) (cl:code-char (cl:read-byte istream)))))
+    (cl:let ((__ros_str_len 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) __ros_str_len) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) __ros_str_len) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) __ros_str_len) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) __ros_str_len) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'robot_id) (cl:make-string __ros_str_len))
+      (cl:dotimes (__ros_str_idx __ros_str_len msg)
+        (cl:setf (cl:char (cl:slot-value msg 'robot_id) __ros_str_idx) (cl:code-char (cl:read-byte istream)))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<robotstatedecision-request>)))
@@ -55,24 +79,26 @@
   "tiago1/robotstatedecisionRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<robotstatedecision-request>)))
   "Returns md5sum for a message object of type '<robotstatedecision-request>"
-  "0ab1128539f620d6fb5a0f6e99d11fa7")
+  "33ec071b72a9a044f86da64824d0e481")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'robotstatedecision-request)))
   "Returns md5sum for a message object of type 'robotstatedecision-request"
-  "0ab1128539f620d6fb5a0f6e99d11fa7")
+  "33ec071b72a9a044f86da64824d0e481")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<robotstatedecision-request>)))
   "Returns full string definition for message of type '<robotstatedecision-request>"
-  (cl:format cl:nil "string state_input ~%~%~%"))
+  (cl:format cl:nil "string state_input ~%string robot_id~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'robotstatedecision-request)))
   "Returns full string definition for message of type 'robotstatedecision-request"
-  (cl:format cl:nil "string state_input ~%~%~%"))
+  (cl:format cl:nil "string state_input ~%string robot_id~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <robotstatedecision-request>))
   (cl:+ 0
      4 (cl:length (cl:slot-value msg 'state_input))
+     4 (cl:length (cl:slot-value msg 'robot_id))
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <robotstatedecision-request>))
   "Converts a ROS message object to a list"
   (cl:list 'robotstatedecision-request
     (cl:cons ':state_input (state_input msg))
+    (cl:cons ':robot_id (robot_id msg))
 ))
 ;//! \htmlinclude robotstatedecision-response.msg.html
 
@@ -197,10 +223,10 @@
   "tiago1/robotstatedecisionResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<robotstatedecision-response>)))
   "Returns md5sum for a message object of type '<robotstatedecision-response>"
-  "0ab1128539f620d6fb5a0f6e99d11fa7")
+  "33ec071b72a9a044f86da64824d0e481")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'robotstatedecision-response)))
   "Returns md5sum for a message object of type 'robotstatedecision-response"
-  "0ab1128539f620d6fb5a0f6e99d11fa7")
+  "33ec071b72a9a044f86da64824d0e481")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<robotstatedecision-response>)))
   "Returns full string definition for message of type '<robotstatedecision-response>"
   (cl:format cl:nil "string state_output~%int32 id_client~%string[] order~%bool success~%~%~%~%~%~%~%"))

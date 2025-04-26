@@ -6,22 +6,24 @@ from std_msgs.msg import String
 from tiago1.msg import MovementControlAction, MovementControlGoal
 from tiago1.msg import ArmControlAction, ArmControlGoal
 from tiago1.msg import GripperControlAction, GripperControlGoal
+import sys
 
 
 class ReasoningAction:
     def __init__(self):
-        rospy.init_node('reasoning_action_node')
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_reasoning_action_node')
 
         self.path_received = False
         self.path_msg = None
 
-        rospy.Subscriber('/planned_path', Path, self.path_callback)
-        rospy.Subscriber("/table_reasoning_commands", String, self.table_command_callback)
-        self.task_feedback_pub = rospy.Publisher('feedback_acion', String, queue_size=1)
+        rospy.Subscriber(f'/{self.robot_number}/planned_path', Path, self.path_callback)
+        rospy.Subscriber(f'/{self.robot_number}/table_reasoning_commands', String, self.table_command_callback)
+        self.task_feedback_pub = rospy.Publisher(f'/{self.robot_number}/feedback_acion', String, queue_size=1)
 
-        self.movement_client = actionlib.SimpleActionClient('movement_control', MovementControlAction)
-        self.arm_client = actionlib.SimpleActionClient('arm_control', ArmControlAction)
-        self.gripper_client = actionlib.SimpleActionClient('gripper_control', GripperControlAction)
+        self.movement_client = actionlib.SimpleActionClient(f'/{self.robot_number}/movement_control', MovementControlAction)
+        self.arm_client = actionlib.SimpleActionClient(f'/{self.robot_number}/arm_control', ArmControlAction)
+        self.gripper_client = actionlib.SimpleActionClient(f'/{self.robot_number}/gripper_control', GripperControlAction)
 
         self.wait_for_servers()
 

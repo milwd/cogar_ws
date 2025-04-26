@@ -6,12 +6,15 @@ from nav_msgs.msg import Path, OccupancyGrid, Odometry
 from geometry_msgs.msg import PoseStamped
 from tiago1.msg import MovementControlAction, MovementControlFeedback, MovementControlResult
 import time
+import sys
 
 class ControlMovementServer:
     def __init__(self):
-        self.cmd_pub = rospy.Publisher('/cmd_vel/wheel', Twist, queue_size=10)
+        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        rospy.init_node(f'{self.robot_number}_control_movement_node')
+        self.cmd_pub = rospy.Publisher(f'/{self.robot_number}/cmd_vel/wheel', Twist, queue_size=10)
         self.server = actionlib.SimpleActionServer(
-            'movement_control',
+            f'/{self.robot_number}/movement_control',
             MovementControlAction,
             execute_cb=self.execute_cb,
             auto_start=False
@@ -46,6 +49,5 @@ class ControlMovementServer:
         self.server.set_succeeded(result)
 
 if __name__ == '__main__':
-    rospy.init_node('control_movement_node')
     ControlMovementServer()
     rospy.spin()

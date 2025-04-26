@@ -9,17 +9,18 @@ import struct
 import tiago1.msg
 
 class send_orderRequest(genpy.Message):
-  _md5sum = "c4f6fe1e5b6183c9cba764c155d0803b"
+  _md5sum = "d56ba497c9b776350b5159a4a79a8008"
   _type = "tiago1/send_orderRequest"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """tiago1/Voice_rec order
+string robot_id
 
 ================================================================================
 MSG: tiago1/Voice_rec
 int32 id_client
 string[] list_of_orders"""
-  __slots__ = ['order']
-  _slot_types = ['tiago1/Voice_rec']
+  __slots__ = ['order','robot_id']
+  _slot_types = ['tiago1/Voice_rec','string']
 
   def __init__(self, *args, **kwds):
     """
@@ -29,7 +30,7 @@ string[] list_of_orders"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       order
+       order,robot_id
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -40,8 +41,11 @@ string[] list_of_orders"""
       # message fields cannot be None, assign default values for those that are
       if self.order is None:
         self.order = tiago1.msg.Voice_rec()
+      if self.robot_id is None:
+        self.robot_id = ''
     else:
       self.order = tiago1.msg.Voice_rec()
+      self.robot_id = ''
 
   def _get_types(self):
     """
@@ -65,6 +69,12 @@ string[] list_of_orders"""
           val1 = val1.encode('utf-8')
           length = len(val1)
         buff.write(struct.Struct('<I%ss'%length).pack(length, val1))
+      _x = self.robot_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -96,6 +106,15 @@ string[] list_of_orders"""
         else:
           val1 = str[start:end]
         self.order.list_of_orders.append(val1)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.robot_id = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.robot_id = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -118,6 +137,12 @@ string[] list_of_orders"""
           val1 = val1.encode('utf-8')
           length = len(val1)
         buff.write(struct.Struct('<I%ss'%length).pack(length, val1))
+      _x = self.robot_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -150,6 +175,15 @@ string[] list_of_orders"""
         else:
           val1 = str[start:end]
         self.order.list_of_orders.append(val1)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.robot_id = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.robot_id = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -291,6 +325,6 @@ def _get_struct_I():
     return _struct_I
 class send_order(object):
   _type          = 'tiago1/send_order'
-  _md5sum = '741481bb0a1ea48957f004257c6bcdd4'
+  _md5sum = '54d692335fd48f1476d58fcf2615595d'
   _request_class  = send_orderRequest
   _response_class = send_orderResponse

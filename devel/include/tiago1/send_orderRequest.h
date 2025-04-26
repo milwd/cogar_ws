@@ -25,10 +25,12 @@ struct send_orderRequest_
   typedef send_orderRequest_<ContainerAllocator> Type;
 
   send_orderRequest_()
-    : order()  {
+    : order()
+    , robot_id()  {
     }
   send_orderRequest_(const ContainerAllocator& _alloc)
-    : order(_alloc)  {
+    : order(_alloc)
+    , robot_id(_alloc)  {
   (void)_alloc;
     }
 
@@ -36,6 +38,9 @@ struct send_orderRequest_
 
    typedef  ::tiago1::Voice_rec_<ContainerAllocator>  _order_type;
   _order_type order;
+
+   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _robot_id_type;
+  _robot_id_type robot_id;
 
 
 
@@ -66,7 +71,8 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::tiago1::send_orderRequest_<ContainerAllocator1> & lhs, const ::tiago1::send_orderRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.order == rhs.order;
+  return lhs.order == rhs.order &&
+    lhs.robot_id == rhs.robot_id;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -123,12 +129,12 @@ struct MD5Sum< ::tiago1::send_orderRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "c4f6fe1e5b6183c9cba764c155d0803b";
+    return "d56ba497c9b776350b5159a4a79a8008";
   }
 
   static const char* value(const ::tiago1::send_orderRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xc4f6fe1e5b6183c9ULL;
-  static const uint64_t static_value2 = 0xcba764c155d0803bULL;
+  static const uint64_t static_value1 = 0xd56ba497c9b77635ULL;
+  static const uint64_t static_value2 = 0x0b5159a4a79a8008ULL;
 };
 
 template<class ContainerAllocator>
@@ -148,6 +154,7 @@ struct Definition< ::tiago1::send_orderRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "tiago1/Voice_rec order\n"
+"string robot_id\n"
 "\n"
 "================================================================================\n"
 "MSG: tiago1/Voice_rec\n"
@@ -172,6 +179,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.order);
+      stream.next(m.robot_id);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -193,6 +201,8 @@ struct Printer< ::tiago1::send_orderRequest_<ContainerAllocator> >
     s << indent << "order: ";
     s << std::endl;
     Printer< ::tiago1::Voice_rec_<ContainerAllocator> >::stream(s, indent + "  ", v.order);
+    s << indent << "robot_id: ";
+    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.robot_id);
   }
 };
 
