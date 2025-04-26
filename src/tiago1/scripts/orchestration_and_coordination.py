@@ -131,12 +131,12 @@ class orchestration_and_coordination():
     def load_data(self):
         if os.path.exists(self.yaml_path):
             with open(self.yaml_path, 'r') as file:
-                self.data = yaml.safe_load(file)
+                self.data = yaml.safe_load(file) or {"orders": []}
         else:
-            self.data = self.data
-        # If orders is None (because in YAML it's just 'orders:'), fix it
-        if self.data.get("orders") is None:
-            self.data["orders"] = [] 
+            # If the file doesn't exist or is empty, initialize with "orders:"
+            self.data = {"orders": []}
+            with open(self.yaml_path, 'w') as file:
+                yaml.dump(self.data, file)
 
     def save_data(self):
         with open(self.yaml_path, 'w') as file:

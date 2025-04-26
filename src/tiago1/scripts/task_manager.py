@@ -46,7 +46,7 @@ class TaskManager:
 if __name__ == "__main__":
     try:
         task_manager = TaskManager()
-        rate = rospy.Rate(10)
+        rate = rospy.Rate()
         while not rospy.is_shutdown():
             task_manager.change_state()
             rate.sleep()
