@@ -1,7 +1,9 @@
 string state_input 
 ---
 string state_output
+int32 id_client
 string[] order
 bool success
+
 
 

@@ -5,6 +5,7 @@ from geometry_msgs.msg import Twist
 from nav_msgs.msg import Path, OccupancyGrid, Odometry
 from geometry_msgs.msg import PoseStamped
 from tiago1.msg import MovementControlAction, MovementControlFeedback, MovementControlResult
+import time
 
 class ControlMovementServer:
     def __init__(self):
@@ -36,9 +37,13 @@ class ControlMovementServer:
         cmd.linear.y = path.path.poses[0].pose.position.x * 0.01
         self.cmd_pub.publish(cmd)
 
+       
+        
+
         feedback.status = f"Moving to point {1}/{len(path.path.poses)}"
         self.server.publish_feedback(feedback)
         rospy.sleep(2)  # time to reach each point
+        time.sleep(3)
 
         result.success = True
         self.server.set_succeeded(result)

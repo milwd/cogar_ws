@@ -123,21 +123,31 @@ class orchestration_and_coordination():
         self.service = rospy.Service("/robot_state_decision", robotstatedecision, self.handle_request)
         self.service_order = rospy.Service("/robot_state_decision_add", send_order, self.handle_request_new_order)
         
-        self.data = {"orders": []}
+        self.data = {
+            "orders": []  # list of orders
+        }
         self.load_data()
 
     def load_data(self):
         if os.path.exists(self.yaml_path):
             with open(self.yaml_path, 'r') as file:
-                self.data = yaml.safe_load(file) or {"orders": []}
+                self.data = yaml.safe_load(file)
+        else:
+            self.data = self.data
+        # If orders is None (because in YAML it's just 'orders:'), fix it
+        if self.data.get("orders") is None:
+            self.data["orders"] = [] 
 
     def save_data(self):
         with open(self.yaml_path, 'w') as file:
             yaml.dump(self.data, file)
 
     def obtain_order(self):
+        print("gettning order")
         self.load_data()
-        if "orders" in self.data and self.data["orders"]:
+        print(self.data)
+        if  self.data["orders"]:
+            
             first_order = self.data["orders"].pop(0)
             self.save_data()
             rospy.loginfo(f"Popped order: {first_order}")
@@ -148,13 +158,15 @@ class orchestration_and_coordination():
 
     def handle_request(self, req):
         order = self.obtain_order()
+        rospy.loginfo(f"Popped order: {order}")
         if order is None:
-            return robotstatedecisionResponse(state_output="Wait", order=[], success=False)
+            return robotstatedecisionResponse(state_output="Wait",id_client =None, order=[], success=False)
         
         if req.state_input in ["Free", "Wait"]:
-            return robotstatedecisionResponse(state_output="Busy", order=order["food_list"], success=True)
-        else:
-            return robotstatedecisionResponse(state_output=req.state_input, order=[], success=False)
+            return robotstatedecisionResponse(state_output="Busy",id_client =order["id_client"],  order=order["food_list"], success=True)
+        elif req.state_input in ["Busy"]:
+            return robotstatedecisionResponse(state_output="Busy",id_client =None, order=[], success=True)
+      
 
     def handle_request_new_order(self, req):
         new_order = {
@@ -162,10 +174,15 @@ class orchestration_and_coordination():
             "food_list": list(req.order.list_of_orders)  # assume order is a list of strings
         }
         self.load_data()
+        # rospy.loginfo(f"Received new order: {new_order}")
+        # rospy.loginfo(f"Received new order: {self.data}")
+        # rospy.loginfo(f"Received new order: {self.data}")
+
         self.data["orders"].append(new_order)
         self.save_data()
-        rospy.loginfo(f"Added new order: {new_order}")
-        return send_orderResponse(message ="order added")
+
+        rospy.loginfo(f"Added new order to YAML: {new_order}")
+        return send_orderResponse(message="Order successfully added")
 
 if __name__ == "__main__":
     try:

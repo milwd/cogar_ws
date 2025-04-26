@@ -197,7 +197,8 @@ catkin_install_python(PROGRAMS
   scripts/control_gripper.py
   
   scripts/reasoning_action.py
-  scripts/reasoning_order_verif.py
+  scripts/reasoning_order_verification.py
+  scripts/topic_adapter.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

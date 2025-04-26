@@ -25,11 +25,13 @@ struct robotstatedecisionResponse_
 
   robotstatedecisionResponse_()
     : state_output()
+    , id_client(0)
     , order()
     , success(false)  {
     }
   robotstatedecisionResponse_(const ContainerAllocator& _alloc)
     : state_output(_alloc)
+    , id_client(0)
     , order(_alloc)
     , success(false)  {
   (void)_alloc;
@@ -39,6 +41,9 @@ struct robotstatedecisionResponse_
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _state_output_type;
   _state_output_type state_output;
+
+   typedef int32_t _id_client_type;
+  _id_client_type id_client;
 
    typedef std::vector<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > , typename ContainerAllocator::template rebind<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::other >  _order_type;
   _order_type order;
@@ -76,6 +81,7 @@ template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::tiago1::robotstatedecisionResponse_<ContainerAllocator1> & lhs, const ::tiago1::robotstatedecisionResponse_<ContainerAllocator2> & rhs)
 {
   return lhs.state_output == rhs.state_output &&
+    lhs.id_client == rhs.id_client &&
     lhs.order == rhs.order &&
     lhs.success == rhs.success;
 }
@@ -134,12 +140,12 @@ struct MD5Sum< ::tiago1::robotstatedecisionResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "c81b3a5eeba79e683979489f11c6ecfa";
+    return "52bb16fdddb35bef99f76c3abb84b931";
   }
 
   static const char* value(const ::tiago1::robotstatedecisionResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xc81b3a5eeba79e68ULL;
-  static const uint64_t static_value2 = 0x3979489f11c6ecfaULL;
+  static const uint64_t static_value1 = 0x52bb16fdddb35befULL;
+  static const uint64_t static_value2 = 0x99f76c3abb84b931ULL;
 };
 
 template<class ContainerAllocator>
@@ -159,8 +165,10 @@ struct Definition< ::tiago1::robotstatedecisionResponse_<ContainerAllocator> >
   static const char* value()
   {
     return "string state_output\n"
+"int32 id_client\n"
 "string[] order\n"
 "bool success\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -183,6 +191,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.state_output);
+      stream.next(m.id_client);
       stream.next(m.order);
       stream.next(m.success);
     }
@@ -205,6 +214,8 @@ struct Printer< ::tiago1::robotstatedecisionResponse_<ContainerAllocator> >
   {
     s << indent << "state_output: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.state_output);
+    s << indent << "id_client: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.id_client);
     s << indent << "order[]" << std::endl;
     for (size_t i = 0; i < v.order.size(); ++i)
     {

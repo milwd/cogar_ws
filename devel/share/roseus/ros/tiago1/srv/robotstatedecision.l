@@ -57,23 +57,28 @@
 
 (defclass tiago1::robotstatedecisionResponse
   :super ros::object
-  :slots (_state_output _order _success ))
+  :slots (_state_output _id_client _order _success ))
 
 (defmethod tiago1::robotstatedecisionResponse
   (:init
    (&key
     ((:state_output __state_output) "")
+    ((:id_client __id_client) 0)
     ((:order __order) (let (r) (dotimes (i 0) (push "" r)) r))
     ((:success __success) nil)
     )
    (send-super :init)
    (setq _state_output (string __state_output))
+   (setq _id_client (round __id_client))
    (setq _order __order)
    (setq _success __success)
    self)
   (:state_output
    (&optional __state_output)
    (if __state_output (setq _state_output __state_output)) _state_output)
+  (:id_client
+   (&optional __id_client)
+   (if __id_client (setq _id_client __id_client)) _id_client)
   (:order
    (&optional __order)
    (if __order (setq _order __order)) _order)
@@ -85,6 +90,8 @@
    (+
     ;; string _state_output
     4 (length _state_output)
+    ;; int32 _id_client
+    4
     ;; string[] _order
     (apply #'+ (mapcar #'(lambda (x) (+ 4 (length x))) _order)) 4
     ;; bool _success
@@ -96,6 +103,8 @@
               (make-string-output-stream (send self :serialization-length)))))
      ;; string _state_output
        (write-long (length _state_output) s) (princ _state_output s)
+     ;; int32 _id_client
+       (write-long _id_client s)
      ;; string[] _order
      (write-long (length _order) s)
      (dolist (elem _order)
@@ -109,6 +118,8 @@
    (buf &optional (ptr- 0))
    ;; string _state_output
      (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _state_output (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
+   ;; int32 _id_client
+     (setq _id_client (sys::peek buf ptr- :integer)) (incf ptr- 4)
    ;; string[] _order
    (let (n)
      (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4)
@@ -126,7 +137,7 @@
   :super ros::object
   :slots ())
 
-(setf (get tiago1::robotstatedecision :md5sum-) "26c301d5da14bdddfe3b9fdfb6c1eca2")
+(setf (get tiago1::robotstatedecision :md5sum-) "0ab1128539f620d6fb5a0f6e99d11fa7")
 (setf (get tiago1::robotstatedecision :datatype-) "tiago1/robotstatedecision")
 (setf (get tiago1::robotstatedecision :request) tiago1::robotstatedecisionRequest)
 (setf (get tiago1::robotstatedecision :response) tiago1::robotstatedecisionResponse)
@@ -134,27 +145,31 @@
 (defmethod tiago1::robotstatedecisionRequest
   (:response () (instance tiago1::robotstatedecisionResponse :init)))
 
-(setf (get tiago1::robotstatedecisionRequest :md5sum-) "26c301d5da14bdddfe3b9fdfb6c1eca2")
+(setf (get tiago1::robotstatedecisionRequest :md5sum-) "0ab1128539f620d6fb5a0f6e99d11fa7")
 (setf (get tiago1::robotstatedecisionRequest :datatype-) "tiago1/robotstatedecisionRequest")
 (setf (get tiago1::robotstatedecisionRequest :definition-)
       "string state_input 
 ---
 string state_output
+int32 id_client
 string[] order
 bool success
 
 
 
+
 ")
 
-(setf (get tiago1::robotstatedecisionResponse :md5sum-) "26c301d5da14bdddfe3b9fdfb6c1eca2")
+(setf (get tiago1::robotstatedecisionResponse :md5sum-) "0ab1128539f620d6fb5a0f6e99d11fa7")
 (setf (get tiago1::robotstatedecisionResponse :datatype-) "tiago1/robotstatedecisionResponse")
 (setf (get tiago1::robotstatedecisionResponse :definition-)
       "string state_input 
 ---
 string state_output
+int32 id_client
 string[] order
 bool success
+
 
 
 
@@ -162,6 +177,6 @@ bool success
 
 
 
-(provide :tiago1/robotstatedecision "26c301d5da14bdddfe3b9fdfb6c1eca2")
+(provide :tiago1/robotstatedecision "0ab1128539f620d6fb5a0f6e99d11fa7")
 
 
