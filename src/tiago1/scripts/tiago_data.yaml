@@ -56,3 +56,10 @@ orders:
 - food_list:
   - steak
   id_client: 26
+- food_list:
+  - pasta
+  id_client: 0
+- food_list:
+  - riso
+  - shit
+  id_client: 1
