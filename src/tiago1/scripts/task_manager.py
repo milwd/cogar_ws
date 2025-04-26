@@ -13,8 +13,10 @@ class TaskManager:
         rospy.Subscriber("/feedback_acion",String,self.feed_callback_state)
         self.dialogue_pub = rospy.Publisher("/speaker_channel", String, queue_size=0)
         self.state = None
+        print("heyyyyyy")
 
     def feed_callback_state(self,msg):
+        rospy.loginfo(f"Response from server: {msg}")
         self.state=msg
         
     def change_state(self):

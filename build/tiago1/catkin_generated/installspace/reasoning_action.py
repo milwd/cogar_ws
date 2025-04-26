@@ -55,15 +55,15 @@ class ReasoningAction:
         self.perform_table_command(decision)
 
     def loop(self):
-        rate = rospy.Rate(1)
+        rate = rospy.Rate(0.3)
         while not rospy.is_shutdown():
             if self.path_received:
+                self.task_feedback_pub.publish("Busy")
                 rospy.loginfo("[ReasoningAction] Received planned path, sending to ControlMovement.")
                 move_goal = MovementControlGoal(path=self.path_msg)
                 self.movement_client.send_goal(move_goal)
                 self.movement_client.wait_for_result()
                 move_result = self.movement_client.get_result()
-                self.task_feedback_pub.publish("Busy")
                 if move_result.success:
                     rospy.loginfo("[ReasoningAction] Movement succeeded. Sending commands to arm and gripper.")
                     arm_goal = ArmControlGoal(degree=3)

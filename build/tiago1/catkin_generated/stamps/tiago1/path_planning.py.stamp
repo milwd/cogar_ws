@@ -12,7 +12,7 @@ class PathPlanner:
         self.odom = None
 
         rospy.Subscriber('/map', OccupancyGrid, self.map_callback)
-        rospy.Subscriber('/odom', Odometry, self.odom_callback)
+        rospy.Subscriber('/odom_slam', Odometry, self.odom_callback)
 
         self.path_pub = rospy.Publisher('/planned_path', Path, queue_size=1)
 

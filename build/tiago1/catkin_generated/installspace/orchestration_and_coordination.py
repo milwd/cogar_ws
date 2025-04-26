@@ -163,15 +163,15 @@ class orchestration_and_coordination():
             return robotstatedecisionResponse(state_output="Wait",id_client =None, order=[], success=False)
         
         if req.state_input in ["Free", "Wait"]:
-            return robotstatedecisionResponse(state_output="Busy",id_client =order["id_client"],  order=order["food_list"], success=True)
+            return robotstatedecisionResponse(state_output="Busy", id_client = order["id_client"], order=order["food_list"], success=True)
         elif req.state_input in ["Busy"]:
-            return robotstatedecisionResponse(state_output="Busy",id_client =None, order=[], success=True)
+            return robotstatedecisionResponse(state_output="Busy", id_client = None, order=[], success=True)
       
 
     def handle_request_new_order(self, req):
         new_order = {
             "id_client": req.order.id_client,
-            "food_list": list(req.order.list_of_orders)  # assume order is a list of strings
+            "food_list": list(req.order.list_of_orders)  
         }
         self.load_data()
         # rospy.loginfo(f"Received new order: {new_order}")

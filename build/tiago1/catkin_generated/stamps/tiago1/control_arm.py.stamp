@@ -55,7 +55,9 @@ class ControlArmServer:
             cmd.angular.z = 0.01 * error
             self.cmd_pub.publish(cmd)
 
-            feedback.status = f"Moving to angle {target}, current: {self.encoder_val}"
+            feedback.positions = [0.1]*7
+            feedback.velocities = [0.1]*7
+            feedback.efforts = [0.1]*7
             self.server.publish_feedback(feedback)
 
             rate.sleep()

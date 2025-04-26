@@ -7,8 +7,12 @@ class SLAM:
     def __init__(self):
         rospy.init_node('slam_node')
         rospy.Subscriber('/fused_scan', LaserScan, self.callback)
+        rospy.Subscriber('/odom_proc', Odometry, self.callback_odom)
         self.map_pub = rospy.Publisher('/map', OccupancyGrid, queue_size=1)
-        self.odom_pub = rospy.Publisher('/odom', Odometry, queue_size=1)
+        self.odom_pub = rospy.Publisher('/odom_slam', Odometry, queue_size=1)
+
+    def callback_odom(self, data):
+        self.odom_pub.publish(data)
 
     def callback(self, data):
         map_msg = OccupancyGrid()
@@ -51,7 +55,6 @@ class SLAM:
         # odom_msg.pose.pose.orientation.z = self.update_orientation(data)
 
         self.map_pub.publish(map_msg)
-        self.odom_pub.publish(odom_msg)
 
 if __name__ == '__main__':
     slam = SLAM()
