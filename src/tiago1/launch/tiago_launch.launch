@@ -1,4 +1,15 @@
 <launch>
+  <node pkg="tiago1" type="play" name="my_rosbag_player" args="--start=0 /path/to/your/arm_jointstate.bag" />
+  <node pkg="tiago1" type="play" name="my_rosbag_player" args="--start=0 /path/to/your/depth_raw.bag" />
+  <node pkg="tiago1" type="play" name="my_rosbag_player" args="--start=0 /path/to/your/force_sensor.bag" />
+  <node pkg="tiago1" type="play" name="my_rosbag_player" args="--start=0 /path/to/your/odometry.bag" />
+  <node pkg="tiago1" type="play" name="my_rosbag_player" args="--start=0 /path/to/your/rgb_raw.bag" />
+  <node pkg="tiago1" type="play" name="my_rosbag_player" args="--start=0 /path/to/your/scan_lidar.bag" />
+  <node pkg="tiago1" type="play" name="my_rosbag_player" args="--start=0 /path/to/your/sonar.bag" />
+  
+
+
+
   <node pkg="tiago1" type="sonar.py" name="sonar_node"/>
   <node pkg="tiago1" type="lidar.py" name="lidar_node"/>
   <node pkg="tiago1" type="camera.py" name="camera_node"/>

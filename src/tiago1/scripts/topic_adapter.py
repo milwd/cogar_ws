@@ -49,7 +49,7 @@ def listener():
     rospy.Subscriber('/arm_right_controller/state', JointTrajectoryControllerState, arm_jointstate_callback)
     rospy.Subscriber('/xtion/depth/image_raw', Image, depth_raw_callback)
     rospy.Subscriber('/wrist_right_ft', WrenchStamped, force_sensor_callback)
-    # rospy.Subscriber('/mobile_base_controller/odom', Odometry, odometry_callback)
+    rospy.Subscriber('/mobile_base_controller/odom', Odometry, odometry_callback)
     rospy.Subscriber('/xtion/rgb/image_raw', Image, rgb_raw_callback)
     rospy.Subscriber('/scan', LaserScan, scan_lidar_callback)
     rospy.Subscriber('/sonar_base', Range, sonar_callback)
