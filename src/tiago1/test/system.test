@@ -1,0 +1,43 @@
+<launch>
+  <!--  =====================   SENSOR & PERCEPTION  ===================== -->
+  <node pkg="tiago1" type="camera.py"                   name="camera"                    output="screen"/>
+  <node pkg="tiago1" type="camera_preprocessing.py"     name="camera_preproc"            output="screen"/>
+  <node pkg="tiago1" type="lidar.py"                    name="lidar"                     output="screen"/>
+  <node pkg="tiago1" type="sonar.py"                    name="sonar"                     output="screen"/>
+  <node pkg="tiago1" type="object_detection.py"         name="object_detection"          output="screen"/>
+  <node pkg="tiago1" type="distance_estimation.py"      name="distance_estimation"       output="screen"/>
+  <node pkg="tiago1" type="sensor_fusion.py"            name="sensor_fusion"             output="screen"/>
+
+  <!--  =====================      LOCALISATION & NAV   ===================== -->
+  <node pkg="tiago1" type="slam.py"                     name="slam"                      output="screen"/>
+  <node pkg="tiago1" type="path_planning.py"            name="path_planning"             output="screen"/>
+
+  <!--  =====================           REASONING         ===================== -->
+  <node pkg="tiago1" type="reasoning_action.py"             name="reasoning_action"          output="screen"/>
+  <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification" output="screen"/>
+  <node pkg="tiago1" type="reasoning_speech_generation.py"  name="reasoning_speech_generation" output="screen"/>
+  <node pkg="tiago1" type="reasoning_table_placement.py"    name="reasoning_table_placement"   output="screen"/>
+
+  <!--  =====================          EXECUTION          ===================== -->
+  <node pkg="tiago1" type="control_arm.py"              name="control_arm"               output="screen"/>
+  <node pkg="tiago1" type="control_gripper.py"          name="control_gripper"           output="screen"/>
+  <node pkg="tiago1" type="control_wheel.py"            name="control_wheel"             output="screen"/>
+  <node pkg="tiago1" type="encoder_arm.py"              name="encoder_arm"               output="screen"/>
+  <node pkg="tiago1" type="encoder_gripper.py"          name="encoder_gripper"           output="screen"/>
+  <node pkg="tiago1" type="encoder_wheel.py"            name="encoder_wheel"             output="screen"/>
+  <node pkg="tiago1" type="force.py"                    name="force"                     output="screen"/>
+
+  <!--  =====================      HUMAN–ROBOT I/O       ===================== -->
+  <node pkg="tiago1" type="microphone.py"               name="microphone"                output="screen"/>
+  <node pkg="tiago1" type="voice_recognition.py"        name="voice_recognition"         output="screen"/>
+  <node pkg="tiago1" type="speaker.py"                  name="speaker"                   output="screen"/>
+
+  <!--  =====================     STATIC CONFIG / PARAMS ===================== -->
+  <rosparam command="load" file="$(find tiago1)/tiago_data.yaml"/>
+
+  <!--  =====================       PYTHON ASSERTIONS     ===================== -->
+  <test test-name="pipeline_smoke"
+        pkg="tiago1"
+        type="flow_test.py"
+        time-limit="60" />
+</launch>
