@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+CMAKE_BINARY_DIR = /root/cogar_ws/build
 
 # Utility rule file for tests.
 
@@ -67,6 +67,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src /root/cogar_ws/build /root/cogar_ws/build /root/cogar_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 

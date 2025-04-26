@@ -33,10 +33,10 @@ class TaskManager:
                 response = self.server_client(request)  
                 rospy.loginfo(f"Response from server: {response.success}")
                 
-                if response.output_state == "Busy":
+                if response.state_output == "Busy":
                     mss = String(f"Order obtained, I will get to {response.id_client}, whose order is {response.order} ")
                     self.dialogue_pub.publish(mss)
-                elif response.output_state == "Wait":
+                elif response.state_output == "Wait":
                     mss = String(f"Wait, I've got better things to do")
                     self.dialogue_pub.publish(mss)
                 
@@ -46,7 +46,7 @@ class TaskManager:
 if __name__ == "__main__":
     try:
         task_manager = TaskManager()
-        rate = rospy.Rate(10)
+        rate = rospy.Rate()
         while not rospy.is_shutdown():
             task_manager.change_state()
             rate.sleep()

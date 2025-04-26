@@ -44,10 +44,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
+CMAKE_BINARY_DIR = /root/cogar_ws/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -231,14 +231,14 @@ tiago1/clean: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperCont
 CMakeFiles/doxygen.dir/all:
 	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/depend
 	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target doxygen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target doxygen"
 .PHONY : CMakeFiles/doxygen.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/doxygen.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/doxygen.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : CMakeFiles/doxygen.dir/rule
 
 # Convenience name for target.
@@ -258,14 +258,14 @@ CMakeFiles/doxygen.dir/clean:
 CMakeFiles/run_tests.dir/all:
 	$(MAKE) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/depend
 	$(MAKE) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target run_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target run_tests"
 .PHONY : CMakeFiles/run_tests.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/run_tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/run_tests.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : CMakeFiles/run_tests.dir/rule
 
 # Convenience name for target.
@@ -285,14 +285,14 @@ CMakeFiles/run_tests.dir/clean:
 CMakeFiles/clean_test_results.dir/all:
 	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/depend
 	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target clean_test_results"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target clean_test_results"
 .PHONY : CMakeFiles/clean_test_results.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/clean_test_results.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/clean_test_results.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : CMakeFiles/clean_test_results.dir/rule
 
 # Convenience name for target.
@@ -312,14 +312,14 @@ CMakeFiles/clean_test_results.dir/clean:
 CMakeFiles/tests.dir/all:
 	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/depend
 	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target tests"
 .PHONY : CMakeFiles/tests.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/tests.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : CMakeFiles/tests.dir/rule
 
 # Convenience name for target.
@@ -339,14 +339,14 @@ CMakeFiles/tests.dir/clean:
 CMakeFiles/download_extra_data.dir/all:
 	$(MAKE) -f CMakeFiles/download_extra_data.dir/build.make CMakeFiles/download_extra_data.dir/depend
 	$(MAKE) -f CMakeFiles/download_extra_data.dir/build.make CMakeFiles/download_extra_data.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target download_extra_data"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target download_extra_data"
 .PHONY : CMakeFiles/download_extra_data.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/download_extra_data.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/download_extra_data.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : CMakeFiles/download_extra_data.dir/rule
 
 # Convenience name for target.
@@ -367,14 +367,14 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googlemock/CMakeFiles/gmoc
 gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=2,3 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=2,3 "Built target gmock_main"
 .PHONY : gtest/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
 gtest/googlemock/CMakeFiles/gmock_main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/CMakeFiles/gmock_main.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : gtest/googlemock/CMakeFiles/gmock_main.dir/rule
 
 # Convenience name for target.
@@ -394,14 +394,14 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/clean:
 gtest/googlemock/CMakeFiles/gmock.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=1 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=1 "Built target gmock"
 .PHONY : gtest/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
 gtest/googlemock/CMakeFiles/gmock.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 gtest/googlemock/CMakeFiles/gmock.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : gtest/googlemock/CMakeFiles/gmock.dir/rule
 
 # Convenience name for target.
@@ -421,14 +421,14 @@ gtest/googlemock/CMakeFiles/gmock.dir/clean:
 gtest/googletest/CMakeFiles/gtest_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=5,6 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=5,6 "Built target gtest_main"
 .PHONY : gtest/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
 gtest/googletest/CMakeFiles/gtest_main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 gtest/googletest/CMakeFiles/gtest_main.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : gtest/googletest/CMakeFiles/gtest_main.dir/rule
 
 # Convenience name for target.
@@ -448,14 +448,14 @@ gtest/googletest/CMakeFiles/gtest_main.dir/clean:
 gtest/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=4 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=4 "Built target gtest"
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
 gtest/googletest/CMakeFiles/gtest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 gtest/googletest/CMakeFiles/gtest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/rule
 
 # Convenience name for target.
@@ -475,14 +475,14 @@ gtest/googletest/CMakeFiles/gtest.dir/clean:
 tiago1/CMakeFiles/tiago1_genpy.dir/all: tiago1/CMakeFiles/tiago1_generate_messages_py.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_genpy.dir/build.make tiago1/CMakeFiles/tiago1_genpy.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_genpy.dir/build.make tiago1/CMakeFiles/tiago1_genpy.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_genpy"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_genpy"
 .PHONY : tiago1/CMakeFiles/tiago1_genpy.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_genpy.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 20
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 20
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_genpy.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_genpy.dir/rule
 
 # Convenience name for target.
@@ -502,14 +502,14 @@ tiago1/CMakeFiles/tiago1_genpy.dir/clean:
 tiago1/CMakeFiles/tiago1_gennodejs.dir/all: tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_gennodejs.dir/build.make tiago1/CMakeFiles/tiago1_gennodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_gennodejs.dir/build.make tiago1/CMakeFiles/tiago1_gennodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_gennodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_gennodejs"
 .PHONY : tiago1/CMakeFiles/tiago1_gennodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_gennodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 19
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_gennodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_gennodejs.dir/rule
 
 # Convenience name for target.
@@ -529,14 +529,14 @@ tiago1/CMakeFiles/tiago1_gennodejs.dir/clean:
 tiago1/CMakeFiles/tiago1_genlisp.dir/all: tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_genlisp.dir/build.make tiago1/CMakeFiles/tiago1_genlisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_genlisp.dir/build.make tiago1/CMakeFiles/tiago1_genlisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_genlisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_genlisp"
 .PHONY : tiago1/CMakeFiles/tiago1_genlisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 18
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_genlisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_genlisp.dir/rule
 
 # Convenience name for target.
@@ -582,14 +582,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/all: tiago1/CMakeFiles/_tiag
 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/all: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61 "Built target tiago1_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61 "Built target tiago1_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 18
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -609,14 +609,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/tiago1_geneus.dir/all: tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_geneus.dir/build.make tiago1/CMakeFiles/tiago1_geneus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_geneus.dir/build.make tiago1/CMakeFiles/tiago1_geneus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_geneus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_geneus"
 .PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 19
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_geneus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_geneus.dir/rule
 
 # Convenience name for target.
@@ -662,14 +662,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/all: tiago1/CMakeFiles/_tiago
 tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/all: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 "Built target tiago1_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 "Built target tiago1_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 18
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -689,14 +689,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_robotstatedecision"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_robotstatedecision"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/rule
 
 # Convenience name for target.
@@ -716,14 +716,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_robotstatedecision.dir/cl
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_send_order"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_send_order"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/rule
 
 # Convenience name for target.
@@ -743,14 +743,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_send_order.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlResult"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlResult"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/rule
 
 # Convenience name for target.
@@ -770,14 +770,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlResult.dir/
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlGoal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlGoal"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/rule
 
 # Convenience name for target.
@@ -797,14 +797,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlGoal.dir/cl
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlActionFeedback"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlActionFeedback"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedback.dir/rule
 
 # Convenience name for target.
@@ -824,14 +824,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionFeedb
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -851,14 +851,14 @@ tiago1/CMakeFiles/actionlib_msgs_generate_messages_py.dir/clean:
 tiago1/CMakeFiles/tiago1_gencpp.dir/all: tiago1/CMakeFiles/tiago1_generate_messages_cpp.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_gencpp.dir/build.make tiago1/CMakeFiles/tiago1_gencpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_gencpp.dir/build.make tiago1/CMakeFiles/tiago1_gencpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_gencpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_gencpp"
 .PHONY : tiago1/CMakeFiles/tiago1_gencpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_gencpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 18
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_gencpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_gencpp.dir/rule
 
 # Convenience name for target.
@@ -878,14 +878,14 @@ tiago1/CMakeFiles/tiago1_gencpp.dir/clean:
 tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -905,14 +905,14 @@ tiago1/CMakeFiles/actionlib_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -932,14 +932,14 @@ tiago1/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -959,14 +959,14 @@ tiago1/CMakeFiles/nav_msgs_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/roscpp_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_py.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_py.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -986,14 +986,14 @@ tiago1/CMakeFiles/roscpp_generate_messages_py.dir/clean:
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -1013,14 +1013,14 @@ tiago1/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlGoal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlGoal"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/rule
 
 # Convenience name for target.
@@ -1040,14 +1040,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlGoal.dir/c
 tiago1/CMakeFiles/actionlib_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_py.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_py.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -1093,14 +1093,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_py.dir/all: tiago1/CMakeFiles/_tiago1
 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/all: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100 "Built target tiago1_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100 "Built target tiago1_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 20
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 20
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -1146,14 +1146,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/all: tiago1/CMakeFiles/_tiago
 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/all: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43 "Built target tiago1_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43 "Built target tiago1_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 19
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -1173,14 +1173,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -1200,14 +1200,14 @@ tiago1/CMakeFiles/nav_msgs_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlFeedback"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlFeedback"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.dir/rule
 
 # Convenience name for target.
@@ -1227,14 +1227,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlFeedback.d
 tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -1254,14 +1254,14 @@ tiago1/CMakeFiles/geometry_msgs_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -1281,14 +1281,14 @@ tiago1/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlFeedback"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlFeedback"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.dir/rule
 
 # Convenience name for target.
@@ -1308,14 +1308,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlFeedback.di
 tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -1335,14 +1335,14 @@ tiago1/CMakeFiles/roscpp_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -1362,14 +1362,14 @@ tiago1/CMakeFiles/actionlib_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -1389,14 +1389,14 @@ tiago1/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -1416,14 +1416,14 @@ tiago1/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -1443,14 +1443,14 @@ tiago1/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -1470,14 +1470,14 @@ tiago1/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -1497,14 +1497,14 @@ tiago1/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -1524,14 +1524,14 @@ tiago1/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -1551,14 +1551,14 @@ tiago1/CMakeFiles/std_msgs_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlResult"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlResult"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir/rule
 
 # Convenience name for target.
@@ -1578,14 +1578,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlResult.dir
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -1605,14 +1605,14 @@ tiago1/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -1632,14 +1632,14 @@ tiago1/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -1659,14 +1659,14 @@ tiago1/CMakeFiles/actionlib_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -1686,14 +1686,14 @@ tiago1/CMakeFiles/nav_msgs_generate_messages_py.dir/clean:
 tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -1713,14 +1713,14 @@ tiago1/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean:
 tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -1766,14 +1766,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/all: tiago1/CMakeFiles/_ti
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/all: tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80 "Built target tiago1_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80 "Built target tiago1_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 19
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -1793,14 +1793,14 @@ tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlAction"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlAction"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/rule
 
 # Convenience name for target.
@@ -1820,14 +1820,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlAction.dir/
 tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -1847,14 +1847,14 @@ tiago1/CMakeFiles/std_msgs_generate_messages_py.dir/clean:
 tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -1874,14 +1874,14 @@ tiago1/CMakeFiles/roscpp_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlActionFeedback"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlActionFeedback"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.dir/rule
 
 # Convenience name for target.
@@ -1901,14 +1901,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionFeedback.
 tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -1928,14 +1928,14 @@ tiago1/CMakeFiles/nav_msgs_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -1955,14 +1955,14 @@ tiago1/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean:
 tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target nav_msgs_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -1982,14 +1982,14 @@ tiago1/CMakeFiles/nav_msgs_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_cpp"
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -2009,14 +2009,14 @@ tiago1/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean:
 tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -2036,14 +2036,14 @@ tiago1/CMakeFiles/sensor_msgs_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_lisp"
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -2063,14 +2063,14 @@ tiago1/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlActionFeedback"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlActionFeedback"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeedback.dir/rule
 
 # Convenience name for target.
@@ -2090,14 +2090,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionFeed
 tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target sensor_msgs_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -2117,14 +2117,14 @@ tiago1/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlGoal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlGoal"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/rule
 
 # Convenience name for target.
@@ -2144,14 +2144,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlGoal.dir/clean:
 tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -2171,14 +2171,14 @@ tiago1/CMakeFiles/actionlib_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target rosgraph_msgs_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -2202,14 +2202,14 @@ tiago1/CMakeFiles/tiago1_generate_messages.dir/all: tiago1/CMakeFiles/tiago1_gen
 tiago1/CMakeFiles/tiago1_generate_messages.dir/all: tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/all
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/tiago1_generate_messages.dir/build.make tiago1/CMakeFiles/tiago1_generate_messages.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_generate_messages"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target tiago1_generate_messages"
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/tiago1_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 94
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 94
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/tiago1_generate_messages.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages.dir/rule
 
 # Convenience name for target.
@@ -2229,14 +2229,14 @@ tiago1/CMakeFiles/tiago1_generate_messages.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlActionResult"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlActionResult"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResult.dir/rule
 
 # Convenience name for target.
@@ -2256,14 +2256,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionResul
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build.make tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target actionlib_msgs_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -2283,14 +2283,14 @@ tiago1/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlAction"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlAction"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir/rule
 
 # Convenience name for target.
@@ -2310,14 +2310,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlAction.dir
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlActionGoal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlActionGoal"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal.dir/rule
 
 # Convenience name for target.
@@ -2337,14 +2337,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionGoal
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlActionResult"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_MovementControlActionResult"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResult.dir/rule
 
 # Convenience name for target.
@@ -2364,14 +2364,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_MovementControlActionResu
 tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_eus"
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -2391,14 +2391,14 @@ tiago1/CMakeFiles/roscpp_generate_messages_eus.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_Voice_rec"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_Voice_rec"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/rule
 
 # Convenience name for target.
@@ -2418,14 +2418,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_Voice_rec.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlAction"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlAction"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/rule
 
 # Convenience name for target.
@@ -2445,14 +2445,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlAction.dir/clea
 tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target roscpp_generate_messages_nodejs"
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -2472,14 +2472,14 @@ tiago1/CMakeFiles/roscpp_generate_messages_nodejs.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlFeedback"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlFeedback"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/rule
 
 # Convenience name for target.
@@ -2499,14 +2499,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlFeedback.dir/cl
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlActionGoal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlActionGoal"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/rule
 
 # Convenience name for target.
@@ -2526,14 +2526,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionGoal.dir/
 tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target geometry_msgs_generate_messages_py"
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -2553,14 +2553,14 @@ tiago1/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean:
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlActionResult"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlActionResult"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.dir/rule
 
 # Convenience name for target.
@@ -2580,14 +2580,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlActionResult.di
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlResult"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_ArmControlResult"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/rule
 
 # Convenience name for target.
@@ -2607,14 +2607,14 @@ tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_ArmControlResult.dir/clea
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all:
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/depend
 	$(MAKE) -f tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/build.make tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlActionGoal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num= "Built target _tiago1_generate_messages_check_deps_GripperControlActionGoal"
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all
 
 # Build rule for subdir invocation for target.
 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/cogar_ws/build/CMakeFiles 0
 .PHONY : tiago1/CMakeFiles/_tiago1_generate_messages_check_deps_GripperControlActionGoal.dir/rule
 
 # Convenience name for target.

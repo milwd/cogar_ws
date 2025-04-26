@@ -7,7 +7,7 @@
 
   <node pkg="tiago1" type="voice_recognition.py" name="voice_recognition_node"/>
 
-  <!-- <node pkg="tiago1" type="task_manager.py" name="task_manager_node"/> -->
+  <node pkg="tiago1" type="task_manager.py" name="task_manager_node"/>
   <node pkg="tiago1" type="orchestration_and_coordination.py" name="orchestration_and_coordination_node"/>
 
   <node pkg="tiago1" type="sensor_fusion.py" name="sensor_fusion_node"/>

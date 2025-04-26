@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /root/Desktop/cogar_ass1/cogar_ws/install/setup.sh
+    local-name: /root/cogar_ws/install/setup.sh

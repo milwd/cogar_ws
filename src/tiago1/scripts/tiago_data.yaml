@@ -1,0 +1,58 @@
+orders:
+- food_list:
+  - steak
+  id_client: 10
+- food_list:
+  - steak
+  id_client: 11
+- food_list:
+  - riso
+  - shit
+  id_client: 12
+- food_list:
+  - hamburger
+  id_client: 13
+- food_list:
+  - hamburger
+  id_client: 14
+- food_list:
+  - pasta
+  - sushi
+  id_client: 15
+- food_list:
+  - riso
+  - shit
+  id_client: 16
+- food_list:
+  - pasta
+  - sushi
+  id_client: 17
+- food_list:
+  - pasta
+  id_client: 18
+- food_list:
+  - riso
+  - shit
+  id_client: 19
+- food_list:
+  - steak
+  id_client: 20
+- food_list:
+  - pasta
+  id_client: 21
+- food_list:
+  - steak
+  id_client: 22
+- food_list:
+  - steak
+  id_client: 23
+- food_list:
+  - steak
+  id_client: 24
+- food_list:
+  - pasta
+  - sushi
+  id_client: 25
+- food_list:
+  - steak
+  id_client: 26
