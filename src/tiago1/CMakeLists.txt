@@ -19,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib
   actionlib_msgs
   message_generation
+  
 )
 
 ## System dependencies are found with CMake's conventions
@@ -114,7 +115,7 @@ generate_messages(DEPENDENCIES std_msgs actionlib_msgs nav_msgs)
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES tiago1
- CATKIN_DEPENDS geometry_msgs message_runtime nav_msgs roscpp rospy rostest sensor_msgs std_msgs std_msgs
+ CATKIN_DEPENDS  geometry_msgs message_runtime nav_msgs roscpp rospy rostest sensor_msgs std_msgs 
  DEPENDS system_lib
 )
 
@@ -198,6 +199,7 @@ catkin_install_python(PROGRAMS
   
   scripts/reasoning_action.py
   scripts/reasoning_order_verification.py
+  scripts/topic_adapter.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

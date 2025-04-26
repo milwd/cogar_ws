@@ -17,7 +17,7 @@ class ReasoningAction:
 
         rospy.Subscriber('/planned_path', Path, self.path_callback)
         rospy.Subscriber("/table_reasoning_commands", String, self.table_command_callback)
-        self.task_feedback_pub = rospy.Publisher('task_feedback', String, queue_size=1)
+        self.task_feedback_pub = rospy.Publisher('feedback_acion', String, queue_size=1)
 
         self.movement_client = actionlib.SimpleActionClient('movement_control', MovementControlAction)
         self.arm_client = actionlib.SimpleActionClient('arm_control', ArmControlAction)
@@ -55,15 +55,15 @@ class ReasoningAction:
         self.perform_table_command(decision)
 
     def loop(self):
-        rate = rospy.Rate(1)
+        rate = rospy.Rate(0.3)
         while not rospy.is_shutdown():
             if self.path_received:
+                self.task_feedback_pub.publish("Busy")
                 rospy.loginfo("[ReasoningAction] Received planned path, sending to ControlMovement.")
                 move_goal = MovementControlGoal(path=self.path_msg)
                 self.movement_client.send_goal(move_goal)
                 self.movement_client.wait_for_result()
                 move_result = self.movement_client.get_result()
-
                 if move_result.success:
                     rospy.loginfo("[ReasoningAction] Movement succeeded. Sending commands to arm and gripper.")
                     arm_goal = ArmControlGoal(degree=3)
@@ -74,10 +74,10 @@ class ReasoningAction:
                     self.gripper_client.send_goal(gripper_goal)
                     self.gripper_client.wait_for_result()
 
-                    self.task_feedback_pub.publish("Movement and arm/gripper control succeeded.")
+                    self.task_feedback_pub.publish("Free")
                 else:
                     rospy.logwarn("[ReasoningAction] Movement failed, not sending arm/gripper commands.")
-                    self.task_feedback_pub.publish("Movement failed, not sending arm/gripper commands.")
+                    self.task_feedback_pub.publish("Free")
 
                 self.path_received = False 
             rate.sleep()

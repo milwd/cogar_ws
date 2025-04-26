@@ -5,4 +5,6 @@ int32 degree
 bool success
 ---
 # Feedback
-string status
+float64[] positions
+float64[] velocities
+float64[] efforts

@@ -95,6 +95,7 @@ class robotstatedecisionResponse {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.state_output = null;
+      this.id_client = null;
       this.order = null;
       this.success = null;
     }
@@ -104,6 +105,12 @@ class robotstatedecisionResponse {
       }
       else {
         this.state_output = '';
+      }
+      if (initObj.hasOwnProperty('id_client')) {
+        this.id_client = initObj.id_client
+      }
+      else {
+        this.id_client = 0;
       }
       if (initObj.hasOwnProperty('order')) {
         this.order = initObj.order
@@ -124,6 +131,8 @@ class robotstatedecisionResponse {
     // Serializes a message object of type robotstatedecisionResponse
     // Serialize message field [state_output]
     bufferOffset = _serializer.string(obj.state_output, buffer, bufferOffset);
+    // Serialize message field [id_client]
+    bufferOffset = _serializer.int32(obj.id_client, buffer, bufferOffset);
     // Serialize message field [order]
     bufferOffset = _arraySerializer.string(obj.order, buffer, bufferOffset, null);
     // Serialize message field [success]
@@ -137,6 +146,8 @@ class robotstatedecisionResponse {
     let data = new robotstatedecisionResponse(null);
     // Deserialize message field [state_output]
     data.state_output = _deserializer.string(buffer, bufferOffset);
+    // Deserialize message field [id_client]
+    data.id_client = _deserializer.int32(buffer, bufferOffset);
     // Deserialize message field [order]
     data.order = _arrayDeserializer.string(buffer, bufferOffset, null)
     // Deserialize message field [success]
@@ -150,7 +161,7 @@ class robotstatedecisionResponse {
     object.order.forEach((val) => {
       length += 4 + _getByteLength(val);
     });
-    return length + 9;
+    return length + 13;
   }
 
   static datatype() {
@@ -160,15 +171,17 @@ class robotstatedecisionResponse {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'c81b3a5eeba79e683979489f11c6ecfa';
+    return '52bb16fdddb35bef99f76c3abb84b931';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     string state_output
+    int32 id_client
     string[] order
     bool success
+    
     
     
     
@@ -187,6 +200,13 @@ class robotstatedecisionResponse {
     }
     else {
       resolved.state_output = ''
+    }
+
+    if (msg.id_client !== undefined) {
+      resolved.id_client = msg.id_client;
+    }
+    else {
+      resolved.id_client = 0
     }
 
     if (msg.order !== undefined) {
@@ -210,6 +230,6 @@ class robotstatedecisionResponse {
 module.exports = {
   Request: robotstatedecisionRequest,
   Response: robotstatedecisionResponse,
-  md5sum() { return '26c301d5da14bdddfe3b9fdfb6c1eca2'; },
+  md5sum() { return '0ab1128539f620d6fb5a0f6e99d11fa7'; },
   datatype() { return 'tiago1/robotstatedecision'; }
 };

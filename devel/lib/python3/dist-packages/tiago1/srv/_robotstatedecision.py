@@ -133,18 +133,20 @@ import struct
 
 
 class robotstatedecisionResponse(genpy.Message):
-  _md5sum = "c81b3a5eeba79e683979489f11c6ecfa"
+  _md5sum = "52bb16fdddb35bef99f76c3abb84b931"
   _type = "tiago1/robotstatedecisionResponse"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """string state_output
+int32 id_client
 string[] order
 bool success
 
 
 
+
 """
-  __slots__ = ['state_output','order','success']
-  _slot_types = ['string','string[]','bool']
+  __slots__ = ['state_output','id_client','order','success']
+  _slot_types = ['string','int32','string[]','bool']
 
   def __init__(self, *args, **kwds):
     """
@@ -154,7 +156,7 @@ bool success
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       state_output,order,success
+       state_output,id_client,order,success
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -165,12 +167,15 @@ bool success
       # message fields cannot be None, assign default values for those that are
       if self.state_output is None:
         self.state_output = ''
+      if self.id_client is None:
+        self.id_client = 0
       if self.order is None:
         self.order = []
       if self.success is None:
         self.success = False
     else:
       self.state_output = ''
+      self.id_client = 0
       self.order = []
       self.success = False
 
@@ -192,6 +197,8 @@ bool success
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.id_client
+      buff.write(_get_struct_i().pack(_x))
       length = len(self.order)
       buff.write(_struct_I.pack(length))
       for val1 in self.order:
@@ -222,6 +229,9 @@ bool success
         self.state_output = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.state_output = str[start:end]
+      start = end
+      end += 4
+      (self.id_client,) = _get_struct_i().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -259,6 +269,8 @@ bool success
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.id_client
+      buff.write(_get_struct_i().pack(_x))
       length = len(self.order)
       buff.write(_struct_I.pack(length))
       for val1 in self.order:
@@ -292,6 +304,9 @@ bool success
         self.state_output = str[start:end]
       start = end
       end += 4
+      (self.id_client,) = _get_struct_i().unpack(str[start:end])
+      start = end
+      end += 4
       (length,) = _struct_I.unpack(str[start:end])
       self.order = []
       for i in range(0, length):
@@ -323,8 +338,14 @@ def _get_struct_B():
     if _struct_B is None:
         _struct_B = struct.Struct("<B")
     return _struct_B
+_struct_i = None
+def _get_struct_i():
+    global _struct_i
+    if _struct_i is None:
+        _struct_i = struct.Struct("<i")
+    return _struct_i
 class robotstatedecision(object):
   _type          = 'tiago1/robotstatedecision'
-  _md5sum = '26c301d5da14bdddfe3b9fdfb6c1eca2'
+  _md5sum = '0ab1128539f620d6fb5a0f6e99d11fa7'
   _request_class  = robotstatedecisionRequest
   _response_class = robotstatedecisionResponse

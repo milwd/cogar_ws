@@ -177,6 +177,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/sonar.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/speaker.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/task_manager.py"
+  "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/topic_adapter.py"
   "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/voice_recognition.py"
   "/usr/share/cmake-3.16/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
   "/usr/share/cmake-3.16/Modules/CMakeCCompiler.cmake.in"
