@@ -94,13 +94,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">navigation and obstacle-avoidance pipelines to be exercised even without</span>
 <span class="sd">real hardware or ROS bags.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Decoupling** – navigation and fusion code subscribe to a single `/sonar` topic,</span>
-<span class="sd">  oblivious to real or dummy sensors.  </span>
-<span class="sd">* **Determinism** – always publishes the same range value for reproducible tests.  </span>
-<span class="sd">* **Lightweight** – no hardware dependencies or external config files required.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 
@@ -192,7 +185,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">       c. Set `radiation_type = Range.ULTRASOUND`.  </span>
 
 <span class="sd">       d. Assign `_FOV`, `_MIN_RANGE`, `_MAX_RANGE`, `_FIXED_RANGE`. </span>
-<span class="sd">        </span>
+
 <span class="sd">       e. Publish and sleep to maintain rate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">robot_id</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>

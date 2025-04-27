@@ -86,14 +86,6 @@ pseudo-random tick counts on each wheel revolution at a fixed rate.
 It enables movement stacks—dead-reckoning, PID controllers and loggers—to
 run in simulation or CI without real encoder hardware.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Parallel development</strong> – downstream controllers receive ticks even on CI.</p></li>
-<li><p><strong>Determinism</strong> – uniform random ticks reproducible by seeding if needed.</p></li>
-<li><p><strong>Lightweight</strong> – no external dependencies beyond <cite>rospy</cite> and standard msgs.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

@@ -93,14 +93,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">IDs” into canned sentences so downstream components (order-verifier, task-manager,</span>
 <span class="sd">etc.) can be developed and tested without a real speech recogniser.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Decoupling** – cognitive layers publish simple integers; this node turns them</span>
-<span class="sd">  into full strings.  </span>
-<span class="sd">* **Legacy support** – listens to both namespaced and root topics, republishes</span>
-<span class="sd">  on both.  </span>
-<span class="sd">* **Stateless replay** – the last valid sentence is latched so late subscribers</span>
-<span class="sd">  still receive it.</span>
 
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>

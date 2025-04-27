@@ -93,13 +93,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">dummy waypoint at 1 Hz.  It lets downstream local planners, controllers and</span>
 <span class="sd">visualisers run before the real global planner is available.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Bring-up** – ensure `/planned_path` exists so navigation stacks can start.  </span>
-<span class="sd">* **Contract documentation** – downstream nodes see the required Path message</span>
-<span class="sd">  and coordinate frames.  </span>
-<span class="sd">* **Simplicity** – one waypoint only, easy to replace with a full planner.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 

@@ -163,12 +163,6 @@ independent of any previous frames.</p>
 <li><p>Clean shutdown on Ctrl-C or <code class="docutils literal notranslate"><span class="pre">rosnode</span> <span class="pre">kill</span></code>.</p></li>
 </ul>
 </section>
-<section id="extensibility-roadmap">
-<h3>Extensibility roadmap<a class="headerlink" href="#extensibility-roadmap" title="Link to this heading"></a></h3>
-<p>Replace <cite>image_callback</cite> with real inference, switch the output to
-<code class="docutils literal notranslate"><span class="pre">vision_msgs/Detection2DArray</span></code> or a custom strongly-typed message, and delete
-the explicit 1 Hz loop (the network’s runtime will throttle the topic naturally).</p>
-</section>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="object_detection.ObjectDetector">

@@ -94,13 +94,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">This lightweight placeholder lets sensor-fusion and obstacle-avoidance pipelines</span>
 <span class="sd">be exercised without complex probabilistic filters or real hardware.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Simplicity** – embed the sonar reading into the LiDAR fan by element-wise addition.  </span>
-<span class="sd">* **Determinism** – produces the same fused scan for reproducible bench tests.  </span>
-<span class="sd">* **Decoupling** – downstream nodes subscribe only to `/fused_scan`, oblivious to</span>
-<span class="sd">  the individual sensors.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 

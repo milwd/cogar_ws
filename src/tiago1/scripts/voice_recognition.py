@@ -9,14 +9,6 @@ Overview
 IDs” into canned sentences so downstream components (order-verifier, task-manager,
 etc.) can be developed and tested without a real speech recogniser.
 
-Design goals
-------------
-* **Decoupling** – cognitive layers publish simple integers; this node turns them
-  into full strings.  
-* **Legacy support** – listens to both namespaced and root topics, republishes
-  on both.  
-* **Stateless replay** – the last valid sentence is latched so late subscribers
-  still receive it.
 
 Interfaces (strongly-typed, stateless)
 --------------------------------------

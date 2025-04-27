@@ -105,15 +105,6 @@ It steers the TIAGo platform toward the <strong>first waypoint</strong> of a rec
 <cite>nav_msgs/Path</cite> using a simple proportional law, then reports success.  Replace
 this stub’s single-shot behavior with a full trajectory tracker for production.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Modularity</strong> – downstream path planners send full Paths; this server only
-handles the first pose.</p></li>
-<li><p><strong>Simplicity</strong> – one proportional command per goal, easy to extend.</p></li>
-<li><p><strong>Safety</strong> – stops the robot once the velocity command is sent.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

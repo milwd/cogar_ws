@@ -93,12 +93,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">pseudo-random force readings so that grasp controllers, compliant planners,</span>
 <span class="sd">and safety monitors can be developed and tested without real hardware.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Parallel development** – pipelines receive realistic-looking force data on CI  </span>
-<span class="sd">* **Determinism** – uniform random forces, seedable for repeatable tests  </span>
-<span class="sd">* **Lightweight** – no external dependencies or real sensor drivers</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 
@@ -180,7 +174,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">       a. Generate `f = uniform(0, _MAX_FORCE)`.  </span>
 
 <span class="sd">       b. Publish `Float32(f)`.  </span>
-<span class="sd">       </span>
+
 <span class="sd">       c. Sleep to maintain rate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>

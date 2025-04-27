@@ -85,17 +85,6 @@
 IDs” into canned sentences so downstream components (order-verifier, task-manager,
 etc.) can be developed and tested without a real speech recogniser.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Decoupling</strong> – cognitive layers publish simple integers; this node turns them
-into full strings.</p></li>
-<li><p><strong>Legacy support</strong> – listens to both namespaced and root topics, republishes
-on both.</p></li>
-<li><p><strong>Stateless replay</strong> – the last valid sentence is latched so late subscribers
-still receive it.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

@@ -95,14 +95,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">TTS backend—you can plug in Festival, `sound_play`, a cloud API, or a</span>
 <span class="sd">proprietary amplifier as long as it subscribes to ``/{robot}/speaker_channel``.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Decoupling** – reasoning publishes text once; TTS drivers only care about</span>
-<span class="sd">  a single downstream topic.  </span>
-<span class="sd">* **State buffering** – latest sentence is cached so late subscribers (e.g.,</span>
-<span class="sd">  a driver that just restarted) still get the current utterance.  </span>
-<span class="sd">* **Rate control** – re-emits at 1 Hz, protecting slow audio pipelines from</span>
-<span class="sd">  bursty upstream chatter.</span>
 
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>

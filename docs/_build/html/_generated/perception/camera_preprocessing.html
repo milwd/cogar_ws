@@ -174,14 +174,6 @@ dozen ad-hoc patches spread across your stack.</p>
 <li><p><strong>Throughput</strong> ≥ camera frame-rate (default 30 Hz).</p></li>
 <li><p><strong>Cyclomatic complexity</strong> &lt; 15 → easy to maintain / extend.</p></li>
 </ul>
-</section>
-<section id="extensibility">
-<h3>Extensibility<a class="headerlink" href="#extensibility" title="Link to this heading"></a></h3>
-<p>The minimal interface is already in place.  A <em>complete</em> variant may expose a
-<cite>dynamic_reconfigure</cite> server for:
-- blur kernel size / σ
-- depth threshold
-- optional resize scale or JPEG quality</p>
 <p>Adding such a server is orthogonal to the current contract and does not break
 existing clients.</p>
 </section>

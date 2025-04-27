@@ -11,14 +11,6 @@ channel at a steady 1 Hz.  The node is intentionally agnostic about the actual
 TTS backend—you can plug in Festival, `sound_play`, a cloud API, or a
 proprietary amplifier as long as it subscribes to ``/{robot}/speaker_channel``.
 
-Design goals
-------------
-* **Decoupling** – reasoning publishes text once; TTS drivers only care about
-  a single downstream topic.  
-* **State buffering** – latest sentence is cached so late subscribers (e.g.,
-  a driver that just restarted) still get the current utterance.  
-* **Rate control** – re-emits at 1 Hz, protecting slow audio pipelines from
-  bursty upstream chatter.
 
 Interfaces (strongly-typed, stateless)
 --------------------------------------

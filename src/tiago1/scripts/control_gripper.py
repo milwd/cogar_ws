@@ -10,12 +10,6 @@ to open or close.  It accepts a boolean goal—`True` to grip, `False` to releas
 and publishes a `std_msgs/Bool` on the gripper command topic.  After a short
 delay, it reports success or honours any pre-emption/abort requests.
 
-Design goals
-------------
-* **Binary actuator** – simple close/open commands via a boolean topic.  
-* **Responsiveness** – honours ActionLib pre-emption immediately.  
-* **Safety** – can adjust delay and topic names in one place.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 

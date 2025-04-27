@@ -94,13 +94,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">start before a real SLAM backend is available.  It defines exactly which</span>
 <span class="sd">message types and frames future SLAM solutions must honour.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Bring-up** – ensure `/map` and `/odom` exist for early integration.  </span>
-<span class="sd">* **Contract documentation** – downstream nodes see the required `/map`,</span>
-<span class="sd">  `/odom` message shapes and coordinate frames.  </span>
-<span class="sd">* **Stateless stub** – no real map or pose estimation, just fixed outputs.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 

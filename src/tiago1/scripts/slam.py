@@ -10,13 +10,6 @@ and identity odometry so that navigation stacks (e.g. `move_base`, `rviz`) can
 start before a real SLAM backend is available.  It defines exactly which
 message types and frames future SLAM solutions must honour.
 
-Design goals
-------------
-* **Bring-up** – ensure `/map` and `/odom` exist for early integration.  
-* **Contract documentation** – downstream nodes see the required `/map`,
-  `/odom` message shapes and coordinate frames.  
-* **Stateless stub** – no real map or pose estimation, just fixed outputs.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 

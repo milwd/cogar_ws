@@ -9,12 +9,6 @@ Overview
 pseudo-random gripper opening widths at a fixed rate.  It enables PID loops,
 dashboards and loggers to run when the physical gripper is offline or during CI.
 
-Design goals
-------------
-* **Parallel development** – downstream controllers receive gripper data without hardware.  
-* **Determinism** – uniform random widths reproducible by seeding the RNG.  
-* **Lightweight** – no complex kinematics or hardware drivers required.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 
@@ -95,7 +89,7 @@ def gripper_encoder() -> None:
        a. Generate `width = randint(0, _MAX_WIDTH)`.  
 
        b. Publish `Int32(width)`.  
-       
+
        c. Sleep to maintain rate.
     """
     if len(sys.argv) < 2:

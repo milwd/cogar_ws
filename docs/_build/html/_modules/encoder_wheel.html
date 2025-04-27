@@ -94,12 +94,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">It enables movement stacks—dead-reckoning, PID controllers and loggers—to</span>
 <span class="sd">run in simulation or CI without real encoder hardware.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Parallel development** – downstream controllers receive ticks even on CI.  </span>
-<span class="sd">* **Determinism** – uniform random ticks reproducible by seeding if needed.  </span>
-<span class="sd">* **Lightweight** – no external dependencies beyond `rospy` and standard msgs.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 
@@ -181,7 +175,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">       a. Generate `ticks = randint(0, _MAX_TICK)`.  </span>
 
 <span class="sd">       b. Publish `Int32(ticks)`.  </span>
-<span class="sd">       </span>
+
 <span class="sd">       c. Sleep to maintain rate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">robot_id</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>

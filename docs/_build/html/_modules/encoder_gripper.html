@@ -93,12 +93,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">pseudo-random gripper opening widths at a fixed rate.  It enables PID loops,</span>
 <span class="sd">dashboards and loggers to run when the physical gripper is offline or during CI.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Parallel development** – downstream controllers receive gripper data without hardware.  </span>
-<span class="sd">* **Determinism** – uniform random widths reproducible by seeding the RNG.  </span>
-<span class="sd">* **Lightweight** – no complex kinematics or hardware drivers required.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 
@@ -181,7 +175,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">       a. Generate `width = randint(0, _MAX_WIDTH)`.  </span>
 
 <span class="sd">       b. Publish `Int32(width)`.  </span>
-<span class="sd">       </span>
+
 <span class="sd">       c. Sleep to maintain rate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>

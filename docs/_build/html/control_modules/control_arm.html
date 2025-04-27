@@ -105,14 +105,6 @@ manipulator to a target joint angle (in degrees).  It applies a proportional
 control law on the arm’s angular velocity until the on-board encoder reports
 the target is reached within tolerance, or a timeout/pre-emption occurs.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Precise control</strong> – proportional feedback on encoder readings.</p></li>
-<li><p><strong>Safety</strong> – zero velocity published immediately on success, abort or pre-emption.</p></li>
-<li><p><strong>Responsiveness</strong> – honours ActionLib pre-emption so higher layers can interrupt.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateful">
 <h3>Interfaces (strongly-typed, stateful)<a class="headerlink" href="#interfaces-strongly-typed-stateful" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

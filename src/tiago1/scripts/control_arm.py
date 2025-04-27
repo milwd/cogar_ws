@@ -10,12 +10,6 @@ manipulator to a target joint angle (in degrees).  It applies a proportional
 control law on the arm’s angular velocity until the on-board encoder reports
 the target is reached within tolerance, or a timeout/pre-emption occurs.
 
-Design goals
-------------
-* **Precise control** – proportional feedback on encoder readings.  
-* **Safety** – zero velocity published immediately on success, abort or pre-emption.  
-* **Responsiveness** – honours ActionLib pre-emption so higher layers can interrupt.
-
 Interfaces (strongly-typed, stateful)
 --------------------------------------
 

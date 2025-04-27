@@ -10,13 +10,6 @@ constant `sensor_msgs/Range` messages at 10 Hz.  It enables sensor-fusion,
 navigation and obstacle-avoidance pipelines to be exercised even without
 real hardware or ROS bags.
 
-Design goals
-------------
-* **Decoupling** – navigation and fusion code subscribe to a single `/sonar` topic,
-  oblivious to real or dummy sensors.  
-* **Determinism** – always publishes the same range value for reproducible tests.  
-* **Lightweight** – no hardware dependencies or external config files required.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 
@@ -106,7 +99,7 @@ def publish():
        c. Set `radiation_type = Range.ULTRASOUND`.  
 
        d. Assign `_FOV`, `_MIN_RANGE`, `_MAX_RANGE`, `_FIXED_RANGE`. 
-        
+
        e. Publish and sleep to maintain rate.
     """
     robot_id = sys.argv[1]

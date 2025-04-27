@@ -103,15 +103,6 @@ LiDAR scanner and a single-beam sonar into a unified <cite>sensor_msgs/LaserScan
 This lightweight placeholder lets sensor-fusion and obstacle-avoidance pipelines
 be exercised without complex probabilistic filters or real hardware.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Simplicity</strong> – embed the sonar reading into the LiDAR fan by element-wise addition.</p></li>
-<li><p><strong>Determinism</strong> – produces the same fused scan for reproducible bench tests.</p></li>
-<li><p><strong>Decoupling</strong> – downstream nodes subscribe only to <cite>/fused_scan</cite>, oblivious to
-the individual sensors.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

@@ -158,14 +158,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">- **Throughput** ≥ camera frame-rate (default 30 Hz).  </span>
 <span class="sd">- **Cyclomatic complexity** &lt; 15 → easy to maintain / extend.</span>
 
-<span class="sd">Extensibility</span>
-<span class="sd">-------------</span>
-<span class="sd">The minimal interface is already in place.  A *complete* variant may expose a</span>
-<span class="sd">`dynamic_reconfigure` server for:</span>
-<span class="sd">- blur kernel size / σ  </span>
-<span class="sd">- depth threshold  </span>
-<span class="sd">- optional resize scale or JPEG quality</span>
-
 <span class="sd">Adding such a server is orthogonal to the current contract and does not break</span>
 <span class="sd">existing clients.</span>
 

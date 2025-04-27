@@ -93,12 +93,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">pseudo-random encoder angles for the TIAGo arm at a fixed rate.  It enables</span>
 <span class="sd">controllers, loggers, and dashboards to run when no real hardware is connected.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Parallel development** – feed decoder loops with dummy joint data in CI.  </span>
-<span class="sd">* **Determinism** – uniform random angles for reproducible testing (seedable).  </span>
-<span class="sd">* **Lightweight** – no hardware dependencies or complex kinematics required.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 
@@ -181,7 +175,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">       a. Generate `angle = randint(0, _MAX_ANGLE)`.  </span>
 
 <span class="sd">       b. Publish `Int32(angle)`.  </span>
-<span class="sd">       </span>
+
 <span class="sd">       c. Sleep to maintain rate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>

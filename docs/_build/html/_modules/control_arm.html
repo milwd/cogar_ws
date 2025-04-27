@@ -94,12 +94,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">control law on the arm’s angular velocity until the on-board encoder reports</span>
 <span class="sd">the target is reached within tolerance, or a timeout/pre-emption occurs.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Precise control** – proportional feedback on encoder readings.  </span>
-<span class="sd">* **Safety** – zero velocity published immediately on success, abort or pre-emption.  </span>
-<span class="sd">* **Responsiveness** – honours ActionLib pre-emption so higher layers can interrupt.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateful)</span>
 <span class="sd">--------------------------------------</span>
 

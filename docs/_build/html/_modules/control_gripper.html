@@ -94,12 +94,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">and publishes a `std_msgs/Bool` on the gripper command topic.  After a short</span>
 <span class="sd">delay, it reports success or honours any pre-emption/abort requests.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Binary actuator** – simple close/open commands via a boolean topic.  </span>
-<span class="sd">* **Responsiveness** – honours ActionLib pre-emption immediately.  </span>
-<span class="sd">* **Safety** – can adjust delay and topic names in one place.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 

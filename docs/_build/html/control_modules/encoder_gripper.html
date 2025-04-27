@@ -104,14 +104,6 @@
 pseudo-random gripper opening widths at a fixed rate.  It enables PID loops,
 dashboards and loggers to run when the physical gripper is offline or during CI.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Parallel development</strong> – downstream controllers receive gripper data without hardware.</p></li>
-<li><p><strong>Determinism</strong> – uniform random widths reproducible by seeding the RNG.</p></li>
-<li><p><strong>Lightweight</strong> – no complex kinematics or hardware drivers required.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

@@ -9,7 +9,6 @@ Overview
 messages at 10 Hz.  It lets navigation, SLAM, and obstacle-avoidance stacks run
 without real hardware or recorded bags.
 
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 

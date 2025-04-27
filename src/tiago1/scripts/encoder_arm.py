@@ -9,12 +9,6 @@ Overview
 pseudo-random encoder angles for the TIAGo arm at a fixed rate.  It enables
 controllers, loggers, and dashboards to run when no real hardware is connected.
 
-Design goals
-------------
-* **Parallel development** – feed decoder loops with dummy joint data in CI.  
-* **Determinism** – uniform random angles for reproducible testing (seedable).  
-* **Lightweight** – no hardware dependencies or complex kinematics required.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 
@@ -95,7 +89,7 @@ def arm_encoder() -> None:
        a. Generate `angle = randint(0, _MAX_ANGLE)`.  
 
        b. Publish `Int32(angle)`.  
-       
+
        c. Sleep to maintain rate.
     """
     if len(sys.argv) < 2:

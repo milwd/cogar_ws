@@ -85,14 +85,6 @@
 pseudo-random encoder angles for the TIAGo arm at a fixed rate.  It enables
 controllers, loggers, and dashboards to run when no real hardware is connected.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Parallel development</strong> – feed decoder loops with dummy joint data in CI.</p></li>
-<li><p><strong>Determinism</strong> – uniform random angles for reproducible testing (seedable).</p></li>
-<li><p><strong>Lightweight</strong> – no hardware dependencies or complex kinematics required.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

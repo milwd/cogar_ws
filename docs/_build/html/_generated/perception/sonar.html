@@ -86,15 +86,6 @@ constant <cite>sensor_msgs/Range</cite> messages at 10 Hz.  It enables sensor-fu
 navigation and obstacle-avoidance pipelines to be exercised even without
 real hardware or ROS bags.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Decoupling</strong> – navigation and fusion code subscribe to a single <cite>/sonar</cite> topic,
-oblivious to real or dummy sensors.</p></li>
-<li><p><strong>Determinism</strong> – always publishes the same range value for reproducible tests.</p></li>
-<li><p><strong>Lightweight</strong> – no hardware dependencies or external config files required.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

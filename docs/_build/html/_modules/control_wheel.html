@@ -94,13 +94,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">`nav_msgs/Path` using a simple proportional law, then reports success.  Replace</span>
 <span class="sd">this stub’s single-shot behavior with a full trajectory tracker for production.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Modularity** – downstream path planners send full Paths; this server only</span>
-<span class="sd">  handles the first pose.  </span>
-<span class="sd">* **Simplicity** – one proportional command per goal, easy to extend.  </span>
-<span class="sd">* **Safety** – stops the robot once the velocity command is sent.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 

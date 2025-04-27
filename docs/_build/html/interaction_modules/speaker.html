@@ -100,15 +100,6 @@
 <p><cite>speaker.py</cite> is the <strong>last-mile speech relay</strong> that takes high-level sentences
 from the cognitive layer and immediately forwards them to the TTS backend.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Stateless</strong> – no transformation, just one-to-one forwarding.</p></li>
-<li><p><strong>Latch</strong> – publisher is latched so late-joining TTS drivers still receive
-the most recent sentence.</p></li>
-<li><p><strong>Immediate</strong> – forwarding occurs in the subscriber callback; no loop needed.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

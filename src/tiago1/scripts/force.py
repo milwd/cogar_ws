@@ -9,12 +9,6 @@ Overview
 pseudo-random force readings so that grasp controllers, compliant planners,
 and safety monitors can be developed and tested without real hardware.
 
-Design goals
-------------
-* **Parallel development** – pipelines receive realistic-looking force data on CI  
-* **Determinism** – uniform random forces, seedable for repeatable tests  
-* **Lightweight** – no external dependencies or real sensor drivers
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 
@@ -94,7 +88,7 @@ def force_sensor() -> None:
        a. Generate `f = uniform(0, _MAX_FORCE)`.  
 
        b. Publish `Float32(f)`.  
-       
+
        c. Sleep to maintain rate.
     """
     if len(sys.argv) < 2:

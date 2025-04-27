@@ -102,15 +102,6 @@
 dummy waypoint at 1 Hz.  It lets downstream local planners, controllers and
 visualisers run before the real global planner is available.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Bring-up</strong> – ensure <cite>/planned_path</cite> exists so navigation stacks can start.</p></li>
-<li><p><strong>Contract documentation</strong> – downstream nodes see the required Path message
-and coordinate frames.</p></li>
-<li><p><strong>Simplicity</strong> – one waypoint only, easy to replace with a full planner.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

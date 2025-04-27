@@ -103,17 +103,6 @@ channel at a steady 1 Hz.  The node is intentionally agnostic about the actual
 TTS backend—you can plug in Festival, <cite>sound_play</cite>, a cloud API, or a
 proprietary amplifier as long as it subscribes to <code class="docutils literal notranslate"><span class="pre">/{robot}/speaker_channel</span></code>.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Decoupling</strong> – reasoning publishes text once; TTS drivers only care about
-a single downstream topic.</p></li>
-<li><p><strong>State buffering</strong> – latest sentence is cached so late subscribers (e.g.,
-a driver that just restarted) still get the current utterance.</p></li>
-<li><p><strong>Rate control</strong> – re-emits at 1 Hz, protecting slow audio pipelines from
-bursty upstream chatter.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

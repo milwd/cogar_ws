@@ -10,12 +10,6 @@ pseudo-random tick counts on each wheel revolution at a fixed rate.
 It enables movement stacks—dead-reckoning, PID controllers and loggers—to
 run in simulation or CI without real encoder hardware.
 
-Design goals
-------------
-* **Parallel development** – downstream controllers receive ticks even on CI.  
-* **Determinism** – uniform random ticks reproducible by seeding if needed.  
-* **Lightweight** – no external dependencies beyond `rospy` and standard msgs.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 
@@ -95,7 +89,7 @@ def wheel_encoder() -> None:
        a. Generate `ticks = randint(0, _MAX_TICK)`.  
 
        b. Publish `Int32(ticks)`.  
-       
+
        c. Sleep to maintain rate.
     """
     robot_id = sys.argv[1]

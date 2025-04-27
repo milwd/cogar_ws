@@ -86,15 +86,6 @@ and identity odometry so that navigation stacks (e.g. <cite>move_base</cite>, <c
 start before a real SLAM backend is available.  It defines exactly which
 message types and frames future SLAM solutions must honour.</p>
 </section>
-<section id="design-goals">
-<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Bring-up</strong> – ensure <cite>/map</cite> and <cite>/odom</cite> exist for early integration.</p></li>
-<li><p><strong>Contract documentation</strong> – downstream nodes see the required <cite>/map</cite>,
-<cite>/odom</cite> message shapes and coordinate frames.</p></li>
-<li><p><strong>Stateless stub</strong> – no real map or pose estimation, just fixed outputs.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

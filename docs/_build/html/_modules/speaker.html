@@ -92,13 +92,6 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">`speaker.py` is the **last-mile speech relay** that takes high-level sentences</span>
 <span class="sd">from the cognitive layer and immediately forwards them to the TTS backend.</span>
 
-<span class="sd">Design goals</span>
-<span class="sd">------------</span>
-<span class="sd">* **Stateless** – no transformation, just one-to-one forwarding.  </span>
-<span class="sd">* **Latch** – publisher is latched so late-joining TTS drivers still receive</span>
-<span class="sd">  the most recent sentence.  </span>
-<span class="sd">* **Immediate** – forwarding occurs in the subscriber callback; no loop needed.</span>
-
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>
 
