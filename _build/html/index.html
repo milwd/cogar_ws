@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment 1 Documentation &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Perception Components" href="perception.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Assignment 1 Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="assignment-1-documentation">
+<span id="index"></span><h1>Assignment 1 Documentation<a class="headerlink" href="#assignment-1-documentation" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This project implements <strong>Topic 2 – Autonomous Waiters in a Sushi Restaurant</strong>.
+A fleet of five PAL-Robotics TIAGo robots cooperates to serve dishes, clear tables and return to the station. :contentReference[oaicite:0]{index=0}&amp;#8203;:contentReference[oaicite:1]{index=1}</p>
+<section id="key-software-components">
+<h3>Key software components<a class="headerlink" href="#key-software-components" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Orchestration System</strong>
+• Dynamically allocates each order to the best-placed robot.
+• Prevents table congestion by queuing robots if necessary.</p></li>
+<li><p><strong>Reasoning about Food Placement</strong>
+• Analyses the table layout with camera + depth data.
+• Chooses a free, stable spot and adapts if the table is cluttered.</p></li>
+<li><p><strong>Order Verification &amp; Error Handling</strong>
+• Announces the dish, waits for customer confirmation.
+• Registers disputes and notifies human staff. :contentReference[oaicite:2]{index=2}&amp;#8203;:contentReference[oaicite:3]{index=3}</p></li>
+</ol>
+</section>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>Clone the repository into your catkin workspace, build, then source the setup file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/catkin_ws/src
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;your-org&gt;/cogar_ws.git
+<span class="nb">cd</span><span class="w"> </span>..
+catkin_make
+<span class="nb">source</span><span class="w"> </span>devel/setup.bash
+</pre></div>
+</div>
+<p>Make sure the required ROS Noetic dependencies are installed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ros-noetic-actionlib<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ros-noetic-geometry-msgs<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ros-noetic-std-msgs<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ros-noetic-std-srvs<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ros-noetic-nav-msgs
+</pre></div>
+</div>
+</section>
+<section id="how-to-launch">
+<h2>How to Launch<a class="headerlink" href="#how-to-launch" title="Link to this heading"></a></h2>
+<p><strong>Step 1 – bring up the whole stack</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>sushi_waiter.launch
+</pre></div>
+</div>
+<p><strong>Step 2 – assign an order manually (example)</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rosservice call /assign_order &quot;table_id: 4
+dish_name: &#39;Dragon Roll&#39;&quot;
+</pre></div>
+</div>
+<p><strong>Step 3 – verify / cancel</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/order_verification
+rosservice<span class="w"> </span>call<span class="w"> </span>/cancel_order<span class="w"> </span><span class="s2">&quot;table_id: 4&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="proof-of-work">
+<h2>Proof of Work<a class="headerlink" href="#proof-of-work" title="Link to this heading"></a></h2>
+<img alt="Demo – robot serving a table" src="static/robot_serving.gif" />
+<img alt="Demo – table clearing sequence" src="static/table_clearing.gif" />
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#camera-py">camera.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#camera.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#camera-preprocessing-py">camera_preprocessing.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#camera_preprocessing.CameraPreprocessing"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#lidar-py">lidar.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#lidar.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#sonar-py">sonar.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#sonar.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#object-detection-py">object_detection.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#object_detection.ObjectDetector"><code class="docutils literal notranslate"><span class="pre">ObjectDetector</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#sensor-fusion-py">sensor_fusion.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#sensor_fusion.Adapter"><code class="docutils literal notranslate"><span class="pre">Adapter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#sensor_fusion.SensorFusionNode"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#distance-estimation-py">distance_estimation.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.ClearingStrategy"><code class="docutils literal notranslate"><span class="pre">ClearingStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.DistanceEstimator"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.FindPlacementStrategy"><code class="docutils literal notranslate"><span class="pre">FindPlacementStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.TableAnalysisStrategy"><code class="docutils literal notranslate"><span class="pre">TableAnalysisStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#path_planning.PathPlanner"><code class="docutils literal notranslate"><span class="pre">PathPlanner</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning_table_placement.ReasoningTablePlacement"><code class="docutils literal notranslate"><span class="pre">ReasoningTablePlacement</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning_table_placement.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#slam.SLAM"><code class="docutils literal notranslate"><span class="pre">SLAM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder_arm.arm_encoder"><code class="docutils literal notranslate"><span class="pre">arm_encoder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder_gripper.gripper_encoder"><code class="docutils literal notranslate"><span class="pre">gripper_encoder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder_wheel.wheel_encoder"><code class="docutils literal notranslate"><span class="pre">wheel_encoder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#force.force_sensor"><code class="docutils literal notranslate"><span class="pre">force_sensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#voice_recognition.VoiceRecognition"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#speaker.Speaker"><code class="docutils literal notranslate"><span class="pre">Speaker</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="perception.html" class="btn btn-neutral float-right" title="Perception Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

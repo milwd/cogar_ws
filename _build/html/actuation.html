@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actuation &amp; Control Components &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Interaction Components" href="interaction.html" />
+    <link rel="prev" title="Reasoning &amp; Planning Components" href="reasoning.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Actuation &amp; Control Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#encoder_arm.arm_encoder"><code class="docutils literal notranslate"><span class="pre">arm_encoder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encoder_gripper.gripper_encoder"><code class="docutils literal notranslate"><span class="pre">gripper_encoder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encoder_wheel.wheel_encoder"><code class="docutils literal notranslate"><span class="pre">wheel_encoder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#force.force_sensor"><code class="docutils literal notranslate"><span class="pre">force_sensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Actuation &amp; Control Components</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/actuation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="actuation-control-components">
+<h1>Actuation &amp; Control Components<a class="headerlink" href="#actuation-control-components" title="Link to this heading"></a></h1>
+<p id="module-encoder_arm">encoder_arm.py</p>
+<p>ROS node that simulates the arm encoder by publishing random encoder readings.
+Publishes Int32 messages on ‘/encoder_arm’ at 10 Hz for testing downstream controllers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encoder_arm.arm_encoder">
+<span class="sig-prename descclassname"><span class="pre">encoder_arm.</span></span><span class="sig-name descname"><span class="pre">arm_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder_arm.html#arm_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_arm.arm_encoder" title="Link to this definition"></a></dt>
+<dd><p>Initialize the ROS node and publish simulated arm encoder values.</p>
+<section id="process">
+<h2>Process<a class="headerlink" href="#process" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Initialize ROS node ‘encoder_arm’.</p></li>
+<li><p>Create a Publisher on ‘/encoder_arm’ for Int32 messages.</p></li>
+<li><p>Loop at 10 Hz until shutdown:
+a. Generate a random float between 0 and 5.
+b. Wrap in Int32 and publish.
+c. Sleep to maintain loop rate.</p></li>
+</ol>
+</section>
+</dd></dl>
+
+<p id="module-encoder_gripper">encoder_gripper.py</p>
+<p>ROS node that simulates the gripper encoder by publishing random encoder readings.
+Publishes Int32 messages on ‘/encoder_gripper’ at 10 Hz for testing downstream controllers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encoder_gripper.gripper_encoder">
+<span class="sig-prename descclassname"><span class="pre">encoder_gripper.</span></span><span class="sig-name descname"><span class="pre">gripper_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder_gripper.html#gripper_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_gripper.gripper_encoder" title="Link to this definition"></a></dt>
+<dd><p>Initialize the ROS node and publish simulated gripper encoder values.</p>
+<section id="id1">
+<h2>Process<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Initialize ROS node ‘encoder_gripper’.</p></li>
+<li><p>Create a Publisher on ‘/encoder_gripper’ for Int32 messages.</p></li>
+<li><p>Loop at 10 Hz until shutdown:
+a. Generate a random float between 0 and 5.
+b. Wrap the value in an Int32 message and publish.
+c. Sleep to maintain loop rate.</p></li>
+</ol>
+</section>
+</dd></dl>
+
+<p id="module-encoder_wheel">encoder_wheel.py</p>
+<p>ROS node that simulates wheel encoder readings. Publishes random encoder counts
+on ‘/encoder_wheel’ at 10 Hz for testing movement controllers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encoder_wheel.wheel_encoder">
+<span class="sig-prename descclassname"><span class="pre">encoder_wheel.</span></span><span class="sig-name descname"><span class="pre">wheel_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder_wheel.html#wheel_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_wheel.wheel_encoder" title="Link to this definition"></a></dt>
+<dd><p>Initialize the ROS node and publish simulated wheel encoder values.</p>
+<section id="id2">
+<h2>Process<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Initialize ROS node ‘encoder_wheel’.</p></li>
+<li><p>Advertise ‘/encoder_wheel’ for Int32 messages.</p></li>
+<li><p>Loop at 10 Hz:
+a. Generate a random float between 0 and 5.
+b. Wrap the value in an Int32 message and publish.
+c. Sleep to maintain loop rate.</p></li>
+</ol>
+</section>
+</dd></dl>
+
+<p id="module-force">force.py</p>
+<p>ROS node that simulates a force sensor by publishing random force readings.
+Publishes Float32 messages on ‘/force’ at 10 Hz for testing manipulation tasks.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="force.force_sensor">
+<span class="sig-prename descclassname"><span class="pre">force.</span></span><span class="sig-name descname"><span class="pre">force_sensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/force.html#force_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#force.force_sensor" title="Link to this definition"></a></dt>
+<dd><p>Initialize the ROS node and publish simulated force sensor values.</p>
+<section id="id3">
+<h2>Process<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Initialize ROS node ‘force’.</p></li>
+<li><p>Advertise ‘/force’ for Float32 messages.</p></li>
+<li><p>Loop at 10 Hz:
+a. Generate a random force value between 0 and 5 Newtons.
+b. Wrap the value in a Float32 message and publish.
+c. Sleep to maintain loop rate.</p></li>
+</ol>
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="reasoning.html" class="btn btn-neutral float-left" title="Reasoning &amp; Planning Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interaction.html" class="btn btn-neutral float-right" title="Interaction Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

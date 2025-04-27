@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lidar &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lidar</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lidar</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">lidar.py</span>
+<span class="sd">========</span>
+
+<span class="sd">Synthetic **2-D LiDAR** publisher for bench-testing navigation stacks</span>
+<span class="sd">--------------------------------------------------------------------</span>
+
+<span class="sd">This node emulates a planar laser scanner so that path-planning, SLAM or</span>
+<span class="sd">obstacle-avoidance components can be developed on a laptop without any real</span>
+<span class="sd">sensor or recorded bags.</span>
+
+
+<span class="sd">Published topic</span>
+<span class="sd">---------------</span>
+<span class="sd">``/lidar``  ( ``sensor_msgs/LaserScan`` )   10 Hz, 180 beams</span>
+
+<span class="sd">Message layout</span>
+<span class="sd">~~~~~~~~~~~~~~</span>
+<span class="sd">=======================  ======================================================</span>
+<span class="sd">Field                    Value</span>
+<span class="sd">-----------------------  ------------------------------------------------------</span>
+<span class="sd">``header.frame_id``      ``&quot;laser&quot;``</span>
+<span class="sd">``angle_min``            –π / 2 rad   (–90 °)</span>
+<span class="sd">``angle_max``            +π / 2 rad   (+90 °)</span>
+<span class="sd">``angle_increment``      π / 180 rad  (1 ° per beam)</span>
+<span class="sd">``time_increment``       0 s (all beams considered simultaneous)</span>
+<span class="sd">``range_min``            0.1 m  (typical safety threshold)</span>
+<span class="sd">``range_max``            10.0 m</span>
+<span class="sd">``ranges``               181 floats, each **5.0 m**</span>
+<span class="sd">=======================  ======================================================</span>
+
+<span class="sd">Change any of the numeric constants to mimic a different sensor model.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaserScan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Header</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">pi</span>
+
+
+<div class="viewcode-block" id="publish">
+<a class="viewcode-back" href="../perception.html#lidar.publish">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">publish</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Continuously construct and transmit **LaserScan** messages.</span>
+
+<span class="sd">    Workflow</span>
+<span class="sd">    --------</span>
+<span class="sd">    #. **Initialise ROS** under the name ``lidar_node`` (anonymous to allow</span>
+<span class="sd">       multiple instances).  </span>
+<span class="sd">    #. **Advertise** the ``/lidar`` topic.  </span>
+<span class="sd">    #. Enter a **10 Hz loop** that:</span>
+
+<span class="sd">       a. Allocates a fresh ``LaserScan`` instance.  </span>
+<span class="sd">       b. Fills the :pyattr:`~sensor_msgs.msg.LaserScan.header` with the</span>
+<span class="sd">          current time stamp and the fixed frame ``&quot;laser&quot;``.  </span>
+<span class="sd">       c. Sets angular limits and increment so that the scan spans 180 degrees</span>
+<span class="sd">          with 1-degree resolution.  </span>
+<span class="sd">       d. Populates :pyattr:`~sensor_msgs.msg.LaserScan.ranges` with a constant</span>
+<span class="sd">          distance (*5 m* in this example).  </span>
+<span class="sd">       e. Publishes the message.  </span>
+<span class="sd">       f. Sleeps the remaining time to honour the 10 Hz rate.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    * ``time_increment`` is left at 0 because the entire fake scan is assumed</span>
+<span class="sd">      to be captured instantaneously.  </span>
+<span class="sd">    * Replace the constant list comprehension with any custom profile</span>
+<span class="sd">      (e.g. walls, obstacles) if you need more realistic testing stimuli.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/lidar&quot;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;lidar_node&quot;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>                       <span class="c1"># 10 Hz → 100 ms period</span>
+    <span class="n">total_beams</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>      <span class="c1"># 181 beams for 180 °</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="n">scan</span> <span class="o">=</span> <span class="n">LaserScan</span><span class="p">()</span>
+
+        <span class="c1"># ---------- Header --------------------------------------------------</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">()</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;laser&quot;</span>
+
+        <span class="c1"># ---------- Geometry -----------------------------------------------</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">angle_min</span> <span class="o">=</span> <span class="o">-</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>                <span class="c1"># –90 °</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">angle_max</span> <span class="o">=</span>  <span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>                <span class="c1"># +90 °</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">angle_increment</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>         <span class="c1"># 1 ° resolution</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">time_increment</span> <span class="o">=</span> <span class="mf">0.0</span>               <span class="c1"># assume zero rolling shutter</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">range_min</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">range_max</span> <span class="o">=</span> <span class="mf">10.0</span>
+
+        <span class="c1"># ---------- Data ----------------------------------------------------</span>
+        <span class="n">scan</span><span class="o">.</span><span class="n">ranges</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_beams</span>       <span class="c1"># every ray reports 5 m</span>
+
+        <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">scan</span><span class="p">)</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Entrypoint — start the publisher and exit cleanly on ROS shutdown.</span>
+
+<span class="sd">    Only the ROS interruption is swallowed so that genuine bugs still raise a</span>
+<span class="sd">    traceback, which simplifies debugging.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">publish</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

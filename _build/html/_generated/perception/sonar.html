@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sonar &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">sonar</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/_generated/perception/sonar.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sonar">
+<span id="sonar"></span><h1>sonar<a class="headerlink" href="#module-sonar" title="Link to this heading"></a></h1>
+<section id="sonar-py">
+<h2>sonar.py<a class="headerlink" href="#sonar-py" title="Link to this heading"></a></h2>
+<section id="synthetic-ultrasound-range-finder-for-quick-sensor-fusion-prototyping">
+<h3>Synthetic <strong>ultrasound range-finder</strong> for quick sensor-fusion prototyping<a class="headerlink" href="#synthetic-ultrasound-range-finder-for-quick-sensor-fusion-prototyping" title="Link to this heading"></a></h3>
+<p>This node mimics a 1-D sonar module by broadcasting a constant
+<a href="#id1"><span class="problematic" id="id2">:pyclass:`sensor_msgs.msg.Range`</span></a> message.  Navigation, fusion and obstacle
+avoidance stacks can therefore be exercised on any machine—even one with no
+hardware attached or ROS bag available.</p>
+</section>
+<section id="published-topic">
+<h3>Published topic<a class="headerlink" href="#published-topic" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">/sonar</span></code> ( <code class="docutils literal notranslate"><span class="pre">sensor_msgs/Range</span></code> ) 10 Hz, single beam</p>
+<section id="message-layout">
+<h4>Message layout<a class="headerlink" href="#message-layout" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Field</p></td>
+<td><p>Value</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">header.frame_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;sonar&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">radiation_type</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Range.ULTRASOUND</span></code>  (numeric constant 0)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">field_of_view</span></code></p></td>
+<td><p>0.1 rad ≈ 5.7 °</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">min_range</span></code></p></td>
+<td><p>0.2 m</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_range</span></code></p></td>
+<td><p>4.0 m</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+<td><p><strong>3.0 m</strong> (fixed reading)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Tweak any constant to emulate a different device or scenario.</p>
+</section>
+</section>
+</section>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#sonar.publish" title="sonar.publish"><code class="xref py py-obj docutils literal notranslate"><span class="pre">publish</span></code></a>()</p></td>
+<td><p>Spawn the node and stream <strong>Range</strong> messages until ROS shuts down.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camera &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">camera</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camera</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">camera.py</span>
+<span class="sd">=========</span>
+
+<span class="sd">Synthetic **RGB + Depth** sensor for rapid, dependency-free testing</span>
+<span class="sd">------------------------------------------------------------------</span>
+
+<span class="sd">This script pretends to be a camera node even when no real hardware is</span>
+<span class="sd">attached.  It continuously publishes **one static RGB frame** together with a</span>
+<span class="sd">**mock depth map** so that downstream perception, fusion or visualisation</span>
+<span class="sd">nodes can start development immediately.</span>
+
+<span class="sd">Why a dummy camera?</span>
+<span class="sd">    • *Deterministic output* – unit tests and integration pipelines do not rely  </span>
+<span class="sd">      on external devices or recorded ROS bags.  </span>
+<span class="sd">    • *Speed* – a single JPEG on disk avoids the overhead of connecting to  </span>
+<span class="sd">      physical sensors.  </span>
+<span class="sd">    • *Isolation* – failures in consumer nodes are never due to flaky hardware.</span>
+
+<span class="sd">Published topics</span>
+<span class="sd">----------------</span>
+<span class="sd">=====================  =============  ==============================</span>
+<span class="sd">Topic name             Type           Content</span>
+<span class="sd">---------------------  -------------  ------------------------------</span>
+<span class="sd">``/camera``            ``sensor_msgs/Image`` 24-bit BGR image read</span>
+<span class="sd">                                      from *image.jpg*</span>
+<span class="sd">``/depth``             ``sensor_msgs/Image`` 8-bit signed, all-ones  </span>
+<span class="sd">                                      array the same resolution as the RGB</span>
+<span class="sd">=====================  =============  ==============================</span>
+
+<span class="sd">Both messages share *wall-clock* time stamps and are published at **10 Hz** so</span>
+<span class="sd">that synchronisation filters (e.g. message_filters) treat them as a stereo</span>
+<span class="sd">pair.</span>
+
+<span class="sd">Directory layout</span>
+<span class="sd">----------------</span>
+<span class="sd">``camera.py`` expects the JPEG at  </span>
+<span class="sd">``/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg``.  </span>
+<span class="sd">Change the path if you move the file; no other configuration is required.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cv_bridge</span><span class="w"> </span><span class="kn">import</span> <span class="n">CvBridge</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<div class="viewcode-block" id="publish">
+<a class="viewcode-back" href="../perception.html#camera.publish">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">publish</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bootstrap the node and stream frames until ROS shuts down.</span>
+
+<span class="sd">    Execution flow</span>
+<span class="sd">    --------------</span>
+<span class="sd">    1. **Node init** </span>
+<span class="sd">    – registers the process with the ROS master under the name ``camera``.</span>
+<span class="sd">    </span>
+<span class="sd">    2. **Publisher creation**</span>
+
+<span class="sd">       * ``pub_rgb``  → ``/camera``  (BGR colour image)  </span>
+
+<span class="sd">       * ``pub_depth`` → ``/depth``   (8-bit signed mono depth)</span>
+<span class="sd">    3. **Main loop** (10 Hz):</span>
+
+<span class="sd">       a. Read the *unchanging* JPEG from disk.  </span>
+<span class="sd">          Reading from disk each cycle guarantees that edits to the file show up</span>
+<span class="sd">          immediately, handy for quick visual experiments.  </span>
+<span class="sd">       b. Convert the NumPy array to ``sensor_msgs/Image`` via **cv_bridge**.  </span>
+<span class="sd">       c. Publish the RGB frame.  </span>
+<span class="sd">       d. Allocate a depth array of identical resolution, fill it with ones</span>
+<span class="sd">          (1 m in whatever synthetic unit you prefer), convert and publish.  </span>
+<span class="sd">       e. Sleep the remaining time to keep the loop period at ~100 ms.</span>
+<span class="sd">    4. On shutdown (Ctrl-C or ``rosnode kill``) the ``rospy.is_shutdown()``</span>
+<span class="sd">       flag becomes *True* and the while-loop exits cleanly.</span>
+
+<span class="sd">    Exceptions</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Any exception raised inside the loop will abort the node unless you wrap</span>
+<span class="sd">    the offending code in additional ``try/except`` blocks.  ROS-level</span>
+<span class="sd">    interruptions (e.g. lost master) are already handled in ``main``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;camera&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Queue size 10 is plenty for a 10 Hz producer → no back-pressure.</span>
+    <span class="n">pub_rgb</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/camera&#39;</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">pub_depth</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/depth&#39;</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 10 Hz → 100 ms between iterations</span>
+    <span class="n">bridge</span> <span class="o">=</span> <span class="n">CvBridge</span><span class="p">()</span>    <span class="c1"># Expensive to construct; reuse between loops</span>
+
+    <span class="c1"># Absolute path keeps the example self-contained; adjust for your workspace</span>
+    <span class="n">rgb_path</span> <span class="o">=</span> <span class="s1">&#39;/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg&#39;</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+
+        <span class="c1"># ---------- RGB FRAME -------------------------------------------------</span>
+        <span class="n">original</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">rgb_path</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_COLOR</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">original</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;camera.py: failed to read </span><span class="si">{</span><span class="n">rgb_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">image</span> <span class="o">=</span> <span class="n">bridge</span><span class="o">.</span><span class="n">cv2_to_imgmsg</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;bgr8&quot;</span><span class="p">)</span>
+        <span class="n">image</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">image</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s1">&#39;camera_frame&#39;</span>
+        <span class="n">pub_rgb</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="c1"># ---------- DEPTH FRAME ----------------------------------------------</span>
+        <span class="n">depth_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">original</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>  <span class="c1"># constant 1 m</span>
+        <span class="n">depth_image</span> <span class="o">=</span> <span class="n">bridge</span><span class="o">.</span><span class="n">cv2_to_imgmsg</span><span class="p">(</span><span class="n">depth_np</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;8SC1&quot;</span><span class="p">)</span>
+        <span class="n">depth_image</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span>          <span class="c1"># keep in sync</span>
+        <span class="n">depth_image</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s1">&#39;depth_frame&#39;</span>
+        <span class="n">pub_depth</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">depth_image</span><span class="p">)</span>
+
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Entrypoint — start the publisher and swallow *only* ROS interruptions.</span>
+
+<span class="sd">    Any other unexpected exception will propagate and leave a useful traceback</span>
+<span class="sd">    in the ROS console, which is the preferred behaviour during development.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">publish</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="c1"># Expected when the node is killed gracefully.</span>
+        <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

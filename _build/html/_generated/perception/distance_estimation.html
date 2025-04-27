@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>distance_estimation &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">distance_estimation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/_generated/perception/distance_estimation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-distance_estimation">
+<span id="distance-estimation"></span><h1>distance_estimation<a class="headerlink" href="#module-distance_estimation" title="Link to this heading"></a></h1>
+<section id="distance-estimation-py">
+<h2>distance_estimation.py<a class="headerlink" href="#distance-estimation-py" title="Link to this heading"></a></h2>
+<section id="in-1-node-depth-aware-object-localisation-table-state-reasoning">
+<h3>3-in-1 node: <strong>depth-aware object localisation + table-state reasoning</strong><a class="headerlink" href="#in-1-node-depth-aware-object-localisation-table-state-reasoning" title="Link to this heading"></a></h3>
+<p>The node fuses <em>semantic</em> information from an object-detection topic with
+<em>metric</em> data from a depth image to output two things:</p>
+<ol class="arabic simple">
+<li><p><strong>/object_positions</strong> – a human-readable list of XYZ positions for every
+object currently visible to the camera (single string message for easy
+logging or GUI display).</p></li>
+<li><p><strong>/placement_decision</strong> – a concise keyword that tells the waiter robot
+<strong>what to do next at the table</strong> ( <em>PLACE</em> a dish, <em>FULL</em> do nothing,
+<em>CLEAR</em> remove crockery, or <em>IGNORE</em>).</p></li>
+</ol>
+<p>Both decisions are produced via the <strong>Strategy pattern</strong>, so swapping the
+business logic requires only instantiating a different strategy class.</p>
+<dl>
+<dt>Why split placement vs clearing?</dt><dd><ul class="simple">
+<li><p>Placement reasoning only cares about <em>free space</em> (≤ 3 items).</p></li>
+<li><p>Clearing reasoning only cares about detecting <em>specific</em> objects
+(plate + cup).</p></li>
+</ul>
+<p>Keeping them in separate interchangeable strategies lets you tune or
+replace each behaviour independently.</p>
+</dd>
+</dl>
+</section>
+<section id="ros-i-o-summary">
+<h3>ROS I/O summary<a class="headerlink" href="#ros-i-o-summary" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic name / Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Subscribe</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/camera_detections</span></code></p></td>
+<td><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – e.g.</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;Detected:</span> <span class="pre">cup,</span> <span class="pre">plate&quot;</span></code></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Subscribe</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/depth_processed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code> – 32-bit float</p></td>
+</tr>
+<tr class="row-even"><td><p>Publish</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/object_positions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – formatted XYZ list</p></td>
+</tr>
+<tr class="row-odd"><td><p>Publish</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/placement_decision</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> –
+<code class="docutils literal notranslate"><span class="pre">&quot;Decision:</span> <span class="pre">PLACE,</span> <span class="pre">CLEAR&quot;</span></code> etc.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="assumptions-limitations">
+<h3>Assumptions &amp; Limitations<a class="headerlink" href="#assumptions-limitations" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Exactly one RGB/Depth camera with <strong>pinhole intrinsics</strong> (fx, fy, cx, cy
+hard-coded below).</p></li>
+<li><p>Only the image-centre pixel is sampled for depth right now – replace that
+placeholder with real 2-D bounding-box → 3-D projection for production use.</p></li>
+<li><p>Object detection arrives as a simple string; in a real pipeline you would
+subscribe to a custom message carrying bounding boxes and class labels.</p></li>
+</ul>
+</section>
+</section>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.main" title="distance_estimation.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>()</p></td>
+<td><p>Spin the node until ROS master shuts down.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.ClearingStrategy" title="distance_estimation.ClearingStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClearingStrategy</span></code></a>()</p></td>
+<td><p>Simple clearing heuristic.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.DistanceEstimator" title="distance_estimation.DistanceEstimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DistanceEstimator</span></code></a>()</p></td>
+<td><p>Combines perception and reasoning in one ROS node.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.FindPlacementStrategy" title="distance_estimation.FindPlacementStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FindPlacementStrategy</span></code></a>()</p></td>
+<td><p><em>Minimal-viable</em> placement logic.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.TableAnalysisStrategy" title="distance_estimation.TableAnalysisStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableAnalysisStrategy</span></code></a>()</p></td>
+<td><p>Abstract contract for any <em>table-state</em> decision algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

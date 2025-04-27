@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interaction Components &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Orchestration &amp; Management" href="orchestration.html" />
+    <link rel="prev" title="Actuation &amp; Control Components" href="actuation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Interaction Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#voice_recognition.VoiceRecognition"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#voice_recognition.VoiceRecognition.data"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition.data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice_recognition.VoiceRecognition.stringDS"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition.stringDS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice_recognition.VoiceRecognition.voice_recognized_pub"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition.voice_recognized_pub</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice_recognition.VoiceRecognition.mic_callback"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition.mic_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice_recognition.VoiceRecognition.process_data"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition.process_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#speaker.Speaker"><code class="docutils literal notranslate"><span class="pre">Speaker</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#speaker.Speaker.msg"><code class="docutils literal notranslate"><span class="pre">Speaker.msg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#speaker.Speaker.pub_speak"><code class="docutils literal notranslate"><span class="pre">Speaker.pub_speak</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#speaker.Speaker.publish_msg"><code class="docutils literal notranslate"><span class="pre">Speaker.publish_msg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#speaker.Speaker.speaker_callback"><code class="docutils literal notranslate"><span class="pre">Speaker.speaker_callback()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Interaction Components</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/interaction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-voice_recognition">
+<span id="interaction-components"></span><h1>Interaction Components<a class="headerlink" href="#module-voice_recognition" title="Link to this heading"></a></h1>
+<p>voice_recognition.py</p>
+<p>ROS node that simulates voice recognition by mapping microphone channel integers
+to predefined phrases. Subscribes to ‘/mic_channel’ (Int32) and publishes recognized
+voice strings on ‘/voice_recogn’.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="voice_recognition.VoiceRecognition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voice_recognition.</span></span><span class="sig-name descname"><span class="pre">VoiceRecognition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voice_strings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/voice_recognition.html#VoiceRecognition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#voice_recognition.VoiceRecognition" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Node for mapping microphone channel inputs to voice recognition outputs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voice_recognition.VoiceRecognition.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#voice_recognition.VoiceRecognition.data" title="Link to this definition"></a></dt>
+<dd><p>Last received microphone channel message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>std_msgs.msg.Int32 or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voice_recognition.VoiceRecognition.stringDS">
+<span class="sig-name descname"><span class="pre">stringDS</span></span><a class="headerlink" href="#voice_recognition.VoiceRecognition.stringDS" title="Link to this definition"></a></dt>
+<dd><p>Mapping from microphone channel values to phrases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a> of int to str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voice_recognition.VoiceRecognition.voice_recognized_pub">
+<span class="sig-name descname"><span class="pre">voice_recognized_pub</span></span><a class="headerlink" href="#voice_recognition.VoiceRecognition.voice_recognized_pub" title="Link to this definition"></a></dt>
+<dd><p>Publisher for recognized voice strings on ‘/voice_recogn’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>rospy.Publisher</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="voice_recognition.VoiceRecognition.mic_callback">
+<span class="sig-name descname"><span class="pre">mic_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/voice_recognition.html#VoiceRecognition.mic_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#voice_recognition.VoiceRecognition.mic_callback" title="Link to this definition"></a></dt>
+<dd><p>Callback for incoming microphone channel data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>std_msgs.msg.Int32</em>) – The published microphone channel value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="voice_recognition.VoiceRecognition.process_data">
+<span class="sig-name descname"><span class="pre">process_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/voice_recognition.html#VoiceRecognition.process_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#voice_recognition.VoiceRecognition.process_data" title="Link to this definition"></a></dt>
+<dd><p>Process the latest microphone data and publish the corresponding voice string.</p>
+<p>If self.data is set and maps to a known phrase in stringDS, publish it.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-speaker">speaker.py</p>
+<p>ROS node for relaying speech output. Subscribes to ‘/speaker_channel’ for incoming text
+commands and republishes them on ‘/speaker_output’ for the robot’s speaker system.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="speaker.Speaker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">speaker.</span></span><span class="sig-name descname"><span class="pre">Speaker</span></span><a class="reference internal" href="_modules/speaker.html#Speaker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#speaker.Speaker" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Subscribes to an intermediate speech channel and republishes messages
+to the final speaker output.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="speaker.Speaker.msg">
+<span class="sig-name descname"><span class="pre">msg</span></span><a class="headerlink" href="#speaker.Speaker.msg" title="Link to this definition"></a></dt>
+<dd><p>The most recent speech message received.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>std_msgs.msg.String or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="speaker.Speaker.pub_speak">
+<span class="sig-name descname"><span class="pre">pub_speak</span></span><a class="headerlink" href="#speaker.Speaker.pub_speak" title="Link to this definition"></a></dt>
+<dd><p>Publisher for outgoing speech on ‘/speaker_output’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>rospy.Publisher</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="speaker.Speaker.publish_msg">
+<span class="sig-name descname"><span class="pre">publish_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/speaker.html#Speaker.publish_msg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#speaker.Speaker.publish_msg" title="Link to this definition"></a></dt>
+<dd><p>Publish the most recent speech message to the speaker output.</p>
+<section id="process">
+<h2>Process<a class="headerlink" href="#process" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>If a message has been received (self.msg is not None), republish it
+on ‘/speaker_output’.</p></li>
+</ul>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="speaker.Speaker.speaker_callback">
+<span class="sig-name descname"><span class="pre">speaker_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speaker.html#Speaker.speaker_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#speaker.Speaker.speaker_callback" title="Link to this definition"></a></dt>
+<dd><p>Callback invoked when a new speech command arrives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>std_msgs.msg.String</em>) – The incoming text to be spoken.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="actuation.html" class="btn btn-neutral float-left" title="Actuation &amp; Control Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="orchestration.html" class="btn btn-neutral float-right" title="Orchestration &amp; Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

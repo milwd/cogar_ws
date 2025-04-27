@@ -1,4 +1,15 @@
 #!/usr/bin/env python
+"""
+orchestration_and_coordination.py
+
+ROS node for order orchestration and coordination in the sushi restaurant.
+Offers two services:
+ - /robot_state_decision: returns the next order and robot state based on current input state.
+ - /robot_state_decision_add: adds a new order to the pending orders list.
+
+Loads and saves orders to a YAML file alongside the node.
+"""
+
 import rospy
 import yaml
 import os
@@ -42,7 +53,29 @@ class BusyState(State):
 # -- Orchestration Node --
 
 class orchestration_and_coordination:
+    """
+    Manages order queue and robot state transitions via ROS services.
+
+    Variables
+    ----------
+    yaml_path : str
+        Filesystem path to the YAML file storing pending orders.
+    data : dict
+        In-memory representation of orders, with key "orders" mapping to a list.
+    service : rospy.Service
+        Service server for '/robot_state_decision'.
+    service_order : rospy.Service
+        Service server for '/robot_state_decision_add'.
+    """
     def __init__(self):
+        """
+        Initialize the orchestration node:
+
+        - Initialize ROS node 'orchestration_and_coordination_node'.
+        - Determine YAML storage path for orders.
+        - Advertise two services: robot_state_decision and robot_state_decision_add.
+        - Load existing orders from disk.
+        """
         rospy.init_node("orchestration_and_coordination_node")
         self.number_of_robots = int(rospy.get_param("number_of_robots"))
 
@@ -75,6 +108,15 @@ class orchestration_and_coordination:
         self.robot_states[robot_id] = state
 
     def load_data(self):
+        """
+        Load pending orders from the YAML file into memory.
+        Creates an empty structure if the file does not exist.
+
+        Raises
+        ------
+        IOError
+            If the YAML file exists but cannot be read.
+        """
         if os.path.exists(self.yaml_path):
             with open(self.yaml_path, 'r') as file:
                 self.data = yaml.safe_load(file) or {"orders": []}
@@ -84,10 +126,23 @@ class orchestration_and_coordination:
                 yaml.dump(self.data, file)
 
     def save_data(self):
+        """
+        Persist the current in-memory orders list to the YAML file.
+        Overwrites the existing file.
+        """
         with open(self.yaml_path, 'w') as file:
             yaml.dump(self.data, file)
 
     def obtain_order(self):
+        """
+        Pop the first pending order from the queue.
+
+        Returns
+        -------
+        dict or None
+            The order dictionary with keys 'id_client' and 'food_list',
+            or None if no orders are pending.
+        """
         self.load_data()
         if self.data["orders"]:
             first_order = self.data["orders"].pop(0)
@@ -99,10 +154,38 @@ class orchestration_and_coordination:
             return None
 
     def handle_request(self, req):
+        """
+        Service callback for '/robot_state_decision'.
+
+        Parameters
+        ----------
+        req : tiago1.srv.robotstatedecisionRequest
+            Incoming request containing 'state_input'.
+
+        Returns
+        -------
+        robotstatedecisionResponse
+            - state_output: "Busy" if Free/Wait and an order exists, else original state or "Wait".
+            - order: list of food items for the robot to serve.
+            - success: True on valid transition with order, False otherwise.
+        """
         robot_id = req.robot_id
         return self.robot_states[robot_id].handle(self, req)
 
     def handle_request_new_order(self, req):
+        """
+        Service callback for '/robot_state_decision_add'.
+
+        Parameters
+        ----------
+        req : tiago1.srv.send_orderRequest
+            Incoming request containing 'order' with fields 'id_client' and 'list_of_orders'.
+
+        Returns
+        -------
+        send_orderResponse
+            - message: confirmation string ("order added").
+        """
         new_order = {
             "id_client": req.order.id_client,
             "food_list": list(req.order.list_of_orders)
@@ -115,6 +198,9 @@ class orchestration_and_coordination:
         return send_orderResponse(message="Order successfully added")
 
 if __name__ == "__main__":
+    """
+    Main entrypoint: instantiate the orchestration node and spin.
+    """
     try:
         orchestration_and_coordination()
         rospy.spin()
