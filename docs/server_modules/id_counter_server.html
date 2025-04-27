@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Id Counter Server &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Orchestration And Coordination" href="orchestration_and_coordination.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../server.html">Subsystem Server</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../server.html#what-the-server-subsystem-does">What the Server subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../server.html#design-patterns">Design Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../server.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../server.html#data-life-cycle">Data life-cycle</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../server.html#implementation-module">Implementation module</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="orchestration_and_coordination.html">Orchestration And Coordination</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Id Counter Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../server.html">Subsystem Server</a></li>
+      <li class="breadcrumb-item active">Id Counter Server</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/server_modules/id_counter_server.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id-counter-server">
+<h1>Id Counter Server<a class="headerlink" href="#id-counter-server" title="Link to this heading"></a></h1>
+<section id="module-id_counter_server">
+<span id="id-counter-server-py"></span><h2>id_counter_server.py<a class="headerlink" href="#module-id_counter_server" title="Link to this heading"></a></h2>
+<section id="unique-id-generation-service-thread-safe-counter-persisted-via-ros-parameter-server">
+<h3>Unique <strong>ID Generation Service</strong> – thread-safe counter persisted via ROS Parameter Server<a class="headerlink" href="#unique-id-generation-service-thread-safe-counter-persisted-via-ros-parameter-server" title="Link to this heading"></a></h3>
+<p>This node provides a simple ROS service that hands out <strong>globally unique integer IDs</strong>
+to clients on demand. It stores the current counter in the ROS Parameter Server
+under <cite>id_client_counter</cite>, so the count survives node restarts, and uses a
+threading lock to serialize concurrent requests safely.</p>
+</section>
+<section id="interfaces-strongly-typed-stateful">
+<h3>Interfaces (strongly-typed, stateful)<a class="headerlink" href="#interfaces-strongly-typed-stateful" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Interface</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Service</strong>: <code class="docutils literal notranslate"><span class="pre">/get_next_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/GetNextId</span></code></p></td>
+<td><p><strong>Stateful RPC</strong> – returns the next integer in a persisted counter; the service
+maintains and updates its internal state (the counter) on each call.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ros-service">
+<h3>ROS Service<a class="headerlink" href="#ros-service" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Service Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/get_next_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/GetNextId</span></code></p></td>
+<td><p>Returns the next unique integer ID in the sequence.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="id_counter_server.IdCounterServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">id_counter_server.</span></span><span class="sig-name descname"><span class="pre">IdCounterServer</span></span><a class="reference internal" href="../_modules/id_counter_server.html#IdCounterServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id_counter_server.IdCounterServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Provides the <cite>/get_next_id</cite> service and manages the counter state.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>id_counter<span class="classifier">int</span></dt><dd><p>Current value of the ID counter (loaded from Parameter Server).</p>
+</dd>
+<dt>_id_lock<span class="classifier">threading.Lock</span></dt><dd><p>Ensures only one thread can increment <cite>id_counter</cite> at a time.</p>
+</dd>
+<dt>id_service<span class="classifier">rospy.Service</span></dt><dd><p>Service handle for <cite>/get_next_id</cite>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="id_counter_server.IdCounterServer.handle_get_next_id">
+<span class="sig-name descname"><span class="pre">handle_get_next_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/id_counter_server.html#IdCounterServer.handle_get_next_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id_counter_server.IdCounterServer.handle_get_next_id" title="Link to this definition"></a></dt>
+<dd><p>Service callback: safely return the next ID and update the counter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>req</strong> (<em>GetNextIdRequest</em>) – Empty request (no fields).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Contains the allocated ID.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>GetNextIdResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="orchestration_and_coordination.html" class="btn btn-neutral float-left" title="Orchestration And Coordination" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subsystem Server &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Orchestration And Coordination" href="server_modules/orchestration_and_coordination.html" />
+    <link rel="prev" title="Speaker" href="interaction_modules/speaker.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-server-subsystem-does">What the Server subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-patterns">Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#singleton">Singleton</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strategy">Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-method">Template Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command">Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observer">Observer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-life-cycle">Data life-cycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-module">Implementation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="server_modules/orchestration_and_coordination.html">Orchestration And Coordination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="server_modules/id_counter_server.html">Id Counter Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Subsystem Server</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/server.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="subsystem-server">
+<h1>Subsystem Server<a class="headerlink" href="#subsystem-server" title="Link to this heading"></a></h1>
+<section id="what-the-server-subsystem-does">
+<h2>What the Server subsystem does<a class="headerlink" href="#what-the-server-subsystem-does" title="Link to this heading"></a></h2>
+<p>The central Server component, <strong>orchestration_and_coordination.py</strong>, manages the global workflow across all TIAGo robots:</p>
+<ol class="arabic simple">
+<li><p><strong>Order ingestion</strong>
+Exposes <cite>/robot_state_decision_add</cite> (tiago1/send_order) so that verified orders arrive and are appended to a <strong>persistent FIFO</strong> (<cite>tiago_data.yaml</cite>).</p></li>
+<li><p><strong>Order dispatch</strong>
+Implements <cite>/robot_state_decision</cite> (tiago1/robotstatedecision) which robots call with their current state (<cite>Free</cite>, <cite>Wait</cite>, etc.).
+- If the robot is <cite>Free</cite> and the queue is nonempty, the server <strong>pops</strong> the next order and returns it with <cite>Busy</cite>.
+- If the queue is empty, returns <cite>Wait</cite>.
+- If the robot is already <cite>Busy</cite>, acknowledges without popping.</p></li>
+<li><p><strong>Persistence &amp; resilience</strong>
+All changes (adds/removes) are flushed immediately to YAML.  On restart the server recovers the queue in &lt;1 s, and a corrupted file triggers automatic reconstruction from a backup.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/server_subsystem.png"><img alt="Deployment diagram – server, robots and services" class="align-center" src="_images/server_subsystem.png" style="width: 85%;" />
+</a>
+</section>
+<section id="design-patterns">
+<h2>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h2>
+<section id="singleton">
+<h3>Singleton<a class="headerlink" href="#singleton" title="Link to this heading"></a></h3>
+<p>In our server, the <cite>OrderQueue</cite> class wraps all YAML I/O and in-memory queue state.  By making it a singleton, every service callback, recovery routine and backup handler uses the same instance, preventing concurrent writes and ensuring <strong>consistency</strong> across the node.</p>
+</section>
+<section id="strategy">
+<h3>Strategy<a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
+<p>Currently the server uses a FIFO strategy (<cite>FirstInFirstOutStrategy</cite>), but by abstracting dispatch logic into a pluggable <cite>DispatchStrategy</cite> interface, we could swap in a <strong>priority-based</strong> strategy (e.g., urgent orders first) or <strong>round-robin</strong> across tables without touching the service handlers themselves.</p>
+</section>
+<section id="template-method">
+<h3>Template Method<a class="headerlink" href="#template-method" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>The <cite>ServiceHandler</cite> base class in the server defines:</dt><dd><ol class="arabic simple">
+<li><p><strong>authenticate &amp; validate</strong> request</p></li>
+<li><p><strong>execute</strong> (add or dispatch)</p></li>
+<li><p><strong>format</strong> and <strong>return</strong> response</p></li>
+</ol>
+</dd>
+</dl>
+<p>By overriding only the <cite>execute()</cite> hook for <cite>AddOrderHandler</cite> and <cite>DispatchOrderHandler</cite>, we enforce a consistent flow—validation, execution, persistence, response—for both services.</p>
+</section>
+<section id="command">
+<h3>Command<a class="headerlink" href="#command" title="Link to this heading"></a></h3>
+<p>Every incoming <cite>send_orderRequest</cite> or <cite>robotstatedecisionRequest</cite> is wrapped in a <cite>Command</cite> subclass (<cite>AddOrderCommand</cite>, <cite>DispatchOrderCommand</cite>) with an <cite>execute()</cite> method.  This allows uniform logging, retry logic, or queuing of failed commands without duplicating service code.</p>
+</section>
+<section id="observer">
+<h3>Observer<a class="headerlink" href="#observer" title="Link to this heading"></a></h3>
+<p>The <cite>OrderQueue</cite> singleton notifies registered observers (e.g., a backup manager, a metrics logger) whenever an order is added or removed.  Observers then perform side‐effects—writing backups, updating monitoring dashboards—<strong>automatically</strong>, keeping the core queue logic free of ancillary concerns.</p>
+</section>
+</section>
+<section id="ros-interfaces-kpis">
+<h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 25.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Service / Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>KPI / Note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code> (srv)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/robotstatedecision</span></code></p></td>
+<td><p>≥ 99.9 % success, response &lt; 100 ms; returning <cite>Busy</cite> only when queue ≥ 1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code> (srv)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/send_order</span></code></p></td>
+<td><p>YAML write &lt; 50 ms, supports ≥ 20 req/s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tiago_data.yaml</span></code> (file I/O)</p></td>
+<td><p>YAML</p></td>
+<td><p>Survive restart; corruption detection &amp; recovery &lt; 1 s</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-life-cycle">
+<h2>Data life-cycle<a class="headerlink" href="#data-life-cycle" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Order added</strong> – <cite>send_order</cite> service appends to in-memory queue and saves YAML.</p></li>
+<li><p><strong>Robot query</strong> – <cite>robotstatedecision</cite> service reads queue head and robot state:
+- <cite>Free</cite> → pop &amp; return order + set <cite>Busy</cite>.
+- <cite>Wait</cite> or empty queue → return <cite>Wait</cite>.</p></li>
+<li><p><strong>Persistence</strong> – every mutation triggers an immediate YAML flush.</p></li>
+<li><p><strong>Recovery</strong> – on startup, existing YAML is loaded; if malformed, a backup is restored or recreated.</p></li>
+</ol>
+</section>
+<section id="implementation-module">
+<h2>Implementation module<a class="headerlink" href="#implementation-module" title="Link to this heading"></a></h2>
+<p>Full API documentation:</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Server Component</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="server_modules/orchestration_and_coordination.html">Orchestration And Coordination</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server_modules/id_counter_server.html">Id Counter Server</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="interaction_modules/speaker.html" class="btn btn-neutral float-left" title="Speaker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="server_modules/orchestration_and_coordination.html" class="btn btn-neutral float-right" title="Orchestration And Coordination" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
