@@ -21,6 +21,7 @@ file(REMOVE_RECURSE
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js"
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/GetNextId.js"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js"
   "CMakeFiles/tiago1_generate_messages_nodejs"

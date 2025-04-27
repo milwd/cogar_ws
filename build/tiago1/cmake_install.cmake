@@ -45,6 +45,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/tiago1/srv" TYPE FILE FILES
     "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/send_order.srv"
     "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/robotstatedecision.srv"
+    "/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/GetNextId.srv"
     )
 endif()
 
@@ -217,5 +218,9 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/tiago1" TYPE PROGRAM FILES "/root/Desktop/cogar_ass1/cogar_ws/build/tiago1/catkin_generated/installspace/topic_adapter.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/tiago1" TYPE PROGRAM FILES "/root/Desktop/cogar_ass1/cogar_ws/build/tiago1/catkin_generated/installspace/id_counter_server.py")
 endif()
 

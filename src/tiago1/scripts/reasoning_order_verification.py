@@ -4,6 +4,9 @@ from std_msgs.msg import String, Int32
 from tiago1.msg import Voice_rec
 import threading
 from tiago1.srv import send_order,send_orderRequest
+from tiago1.srv import GetNextId, GetNextIdRequest
+
+
 import sys
 
 
@@ -19,6 +22,8 @@ class ReasoningOrderVerification:
         rospy.Subscriber(f'/{self.robot_number}/voice_recogn',String,self.string_callback)
         rospy.wait_for_service(f'/{self.robot_number}/robot_state_decision_add')  
         self.server_client = rospy.ServiceProxy(f'/{self.robot_number}/robot_state_decision_add', send_order)  
+        self.get_next_id = rospy.ServiceProxy("get_next_id", GetNextId)
+
         self.error_notification = rospy.Publisher(f'/{self.robot_number}/error_from_interaction', Int32, queue_size=10)
         self.verific_taskmanager = rospy.Publisher(f'/{self.robot_number}/verif_T_manager', Voice_rec, queue_size = 10)
         self.counter_id = 0
@@ -39,15 +44,19 @@ class ReasoningOrderVerification:
                 # rospy.loginfo(f"Found items: {found_items}")
                 if found_items:
                     order = Voice_rec()
-                    with self.file_lock:
-                        order.id_client =  int(rospy.get_param("id_client_counter")) 
-                        for item in found_items:
-                            order.list_of_orders.append(item)
-                        self.send_request(order)
-                        self.verific_taskmanager.publish(order)
-                        # rospy.loginfo(f"Published verified order: {order}")
-                        
-                        rospy.set_param("id_client_counter",int(rospy.get_param("id_client_counter")) +1)
+                    
+                    response = self.get_next_id()
+
+
+                    order.id_client =  response.id
+                    
+                    for item in found_items:
+                        order.list_of_orders.append(item)
+                    self.send_request(order)
+                    self.verific_taskmanager.publish(order)
+                    # rospy.loginfo(f"Published verified order: {order}")
+                    
+                    # rospy.set_param("id_client_counter",int(rospy.get_param("id_client_counter")) +1)
                 else:
                     self.error_code = 1
                     self.error_notification.publish(self.error_code)

@@ -22,6 +22,7 @@ file(REMOVE_RECURSE
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlGoal.l"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/MovementControlResult.l"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/msg/Voice_rec.l"
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/GetNextId.l"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/robotstatedecision.l"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/roseus/ros/tiago1/srv/send_order.l"
   "CMakeFiles/tiago1_generate_messages_eus"

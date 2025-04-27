@@ -66,6 +66,7 @@ add_service_files(
   FILES
   send_order.srv
   robotstatedecision.srv
+  GetNextId.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -200,6 +201,7 @@ catkin_install_python(PROGRAMS
   scripts/reasoning_action.py
   scripts/reasoning_order_verification.py
   scripts/topic_adapter.py
+  scripts/id_counter_server.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

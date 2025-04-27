@@ -11,7 +11,7 @@
   <param name="number_of_robots" value="6"/>
   <param name="id_client_counter" type = "int" value="0"/>
   <node pkg="tiago1" type="orchestration_and_coordination.py" name="orchestration_and_coordination_node" output = "screen">  </node>
-
+  <node pkg="tiago1" type="id_counter_server.py" name="next_id_node" >  </node>
   <node pkg="tiago1" type="sonar.py" name="sonar_node" args="1">  </node>
   <node pkg="tiago1" type="lidar.py" name="lidar_node" args="1">  </node>
   <node pkg="tiago1" type="camera.py" name="camera_node" args="1">  </node>
