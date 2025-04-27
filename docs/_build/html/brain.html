@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subsystem Brain &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reasoning Action" href="brain_modules/reasoning_action.html" />
+    <link rel="prev" title="Distance Estimation" href="vision_modules/distance_estimation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Brain</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-brain-does">What the “Brain” does</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#design-patterns">Design Patterns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-roles">Component roles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-modules">Implementation modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="brain_modules/reasoning_action.html">Reasoning Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="brain_modules/reasoning_table_placement.html">Reasoning Table Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="brain_modules/task_manager.html">Task Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="brain_modules/reasoning_speech_generation.html">Reasoning Speech Generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Subsystem Brain</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/brain.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="subsystem-brain">
+<h1>Subsystem Brain<a class="headerlink" href="#subsystem-brain" title="Link to this heading"></a></h1>
+<section id="what-the-brain-does">
+<h2>What the “Brain” does<a class="headerlink" href="#what-the-brain-does" title="Link to this heading"></a></h2>
+<p>The Brain is the <strong>central decision-making layer</strong> of each TIAGo robot.  It takes in
+– high-level customer intent (orders parsed from speech),
+– real-time context (table occupancy, robot locations, task queue state), and
+– execution feedback (navigation and manipulation results)</p>
+<p>and synthesises a <strong>coherent, ordered plan of actions</strong> for the robot to follow.
+Its responsibilities include:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>Task arbitration</strong>
+Polling the central <cite>/robot_state_decision</cite> service to claim and sequence tasks
+in a multi-robot fleet, ensuring no two robots attempt the same table at once.</p></li>
+<li><p><strong>Motion planning handoff</strong>
+Emitting a minimal global path (via <cite>/planned_path</cite>) and table commands
+(<cite>PLACE</cite>/<cite>CLEAR</cite>) so that downstream navigation and manipulation layers can take over.</p></li>
+<li><p><strong>Manipulation choreography</strong>
+Orchestrating a tight sequence of ActionLib goals (base move → arm motion
+→ gripper open/close), recovering from failures or pre-emptions gracefully.</p></li>
+<li><p><strong>Customer interaction timing</strong>
+Buffering and throttling spoken notifications (e.g. “Your sushi is here”)
+so that announcements occur at natural breakpoints without overlapping.</p></li>
+</ol>
+</div></blockquote>
+<section id="design-patterns">
+<h3>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h3>
+<p>Below are the key design patterns applied in the Brain subsystem, with explanations of their roles and benefits.</p>
+<ul class="simple">
+<li><p><strong>Strategy</strong></p>
+<ul>
+<li><p><strong>What it is</strong>: Defines a family of interchangeable algorithms behind a common interface.</p></li>
+<li><p><strong>Where used</strong>:</p>
+<ul>
+<li><p><em>Reasoning Action</em> can swap different Table-Placement strategies (e.g. “FindPlacement” vs. “Clearing”) without changing its core logic.</p></li>
+</ul>
+</li>
+<li><p><strong>Why</strong>:</p>
+<ul>
+<li><p>Promotes <strong>extensibility</strong>—new reasoning heuristics can be added by implementing the same interface.</p></li>
+<li><p>Keeps high-level orchestration code <strong>decoupled</strong> from specific placement algorithms.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Command</strong></p>
+<ul>
+<li><p><strong>What it is</strong>: Encapsulates a request as an object, decoupling the sender of a command from its executor.</p></li>
+<li><p><strong>Where used</strong>:</p>
+<ul>
+<li><p>Each ActionLib goal (<cite>MovementControlAction</cite>, <cite>ArmControlAction</cite>, <cite>GripperControlAction</cite>) wraps a motion or manipulation request.</p></li>
+</ul>
+</li>
+<li><p><strong>Why</strong>:</p>
+<ul>
+<li><p>Enables <strong>queuing</strong>, <strong>logging</strong>, <strong>undo</strong> and <strong>retry</strong> of discrete robot actions.</p></li>
+<li><p>Standardizes how tasks are issued and tracked through feedback/result callbacks.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Observer</strong></p>
+<ul>
+<li><p><strong>What it is</strong>: Objects (observers) register interest in state changes or events from another object (subject).</p></li>
+<li><p><strong>Where used</strong>:</p>
+<ul>
+<li><p><em>Task Manager</em> subscribes to <cite>/task_feedback</cite> and reacts whenever controllers publish status updates.</p></li>
+</ul>
+</li>
+<li><p><strong>Why</strong>:</p>
+<ul>
+<li><p>Provides a <strong>push-based</strong> mechanism for keeping the orchestrator in sync with low-level controllers without tight polling loops.</p></li>
+<li><p>Simplifies <strong>event-driven</strong> reac­tion to success, failure or pre-emption.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Adapter</strong></p>
+<ul>
+<li><p><strong>What it is</strong>: Converts the interface of one class into another the client expects.</p></li>
+<li><p><strong>Where used</strong>:</p>
+<ul>
+<li><p><em>Reasoning Table Placement</em> takes a high-level decision string (e.g. <cite>“Decision: PLACE”</cite>) and adapts it into the exact low-level command (<cite>“PLACE_DISH”</cite>) required by the manipulation stack.</p></li>
+</ul>
+</li>
+<li><p><strong>Why</strong>:</p>
+<ul>
+<li><p>Isolates <strong>format translation</strong> between cognitive outputs and motor command inputs.</p></li>
+<li><p>Allows the front-end reasoning logic to evolve independently of downstream command formats.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Template Method</strong></p>
+<ul>
+<li><p><strong>What it is</strong>: Defines the skeleton of an algorithm in a base class, deferring some steps to subclasses.</p></li>
+<li><p><strong>Where used</strong>:</p>
+<ul>
+<li><p><em>Reasoning Speech Generation</em> implements a fixed loop—cache latest text, then republish at 1 Hz—while allowing future variants to override caching or timing behavior.</p></li>
+</ul>
+</li>
+<li><p><strong>Why</strong>:</p>
+<ul>
+<li><p>Ensures <strong>consistent control flow</strong> for speech throttling, while making it easy to customize individual steps (e.g. different throttling rates, latching policies) without rewriting the loop.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="_images/brain_subsystem.png"><img alt="Component diagram of the Brain subsystem" class="align-center" src="_images/brain_subsystem.png" style="width: 90%;" />
+</a>
+</section>
+<section id="component-roles">
+<h3>Component roles<a class="headerlink" href="#component-roles" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>Reasoning Action</strong>
+- Receives a <cite>nav_msgs/Path</cite> (first waypoint) and a table-command string.
+- Sends a sequence of three ActionLib goals (Command pattern):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>MovementControlAction</strong> (drive to the table)</p></li>
+<li><p><strong>ArmControlAction</strong> (lower/lift arm)</p></li>
+<li><p><strong>GripperControlAction</strong> (open/close)</p></li>
+</ol>
+</div></blockquote>
+<ul class="simple">
+<li><p>Monitors feedback at each stage and retries or aborts on error.</p></li>
+</ul>
+</li>
+<li><p><strong>Reasoning Table Placement</strong>
+- Subscribes to <cite>/placement_decision</cite> and applies a substring match.
+- Maps <cite>“PLACE”</cite> → <cite>“PLACE_DISH”</cite>, <cite>“CLEAR”</cite> → <cite>“CLEAR_TABLE”</cite>, others → <cite>“NO_ACTION”</cite>.
+- Adapts the high-level decision into a ROS command (Adapter pattern) and publishes to <cite>/table_reasoning_commands</cite>.</p></li>
+<li><p><strong>Task Manager</strong>
+- Observes <cite>/task_feedback</cite> messages (<cite>Observer</cite> pattern) from controllers (e.g. <cite>“BASE_DONE”</cite>, <cite>“ARM_DONE”</cite>).
+- Caches the latest state and calls the <cite>/robot_state_decision</cite> service with it.
+- Receives the next high-level task (order ID + dish list) and hands it to Reasoning Action.</p></li>
+<li><p><strong>Reasoning Speech Generation</strong>
+- Subscribes to <cite>/task_speech_command</cite> (text) and caches the latest message.
+- Runs a 1 Hz republish loop (Template Method) to <cite>/speaker_channel</cite>, ensuring at most one announcement per second.
+- Uses ROS latching so late subscribers still receive the current sentence.</p></li>
+</ul>
+</section>
+</section>
+<section id="ros-interfaces-kpis">
+<h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic / Service</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>KPI / Note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>`/planned_path` → Reasoning Action</strong></p></td>
+<td><p><cite>nav_msgs/Path</cite></p></td>
+<td><p>First waypoint within <strong>0.5 m</strong> of true goal; end-to-end latency ≤ <strong>500 ms</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>`/table_reasoning_commands` ← Table Placement</strong></p></td>
+<td><p><cite>std_msgs/String</cite></p></td>
+<td><p>Commands must be issued within <strong>200 ms</strong> of decision change</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>`/task_feedback` (out)</strong></p></td>
+<td><p><cite>std_msgs/String</cite></p></td>
+<td><p>Propagate controller state changes within <strong>200 ms</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>`/robot_state_decision` (srv)</strong></p></td>
+<td><p><cite>tiago1/robotstatedecision</cite></p></td>
+<td><p>Service response time ≤ <strong>100 ms</strong>, ≥ 99.9 % success rate</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>`/speaker_channel` (out)</strong></p></td>
+<td><p><cite>std_msgs/String</cite></p></td>
+<td><p>Announcements delivered ≤ <strong>1 s</strong> after cognitive request</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="implementation-modules">
+<h2>Implementation modules<a class="headerlink" href="#implementation-modules" title="Link to this heading"></a></h2>
+<p>Detailed API docs for each Brain component can be found below.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Brain Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="brain_modules/reasoning_action.html">Reasoning Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain_modules/reasoning_table_placement.html">Reasoning Table Placement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain_modules/task_manager.html">Task Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain_modules/reasoning_speech_generation.html">Reasoning Speech Generation</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vision_modules/distance_estimation.html" class="btn btn-neutral float-left" title="Distance Estimation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="brain_modules/reasoning_action.html" class="btn btn-neutral float-right" title="Reasoning Action" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
