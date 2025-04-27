@@ -4,7 +4,7 @@ from std_msgs.msg import String, Int32
 from tiago1.msg import Voice_rec
 import threading
 from tiago1.srv import send_order,send_orderRequest
-from tiago1.srv import GetNextId
+from tiago1.srv import GetNextId, GetNextIdRequest
 
 
 import sys
@@ -22,7 +22,7 @@ class ReasoningOrderVerification:
         rospy.Subscriber(f'/{self.robot_number}/voice_recogn',String,self.string_callback)
         rospy.wait_for_service(f'/{self.robot_number}/robot_state_decision_add')  
         self.server_client = rospy.ServiceProxy(f'/{self.robot_number}/robot_state_decision_add', send_order)  
-        self.get_next_id = rospy.ServiceProxy('get_next_id', GetNextId)
+        self.get_next_id = rospy.ServiceProxy("get_next_id", GetNextId)
 
         self.error_notification = rospy.Publisher(f'/{self.robot_number}/error_from_interaction', Int32, queue_size=10)
         self.verific_taskmanager = rospy.Publisher(f'/{self.robot_number}/verif_T_manager', Voice_rec, queue_size = 10)
@@ -44,10 +44,11 @@ class ReasoningOrderVerification:
                 # rospy.loginfo(f"Found items: {found_items}")
                 if found_items:
                     order = Voice_rec()
-                    response =self.get_next_id()
+                    
+                    response = self.get_next_id()
 
 
-                    order.id_client =  response.id()
+                    order.id_client =  response.id
                     
                     for item in found_items:
                         order.list_of_orders.append(item)

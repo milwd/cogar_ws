@@ -30,8 +30,6 @@
   <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node" args="1">  </node>
   <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node" args="1">  </node>
   <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node" args="1">  </node>
-
-
   <node pkg="tiago1" type="sonar.py" name="sonar_node2" args="2">  </node>
   <node pkg="tiago1" type="lidar.py" name="lidar_node2" args="2">  </node>
   <node pkg="tiago1" type="camera.py" name="camera_node2" args="2">  </node>
@@ -50,7 +48,6 @@
   <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node2" args="2">  </node>
   <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node2" args="2">  </node>
   <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node2" args="2">  </node>
-
     <node pkg="tiago1" type="sonar.py" name="sonar_node3" args="3">  </node>
   <node pkg="tiago1" type="lidar.py" name="lidar_node3" args="3">  </node>
   <node pkg="tiago1" type="camera.py" name="camera_node3" args="3">  </node>
@@ -69,8 +66,6 @@
   <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node3" args="3">  </node>
   <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node3" args="3">  </node>
   <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node3" args="3">  </node>
-
-
     <node pkg="tiago1" type="sonar.py" name="sonar_node4" args="4">  </node>
   <node pkg="tiago1" type="lidar.py" name="lidar_node4" args="4">  </node>
   <node pkg="tiago1" type="camera.py" name="camera_node4" args="4">  </node>
@@ -89,7 +84,6 @@
   <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node4" args="4">  </node>
   <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node4" args="4">  </node>
   <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node4" args="4">  </node>
-
     <node pkg="tiago1" type="sonar.py" name="sonar_node5" args="5">  </node>
   <node pkg="tiago1" type="lidar.py" name="lidar_node5" args="5">  </node>
   <node pkg="tiago1" type="camera.py" name="camera_node5" args="5">  </node>
@@ -108,8 +102,6 @@
   <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node5" args="5">  </node>
   <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node5" args="5">  </node>
   <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node5" args="5">  </node>
-
-
     <node pkg="tiago1" type="sonar.py" name="sonar_node6" args="6">  </node>
   <node pkg="tiago1" type="lidar.py" name="lidar_node6" args="6">  </node>
   <node pkg="tiago1" type="camera.py" name="camera_node6" args="6">  </node>
