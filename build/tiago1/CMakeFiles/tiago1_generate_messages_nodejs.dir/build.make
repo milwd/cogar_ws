@@ -43,264 +43,264 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/cogar_ws/build
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
 
 # Utility rule file for tiago1_generate_messages_nodejs.
 
 # Include the progress variables for this target.
 include tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/progress.make
 
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js
-tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js
+tiago1/CMakeFiles/tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js
 
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js: /root/cogar_ws/src/tiago1/msg/Voice_rec.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from tiago1/Voice_rec.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from tiago1/Voice_rec.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from tiago1/MovementControlAction.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from tiago1/MovementControlAction.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlAction.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from tiago1/MovementControlActionGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from tiago1/MovementControlActionGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from tiago1/MovementControlActionResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from tiago1/MovementControlActionResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Javascript code from tiago1/MovementControlActionFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Javascript code from tiago1/MovementControlActionFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlActionFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Javascript code from tiago1/MovementControlGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseStamped.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/nav_msgs/msg/Path.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Javascript code from tiago1/MovementControlGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Javascript code from tiago1/MovementControlResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Javascript code from tiago1/MovementControlResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Javascript code from tiago1/MovementControlFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Javascript code from tiago1/MovementControlFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/MovementControlFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating Javascript code from tiago1/ArmControlAction.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating Javascript code from tiago1/ArmControlAction.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlAction.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating Javascript code from tiago1/ArmControlActionGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating Javascript code from tiago1/ArmControlActionGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating Javascript code from tiago1/ArmControlActionResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating Javascript code from tiago1/ArmControlActionResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating Javascript code from tiago1/ArmControlActionFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating Javascript code from tiago1/ArmControlActionFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlActionFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating Javascript code from tiago1/ArmControlGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Generating Javascript code from tiago1/ArmControlGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating Javascript code from tiago1/ArmControlResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Generating Javascript code from tiago1/ArmControlResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating Javascript code from tiago1/ArmControlFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Generating Javascript code from tiago1/ArmControlFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/ArmControlFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating Javascript code from tiago1/GripperControlAction.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Generating Javascript code from tiago1/GripperControlAction.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlAction.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating Javascript code from tiago1/GripperControlActionGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Generating Javascript code from tiago1/GripperControlActionGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Generating Javascript code from tiago1/GripperControlActionResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Generating Javascript code from tiago1/GripperControlActionResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Generating Javascript code from tiago1/GripperControlActionFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalStatus.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/share/actionlib_msgs/msg/GoalID.msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Generating Javascript code from tiago1/GripperControlActionFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlActionFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Generating Javascript code from tiago1/GripperControlGoal.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Generating Javascript code from tiago1/GripperControlGoal.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlGoal.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Generating Javascript code from tiago1/GripperControlResult.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Generating Javascript code from tiago1/GripperControlResult.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlResult.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js: /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Generating Javascript code from tiago1/GripperControlFeedback.msg"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js: /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Generating Javascript code from tiago1/GripperControlFeedback.msg"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg/GripperControlFeedback.msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js: /root/cogar_ws/src/tiago1/srv/send_order.srv
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js: /root/cogar_ws/src/tiago1/msg/Voice_rec.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Generating Javascript code from tiago1/send_order.srv"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/src/tiago1/srv/send_order.srv -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/send_order.srv
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg/Voice_rec.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Generating Javascript code from tiago1/send_order.srv"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/send_order.srv -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv
 
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js: /root/cogar_ws/src/tiago1/srv/robotstatedecision.srv
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Generating Javascript code from tiago1/robotstatedecision.srv"
-	cd /root/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/cogar_ws/src/tiago1/srv/robotstatedecision.srv -Itiago1:/root/cogar_ws/src/tiago1/msg -Itiago1:/root/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js: /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/robotstatedecision.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/root/Desktop/cogar_ass1/cogar_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Generating Javascript code from tiago1/robotstatedecision.srv"
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /root/Desktop/cogar_ass1/cogar_ws/src/tiago1/srv/robotstatedecision.srv -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/msg -Itiago1:/root/Desktop/cogar_ass1/cogar_ws/devel/share/tiago1/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Iactionlib_msgs:/opt/ros/noetic/share/actionlib_msgs/cmake/../msg -Inav_msgs:/opt/ros/noetic/share/nav_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p tiago1 -o /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv
 
 tiago1_generate_messages_nodejs: tiago1/CMakeFiles/tiago1_generate_messages_nodejs
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js
-tiago1_generate_messages_nodejs: /root/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/Voice_rec.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlAction.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionGoal.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionResult.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlActionFeedback.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlGoal.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlResult.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/MovementControlFeedback.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlAction.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionGoal.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionResult.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlActionFeedback.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlGoal.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlResult.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/ArmControlFeedback.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlAction.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionGoal.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionResult.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlActionFeedback.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlGoal.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlResult.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/msg/GripperControlFeedback.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/send_order.js
+tiago1_generate_messages_nodejs: /root/Desktop/cogar_ass1/cogar_ws/devel/share/gennodejs/ros/tiago1/srv/robotstatedecision.js
 tiago1_generate_messages_nodejs: tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build.make
 
 .PHONY : tiago1_generate_messages_nodejs
@@ -311,10 +311,10 @@ tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build: tiago1_generate_mes
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/build
 
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/clean:
-	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_nodejs.dir/cmake_clean.cmake
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_generate_messages_nodejs.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/clean
 
 tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/depend:
-	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : tiago1/CMakeFiles/tiago1_generate_messages_nodejs.dir/depend
 

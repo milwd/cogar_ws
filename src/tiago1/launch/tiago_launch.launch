@@ -8,7 +8,8 @@
   <node pkg="rosbag" type="play" name="play_scan_lidar" args="$(find tiago1)/rosbag/scan_lidar.bag --loop"/>
   <node pkg="rosbag" type="play" name="play_sonar" args="$(find tiago1)/rosbag/sonar.bag --loop"/>
 
-  <param name="number_of_robots" value="2"/>
+  <param name="number_of_robots" value="6"/>
+  <param name="id_client_counter" type = "int" value="0"/>
   <node pkg="tiago1" type="orchestration_and_coordination.py" name="orchestration_and_coordination_node" output = "screen">  </node>
 
   <node pkg="tiago1" type="sonar.py" name="sonar_node" args="1">  </node>
@@ -49,5 +50,83 @@
   <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node2" args="2">  </node>
   <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node2" args="2">  </node>
   <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node2" args="2">  </node>
+
+    <node pkg="tiago1" type="sonar.py" name="sonar_node3" args="3">  </node>
+  <node pkg="tiago1" type="lidar.py" name="lidar_node3" args="3">  </node>
+  <node pkg="tiago1" type="camera.py" name="camera_node3" args="3">  </node>
+  <node pkg="tiago1" type="microphone.py" name="microphone_node3" args="3">  </node>
+  <node pkg="tiago1" type="speaker.py" name="speaker_node3" args="3">  </node>
+  <node pkg="tiago1" type="voice_recognition.py" name="voice_recognition_node3" args="3">  </node>
+  <node pkg="tiago1" type="task_manager.py" name="task_manager_node3" args="3" output = "screen">  </node>
+  <node pkg="tiago1" type="sensor_fusion.py" name="sensor_fusion_node3" args="3">  </node>
+  <node pkg="tiago1" type="slam.py" name="slam_node3" args="3">  </node>
+  <node pkg="tiago1" type="path_planning.py" name="path_planning_node3" args="3">  </node>
+  <node pkg="tiago1" type="camera_preprocessing.py" name="camera_preprocessing_node3" args="3">  </node>
+  <node pkg="tiago1" type="object_detection.py" name="object_detection_node3" args="3">  </node>
+  <node pkg="tiago1" type="distance_estimation.py" name="distance_estimation_node3" args="3">  </node>
+  <node pkg="tiago1" type="control_wheel.py" name="control_wheel_node3" args="3">  </node>
+  <node pkg="tiago1" type="control_arm.py" name="control_arm_node3" args="3">  </node>
+  <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node3" args="3">  </node>
+  <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node3" args="3">  </node>
+  <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node3" args="3">  </node>
+
+
+    <node pkg="tiago1" type="sonar.py" name="sonar_node4" args="4">  </node>
+  <node pkg="tiago1" type="lidar.py" name="lidar_node4" args="4">  </node>
+  <node pkg="tiago1" type="camera.py" name="camera_node4" args="4">  </node>
+  <node pkg="tiago1" type="microphone.py" name="microphone_node4" args="4">  </node>
+  <node pkg="tiago1" type="speaker.py" name="speaker_node4" args="4">  </node>
+  <node pkg="tiago1" type="voice_recognition.py" name="voice_recognition_node4" args="4">  </node>
+  <node pkg="tiago1" type="task_manager.py" name="task_manager_node4" args="4" output = "screen">  </node>
+  <node pkg="tiago1" type="sensor_fusion.py" name="sensor_fusion_node4" args="4">  </node>
+  <node pkg="tiago1" type="slam.py" name="slam_node4" args="4">  </node>
+  <node pkg="tiago1" type="path_planning.py" name="path_planning_node4" args="4">  </node>
+  <node pkg="tiago1" type="camera_preprocessing.py" name="camera_preprocessing_node4" args="4">  </node>
+  <node pkg="tiago1" type="object_detection.py" name="object_detection_node4" args="4">  </node>
+  <node pkg="tiago1" type="distance_estimation.py" name="distance_estimation_node4" args="4">  </node>
+  <node pkg="tiago1" type="control_wheel.py" name="control_wheel_node4" args="4">  </node>
+  <node pkg="tiago1" type="control_arm.py" name="control_arm_node4" args="4">  </node>
+  <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node4" args="4">  </node>
+  <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node4" args="4">  </node>
+  <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node4" args="4">  </node>
+
+    <node pkg="tiago1" type="sonar.py" name="sonar_node5" args="5">  </node>
+  <node pkg="tiago1" type="lidar.py" name="lidar_node5" args="5">  </node>
+  <node pkg="tiago1" type="camera.py" name="camera_node5" args="5">  </node>
+  <node pkg="tiago1" type="microphone.py" name="microphone_node5" args="5">  </node>
+  <node pkg="tiago1" type="speaker.py" name="speaker_node5" args="5">  </node>
+  <node pkg="tiago1" type="voice_recognition.py" name="voice_recognition_node5" args="5">  </node>
+  <node pkg="tiago1" type="task_manager.py" name="task_manager_node5" args="5" output = "screen">  </node>
+  <node pkg="tiago1" type="sensor_fusion.py" name="sensor_fusion_node5" args="5">  </node>
+  <node pkg="tiago1" type="slam.py" name="slam_node5" args="5">  </node>
+  <node pkg="tiago1" type="path_planning.py" name="path_planning_node5" args="5">  </node>
+  <node pkg="tiago1" type="camera_preprocessing.py" name="camera_preprocessing_node5" args="5">  </node>
+  <node pkg="tiago1" type="object_detection.py" name="object_detection_node5" args="5">  </node>
+  <node pkg="tiago1" type="distance_estimation.py" name="distance_estimation_node5" args="5">  </node>
+  <node pkg="tiago1" type="control_wheel.py" name="control_wheel_node5" args="5">  </node>
+  <node pkg="tiago1" type="control_arm.py" name="control_arm_node5" args="5">  </node>
+  <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node5" args="5">  </node>
+  <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node5" args="5">  </node>
+  <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node5" args="5">  </node>
+
+
+    <node pkg="tiago1" type="sonar.py" name="sonar_node6" args="6">  </node>
+  <node pkg="tiago1" type="lidar.py" name="lidar_node6" args="6">  </node>
+  <node pkg="tiago1" type="camera.py" name="camera_node6" args="6">  </node>
+  <node pkg="tiago1" type="microphone.py" name="microphone_node6" args="6">  </node>
+  <node pkg="tiago1" type="speaker.py" name="speaker_node6" args="6">  </node>
+  <node pkg="tiago1" type="voice_recognition.py" name="voice_recognition_node6" args="6">  </node>
+  <node pkg="tiago1" type="task_manager.py" name="task_manager_node6" args="6" output = "screen">  </node>
+  <node pkg="tiago1" type="sensor_fusion.py" name="sensor_fusion_node6" args="6">  </node>
+  <node pkg="tiago1" type="slam.py" name="slam_node6" args="6">  </node>
+  <node pkg="tiago1" type="path_planning.py" name="path_planning_node6" args="6">  </node>
+  <node pkg="tiago1" type="camera_preprocessing.py" name="camera_preprocessing_node6" args="6">  </node>
+  <node pkg="tiago1" type="object_detection.py" name="object_detection_node6" args="6">  </node>
+  <node pkg="tiago1" type="distance_estimation.py" name="distance_estimation_node6" args="6">  </node>
+  <node pkg="tiago1" type="control_wheel.py" name="control_wheel_node6" args="6">  </node>
+  <node pkg="tiago1" type="control_arm.py" name="control_arm_node6" args="6">  </node>
+  <node pkg="tiago1" type="control_gripper.py" name="control_gripper_node6" args="6">  </node>
+  <node pkg="tiago1" type="reasoning_action.py" name="reasoning_action_node6" args="6">  </node>
+  <node pkg="tiago1" type="reasoning_order_verification.py" name="reasoning_order_verification_node6" args="6">  </node>
 
 </launch>

@@ -4,6 +4,7 @@ import yaml
 import os
 from tiago1.srv import robotstatedecision, robotstatedecisionResponse
 from tiago1.srv import send_order, send_orderResponse
+import threading
 
 # -- State Machine Base Classes --
 
@@ -45,6 +46,7 @@ class orchestration_and_coordination:
     def __init__(self):
         rospy.init_node("orchestration_and_coordination_node")
         self.number_of_robots = int(rospy.get_param("number_of_robots"))
+        self.file_lock = threading.Lock()
 
         self.yaml_path = os.path.join(os.path.dirname(__file__), "tiago_data.yaml")
         
@@ -75,17 +77,20 @@ class orchestration_and_coordination:
         self.robot_states[robot_id] = state
 
     def load_data(self):
-        if os.path.exists(self.yaml_path):
-            with open(self.yaml_path, 'r') as file:
-                self.data = yaml.safe_load(file) or {"orders": []}
-        else:
-            self.data = {"orders": []}
+        with self.file_lock:  # <-- This ensures exclusive access
+            if os.path.exists(self.yaml_path):
+                with open(self.yaml_path, 'r') as file:
+                    self.data = yaml.safe_load(file) or {"orders": []}
+            else:
+                self.data = {"orders": []}
+                with open(self.yaml_path, 'w') as file:
+                    yaml.dump(self.data, file)
+
+    def save_data(self):
+        with self.file_lock:  # <-- Lock before saving
             with open(self.yaml_path, 'w') as file:
                 yaml.dump(self.data, file)
 
-    def save_data(self):
-        with open(self.yaml_path, 'w') as file:
-            yaml.dump(self.data, file)
 
     def obtain_order(self):
         self.load_data()

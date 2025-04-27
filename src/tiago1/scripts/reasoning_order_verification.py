@@ -2,7 +2,7 @@
 import rospy
 from std_msgs.msg import String, Int32
 from tiago1.msg import Voice_rec
-
+import threading
 from tiago1.srv import send_order,send_orderRequest
 import sys
 
@@ -13,6 +13,8 @@ class ReasoningOrderVerification:
         rospy.init_node(f'{self.robot_number}_reasoning_order_verification_node')
         self.msg=None
         self.server = server_robots
+        self.file_lock = threading.Lock()
+
         self.food_list = food_list
         rospy.Subscriber(f'/{self.robot_number}/voice_recogn',String,self.string_callback)
         rospy.wait_for_service(f'/{self.robot_number}/robot_state_decision_add')  
@@ -37,13 +39,15 @@ class ReasoningOrderVerification:
                 # rospy.loginfo(f"Found items: {found_items}")
                 if found_items:
                     order = Voice_rec()
-                    order.id_client = self.counter_id
-                    for item in found_items:
-                        order.list_of_orders.append(item)
-                    self.send_request(order)
-                    self.verific_taskmanager.publish(order)
-                    # rospy.loginfo(f"Published verified order: {order}")
-                    self.counter_id += 1
+                    with self.file_lock:
+                        order.id_client =  int(rospy.get_param("id_client_counter")) 
+                        for item in found_items:
+                            order.list_of_orders.append(item)
+                        self.send_request(order)
+                        self.verific_taskmanager.publish(order)
+                        # rospy.loginfo(f"Published verified order: {order}")
+                        
+                        rospy.set_param("id_client_counter",int(rospy.get_param("id_client_counter")) +1)
                 else:
                     self.error_code = 1
                     self.error_notification.publish(self.error_code)
@@ -67,7 +71,7 @@ class ReasoningOrderVerification:
         
 if __name__ == "__main__":
     try:    
-        dish_list = ["ragu", "sugo", "pasta", "kebab", "sushi","riso", "frnach", "shit", "hamburger","steak"]
+        dish_list = ["ragu", "sugo", "pasta", "kebab", "sushi","riso", "frnach", "ramen", "hamburger","steak"]
         server_robots =1
         reasonerOrderVerification = ReasoningOrderVerification(server_robots,dish_list)
         rate = rospy.Rate(1)

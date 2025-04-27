@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/cogar_ws/src
+CMAKE_SOURCE_DIR = /root/Desktop/cogar_ass1/cogar_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/cogar_ws/build
+CMAKE_BINARY_DIR = /root/Desktop/cogar_ass1/cogar_ws/build
 
 # Utility rule file for tiago1_gennodejs.
 
@@ -63,10 +63,10 @@ tiago1/CMakeFiles/tiago1_gennodejs.dir/build: tiago1_gennodejs
 .PHONY : tiago1/CMakeFiles/tiago1_gennodejs.dir/build
 
 tiago1/CMakeFiles/tiago1_gennodejs.dir/clean:
-	cd /root/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_gennodejs.dir/cmake_clean.cmake
+	cd /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 && $(CMAKE_COMMAND) -P CMakeFiles/tiago1_gennodejs.dir/cmake_clean.cmake
 .PHONY : tiago1/CMakeFiles/tiago1_gennodejs.dir/clean
 
 tiago1/CMakeFiles/tiago1_gennodejs.dir/depend:
-	cd /root/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/cogar_ws/src /root/cogar_ws/src/tiago1 /root/cogar_ws/build /root/cogar_ws/build/tiago1 /root/cogar_ws/build/tiago1/CMakeFiles/tiago1_gennodejs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/Desktop/cogar_ass1/cogar_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/Desktop/cogar_ass1/cogar_ws/src /root/Desktop/cogar_ass1/cogar_ws/src/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build /root/Desktop/cogar_ass1/cogar_ws/build/tiago1 /root/Desktop/cogar_ass1/cogar_ws/build/tiago1/CMakeFiles/tiago1_gennodejs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : tiago1/CMakeFiles/tiago1_gennodejs.dir/depend
 
