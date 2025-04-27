@@ -3,66 +3,116 @@
 force.py
 =========
 
-Synthetic **end-effector force sensor** for manipulation pipelines
--------------------------------------------------------------------
+Overview
+--------
+`force.py` is a **synthetic end-effector force sensor** that publishes
+pseudo-random force readings so that grasp controllers, compliant planners,
+and safety monitors can be developed and tested without real hardware.
 
-Grasp controllers, compliant planners and safety monitors often rely on a
-continuous force signal.  When real hardware is absent (desktop development,
-CI/CD, remote teaching) this node publishes *pseudo-random* force values so
-that the rest of the stack can still run and be exercised.
+Design goals
+------------
+* **Parallel development** – pipelines receive realistic-looking force data on CI  
+* **Determinism** – uniform random forces, seedable for repeatable tests  
+* **Lightweight** – no external dependencies or real sensor drivers
 
-ROS interface
-~~~~~~~~~~~~~
+Interfaces (strongly-typed, stateless)
+--------------------------------------
+
 .. list-table::
    :header-rows: 1
-   :widths: 25 35 40
+   :widths: 12 30 45
 
-   * - Direction / type
-     - Name
+   * - Direction
+     - Topic
      - Semantics
-   * - **publish** ``std_msgs/Float32``
-     - ``/force``
-     - Simulated contact force **in Newtons** (0 – 50 N)
+   * - **Provided**
+     - ``/{robot}/force``
+     - ``std_msgs/Float32`` – simulated contact force in Newtons
 
-Characteristics
----------------
-* **Rate** 10 Hz.  
-* **Distribution** Uniform *U*(0 N, 50 N).  
-  Swap for a Gaussian or a replay from a CSV file if you need repeatable
-  sequences or more realistic dynamics.
+Contract
+--------
+**Pre-conditions**  
 
-The node shuts down automatically on Ctrl-C or ``rosnode kill``.
+• Node launched with a valid `robot_id` CLI argument.  
+• Downstream nodes subscribe to `/force` at ~10 Hz.
+
+**Post-conditions**  
+
+• Publishes one `Float32` message per loop iteration.  
+• `data` field is a float uniformly drawn from [0, _MAX_FORCE].  
+
+**Invariants**  
+
+• Loop frequency = `_RATE` ± ROS scheduler jitter.  
+• Force range fixed by `_MAX_FORCE`.
+
+Quality-of-Service KPIs
+-----------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 20 45
+
+   * - Metric
+     - Target
+     - Rationale
+   * - Message rate
+     - **10 Hz ± 0.5 Hz**
+     - Ensures smooth controller input.
+   * - Latency
+     - **< 100 ms**
+     - Prevents stale force readings.
+   * - CPU load
+     - **< 1 %**
+     - Safe on embedded CPUs.
+
+Implementation notes
+--------------------
+* Uses `random.uniform(0, _MAX_FORCE)` for force generation.  
+* All logic in `force_sensor()`; the loop maintains timing.  
+* Seed the RNG (`random.seed(...)`) before calling for reproducibility.
 """
 
+import sys
 import random
 import rospy
 from std_msgs.msg import Float32
-import random
-import sys
 
+_RATE = 10        # publication rate in Hz
+_MAX_FORCE = 50.0 # maximum force in Newtons
 
 def force_sensor() -> None:
     """
-    Emit fake force values at 10 Hz until ROS shutdown.
+    Initialise ROS publisher and broadcast random force values until shutdown.
 
-    Steps
-    -----
-    #. Initialise the node as **force**.  
-    #. Advertise ``/force``.  
-    #. In the main loop generate a random float, publish it, sleep.
+    Workflow
+    --------
+    1. Read `robot_id` from CLI and initialise node `<robot>_force>`.  
+    2. Advertise `/robot/force` (Float32, queue_size=10).  
+    3. Loop at `_RATE` Hz:
+
+       a. Generate `f = uniform(0, _MAX_FORCE)`.  
+
+       b. Publish `Float32(f)`.  
+       
+       c. Sleep to maintain rate.
     """
-    robot_number = sys.argv[1]#rospy.get_param('~robot_number')
-    rospy.init_node(f'{robot_number}_force')
-    # pub = rospy.Publisher('/force', Float32, queue_size=10)
-    # rate = rospy.Rate(10)
-    # while not rospy.is_shutdown():
-    #     pub.publish(Float32(random.uniform(0, 5)))
-    #     rate.sleep()
+    if len(sys.argv) < 2:
+        rospy.logerr("Usage: force.py <robot_id>")
+        return
 
+    robot_id = sys.argv[1]
+    rospy.init_node(f"{robot_id}_force")
+    pub = rospy.Publisher(f"/{robot_id}/force", Float32, queue_size=10)
 
+    rate = rospy.Rate(_RATE)
+    while not rospy.is_shutdown():
+        force_val = random.uniform(0, _MAX_FORCE)
+        pub.publish(Float32(data=force_val))
+        rate.sleep()
 
-# ---------------------------------------------------------------------- #
-#                               bootstrap                                #
-# ---------------------------------------------------------------------- #
-if __name__ == '__main__':
-    force_sensor()
+if __name__ == "__main__":
+    try:
+        force_sensor()
+    except rospy.ROSInterruptException:
+        pass

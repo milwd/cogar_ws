@@ -16,6 +16,13 @@
       <script src="../_static/documentation_options.js?v=f2a433a1"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -90,14 +97,6 @@
 <span class="sd">test while the service can evolve (rule engine, ML policy, …) without touching</span>
 <span class="sd">this file.</span>
 
-<span class="sd">Why separate “aggregation” from “decision”?</span>
-<span class="sd">-------------------------------------------</span>
-<span class="sd">* **Single-responsibility** – this node merely funnels events → service, nothing</span>
-<span class="sd">  more.  </span>
-<span class="sd">* **Swap-ability** – upgrade the service (new rules, ML model) without editing</span>
-<span class="sd">  subscribers or timers.  </span>
-<span class="sd">* **Observability** – the TaskManager’s logs show the exact state strings passed</span>
-<span class="sd">  to the reasoner.</span>
 
 <span class="sd">Interfaces (strongly-typed, partly stateful)</span>
 <span class="sd">-------------------------------------------</span>

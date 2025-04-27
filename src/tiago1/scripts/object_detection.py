@@ -11,13 +11,6 @@ The current stub publishes a fixed textual description so the rest of the
 pipeline (sensor fusion, reasoning, speech) can be integrated long before
 GPU-heavy models are available.
 
-Why ship a stub early?
-----------------------
-• **Parallel development** – downstream nodes can be written and tested today.  
-• **Determinism** – CI runs don’t depend on ML randomness or model files.  
-• **Drop-in replacement** – swap this for a real detector without contract
-  changes.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 

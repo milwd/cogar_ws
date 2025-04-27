@@ -3,69 +3,117 @@
 encoder_arm.py
 ==============
 
-Synthetic **joint-position sensor** for development without hardware
---------------------------------------------------------------------
+Overview
+--------
+`encoder_arm.py` is a **synthetic joint-position sensor** that publishes
+pseudo-random encoder angles for the TIAGo arm at a fixed rate.  It enables
+controllers, loggers, and dashboards to run when no real hardware is connected.
 
-Many nodes—controllers, loggers, dashboards—need a continuous stream of arm
-encoder data.  When the real TIAGo arm is not connected, this script fakes the
-signal by emitting *pseudo-random* readings at a fixed rate so that the rest of
-the stack can still run and be tested.
+Design goals
+------------
+* **Parallel development** – feed decoder loops with dummy joint data in CI.  
+* **Determinism** – uniform random angles for reproducible testing (seedable).  
+* **Lightweight** – no hardware dependencies or complex kinematics required.
 
-ROS interface
-~~~~~~~~~~~~~
+Interfaces (strongly-typed, stateless)
+--------------------------------------
+
 .. list-table::
    :header-rows: 1
-   :widths: 25 35 40
+   :widths: 12 30 45
 
-   * - Direction / type
-     - Name
+   * - Direction
+     - Topic
      - Semantics
-   * - **publish** ``std_msgs/Int32``
-     - ``/encoder_arm``
-     - Simulated joint angle in **degrees** (0 – 359)
+   * - **Provided**
+     - ``/{robot}/encoder_arm``
+     - ``std_msgs/Int32`` – simulated joint angle in degrees [0–359]
 
-Behaviour
----------
-* **Frequency** 10 Hz (configurable via the :pydata:`rate` variable).  
-* **Value generator** A plain call to :pymeth:`random.uniform(0, 359)` rounded
-  to an integer gives the appearance of a freely moving joint without any
-  kinematic constraints.  Replace this with a *random walk* or a deterministic
-  table if you need smoother motion or repeatability.
+Contract
+--------
+**Pre-conditions**  
 
-The node quits automatically when ROS shuts down (Ctrl-C or ``rosnode kill``).
+• Node launched with a valid `robot_id` CLI argument.  
+• Downstream subscribers expect arm encoder ticks at ~10 Hz.
+
+**Post-conditions**  
+
+• Publishes exactly one `Int32` per loop iteration.  
+• `data` field is an integer uniformly drawn from [0, _MAX_ANGLE].  
+• No other side-effects or retained state.
+
+**Invariants**  
+
+• Loop frequency = `_RATE` Hz ± ROS scheduler jitter.  
+• Angle range fixed by `_MAX_ANGLE`.
+
+Quality-of-Service KPIs
+-----------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 20 45
+
+   * - Metric
+     - Target
+     - Rationale
+   * - Message rate
+     - **10 Hz ± 0.5 Hz**
+     - Keeps controllers in sync.
+   * - Latency
+     - **< 100 ms**
+     - Prevents stale joint readings.
+   * - CPU load
+     - **< 1 %**
+     - Safe on onboard CPU.
+
+Implementation notes
+--------------------
+* Uses `random.randint(0, _MAX_ANGLE)` for angle generation.  
+* All logic resides in `arm_encoder()`; the main loop only maintains timing.  
+* Seed the RNG (`random.seed(...)`) before calling for reproducible traces.
 """
 
+import sys
 import random
 import rospy
 from std_msgs.msg import Int32
-import random
-import sys
 
+_RATE = 10         # Hz
+_MAX_ANGLE = 359   # maximum joint angle in degrees
 
 def arm_encoder() -> None:
     """
-    Spin a 10 Hz loop that publishes fake encoder positions.
+    Initialise ROS publisher and broadcast random encoder angles until shutdown.
 
-    Steps
-    -----
-    #. Initialise the ROS node under the name **encoder_arm**.  
-    #. Advertise ``/encoder_arm`` as an :pyclass:`Int32` publisher.  
-    #. Loop until shutdown: generate a random angle, publish, then sleep to
-       maintain the target frequency.
+    Workflow
+    --------
+    1. Read `robot_id` from CLI and initialise node `<robot>_encoder_arm>`.  
+    2. Advertise `/robot/encoder_arm` (queue_size=10).  
+    3. Loop at `_RATE` Hz:
+
+       a. Generate `angle = randint(0, _MAX_ANGLE)`.  
+
+       b. Publish `Int32(angle)`.  
+       
+       c. Sleep to maintain rate.
     """
-    robot_number = sys.argv[1]#rospy.get_param('~robot_number')
-    rospy.init_node(f'{robot_number}_encoder_arm')
-    pub = rospy.Publisher(f'/{robot_number}/encoder_arm', Int32, queue_size=10)
+    if len(sys.argv) < 2:
+        rospy.logerr("Usage: encoder_arm.py <robot_id>")
+        return
 
-    rate = rospy.Rate(10)
+    robot_id = sys.argv[1]
+    rospy.init_node(f"{robot_id}_encoder_arm")
+    pub = rospy.Publisher(f"/{robot_id}/encoder_arm", Int32, queue_size=10)
+
+    rate = rospy.Rate(_RATE)
     while not rospy.is_shutdown():
-        angle_deg = int(random.uniform(0, 359))             # 0 – 358°
-        pub.publish(Int32(angle_deg))
+        angle = random.randint(0, _MAX_ANGLE)
+        pub.publish(Int32(data=angle))
         rate.sleep()
 
-
-# ---------------------------------------------------------------------- #
-#                                bootstrap                               #
-# ---------------------------------------------------------------------- #
-if __name__ == '__main__':
-    arm_encoder()
+if __name__ == "__main__":
+    try:
+        arm_encoder()
+    except rospy.ROSInterruptException:
+        pass

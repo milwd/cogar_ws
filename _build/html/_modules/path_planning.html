@@ -80,148 +80,190 @@
 <span class="sd">path_planning.py</span>
 <span class="sd">================</span>
 
-<span class="sd">Skeleton **Path-planning** node — generates a *single dummy waypoint* so that</span>
-<span class="sd">navigation stacks downstream (local planners, controllers, visualisers) have</span>
-<span class="sd">something to chew on while the *real* global planner is under development.</span>
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`path_planning.py` is a **skeleton global planner** that emits a single</span>
+<span class="sd">dummy waypoint at 1 Hz.  It lets downstream local planners, controllers and</span>
+<span class="sd">visualisers run before the real global planner is available.</span>
 
+<span class="sd">Design goals</span>
+<span class="sd">------------</span>
+<span class="sd">* **Bring-up** – ensure `/planned_path` exists so navigation stacks can start.  </span>
+<span class="sd">* **Contract documentation** – downstream nodes see the required Path message</span>
+<span class="sd">  and coordinate frames.  </span>
+<span class="sd">* **Simplicity** – one waypoint only, easy to replace with a full planner.</span>
 
-<span class="sd">Topic interface</span>
-<span class="sd">---------------</span>
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
 
-<span class="sd">**Subscribes**</span>
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 12 30 45</span>
 
-<span class="sd">* ``/map``  (``nav_msgs/OccupancyGrid``) – static or SLAM‐generated map.</span>
-<span class="sd">* ``/odom`` (``nav_msgs/Odometry``) – robot pose in the map frame.</span>
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Topic</span>
+<span class="sd">     - Message type / Notes</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/map``</span>
+<span class="sd">     - ``nav_msgs/OccupancyGrid`` – static or SLAM map</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/odom_slam``</span>
+<span class="sd">     - ``nav_msgs/Odometry`` – robot pose in map frame</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/planned_path``</span>
+<span class="sd">     - ``nav_msgs/Path`` – single-PoseStamped at (1.0, 1.0), 1 Hz</span>
 
-<span class="sd">**Publishes**</span>
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
 
-<span class="sd">* ``/planned_path`` (``nav_msgs/Path``) – single-waypoint global plan, updated at 1 Hz.</span>
+<span class="sd">• Messages published on `/map` and `/odom_slam` share the same frame.  </span>
+<span class="sd">• Both topics must have published at least once before planning.</span>
 
+<span class="sd">**Post-conditions**  </span>
 
-<span class="sd">Assumptions</span>
-<span class="sd">--------------------------</span>
-<span class="sd">* The map frame is identical to the odometry frame (no TF transform applied).</span>
-<span class="sd">* Goal is hard-coded at **(1.0 m, 1.0 m)** in the map frame.</span>
-<span class="sd">* Orientation is left at its default (all zeros → identity quaternion).</span>
-<span class="sd">* Only **one** waypoint is produced; real planners would push a sequence.</span>
+<span class="sd">• Every second, exactly one `nav_msgs/Path` is published.  </span>
+<span class="sd">• Path header uses the map’s `frame_id` and current time stamp.  </span>
+<span class="sd">• A single `PoseStamped` goal at coordinates (1.0, 1.0) is appended.</span>
 
+<span class="sd">**Invariants**  </span>
 
+<span class="sd">• Planner does not block; if data is missing it waits silently.  </span>
+<span class="sd">• Orientation of the goal pose remains the default identity quaternion.</span>
+
+<span class="sd">Implementation notes</span>
+<span class="sd">--------------------</span>
+<span class="sd">* Use `rospy.Rate(1)` to enforce 1 Hz.  </span>
+<span class="sd">* `queue_size=1` on the publisher to always keep the latest plan.  </span>
+<span class="sd">* Replace `plan_path()` with a full search algorithm when ready.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nav_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="n">Odometry</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">PoseStamped</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="PathPlanner">
 <a class="viewcode-back" href="../navigation_modules/path_planning.html#path_planning.PathPlanner">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PathPlanner</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Lightweight wrapper around two subscribers and one publisher.</span>
+<span class="sd">    Skeleton path planner that publishes a one-step plan each second.</span>
 
 <span class="sd">    Variables</span>
 <span class="sd">    ----------</span>
-<span class="sd">    map : nav_msgs.msg.OccupancyGrid or None</span>
-<span class="sd">        Latest occupancy grid; stored *verbatim* until needed.</span>
-<span class="sd">    odom : nav_msgs.msg.Odometry or None</span>
-<span class="sd">        Latest robot pose; used to demonstrate dependency on localisation.</span>
+<span class="sd">    map_msg : nav_msgs.msg.OccupancyGrid | None</span>
+<span class="sd">        Latest map message.</span>
+<span class="sd">    odom_msg : nav_msgs.msg.Odometry | None</span>
+<span class="sd">        Latest odometry message.</span>
 <span class="sd">    path_pub : rospy.Publisher</span>
-<span class="sd">        Advertises ``/planned_path``; queue size 1 is fine at 1 Hz.</span>
+<span class="sd">        Publisher for `/planned_path`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                               SETUP                                   #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Register the node and hook up I/O.</span>
-
-<span class="sd">        Steps</span>
-<span class="sd">        -----</span>
-<span class="sd">        1. Initialise ROS with the node name *path_planning_node*.</span>
-<span class="sd">        2. Subscribe to the global map (``/map``) and robot odometry (``/odom``).</span>
-<span class="sd">        3. Create a latched publisher for ``/planned_path`` so that late-joining</span>
-<span class="sd">           nodes immediately receive the most recent Path.</span>
+<span class="sd">        1. Read `robot_id` from CLI.</span>
+<span class="sd">        2. Initialise ROS node `&lt;robot&gt;_path_planning_node`.</span>
+<span class="sd">        3. Subscribe to `/map` and `/odom_slam`.</span>
+<span class="sd">        4. Advertise `/planned_path` with queue_size=1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># e.g. &quot;R1&quot;</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_path_planning_node&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">map</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">odom</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map_msg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">odom_msg</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/map&#39;</span><span class="p">,</span> <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_callback</span><span class="p">)</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/odom_slam&#39;</span><span class="p">,</span> <span class="n">Odometry</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">odom_callback</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/map&#39;</span><span class="p">,</span>
+            <span class="n">OccupancyGrid</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">map_callback</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/odom_slam&#39;</span><span class="p">,</span>
+            <span class="n">Odometry</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">odom_callback</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">path_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/planned_path&#39;</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/planned_path&#39;</span><span class="p">,</span>
+            <span class="n">Path</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[PathPlanner] Node initialised – waiting for map &amp; odom.&quot;</span><span class="p">)</span>
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                             CALLBACKS                                 #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="PathPlanner.map_callback">
 <a class="viewcode-back" href="../navigation_modules/path_planning.html#path_planning.PathPlanner.map_callback">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">map_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the latest occupancy grid for later use.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">map</span> <span class="o">=</span> <span class="n">msg</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">OccupancyGrid</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Store the latest occupancy grid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : nav_msgs.msg.OccupancyGrid</span>
+<span class="sd">            Static or SLAM-produced map.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map_msg</span> <span class="o">=</span> <span class="n">msg</span></div>
 
 
 <div class="viewcode-block" id="PathPlanner.odom_callback">
 <a class="viewcode-back" href="../navigation_modules/path_planning.html#path_planning.PathPlanner.odom_callback">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">odom_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the latest odometry message.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">odom</span> <span class="o">=</span> <span class="n">msg</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">odom_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Store the latest odometry.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : nav_msgs.msg.Odometry</span>
+<span class="sd">            Robot pose in the map frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">odom_msg</span> <span class="o">=</span> <span class="n">msg</span></div>
 
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                       PATH-GENERATION LOGIC                           #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="PathPlanner.plan_path">
 <a class="viewcode-back" href="../navigation_modules/path_planning.html#path_planning.PathPlanner.plan_path">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">plan_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plan_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Publish a *one-step* global plan when prerequisites are met.</span>
+<span class="sd">        Publish a one-step Path when both map and odometry are available.</span>
 
 <span class="sd">        Preconditions</span>
 <span class="sd">        -------------</span>
-<span class="sd">        • ``self.map``           is not *None*  </span>
-<span class="sd">        • ``self.odom``          is not *None*</span>
+<span class="sd">        • `self.map_msg` and `self.odom_msg` are not None.</span>
 
-<span class="sd">        Behaviour</span>
-<span class="sd">        ---------</span>
-<span class="sd">        * Construct :class:`nav_msgs.msg.Path` stamped in the **map frame**.</span>
-<span class="sd">        * Append a single :class:`geometry_msgs.msg.PoseStamped` at *(1 m, 1 m)*.</span>
-<span class="sd">        * Publish and log at INFO level (runs every second).</span>
+<span class="sd">        Workflow</span>
+<span class="sd">        --------</span>
+<span class="sd">        1. Create a `nav_msgs/Path`, stamp it with `rospy.Time.now()` and set</span>
+<span class="sd">           `frame_id` to `self.map_msg.header.frame_id`.  </span>
+<span class="sd">        2. Create a `geometry_msgs/PoseStamped` at (1.0, 1.0) in the map frame.  </span>
+<span class="sd">        3. Append the pose to `path.poses`.  </span>
+<span class="sd">        4. Publish on `/planned_path` and log at INFO level.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">odom</span><span class="p">):</span>
-            <span class="k">return</span>  <span class="c1"># Wait until both pieces of data arrive</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_msg</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">odom_msg</span><span class="p">):</span>
+            <span class="k">return</span>
 
-        <span class="c1"># ---------- build Path message ----------------------------------- #</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span>
         <span class="n">path</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-        <span class="n">path</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span>  <span class="c1"># keep frames aligned</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span>
 
-        <span class="c1"># Dummy goal pose -------------------------------------------------- #</span>
-        <span class="n">pose</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
-        <span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span>
-        <span class="n">pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span>
-        <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="c1"># Orientation left at default (identity)</span>
+        <span class="n">goal</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
+        <span class="n">goal</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span>
+        <span class="n">goal</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span>
+        <span class="n">goal</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">goal</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="c1"># Orientation defaults to identity quaternion</span>
 
-        <span class="n">path</span><span class="o">.</span><span class="n">poses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
-
-        <span class="c1"># Publish once per call (1 Hz from main loop)</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">poses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo_throttle</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;[PathPlanner] Published dummy path.&quot;</span><span class="p">)</span></div>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo_throttle</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;[PathPlanner] Published dummy path to (1.0, 1.0).&quot;</span><span class="p">)</span></div>
 
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                               MAIN LOOP                               #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="PathPlanner.loop">
 <a class="viewcode-back" href="../navigation_modules/path_planning.html#path_planning.PathPlanner.loop">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invoke :py:meth:`plan_path` at **1 Hz** until ROS shutdown.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run `plan_path()` at 1 Hz until ROS shuts down.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plan_path</span><span class="p">()</span>
@@ -230,9 +272,6 @@
 
 
 
-<span class="c1"># ------------------------------------------------------------------------- #</span>
-<span class="c1">#                               ENTRY POINT                                 #</span>
-<span class="c1"># ------------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">PathPlanner</span><span class="p">()</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>

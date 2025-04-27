@@ -103,17 +103,6 @@ By outsourcing the decision logic the node stays <strong>stateless</strong> and 
 test while the service can evolve (rule engine, ML policy, …) without touching
 this file.</p>
 </section>
-<section id="why-separate-aggregation-from-decision">
-<h3>Why separate “aggregation” from “decision”?<a class="headerlink" href="#why-separate-aggregation-from-decision" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Single-responsibility</strong> – this node merely funnels events → service, nothing
-more.</p></li>
-<li><p><strong>Swap-ability</strong> – upgrade the service (new rules, ML model) without editing
-subscribers or timers.</p></li>
-<li><p><strong>Observability</strong> – the TaskManager’s logs show the exact state strings passed
-to the reasoner.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-partly-stateful">
 <h3>Interfaces (strongly-typed, partly stateful)<a class="headerlink" href="#interfaces-strongly-typed-partly-stateful" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

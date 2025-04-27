@@ -87,15 +87,6 @@ The current stub publishes a fixed textual description so the rest of the
 pipeline (sensor fusion, reasoning, speech) can be integrated long before
 GPU-heavy models are available.</p>
 </section>
-<section id="why-ship-a-stub-early">
-<h3>Why ship a stub early?<a class="headerlink" href="#why-ship-a-stub-early" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Parallel development</strong> – downstream nodes can be written and tested today.</p></li>
-<li><p><strong>Determinism</strong> – CI runs don’t depend on ML randomness or model files.</p></li>
-<li><p><strong>Drop-in replacement</strong> – swap this for a real detector without contract
-changes.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

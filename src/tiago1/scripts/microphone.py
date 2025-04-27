@@ -10,13 +10,6 @@ front-end of an ASR pipeline by publishing random “utterance IDs” at a fixed
 rate.  It’s ideal for CI, headless simulation, or bandwidth-constrained
 environments where real ASR is unavailable.
 
-Why use this stub?
-------------------
-• **Determinism** – reproducible, uniformly random utterance IDs.  
-• **Parallel development** – downstream voice-recognition and order-verification
-  nodes can be tested without real microphones.  
-• **Resource light** – no heavy ASR models or audio I/O dependencies.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 

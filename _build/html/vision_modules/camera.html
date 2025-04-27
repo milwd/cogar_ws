@@ -101,16 +101,6 @@ physical sensor is present.  It lets downstream perception, fusion and
 visualisation nodes run in CI, headless simulation, or early prototyping
 environments where real hardware is unavailable.</p>
 </section>
-<section id="why-a-dummy-camera">
-<h3>Why a dummy camera?<a class="headerlink" href="#why-a-dummy-camera" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Deterministic output</strong> – unit tests and integration pipelines never change
-behaviour because of lighting or hardware drift.</p></li>
-<li><p><strong>Speed &amp; simplicity</strong> – a single JPEG on disk avoids costly device drivers
-and UVC initialisation.</p></li>
-<li><p><strong>Isolation</strong> – consumer failures are provably unrelated to flaky hardware.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

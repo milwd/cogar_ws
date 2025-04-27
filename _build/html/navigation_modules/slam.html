@@ -94,44 +94,81 @@
 <span id="slam"></span><h1>SLAM<a class="headerlink" href="#module-slam" title="Link to this heading"></a></h1>
 <section id="slam-py">
 <h2>slam.py<a class="headerlink" href="#slam-py" title="Link to this heading"></a></h2>
-<p>Minimal <strong>SLAM façade</strong> — publishes a blank map + identity odometry so the
-navigation stack can launch before the real SLAM backend is ready.</p>
-<section id="purpose">
-<h3>Purpose<a class="headerlink" href="#purpose" title="Link to this heading"></a></h3>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>slam.py</cite> is a <strong>minimal SLAM façade</strong> that publishes a blank occupancy map
+and identity odometry so that navigation stacks (e.g. <cite>move_base</cite>, <cite>rviz</cite>) can
+start before a real SLAM backend is available.  It defines exactly which
+message types and frames future SLAM solutions must honour.</p>
+</section>
+<section id="design-goals">
+<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>Bring-up</strong>: rviz, move_base and other consumers expect <cite>/map</cite> and <cite>/odom</cite>
-to exist; this stub unblocks integration work in early project stages.</p></li>
-<li><p><strong>Interface contract</strong>: documents <em>exactly</em> which message types and frames
-the future SLAM solution must honour.</p></li>
+<li><p><strong>Bring-up</strong> – ensure <cite>/map</cite> and <cite>/odom</cite> exist for early integration.</p></li>
+<li><p><strong>Contract documentation</strong> – downstream nodes see the required <cite>/map</cite>,
+<cite>/odom</cite> message shapes and coordinate frames.</p></li>
+<li><p><strong>Stateless stub</strong> – no real map or pose estimation, just fixed outputs.</p></li>
 </ul>
 </section>
-<section id="topic-interface">
-<h3>Topic interface<a class="headerlink" href="#topic-interface" title="Link to this heading"></a></h3>
-<p><strong>Subscribes</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code> (<code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code>) – pre-filtered 2-D scan produced
-by the sensor-fusion node.</p></li>
-</ul>
-<p><strong>Publishes</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">/map</span></code>  (<code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code>) – 10 × 10 cell grid, 5 cm resolution,
-centred at 0,0; currently all <em>unknown/free</em> (value 0).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/odom</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code>) – identity pose in <code class="docutils literal notranslate"><span class="pre">odom</span></code> frame, zero
-twist; child frame <code class="docutils literal notranslate"><span class="pre">base_link</span></code>.</p></li>
-</ul>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12.6%" />
+<col style="width: 29.5%" />
+<col style="width: 57.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / Type</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Required</strong> (sub)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/fused_scan</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code> – pre-filtered scan from sensor_fusion</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Required</strong> (sub)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/odom_proc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code> – upstream pose estimate (ignored by stub)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Provided</strong> (pub, latched)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/map</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code> – blank grid, 0.05 m cells, all free/unknown</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Provided</strong> (pub, latched)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/odom_slam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code> – identity pose, zero twist, frame_id <cite>odom</cite></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="coordinate-frames">
 <h3>Coordinate frames<a class="headerlink" href="#coordinate-frames" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">map</span></code>  ←— identity TF —→ <code class="docutils literal notranslate"><span class="pre">odom</span></code>  ←— [[ real TF broadcaster ]] —→ <code class="docutils literal notranslate"><span class="pre">base_link</span></code></p>
-<p>The stub does <strong>not</strong> broadcast TF transforms; downstream nodes must rely on
-static transforms or their own broadcasters until a full SLAM stack replaces
-this script.</p>
+<p><code class="docutils literal notranslate"><span class="pre">map</span></code>  ←— identity —→ <code class="docutils literal notranslate"><span class="pre">odom</span></code>  ←— real TF —→ <code class="docutils literal notranslate"><span class="pre">base_link</span></code>
+No TF broadcaster here; downstream must supply static or real transforms.</p>
 </section>
-<section id="replace-me-sections">
-<h3>Replace-me sections<a class="headerlink" href="#replace-me-sections" title="Link to this heading"></a></h3>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p><strong>Pre-conditions</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">update_map(data)</span></code> – insert occupancy grid update from scan + pose.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">update_pose(data)</span></code> – insert state-estimation output (EKF, graph-SLAM…).</p></li>
+<li><p>Nodes publish <cite>/fused_scan</cite> at ≥ 1 Hz.</p></li>
+<li><p><cite>/odom_proc</cite> provides any Odometry messages (not used by stub).</p></li>
+</ul>
+<p><strong>Post-conditions</strong></p>
+<ul class="simple">
+<li><p>On the first incoming scan or odom message each publisher latches and makes
+the blank map and identity odom available.</p></li>
+<li><p>No further updates unless subscribers re-connect.</p></li>
+</ul>
+</section>
+<section id="implementation-notes">
+<h3>Implementation notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Map: 10 × 10 cells, 0.05 m resolution, origin (–2.5, –2.5) so (0,0) is map centre.</p></li>
+<li><p>Odometry: pose = (0,0,0), orientation = unit quaternion, twist = zero.</p></li>
+<li><p>Replace <cite>update_map</cite> and <cite>update_pose</cite> stubs to integrate real SLAM algorithms.</p></li>
 </ul>
 </section>
 </section>
@@ -139,55 +176,45 @@ this script.</p>
 <dt class="sig sig-object py" id="slam.SLAM">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slam.</span></span><span class="sig-name descname"><span class="pre">SLAM</span></span><a class="reference internal" href="../_modules/slam.html#SLAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Straight-forward container for publishers + subscriber.</p>
+<p>Stub container wiring subscribers and latched publishers.</p>
 <section id="variables">
 <h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
 <dl class="simple">
-<dt>map_pub</dt><dd><p>Latched publisher for the occupancy grid so late subscribers
-receive the most recent map instantly.</p>
+<dt>map_pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Latched publisher for the occupancy grid.</p>
 </dd>
-<dt>odom_pub</dt><dd><p>Latched publisher for odometry for the same reason.</p>
+<dt>odom_pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Latched publisher for identity odometry.</p>
+</dd>
+<dt>vel<span class="classifier">nav_msgs.msg.Odometry</span></dt><dd><p>Last Odometry received from <cite>/odom_proc</cite> (not used by stub).</p>
 </dd>
 </dl>
-<p>Initialise the ROS node and wire its single input + two outputs.</p>
-</section>
-<section id="steps">
-<h2>Steps<a class="headerlink" href="#steps" title="Link to this heading"></a></h2>
+<p>Initialise the SLAM stub node:</p>
 <ol class="arabic simple">
-<li><p>Call <a href="#id1"><span class="problematic" id="id2">:pyfunc:`rospy.init_node`</span></a> with a descriptive name.</p></li>
-<li><p>Subscribe to the pre-filtered <strong>fused</strong> laser scan.  Queue size 1
-keeps latency low while scans stream in (20–30 Hz typical).</p></li>
-<li><p>Advertise both outputs with <em>latch=True</em> so tools like rviz see
-the very first map/odom without waiting a full second.</p></li>
+<li><p>Read <cite>robot_number</cite> from CLI.</p></li>
+<li><p>Initialise ROS node <cite>&lt;robot&gt;_slam_node</cite>.</p></li>
+<li><p>Subscribe to <cite>/fused_scan</cite> and <cite>/odom_proc</cite>.</p></li>
+<li><p>Advertise <cite>/map</cite> and <cite>/odom_slam</cite> with <cite>latch=True</cite>, <cite>queue_size=1</cite>.</p></li>
 </ol>
 <dl class="py method">
 <dt class="sig sig-object py" id="slam.SLAM.callback">
-<span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slam.html#SLAM.callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback" title="Link to this definition"></a></dt>
-<dd><p>Handle each incoming fused scan.</p>
+<span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.LaserScan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/slam.html#SLAM.callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback" title="Link to this definition"></a></dt>
+<dd><p>Handle incoming fused scan from <cite>/fused_scan</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>scan_msg</strong> (<em>sensor_msgs.msg.LaserScan</em>) – Currently ignored; present to show where real SLAM would ingest
-range data.</p>
+<dd class="field-odd"><p><strong>scan_msg</strong> (<em>sensor_msgs.msg.LaserScan</em>) – Pre-filtered scan (ignored by stub).</p>
 </dd>
 </dl>
-<section id="pipeline">
-<h3>Pipeline<a class="headerlink" href="#pipeline" title="Link to this heading"></a></h3>
-<ol class="arabic simple">
-<li><p><strong>Blank map</strong> – 10 × 10 cells, 0.05 m resolution, centred at
-(-2.5, -2.5) so (0,0) lies roughly in the middle.  All cell values
-initialised to <em>0</em> (free/unknown).</p></li>
-<li><p><strong>Identity odometry</strong> – pose = (0,0,0) + unit quaternion,
-twist = (0,0,0).</p></li>
-<li><p>Publish both messages.  In a real implementation steps 1 &amp; 2 would
-be replaced by <em>update_map</em> and <em>update_pose</em> respectively.</p></li>
-</ol>
-</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="slam.SLAM.callback_odom">
-<span class="sig-name descname"><span class="pre">callback_odom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slam.html#SLAM.callback_odom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback_odom" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">callback_odom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">nav_msgs.msg.Odometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/slam.html#SLAM.callback_odom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback_odom" title="Link to this definition"></a></dt>
+<dd><p>Handle incoming odometry from <cite>/odom_proc</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>nav_msgs.msg.Odometry</em>) – Upstream odometry (ignored; stored for possible future use).</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 </dd></dl>

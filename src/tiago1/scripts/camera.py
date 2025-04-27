@@ -11,15 +11,6 @@ physical sensor is present.  It lets downstream perception, fusion and
 visualisation nodes run in CI, headless simulation, or early prototyping
 environments where real hardware is unavailable.
 
-Why a dummy camera?
--------------------
-
-• **Deterministic output** – unit tests and integration pipelines never change
-  behaviour because of lighting or hardware drift.  
-• **Speed & simplicity** – a single JPEG on disk avoids costly device drivers
-  and UVC initialisation.  
-• **Isolation** – consumer failures are provably unrelated to flaky hardware.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 
@@ -61,7 +52,7 @@ Contract
 • Peak RAM ≤ 2 × (W × H × 3) bytes (one colour buffer + one depth buffer).
 
 **Protocol** 
- 
+
 This component is *stateless*: each 100 ms cycle publishes fresh, independent
 messages.
 

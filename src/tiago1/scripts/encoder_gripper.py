@@ -3,66 +3,117 @@
 encoder_gripper.py
 ==================
 
-Dummy **gripper-position sensor** for controller and UI testing
----------------------------------------------------------------
+Overview
+--------
+`encoder_gripper.py` is a **dummy gripper-position sensor** that publishes
+pseudo-random gripper opening widths at a fixed rate.  It enables PID loops,
+dashboards and loggers to run when the physical gripper is offline or during CI.
 
-When the physical TIAGo gripper is offline—or when you run the stack in CI—this
-node supplies a stand-in encoder signal.  A stream of pseudo-random integers is
-enough for downstream PID loops, dashboards or loggers to stay alive and be
-exercised.
+Design goals
+------------
+* **Parallel development** – downstream controllers receive gripper data without hardware.  
+* **Determinism** – uniform random widths reproducible by seeding the RNG.  
+* **Lightweight** – no complex kinematics or hardware drivers required.
 
-ROS interface
-~~~~~~~~~~~~~
+Interfaces (strongly-typed, stateless)
+--------------------------------------
+
 .. list-table::
    :header-rows: 1
-   :widths: 25 35 40
+   :widths: 12 30 45
 
-   * - Direction / type
-     - Name
+   * - Direction
+     - Topic
      - Semantics
-   * - **publish** ``std_msgs/Int32``
-     - ``/encoder_gripper``
-     - Simulated opening width **in millimetres** (0 – 100 mm)
+   * - **Provided**
+     - ``/{robot}/encoder_gripper``
+     - ``std_msgs/Int32`` – simulated gripper opening width in mm (0–100)
 
-Characteristics
----------------
-* **Rate** 10 Hz.  
-* **Distribution** Uniform *U*(0, 100) → every tick is independent.  
-  Swap for a random walk if you prefer smoother traces.
+Contract
+--------
+**Pre-conditions**  
 
-The node ends automatically on ROS shutdown.
+• Node launched with a valid `robot_id` CLI argument.  
+• Subscribers expect gripper widths at ~10 Hz.
+
+**Post-conditions**  
+
+• Publishes exactly one `Int32` per loop iteration.  
+• `data` field is an integer uniformly drawn from [0, _MAX_WIDTH].  
+• No internal state retained beyond the RNG.
+
+**Invariants**  
+
+• Loop frequency = `_RATE` ± ROS scheduler jitter.  
+• Width range fixed by `_MAX_WIDTH`.
+
+Quality-of-Service KPIs
+-----------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 20 45
+
+   * - Metric
+     - Target
+     - Rationale
+   * - Message rate
+     - **10 Hz ± 0.5 Hz**
+     - Keeps gripper controllers in sync.
+   * - Latency
+     - **< 100 ms**
+     - Prevents stale position readings.
+   * - CPU load
+     - **< 1 %**
+     - Safe on embedded CPU.
+
+Implementation notes
+--------------------
+* Uses `random.randint(0, _MAX_WIDTH)` for uniform width generation.  
+* All logic is in `gripper_encoder()`; the main loop maintains timing.  
+* Seed the RNG (`random.seed(...)`) before calling for reproducible tests.
 """
 
+import sys
 import random
 import rospy
 from std_msgs.msg import Int32
-import random
-import sys
 
+_RATE = 10         # publication rate in Hz
+_MAX_WIDTH = 100   # maximum gripper opening in mm
 
 def gripper_encoder() -> None:
     """
-    Advertise ``/encoder_gripper`` and publish fake readings forever.
+    Initialise ROS publisher and broadcast random gripper widths until shutdown.
 
-    Steps
-    -----
-    #. Initialise the node as **encoder_gripper**.  
-    #. Create an :pyclass:`Int32` publisher.  
-    #. In a 10 Hz loop generate a number in \ [0, 100], publish, sleep.
+    Workflow
+    --------
+    1. Read `robot_id` from CLI and initialise node `<robot>_encoder_gripper>`.  
+    2. Advertise `/robot/encoder_gripper` (queue_size=10).  
+    3. Loop at `_RATE` Hz:
+
+       a. Generate `width = randint(0, _MAX_WIDTH)`.  
+
+       b. Publish `Int32(width)`.  
+       
+       c. Sleep to maintain rate.
     """
-    robot_number = sys.argv[1]#rospy.get_param('~robot_number')
-    rospy.init_node(f'{robot_number}_encoder_gripper')
-    pub = rospy.Publisher(f'/{robot_number}/encoder_gripper', Int32, queue_size=10)
+    if len(sys.argv) < 2:
+        rospy.logerr("Usage: encoder_gripper.py <robot_id>")
+        return
 
-    rate = rospy.Rate(10)
+    robot_id = sys.argv[1]
+    rospy.init_node(f"{robot_id}_encoder_gripper")
+    pub = rospy.Publisher(f"/{robot_id}/encoder_gripper", Int32, queue_size=10)
+
+    rate = rospy.Rate(_RATE)
     while not rospy.is_shutdown():
-        width_mm = int(random.uniform(0, 100))        # 0 – 100 mm
-        pub.publish(Int32(width_mm))
+        width = random.randint(0, _MAX_WIDTH)
+        pub.publish(Int32(data=width))
         rate.sleep()
 
-
-# --------------------------------------------------------------------------- #
-#                                 bootstrap                                   #
-# --------------------------------------------------------------------------- #
-if __name__ == '__main__':
-    gripper_encoder()
+if __name__ == "__main__":
+    try:
+        gripper_encoder()
+    except rospy.ROSInterruptException:
+        pass

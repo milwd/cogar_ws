@@ -101,17 +101,6 @@ module touches it.  Every robot sharing the same message contracts can reuse
 this node as-is, giving you a single place to tweak sensor quirks instead of a
 dozen ad-hoc patches spread across your stack.</p>
 </section>
-<section id="why-bother">
-<h3>Why bother?<a class="headerlink" href="#why-bother" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Noise robustness</strong> – classical feature extractors and CNNs both converge
-faster on well-behaved input.</p></li>
-<li><p><strong>Bandwidth optimisation</strong> – resize or compress here once, without forcing
-consumers to handle multiple resolutions.</p></li>
-<li><p><strong>Separation of concerns</strong> – hardware quirks and lighting fixes remain local
-to this node, not duplicated across the codebase.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

@@ -87,15 +87,6 @@ It listens to high-level <strong>decisions</strong> on <code class="docutils lit
 maps them onto low-level <strong>commands</strong> that the arm / gripper planners
 understand.</p>
 </section>
-<section id="why-a-dedicated-mapper">
-<h3>Why a dedicated mapper?<a class="headerlink" href="#why-a-dedicated-mapper" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Decoupling</strong> – swap in smarter reasoning or a different execution layer
-without editing gripper code.</p></li>
-<li><p><strong>Future-proof</strong> – if execution later moves from strings to Action goals or
-BT ticks, only this node changes.</p></li>
-</ul>
-</section>
 <section id="interfaces-strongly-typed-stateless">
 <h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">

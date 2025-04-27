@@ -11,15 +11,6 @@ module touches it.  Every robot sharing the same message contracts can reuse
 this node as-is, giving you a single place to tweak sensor quirks instead of a
 dozen ad-hoc patches spread across your stack.
 
-Why bother?
------------
-- **Noise robustness** – classical feature extractors and CNNs both converge
-  faster on well-behaved input.
-- **Bandwidth optimisation** – resize or compress here once, without forcing
-  consumers to handle multiple resolutions.
-- **Separation of concerns** – hardware quirks and lighting fixes remain local
-  to this node, not duplicated across the codebase.
-
 Interfaces (strongly-typed, stateless)
 --------------------------------------
 .. list-table::

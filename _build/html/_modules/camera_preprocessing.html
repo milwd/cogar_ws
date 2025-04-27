@@ -16,6 +16,13 @@
       <script src="../_static/documentation_options.js?v=f2a433a1"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -87,15 +94,6 @@
 <span class="sd">module touches it.  Every robot sharing the same message contracts can reuse</span>
 <span class="sd">this node as-is, giving you a single place to tweak sensor quirks instead of a</span>
 <span class="sd">dozen ad-hoc patches spread across your stack.</span>
-
-<span class="sd">Why bother?</span>
-<span class="sd">-----------</span>
-<span class="sd">- **Noise robustness** – classical feature extractors and CNNs both converge</span>
-<span class="sd">  faster on well-behaved input.</span>
-<span class="sd">- **Bandwidth optimisation** – resize or compress here once, without forcing</span>
-<span class="sd">  consumers to handle multiple resolutions.</span>
-<span class="sd">- **Separation of concerns** – hardware quirks and lighting fixes remain local</span>
-<span class="sd">  to this node, not duplicated across the codebase.</span>
 
 <span class="sd">Interfaces (strongly-typed, stateless)</span>
 <span class="sd">--------------------------------------</span>

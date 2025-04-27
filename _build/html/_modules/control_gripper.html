@@ -80,84 +80,109 @@
 <span class="sd">control_gripper.py</span>
 <span class="sd">==================</span>
 
-<span class="sd">Action-level **binary actuator** for the TIAGo gripper</span>
-<span class="sd">-----------------------------------------------------</span>
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`control_gripper.py` is an **ActionLib server** that commands the TIAGo gripper</span>
+<span class="sd">to open or close.  It accepts a boolean goal—`True` to grip, `False` to release—</span>
+<span class="sd">and publishes a `std_msgs/Bool` on the gripper command topic.  After a short</span>
+<span class="sd">delay, it reports success or honours any pre-emption/abort requests.</span>
 
-<span class="sd">The node exposes a :ros:`tiago1/GripperControlAction` server that either</span>
-<span class="sd">**closes** (grip) or **opens** (release) the end-effector.  </span>
-<span class="sd">A single boolean goal, *True* → grip, *False* → release, is converted into a</span>
-<span class="sd">:rosmsg:`std_msgs/Bool` command published on ``/cmd_vel/gripper``.  </span>
-<span class="sd">After a short configurable delay the server replies with a *succeeded* or</span>
-<span class="sd">*pre-empted / aborted* result.</span>
+<span class="sd">Design goals</span>
+<span class="sd">------------</span>
+<span class="sd">* **Binary actuator** – simple close/open commands via a boolean topic.  </span>
+<span class="sd">* **Responsiveness** – honours ActionLib pre-emption immediately.  </span>
+<span class="sd">* **Safety** – can adjust delay and topic names in one place.</span>
 
-<span class="sd">ROS interface</span>
-<span class="sd">~~~~~~~~~~~~~</span>
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
+
 <span class="sd">.. list-table::</span>
 <span class="sd">   :header-rows: 1</span>
-<span class="sd">   :widths: 20 30 50</span>
+<span class="sd">   :widths: 12 28 45</span>
 
-<span class="sd">   * - Direction / type</span>
-<span class="sd">     - Name</span>
-<span class="sd">     - Semantics</span>
-<span class="sd">   * - **publish** ``std_msgs/Bool``</span>
-<span class="sd">     - ``/cmd_vel/gripper``</span>
-<span class="sd">     - ``True`` → close, ``False`` → open</span>
-<span class="sd">   * - **action server** ``tiago1/GripperControlAction``</span>
-<span class="sd">     - ``gripper_control``</span>
-<span class="sd">     - Goal → ``gripnogrip`` (bool)  </span>
-<span class="sd">       Feedback → **status** (string)  </span>
-<span class="sd">       Result → **success** (bool)</span>
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Topic / Name</span>
+<span class="sd">     - Type / Semantics</span>
+<span class="sd">   * - **Publish**</span>
+<span class="sd">     - ``/{robot}/cmd_vel/gripper``</span>
+<span class="sd">     - ``std_msgs/Bool`` – `True` to close, `False` to open</span>
+<span class="sd">   * - **Action server**</span>
+<span class="sd">     - ``/{robot}/gripper_control``</span>
+<span class="sd">     - ``tiago1/GripperControlAction``</span>
+<span class="sd">       Goal: `gripnogrip` (bool)  </span>
+<span class="sd">       Feedback: `status` (string)  </span>
+<span class="sd">       Result: `success` (bool)</span>
 
-<span class="sd">Execution logic</span>
-<span class="sd">---------------</span>
-<span class="sd">#. On goal reception the server checks for an immediate pre-emption request.  </span>
-<span class="sd">#. The boolean command is forwarded to the *cmd* topic.  </span>
-<span class="sd">#. A short wait (2 s by default) gives the hardware time to settle.  </span>
-<span class="sd">#. A success result is returned; if the goal was pre-empted or a ROS shutdown</span>
-<span class="sd">   occurred, the appropriate ActionLib state is set instead.</span>
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
 
-<span class="sd">Timing, waiting strategy and topic names are easily changed in</span>
-<span class="sd">:py:meth:`execute_cb`.</span>
+<span class="sd">• Action server started before goals arrive.  </span>
+<span class="sd">• Publisher on `/cmd_vel/gripper` is available.</span>
+
+<span class="sd">**Post-conditions**  </span>
+
+<span class="sd">• On goal reception, publishes exactly one boolean command.  </span>
+<span class="sd">• After delay, sets Action to succeeded, pre-empted, or aborted.  </span>
+<span class="sd">• Feedback published once per goal with a brief status.</span>
+
+<span class="sd">**Invariants**  </span>
+
+<span class="sd">• Delay duration and command topic are configurable in `execute_cb()`.  </span>
+<span class="sd">• No persistent state beyond wiring subscribers/publishers.</span>
+
+<span class="sd">Tuning knobs</span>
+<span class="sd">------------</span>
+<span class="sd">* `actuation_delay = 2.0` seconds – adjust for real hardware response.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">actionlib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bool</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nav_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="n">Odometry</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">PoseStamped</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">GripperControlAction</span><span class="p">,</span> <span class="n">GripperControlFeedback</span><span class="p">,</span> <span class="n">GripperControlResult</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GripperControlAction</span><span class="p">,</span>
+    <span class="n">GripperControlFeedback</span><span class="p">,</span>
+    <span class="n">GripperControlResult</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="ControlGripperServer">
 <a class="viewcode-back" href="../control_modules/control_gripper.html#control_gripper.ControlGripperServer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ControlGripperServer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Lightweight ActionLib wrapper around a boolean gripper command topic.</span>
+<span class="sd">    ActionLib server wrapping a boolean gripper command.</span>
 
 <span class="sd">    Variables</span>
-<span class="sd">    ------------------</span>
-<span class="sd">    cmd_pub</span>
-<span class="sd">        :pyclass:`rospy.Publisher` streaming ``std_msgs/Bool`` to</span>
-<span class="sd">        ``/cmd_vel/gripper``.</span>
-<span class="sd">    server</span>
-<span class="sd">        :pyclass:`actionlib.SimpleActionServer` handling the</span>
-<span class="sd">        **gripper_control** namespace.</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cmd_pub : rospy.Publisher</span>
+<span class="sd">        Publishes `Bool` on `/cmd_vel/gripper`.</span>
+<span class="sd">    server : actionlib.SimpleActionServer</span>
+<span class="sd">        Serves `gripper_control` goals.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advertise publisher and start the ActionLib server.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/cmd_vel/gripper&#39;</span><span class="p">,</span>
-                                       <span class="n">Bool</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        - Advertise &#39;/cmd_vel/gripper&#39; for gripper commands.</span>
-<span class="sd">        - Set up and start SimpleActionServer for GripperControlAction.</span>
+<span class="sd">        Workflow</span>
+<span class="sd">        --------</span>
+<span class="sd">        1. Read `robot_number` from CLI.  </span>
+<span class="sd">        2. Initialise ROS node `&lt;robot&gt;_control_gripper_node`.  </span>
+<span class="sd">        3. Advertise `/cmd_vel/gripper`.  </span>
+<span class="sd">        4. Start SimpleActionServer on `/gripper_control`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_control_gripper_node&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/cmd_vel/gripper&#39;</span><span class="p">,</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Publisher for boolean gripper commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/cmd_vel/gripper&#39;</span><span class="p">,</span>
+            <span class="n">Bool</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># ActionLib server for GripperControlAction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionServer</span><span class="p">(</span>
             <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/gripper_control&#39;</span><span class="p">,</span>
             <span class="n">GripperControlAction</span><span class="p">,</span>
@@ -165,49 +190,53 @@
             <span class="n">auto_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlGripper] Action server ready.&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlGripper] Action server `/gripper_control` ready.&quot;</span><span class="p">)</span>
 
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                             callback                                #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ControlGripperServer.execute_cb">
 <a class="viewcode-back" href="../control_modules/control_gripper.html#control_gripper.ControlGripperServer.execute_cb">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">execute_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                   <span class="n">goal</span><span class="p">:</span> <span class="n">GripperControlAction</span><span class="o">.</span><span class="n">Goal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">GripperControlAction</span><span class="o">.</span><span class="n">Goal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Act on *goal.gripnogrip* and report the outcome to the Action client.</span>
+<span class="sd">        Handle a grip/no-grip command.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        goal : GripperControlAction.Goal</span>
+<span class="sd">            `goal.gripnogrip == True` → close, `False` → open.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">feedback</span> <span class="o">=</span> <span class="n">GripperControlFeedback</span><span class="p">()</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">GripperControlResult</span><span class="p">()</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlGripper] Received grip command&quot;</span><span class="p">)</span>
 
-        <span class="c1"># control loop</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">is_preempt_requested</span><span class="p">():</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ControlGripper] Preempted&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ControlGripper] Received command → &quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;grip&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">goal</span><span class="o">.</span><span class="n">gripnogrip</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;release&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Pre-emption check</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">is_preempt_requested</span><span class="p">()</span> <span class="ow">or</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ControlGripper] Pre-empted before action.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">set_preempted</span><span class="p">()</span>
             <span class="k">return</span>
 
-        <span class="c1"># do control</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
-        <span class="n">feedback</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Gripping&quot;</span>
+        <span class="c1"># Publish the boolean command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Bool</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">goal</span><span class="o">.</span><span class="n">gripnogrip</span><span class="p">))</span>
+        <span class="n">feedback</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Gripping&quot;</span> <span class="k">if</span> <span class="n">goal</span><span class="o">.</span><span class="n">gripnogrip</span> <span class="k">else</span> <span class="s2">&quot;Releasing&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  
-        <span class="c1"># end control loop</span>
 
+        <span class="c1"># Allow hardware to settle</span>
+        <span class="n">actuation_delay</span> <span class="o">=</span> <span class="mf">2.0</span>  <span class="c1"># seconds</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">actuation_delay</span><span class="p">)</span>
+
+        <span class="c1"># Success</span>
         <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">set_succeeded</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlGripper] Completed: &quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;grip&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">goal</span><span class="o">.</span><span class="n">gripnogrip</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;release&#39;</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlGripper] Action completed.&quot;</span><span class="p">)</span></div>
 </div>
 
 
-
-<span class="c1"># ---------------------------------------------------------------------- #</span>
-<span class="c1">#                                bootstrap                               #</span>
-<span class="c1"># ---------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">ControlGripperServer</span><span class="p">()</span>
-    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ControlGripperServer</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
 </pre></div>
 
            </div>

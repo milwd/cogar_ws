@@ -11,12 +11,6 @@ It listens to high-level **decisions** on ``/{robot}/placement_decision`` and
 maps them onto low-level **commands** that the arm / gripper planners
 understand.
 
-Why a dedicated mapper?
------------------------
-• **Decoupling** – swap in smarter reasoning or a different execution layer
-  without editing gripper code.  
-• **Future-proof** – if execution later moves from strings to Action goals or
-  BT ticks, only this node changes.
 
 Interfaces (strongly-typed, stateless)
 --------------------------------------

@@ -94,82 +94,96 @@
 <span id="lidar"></span><h1>Lidar<a class="headerlink" href="#module-lidar" title="Link to this heading"></a></h1>
 <section id="lidar-py">
 <h2>lidar.py<a class="headerlink" href="#lidar-py" title="Link to this heading"></a></h2>
-<section id="synthetic-2-d-lidar-publisher-for-bench-testing-navigation-stacks">
-<h3>Synthetic <strong>2-D LiDAR</strong> publisher for bench-testing navigation stacks<a class="headerlink" href="#synthetic-2-d-lidar-publisher-for-bench-testing-navigation-stacks" title="Link to this heading"></a></h3>
-<p>This node emulates a planar laser scanner so that path-planning, SLAM or
-obstacle-avoidance components can be developed on a laptop without any real
-sensor or recorded bags.</p>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>lidar.py</cite> is a <strong>synthetic 2-D LiDAR</strong> publisher that emits planar laser scan
+messages at 10 Hz.  It lets navigation, SLAM, and obstacle-avoidance stacks run
+without real hardware or recorded bags.</p>
 </section>
-<section id="published-topic">
-<h3>Published topic<a class="headerlink" href="#published-topic" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">/lidar</span></code>  ( <code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code> )   10 Hz, 180 beams</p>
-<section id="message-layout">
-<h4>Message layout<a class="headerlink" href="#message-layout" title="Link to this heading"></a></h4>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 13.8%" />
+<col style="width: 34.5%" />
+<col style="width: 51.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Message type / Notes</p></th>
+</tr>
+</thead>
 <tbody>
-<tr class="row-odd"><td><p>Field</p></td>
-<td><p>Value</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">header.frame_id</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">&quot;laser&quot;</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">angle_min</span></code></p></td>
-<td><p>–π / 2 rad   (–90 °)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">angle_max</span></code></p></td>
-<td><p>+π / 2 rad   (+90 °)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">angle_increment</span></code></p></td>
-<td><p>π / 180 rad  (1 ° per beam)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_increment</span></code></p></td>
-<td><p>0 s (all beams considered simultaneous)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">range_min</span></code></p></td>
-<td><p>0.1 m  (typical safety threshold)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">range_max</span></code></p></td>
-<td><p>10.0 m</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ranges</span></code></p></td>
-<td><p>181 floats, each <strong>5.0 m</strong></p></td>
+<tr class="row-even"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/lidar</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code> – 10 Hz, 180 beams spanning –90° to +90°.</p></td>
 </tr>
 </tbody>
 </table>
-<p>Change any of the numeric constants to mimic a different sensor model.</p>
 </section>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p><strong>Pre-conditions</strong></p>
+<ul class="simple">
+<li><p>Node launched with positional <cite>robot_id</cite> argument.</p></li>
+<li><p>Downstream subscribers expect <cite>LaserScan</cite> at ~10 Hz.</p></li>
+</ul>
+<p><strong>Post-conditions</strong></p>
+<ul class="simple">
+<li><p>Publishes exactly one <cite>LaserScan</cite> per loop iteration.</p></li>
+<li><p><cite>ranges</cite> list length = 181, each entry fixed at <cite>_FIXED_RANGE</cite> (5.0 m).</p></li>
+<li><p>Header <cite>frame_id</cite> = <cite>“laser”</cite>, <cite>stamp</cite> = <cite>rospy.Time.now()</cite>.</p></li>
+</ul>
+<p><strong>Invariants</strong></p>
+<ul class="simple">
+<li><p><cite>angle_max – angle_min</cite> = π radians, <cite>angle_increment</cite> = π/180.</p></li>
+<li><p><cite>range_min</cite> = 0.1 m, <cite>range_max</cite> = 10.0 m.</p></li>
+</ul>
+</section>
+<section id="quality-of-service-kpis">
+<h3>Quality-of-Service KPIs<a class="headerlink" href="#quality-of-service-kpis" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27.8%" />
+<col style="width: 22.2%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Target</p></th>
+<th class="head"><p>Rationale</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Message rate</p></td>
+<td><p><strong>10 Hz ± 0.5 Hz</strong></p></td>
+<td><p>Keeps real-time filters stable.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Latency</p></td>
+<td><p><strong>&lt; 50 ms</strong></p></td>
+<td><p>Avoids stale obstacle data.</p></td>
+</tr>
+<tr class="row-even"><td><p>CPU load</p></td>
+<td><p><strong>&lt; 1 %</strong></p></td>
+<td><p>Safe on embedded CPUs.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="implementation-notes">
+<h3>Implementation notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Uses <cite>rospy.Rate(_RATE)</cite> for loop timing.</p></li>
+<li><p>All scan parameters defined as module-level constants for easy tweaking.</p></li>
+<li><p>No state beyond the loop – perfect for hot-reload or unit tests.</p></li>
+</ul>
 </section>
 </section>
 <dl class="py function">
 <dt class="sig sig-object py" id="lidar.publish">
 <span class="sig-prename descclassname"><span class="pre">lidar.</span></span><span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lidar.html#publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lidar.publish" title="Link to this definition"></a></dt>
-<dd><p>Continuously construct and transmit <strong>LaserScan</strong> messages.</p>
-<section id="workflow">
-<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p><strong>Initialise ROS</strong> under the name <code class="docutils literal notranslate"><span class="pre">lidar_node</span></code> (anonymous to allow
-multiple instances).</p></li>
-<li><p><strong>Advertise</strong> the <code class="docutils literal notranslate"><span class="pre">/lidar</span></code> topic.</p></li>
-<li><p>Enter a <strong>10 Hz loop</strong> that:</p>
-<ol class="loweralpha simple">
-<li><p>Allocates a fresh <code class="docutils literal notranslate"><span class="pre">LaserScan</span></code> instance.</p></li>
-<li><p>Fills the <a href="#id1"><span class="problematic" id="id2">:pyattr:`~sensor_msgs.msg.LaserScan.header`</span></a> with the
-current time stamp and the fixed frame <code class="docutils literal notranslate"><span class="pre">&quot;laser&quot;</span></code>.</p></li>
-<li><p>Sets angular limits and increment so that the scan spans 180 degrees
-with 1-degree resolution.</p></li>
-<li><p>Populates <a href="#id3"><span class="problematic" id="id4">:pyattr:`~sensor_msgs.msg.LaserScan.ranges`</span></a> with a constant
-distance (<em>5 m</em> in this example).</p></li>
-<li><p>Publishes the message.</p></li>
-<li><p>Sleeps the remaining time to honour the 10 Hz rate.</p></li>
-</ol>
-</li>
-</ol>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">time_increment</span></code> is left at 0 because the entire fake scan is assumed
-to be captured instantaneously.</p></li>
-</ul>
-</section>
+<dd><p>Advertise <cite>/lidar</cite> and stream constant LaserScan messages until shutdown.</p>
 </dd></dl>
 
 </section>

@@ -17,7 +17,13 @@
       <script src="_static/documentation_options.js?v=f2a433a1"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -79,144 +85,157 @@
              
   <section id="autonomous-waiters-complete-project-documentation">
 <span id="index"></span><h1>Autonomous Waiters – Complete Project Documentation<a class="headerlink" href="#autonomous-waiters-complete-project-documentation" title="Link to this heading"></a></h1>
-<section id="why-this-project">
-<h2>Why this project?<a class="headerlink" href="#why-this-project" title="Link to this heading"></a></h2>
-<p>Busy sushi restaurants lose revenue when diners wait too long or receive the
-wrong dish.
-Your solution deploys <strong>five PAL-Robotics TIAGo robots</strong> that handle order
-delivery, table clearing and basic customer interaction – freeing staff for
-tasks that need a human touch. :contentReference[oaicite:0]{index=0}&amp;#8203;:contentReference[oaicite:1]{index=1}</p>
-<section id="key-goals">
-<h3>Key goals<a class="headerlink" href="#key-goals" title="Link to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Team Name<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ACM Robatics Solution</strong></p>
+</dd>
+<dt class="field-even">Contributors<span class="colon">:</span></dt>
+<dd class="field-even"><p>Arian, Milad, Christain</p>
+</dd>
+</dl>
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p><strong>Problem Statement</strong>
+Busy sushi restaurants lose revenue when diners wait too long or receive the wrong dish.
+Our solution deploys <strong>five PAL Robotics TIAGo robots</strong> to handle order delivery, table clearing,
+and basic customer interaction—freeing staff for tasks that need a human touch.</p>
+<p><strong>Objectives</strong></p>
 <ul class="simple">
-<li><p><strong>Timely delivery</strong> – select the closest available robot, plan an
-obstacle-free path and adapt on the fly.</p></li>
-<li><p><strong>Error-free serving</strong> – detect mismatched orders and handle disputes
-gracefully.</p></li>
-<li><p><strong>Scalability</strong> – a central orchestrator must coordinate multiple robots
-without bottlenecks.</p></li>
-<li><p><strong>Recoverability</strong> – every component is restart-safe; no single point of
-failure.</p></li>
+<li><p><strong>Timely delivery</strong>: dispatch the closest available robot, plan obstacle‐free paths, adapt on the fly</p></li>
+<li><p><strong>Error-free serving</strong>: detect and recover from mis-orders gracefully</p></li>
+<li><p><strong>Scalability</strong>: coordinate multiple robots without a central bottleneck</p></li>
+<li><p><strong>Recoverability</strong>: every component is restart-safe; no single point of failure</p></li>
 </ul>
 </section>
+<section id="system-overview">
+<h2>2. System Overview<a class="headerlink" href="#system-overview" title="Link to this heading"></a></h2>
+<p>The software follows a classic <strong>perception → reasoning → actuation</strong> pipeline,
+with a thin orchestration layer balancing the fleet:</p>
+<figure class="align-default" id="id1">
+graph TD
+  A[Orchestration&lt;br/&gt;(task_manager.py,&lt;br/&gt;orchestration_and_coordination.py)]
+  B[Perception&lt;br/&gt;(camera.py …)]
+  C[Reasoning&lt;br/&gt;(path_planning.py,&lt;br/&gt;reasoning_action.py …)]
+  D[Actuation&lt;br/&gt;(control_wheel.py,&lt;br/&gt;control_arm.py,&lt;br/&gt;control_gripper.py)]
+  E[Feedback&lt;br/&gt;(encoder_* , force.py ,&lt;br/&gt;speech_generator.py)]
+  A --&gt;|verified order| C
+  C --&gt;|path + table cmd| D
+  D --&gt;|status| A
+  D --&gt;|raw encoders| E
+  E --&gt;|status| C<figcaption>
+<p><span class="caption-text">System overview</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 </section>
-<section id="hardware-platform">
-<h2>Hardware platform<a class="headerlink" href="#hardware-platform" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>TIAGo base with differential drive</p></li>
-<li><p>7-DoF arm + parallel gripper</p></li>
-<li><p>RGB-D camera, LiDAR, SONAR, force sensor, microphones, speakers</p></li>
-</ul>
+<section id="workflow">
+<h2>3. Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Customer speaks</strong> – simulated ASR (<cite>voice_recognition.py</cite>) publishes “Can I have sushi”</p></li>
+<li><p><strong>Order verification</strong> – <cite>reasoning_order_verification.py</cite> parses dish names, enqueues via <cite>send_order</cite> service</p></li>
+<li><p><strong>Orchestrator</strong> – a free robot polls <cite>/robot_state_decision</cite>, receives the “sushi” task</p></li>
+<li><p><strong>ReasoningAction</strong> – <cite>reasoning_action.py</cite> turns the plan + table command into ActionLib goals (move, arm, gripper)</p></li>
+<li><p><strong>Execution</strong> – <cite>control_wheel.py</cite>, <cite>control_arm.py</cite>, <cite>control_gripper.py</cite> carry out the motions</p></li>
+<li><p><strong>Feedback loop</strong> – upon completion each controller publishes status; <cite>task_manager.py</cite> feeds back into the orchestrator</p></li>
+<li><p><strong>Table placement</strong> – after delivery <cite>reasoning_table_placement.py</cite> issues PLACE_DISH or CLEAR_TABLE commands</p></li>
+<li><p><strong>Interaction</strong> – <cite>speech_generator.py</cite> &amp; <cite>speaker.py</cite> announce actions to customers</p></li>
+</ol>
 </section>
-<section id="software-architecture">
-<h2>Software architecture<a class="headerlink" href="#software-architecture" title="Link to this heading"></a></h2>
-<p>The stack follows a classic <em>perception → reasoning → actuation</em> pipeline plus
-a thin orchestration layer that balances the fleet.</p>
+<section id="architectural-diagrams">
+<h2>4. Architectural Diagrams<a class="headerlink" href="#architectural-diagrams" title="Link to this heading"></a></h2>
+<p>4.1 Component Diagram</p>
+<figure class="align-center" id="id2">
+<img alt="Component Diagram" src="_images/component_diagram.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure X.</strong> High-level component interaction.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>4.2 Behavioral Diagram</p>
+<figure class="align-center" id="id3">
+<img alt="Behavioral Sequence Diagram" src="diagrams/behavioral_diagram.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure Y.</strong> Sequence of messages and actions from order to delivery.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 <section id="codebase-tour">
-<h2>Codebase tour<a class="headerlink" href="#codebase-tour" title="Link to this heading"></a></h2>
-<p>Below you’ll find <strong>every script</strong> you wrote, grouped by the component layer
-they belong to.  Each bullet links to the detailed API page generated by
-<em>autodoc</em>.</p>
+<h2>5. Codebase Tour<a class="headerlink" href="#codebase-tour" title="Link to this heading"></a></h2>
+<p>Each script is grouped by its pipeline layer.  Click through the API docs for details.</p>
 <section id="vision">
 <h3>Vision<a class="headerlink" href="#vision" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><cite>camera.py</cite> – static RGB + synthetic depth generator</p></li>
-<li><p><cite>camera_preprocessing.py</cite> – colour correction &amp; ROI cropping</p></li>
-<li><p><cite>lidar.py</cite>, <cite>sonar.py</cite> – 2-D obstacle clouds</p></li>
-<li><p><cite>object_detection.py</cite> – YOLO-v8 wrapper for plate and hand detection</p></li>
-<li><p><cite>sensor_fusion.py</cite> – fuse RGB-D, LiDAR and SONAR into a cost map</p></li>
-<li><p><cite>microphone_node.py</cite> – raw microphone frames</p></li>
-<li><p><cite>distance_estimation.py</cite> – depth-based size → distance converter</p></li>
+<li><p><strong>camera.py</strong>              – static RGB + synthetic depth generator</p></li>
+<li><p><strong>camera_preprocessing.py</strong> – colour-correction &amp; noise reduction</p></li>
+<li><p><strong>object_detection.py</strong>     – placeholder object detector (1 Hz)</p></li>
+<li><p><strong>distance_estimation.py</strong>  – depth-powered object localization</p></li>
 </ul>
 </section>
-<section id="reasoning-planning">
-<h3>Reasoning &amp; Planning<a class="headerlink" href="#reasoning-planning" title="Link to this heading"></a></h3>
+<section id="brain">
+<h3>Brain<a class="headerlink" href="#brain" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><cite>path_planning.py</cite> – A*/D* hybrid global planner</p></li>
-<li><p><cite>reasoning_action.py</cite> – turns symbolic commands into ActionLib goals</p></li>
-<li><p><cite>reasoning_order_verification.py</cite> – parses <em>“Can I have …”</em> utterances</p></li>
-<li><p><cite>reasoning_table_placement.py</cite> – finds a free, stable spot for the dish</p></li>
-<li><p><cite>slam.py</cite> – RTAB-Map wrapper for map building</p></li>
+<li><p><strong>task_manager.py</strong>       – event aggregator, polls <cite>/robot_state_decision</cite></p></li>
+<li><p><strong>reasoning_action.py</strong>           – translates symbolic plans into ActionLib goals</p></li>
+<li><p><strong>reasoning_table_placement.py</strong>  – maps PLACE/CLEAR decisions to commands</p></li>
+<li><p><strong>reasoning_speech_generation.py</strong>  – throttles and republishes speech commands at 1 Hz</p></li>
 </ul>
 </section>
-<section id="actuation-low-level-control">
-<h3>Actuation &amp; Low-level Control<a class="headerlink" href="#actuation-low-level-control" title="Link to this heading"></a></h3>
+<section id="navigation">
+<h3>Navigation<a class="headerlink" href="#navigation" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><cite>control_wheel.py</cite> – proportional wheel controller (base)</p></li>
-<li><p><cite>control_arm.py</cite> – ActionLib server for joint-space moves</p></li>
-<li><p><cite>control_gripper.py</cite> – open/close with timeout + feedback</p></li>
-<li><p><cite>encoder_wheel.py</cite>, <cite>encoder_arm.py</cite>, <cite>encoder_gripper.py</cite> – synthetic
-encoders for CI</p></li>
+<li><p><strong>path_planning.py</strong>              – dummy global planner (1 waypoint)</p></li>
+<li><p><strong>slam.py</strong>                       – blank map + identity odom stub</p></li>
+<li><p><strong>sensor_fusion.py</strong>        – fuse LiDAR + sonar into a single scan</p></li>
+<li><p><strong>lidar.py</strong>, <strong>sonar.py</strong>  – synthetic LiDAR/sonar streams</p></li>
+</ul>
+</section>
+<section id="control">
+<h3>Control<a class="headerlink" href="#control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>control_wheel.py</strong>      – base controller (first waypoint)</p></li>
+<li><p><strong>control_arm.py</strong>        – proportional joint controller (ActionLib)</p></li>
+<li><p><strong>control_gripper.py</strong>    – binary gripper actuator (ActionLib)</p></li>
+<li><p><strong>encoder_wheel.py</strong>, <strong>encoder_arm.py</strong>, <strong>encoder_gripper.py</strong> – synthetic encoders</p></li>
+<li><p><strong>force.py</strong>              – fake force sensor for manipulator testing</p></li>
 </ul>
 </section>
 <section id="interaction">
 <h3>Interaction<a class="headerlink" href="#interaction" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><cite>speech_generator.py</cite> – buffers sentences and drips them to TTS</p></li>
-<li><p><cite>voice_recognition.py</cite> – integer → phrase stub ASR</p></li>
-<li><p><cite>speaker.py</cite> – last-mile relay to the loudspeaker</p></li>
+<li><p><strong>speech_generator.py</strong>   – buffers and throttles TTS commands</p></li>
+<li><p><strong>speaker.py</strong>            – last-mile relay to TTS backend</p></li>
+<li><p><strong>microphone.py</strong>, <strong>voice_recognition.py</strong> – synthetic ASR pipeline</p></li>
+<li><p><strong>reasoning_order_verification.py</strong> – validates “Can I have …” orders</p></li>
 </ul>
 </section>
-<section id="orchestration-management">
-<h3>Orchestration &amp; Management<a class="headerlink" href="#orchestration-management" title="Link to this heading"></a></h3>
+<section id="server">
+<h3>Server<a class="headerlink" href="#server" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><cite>orchestration_and_coordination.py</cite> – YAML-backed order queue + state
-gateway</p></li>
-<li><p><cite>task_manager.py</cite> – event aggregator, calls <cite>robot_state_decision</cite> to fetch
-the next task</p></li>
+<li><p><strong>orchestration_and_coordination.py</strong> – YAML-backed order queue + state gateway</p></li>
 </ul>
 </section>
-</section>
-<section id="data-flow-example">
-<h2>Data-flow example<a class="headerlink" href="#data-flow-example" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p><cite>voice_recognition.py</cite> publishes <em>“Can I have sushi”</em></p></li>
-<li><p><cite>reasoning_order_verification.py</cite> extracts <strong>sushi</strong> and calls
-<cite>send_order</cite> → queue stores the order</p></li>
-<li><p>A <strong>Free</strong> robot pings <cite>/robot_state_decision</cite> and receives the sushi task</p></li>
-<li><p><cite>reasoning_action.py</cite> converts the plan into
-<cite>control_wheel</cite> → <cite>control_arm</cite> → <cite>control_gripper</cite> goals</p></li>
-<li><p>On success <cite>control_*</cite> nodes emit <em>ARM_DONE</em>, <em>GRIPPER_DONE</em>, … which the
-<cite>task_manager</cite> feeds back into the orchestrator.</p></li>
-</ol>
-</section>
-<section id="development-testing">
-<h2>Development &amp; testing<a class="headerlink" href="#development-testing" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>Sim-only CI</strong> – synthetic encoders (<cite>encoder_*</cite>) and the fake force sensor
-(<cite>force.py</cite>) let you run unit tests on GitHub Actions with zero hardware.</p></li>
-<li><p><strong>Recording sessions</strong> – use <cite>camera_preprocessing.py –record</cite> to save
-synchronised RGB-D bags for offline ML training.</p></li>
-<li><p><strong>Hot reload</strong> – every ActionLib server respects pre-emption; launch filess
-can restart individual components without bringing down the whole stack.</p></li>
-</ul>
 </section>
 <section id="running-the-system">
-<h2>Running the system<a class="headerlink" href="#running-the-system" title="Link to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># one-liner that launches Gazebo, RViz and every node</span>
+<h2>6. Running the System<a class="headerlink" href="#running-the-system" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch Gazebo, RViz and the full stack</span>
 roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>sushi_fleet.launch
 
-<span class="c1"># manual: bring up orchestrator, then a single robot instance</span>
+<span class="c1"># Alternatively, bring up orchestrator then robot 1</span>
 rosrun<span class="w"> </span>cogar_ws<span class="w"> </span>orchestration_and_coordination.py<span class="w"> </span><span class="p">&amp;</span>
 roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>tiago_bringup.launch<span class="w"> </span>robot_id:<span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>A map must be available in <em>$(rospack find cogar_ws)/maps/</em>.
-Run <cite>slam.py –save</cite> the first time on a new restaurant layout.</p>
+<p>A map must exist in <code class="docutils literal notranslate"><span class="pre">$(rospack</span> <span class="pre">find</span> <span class="pre">cogar_ws)/maps/</span></code>.
+Run <code class="docutils literal notranslate"><span class="pre">slam.py</span> <span class="pre">--save</span></code> on the first layout.</p>
 </div>
 </section>
 <section id="further-reading">
-<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading"></a></h2>
+<h2>7. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Component diagrams, behavioural models and KPIs are documented under each
-module page.</p></li>
-<li><p>The assignment brief (slides 13–15) is embedded in <em>docs/assets</em> for quick
-reference. :contentReference[oaicite:2]{index=2}&amp;#8203;:contentReference[oaicite:3]{index=3}</p></li>
+<li><p>Detailed component diagrams &amp; behavioral models under each module’s API page</p></li>
+<li><p>Assignment brief slides embedded in <code class="docutils literal notranslate"><span class="pre">docs/assets</span></code> for reference</p></li>
 </ul>
-<p class="rubric">Navigate the code</p>
+<p class="rubric">Contents</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>

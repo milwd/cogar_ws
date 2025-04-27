@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Force &mdash; cogar_ass1 1.0 documentation</title>
+  <title>Force Sensor &mdash; cogar_ass1 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
@@ -58,7 +58,7 @@
 <li class="toctree-l3"><a class="reference internal" href="encoder_wheel.html">Encoder Wheel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="encoder_arm.html">Encoder Arm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="encoder_gripper.html">Encoder Gripper</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Force</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Force Sensor</a></li>
 </ul>
 </li>
 </ul>
@@ -82,7 +82,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../control.html">Subsystem Control</a></li>
-      <li class="breadcrumb-item active">Force</li>
+      <li class="breadcrumb-item active">Force Sensor</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/control_modules/force.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -93,59 +93,118 @@
            <div itemprop="articleBody">
              
   <section id="module-force">
-<span id="force"></span><h1>Force<a class="headerlink" href="#module-force" title="Link to this heading"></a></h1>
+<span id="force-sensor"></span><h1>Force Sensor<a class="headerlink" href="#module-force" title="Link to this heading"></a></h1>
 <section id="force-py">
 <h2>force.py<a class="headerlink" href="#force-py" title="Link to this heading"></a></h2>
-<section id="synthetic-end-effector-force-sensor-for-manipulation-pipelines">
-<h3>Synthetic <strong>end-effector force sensor</strong> for manipulation pipelines<a class="headerlink" href="#synthetic-end-effector-force-sensor-for-manipulation-pipelines" title="Link to this heading"></a></h3>
-<p>Grasp controllers, compliant planners and safety monitors often rely on a
-continuous force signal.  When real hardware is absent (desktop development,
-CI/CD, remote teaching) this node publishes <em>pseudo-random</em> force values so
-that the rest of the stack can still run and be exercised.</p>
-<section id="ros-interface">
-<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>force.py</cite> is a <strong>synthetic end-effector force sensor</strong> that publishes
+pseudo-random force readings so that grasp controllers, compliant planners,
+and safety monitors can be developed and tested without real hardware.</p>
+</section>
+<section id="design-goals">
+<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Parallel development</strong> – pipelines receive realistic-looking force data on CI</p></li>
+<li><p><strong>Determinism</strong> – uniform random forces, seedable for repeatable tests</p></li>
+<li><p><strong>Lightweight</strong> – no external dependencies or real sensor drivers</p></li>
+</ul>
+</section>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 25.0%" />
-<col style="width: 35.0%" />
-<col style="width: 40.0%" />
+<col style="width: 13.8%" />
+<col style="width: 34.5%" />
+<col style="width: 51.7%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
-<th class="head"><p>Name</p></th>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
 <th class="head"><p>Semantics</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Float32</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">/force</span></code></p></td>
-<td><p>Simulated contact force <strong>in Newtons</strong> (0 – 50 N)</p></td>
+<tr class="row-even"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/force</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Float32</span></code> – simulated contact force in Newtons</p></td>
 </tr>
 </tbody>
 </table>
 </section>
-</section>
-<section id="characteristics">
-<h3>Characteristics<a class="headerlink" href="#characteristics" title="Link to this heading"></a></h3>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p><strong>Pre-conditions</strong></p>
 <ul class="simple">
-<li><p><strong>Rate</strong> 10 Hz.</p></li>
-<li><p><strong>Distribution</strong> Uniform <a href="#id1"><span class="problematic" id="id2">*</span></a>U*(0 N, 50 N).
-Swap for a Gaussian or a replay from a CSV file if you need repeatable
-sequences or more realistic dynamics.</p></li>
+<li><p>Node launched with a valid <cite>robot_id</cite> CLI argument.</p></li>
+<li><p>Downstream nodes subscribe to <cite>/force</cite> at ~10 Hz.</p></li>
 </ul>
-<p>The node shuts down automatically on Ctrl-C or <code class="docutils literal notranslate"><span class="pre">rosnode</span> <span class="pre">kill</span></code>.</p>
+<p><strong>Post-conditions</strong></p>
+<ul class="simple">
+<li><p>Publishes one <cite>Float32</cite> message per loop iteration.</p></li>
+<li><p><cite>data</cite> field is a float uniformly drawn from [0, _MAX_FORCE].</p></li>
+</ul>
+<p><strong>Invariants</strong></p>
+<ul class="simple">
+<li><p>Loop frequency = <cite>_RATE</cite> ± ROS scheduler jitter.</p></li>
+<li><p>Force range fixed by <cite>_MAX_FORCE</cite>.</p></li>
+</ul>
+</section>
+<section id="quality-of-service-kpis">
+<h3>Quality-of-Service KPIs<a class="headerlink" href="#quality-of-service-kpis" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27.8%" />
+<col style="width: 22.2%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Target</p></th>
+<th class="head"><p>Rationale</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Message rate</p></td>
+<td><p><strong>10 Hz ± 0.5 Hz</strong></p></td>
+<td><p>Ensures smooth controller input.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Latency</p></td>
+<td><p><strong>&lt; 100 ms</strong></p></td>
+<td><p>Prevents stale force readings.</p></td>
+</tr>
+<tr class="row-even"><td><p>CPU load</p></td>
+<td><p><strong>&lt; 1 %</strong></p></td>
+<td><p>Safe on embedded CPUs.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="implementation-notes">
+<h3>Implementation notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Uses <cite>random.uniform(0, _MAX_FORCE)</cite> for force generation.</p></li>
+<li><p>All logic in <cite>force_sensor()</cite>; the loop maintains timing.</p></li>
+<li><p>Seed the RNG (<cite>random.seed(…)</cite>) before calling for reproducibility.</p></li>
+</ul>
 </section>
 </section>
 <dl class="py function">
 <dt class="sig sig-object py" id="force.force_sensor">
 <span class="sig-prename descclassname"><span class="pre">force.</span></span><span class="sig-name descname"><span class="pre">force_sensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/force.html#force_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#force.force_sensor" title="Link to this definition"></a></dt>
-<dd><p>Emit fake force values at 10 Hz until ROS shutdown.</p>
-<section id="steps">
-<h2>Steps<a class="headerlink" href="#steps" title="Link to this heading"></a></h2>
+<dd><p>Initialise ROS publisher and broadcast random force values until shutdown.</p>
+<section id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Initialise the node as <strong>force</strong>.</p></li>
-<li><p>Advertise <code class="docutils literal notranslate"><span class="pre">/force</span></code>.</p></li>
-<li><p>In the main loop generate a random float, publish it, sleep.</p></li>
+<li><p>Read <cite>robot_id</cite> from CLI and initialise node <cite>&lt;robot&gt;_force&gt;</cite>.</p></li>
+<li><p>Advertise <cite>/robot/force</cite> (Float32, queue_size=10).</p></li>
+<li><p>Loop at <cite>_RATE</cite> Hz:</p>
+<ol class="loweralpha simple">
+<li><p>Generate <cite>f = uniform(0, _MAX_FORCE)</cite>.</p></li>
+<li><p>Publish <cite>Float32(f)</cite>.</p></li>
+<li><p>Sleep to maintain rate.</p></li>
+</ol>
+</li>
 </ol>
 </section>
 </dd></dl>

@@ -13,14 +13,6 @@ By outsourcing the decision logic the node stays **stateless** and easy to unit-
 test while the service can evolve (rule engine, ML policy, …) without touching
 this file.
 
-Why separate “aggregation” from “decision”?
--------------------------------------------
-* **Single-responsibility** – this node merely funnels events → service, nothing
-  more.  
-* **Swap-ability** – upgrade the service (new rules, ML model) without editing
-  subscribers or timers.  
-* **Observability** – the TaskManager’s logs show the exact state strings passed
-  to the reasoner.
 
 Interfaces (strongly-typed, partly stateful)
 -------------------------------------------

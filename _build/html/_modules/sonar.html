@@ -80,87 +80,134 @@
 <span class="sd">sonar.py</span>
 <span class="sd">=========</span>
 
-<span class="sd">Synthetic **ultrasound range-finder** for quick sensor-fusion prototyping</span>
-<span class="sd">-------------------------------------------------------------------------</span>
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`sonar.py` is a **synthetic ultrasound range-finder** component that emits</span>
+<span class="sd">constant `sensor_msgs/Range` messages at 10 Hz.  It enables sensor-fusion,</span>
+<span class="sd">navigation and obstacle-avoidance pipelines to be exercised even without</span>
+<span class="sd">real hardware or ROS bags.</span>
 
-<span class="sd">This node mimics a 1-D sonar module by broadcasting a constant</span>
-<span class="sd">:pyclass:`sensor_msgs.msg.Range` message.  Navigation, fusion and obstacle</span>
-<span class="sd">avoidance stacks can therefore be exercised on any machine—even one with no</span>
-<span class="sd">hardware attached or ROS bag available.</span>
+<span class="sd">Design goals</span>
+<span class="sd">------------</span>
+<span class="sd">* **Decoupling** – navigation and fusion code subscribe to a single `/sonar` topic,</span>
+<span class="sd">  oblivious to real or dummy sensors.  </span>
+<span class="sd">* **Determinism** – always publishes the same range value for reproducible tests.  </span>
+<span class="sd">* **Lightweight** – no hardware dependencies or external config files required.</span>
 
-<span class="sd">Published topic</span>
-<span class="sd">---------------</span>
-<span class="sd">``/sonar`` ( ``sensor_msgs/Range`` ) 10 Hz, single beam</span>
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
 
-<span class="sd">Message layout</span>
-<span class="sd">~~~~~~~~~~~~~~</span>
-<span class="sd">=======================  =======================================================</span>
-<span class="sd">Field                    Value</span>
-<span class="sd">-----------------------  -------------------------------------------------------</span>
-<span class="sd">``header.frame_id``      ``&quot;sonar&quot;``</span>
-<span class="sd">``radiation_type``       ``Range.ULTRASOUND``  (numeric constant 0)</span>
-<span class="sd">``field_of_view``        0.1 rad ≈ 5.7 °</span>
-<span class="sd">``min_range``            0.2 m</span>
-<span class="sd">``max_range``            4.0 m</span>
-<span class="sd">``range``                **3.0 m** (fixed reading)</span>
-<span class="sd">=======================  =======================================================</span>
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 12 30 45</span>
 
-<span class="sd">Tweak any constant to emulate a different device or scenario.</span>
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Topic</span>
+<span class="sd">     - Message type / Notes</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/sonar``</span>
+<span class="sd">     - ``sensor_msgs/Range`` –  single-beam, 10 Hz</span>
+
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
+
+<span class="sd">• Node launched with a valid `robot_id` CLI argument.  </span>
+<span class="sd">• Downstream expects `Range.ULTRASOUND` readings at ∼10 Hz.</span>
+
+<span class="sd">**Post-conditions**  </span>
+
+<span class="sd">• Publishes exactly one `Range` per loop iteration.  </span>
+<span class="sd">• `range` field is fixed at 3.0 m.  </span>
+<span class="sd">• Header uses frame_id `&quot;sonar&quot;` and current time stamp.</span>
+
+<span class="sd">**Invariants**  </span>
+
+<span class="sd">• Loop frequency = 10 Hz ± 5%.  </span>
+<span class="sd">• `field_of_view` = 0.1 rad, `min_range` = 0.2 m, `max_range` = 4.0 m.</span>
+
+<span class="sd">Quality-of-Service KPIs</span>
+<span class="sd">-----------------------</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 25 20 45</span>
+
+<span class="sd">   * - Metric</span>
+<span class="sd">     - Target</span>
+<span class="sd">     - Rationale</span>
+<span class="sd">   * - Message rate</span>
+<span class="sd">     - **10 Hz ± 0.5 Hz**</span>
+<span class="sd">     - Keeps real-time filters stable.</span>
+<span class="sd">   * - Latency</span>
+<span class="sd">     - **&lt; 50 ms**</span>
+<span class="sd">     - Avoids stale obstacle data.</span>
+<span class="sd">   * - CPU load</span>
+<span class="sd">     - **&lt; 1 %**</span>
+<span class="sd">     - Safe on embedded CPUs.</span>
+
+<span class="sd">Implementation notes</span>
+<span class="sd">--------------------</span>
+<span class="sd">* Uses `rospy.Rate(10)` for timing.  </span>
+<span class="sd">* Message fields are hard-coded for simplicity; adjust constants below to</span>
+<span class="sd">  emulate other sensors.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Range</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
+<span class="c1"># Constants – tweak to emulate different devices</span>
+<span class="n">_FRAME_ID</span>      <span class="o">=</span> <span class="s2">&quot;sonar&quot;</span>
+<span class="n">_FOV</span>           <span class="o">=</span> <span class="mf">0.1</span>   <span class="c1"># radians</span>
+<span class="n">_MIN_RANGE</span>     <span class="o">=</span> <span class="mf">0.2</span>   <span class="c1"># meters</span>
+<span class="n">_MAX_RANGE</span>     <span class="o">=</span> <span class="mf">4.0</span>   <span class="c1"># meters</span>
+<span class="n">_FIXED_RANGE</span>   <span class="o">=</span> <span class="mf">3.0</span>   <span class="c1"># meters</span>
+<span class="n">_PUBLISH_RATE</span>  <span class="o">=</span> <span class="mi">10</span>    <span class="c1"># Hz</span>
 
 <div class="viewcode-block" id="publish">
 <a class="viewcode-back" href="../navigation_modules/sonar.html#sonar.publish">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">publish</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Spawn the node and stream **Range** messages until ROS shuts down.</span>
+<span class="sd">    Advertise `/sonar` and stream constant Range messages until shutdown.</span>
 
 <span class="sd">    Workflow</span>
 <span class="sd">    --------</span>
-<span class="sd">    #. **Advertise** the ``/sonar`` topic (queue size 10).  </span>
-<span class="sd">    #. **Initialise** the node with the name ``sonar_node``; ``anonymous=True``</span>
-<span class="sd">       allows multiple dummy sonars to coexist.  </span>
-<span class="sd">    #. Enter a **10 Hz loop** that:</span>
+<span class="sd">    1. Initialise ROS node `&lt;robot&gt;_sonar_node`, anonymous=True for multiples.  </span>
+<span class="sd">    2. Advertise `/robot/sonar` (queue_size=10).  </span>
+<span class="sd">    3. In a 10 Hz loop:</span>
 
-<span class="sd">       a. Instantiates :pyclass:`sensor_msgs.msg.Range`.  </span>
-<span class="sd">       b. Fills :pyattr:`~sensor_msgs.msg.Range.header` with *now()* and</span>
-<span class="sd">          ``&quot;sonar&quot;`` as the frame.  </span>
-<span class="sd">       c. Sets :pyattr:`~sensor_msgs.msg.Range.radiation_type` to</span>
-<span class="sd">          ``Range.ULTRASOUND``.  </span>
-<span class="sd">       d. Assigns field-of-view and valid range limits.  </span>
-<span class="sd">       e. Stores the constant distance *3 m* in :pyattr:`~sensor_msgs.msg.Range.range`.  </span>
-<span class="sd">       f. Publishes the message.  </span>
-<span class="sd">       g. Sleeps the remaining time to keep the period at 100 ms.</span>
+<span class="sd">       a. Create `sensor_msgs/Range`.  </span>
+
+<span class="sd">       b. Set `header.stamp = now()`, `header.frame_id = _FRAME_ID`.  </span>
+
+<span class="sd">       c. Set `radiation_type = Range.ULTRASOUND`.  </span>
+
+<span class="sd">       d. Assign `_FOV`, `_MIN_RANGE`, `_MAX_RANGE`, `_FIXED_RANGE`. </span>
+<span class="sd">        </span>
+<span class="sd">       e. Publish and sleep to maintain rate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
-    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_sonar_node&#39;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/sonar&#39;</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+    <span class="n">robot_id</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">robot_id</span><span class="si">}</span><span class="s2">_sonar_node&quot;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">robot_id</span><span class="si">}</span><span class="s2">/sonar&quot;</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="n">_PUBLISH_RATE</span><span class="p">)</span>
 
-    <span class="c1"># rate = rospy.Rate(10)  # 10hz</span>
-    <span class="c1"># while not rospy.is_shutdown():</span>
-    <span class="c1">#     sonar = Range()</span>
-    <span class="c1">#     sonar.header.stamp = rospy.Time.now()</span>
-    <span class="c1">#     sonar.header.frame_id = &quot;sonar&quot;</span>
-    <span class="c1">#     sonar.radiation_type = Range.ULTRASOUND</span>
-    <span class="c1">#     sonar.field_of_view = 0.1</span>
-    <span class="c1">#     sonar.min_range = 0.2</span>
-    <span class="c1">#     sonar.max_range = 4.0</span>
-    <span class="c1">#     sonar.range = 3.0</span>
-    <span class="c1">#     pub.publish(sonar)</span>
-    <span class="c1">#     rate.sleep()</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">Range</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">_FRAME_ID</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">radiation_type</span>  <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="n">ULTRASOUND</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">field_of_view</span>   <span class="o">=</span> <span class="n">_FOV</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">min_range</span>       <span class="o">=</span> <span class="n">_MIN_RANGE</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">max_range</span>       <span class="o">=</span> <span class="n">_MAX_RANGE</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">range</span>           <span class="o">=</span> <span class="n">_FIXED_RANGE</span>
+
+        <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Entrypoint — launch the publisher and exit cleanly on ROS shutdown.</span>
-
-<span class="sd">    Only ROS interruptions are swallowed; unexpected exceptions surface with a</span>
-<span class="sd">    full traceback, aiding debugging.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">publish</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>

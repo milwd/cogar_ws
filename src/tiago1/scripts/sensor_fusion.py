@@ -1,43 +1,64 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 """
 sensor_fusion.py
 ================
 
-ROS **fusion node** that combines planar LiDAR and single-beam sonar
---------------------------------------------------------------------
+Overview
+--------
+`sensor_fusion.py` is a **fusion node** that synthesizes data from a planar
+LiDAR scanner and a single-beam sonar into a unified `sensor_msgs/LaserScan`.
+This lightweight placeholder lets sensor-fusion and obstacle-avoidance pipelines
+be exercised without complex probabilistic filters or real hardware.
 
-The node listens to
+Design goals
+------------
+* **Simplicity** – embed the sonar reading into the LiDAR fan by element-wise addition.  
+* **Determinism** – produces the same fused scan for reproducible bench tests.  
+* **Decoupling** – downstream nodes subscribe only to `/fused_scan`, oblivious to
+  the individual sensors.
 
-* ``/lidar``   ( :sensor_msgs:`LaserScan` )  
-* ``/sonar``  ( :sensor_msgs:`Range` — ultrasound )
+Interfaces (strongly-typed, stateless)
+--------------------------------------
 
-and emits a **synthetic, fused scan** on
+.. list-table::
+   :header-rows: 1
+   :widths: 12 30 45
 
-* ``/fused_scan``  ( :sensor_msgs:`LaserScan` )
+   * - Direction
+     - Topic
+     - Message type / Notes
+   * - **Required** (sub)
+     - ``/{robot}/lidar``
+     - ``sensor_msgs/LaserScan`` – 180° planar scan
+   * - **Required** (sub)
+     - ``/{robot}/sonar``
+     - ``sensor_msgs/Range`` – single-beam ultrasound
+   * - **Provided** (pub)
+     - ``/{robot}/fused_scan``
+     - ``sensor_msgs/LaserScan`` – LiDAR + centred sonar reading fused
 
-The fusion strategy is deliberately simple:
+Contract
+--------
+**Pre-conditions**  
 
-#. Convert the sonar’s *scalar* range into a **pseudo-scan** whose length
-   matches the LiDAR beam count.  
-#. Insert the sonar reading at the centre index, leave all other values «0».  
-#. Add the two arrays element-wise.  
+• LiDAR and sonar topics publish at compatible rates (~10 Hz).  
+• LiDAR `ranges` length matches the pseudo-scan length generated from sonar.
 
-This yields a quick placeholder that exercises downstream consumers without
-complex probabilistic filters.
+**Post-conditions**  
 
-Topic contracts
----------------
+• Each call to `publish_fused()` emits exactly one fused `LaserScan`.  
+• Fused `ranges` = element-wise sum of LiDAR ranges and the adapted sonar array.
 
-+-------------+-----------------------+------+-----------------------------------------------+
-| Topic       | Type                  | Dir. | Notes                                         |
-+=============+=======================+======+===============================================+
-| ``/lidar``  | LaserScan             | sub  | 180 ° LiDAR produced by *lidar.py*            |
-+-------------+-----------------------+------+-----------------------------------------------+
-| ``/sonar``  | Range                 | sub  | 1-D ultrasound produced by *sonar.py*         |
-+-------------+-----------------------+------+-----------------------------------------------+
-| ``/fused_scan`` | LaserScan         | pub  | LiDAR beams + centred sonar reading           |
-+-------------+-----------------------+------+-----------------------------------------------+
+**Invariants**  
 
+• Sonar reading is placed at the centre index; all other beam values are unchanged.
+
+Implementation notes
+--------------------
+* Fusion is attempted on every sonar callback and in a fixed-rate loop.  
+* `Adapter` expands a scalar sonar reading into a zero-filled list with the value
+  at the centre.  
+* Holds no extra state beyond the last messages, ideal for hot-reload and tests.
 """
 
 import rospy
@@ -47,45 +68,44 @@ import sys
 
 class SensorFusionNode:
     """
-    Merge LiDAR and sonar information into a single :class:`LaserScan`.
+    Merge LiDAR and sonar information into a single LaserScan.
 
     Variables
     ----------
-    
-    lidar_sub : rospy.Subscriber
-        Receives scans from ``/lidar``.
-    sonar_sub : rospy.Subscriber
-        Receives ranges from ``/sonar``.
-    pub : rospy.Publisher
-        Emits the fused scan on ``/fused_scan``.
     lidar_data : sensor_msgs.msg.LaserScan | None
         Last LiDAR scan received.
     sonar_data : sensor_msgs.msg.Range | None
         Last sonar reading received.
     adapted_sonar : list[float]
-        Sonar value replicated into a list matching the LiDAR beam count.
+        Sonar value expanded to match LiDAR beam count.
     """
-
-    # ------------------------------------------------------------------ #
-    # Initialisation                                                     #
-    # ------------------------------------------------------------------ #
 
     def __init__(self):
         """
-        Register the node, wire subscriptions and publisher and
-        initialise state containers.
+        Register the node, wire subscriptions and publisher, and initialise state.
         """
-        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        self.robot_number = sys.argv[1]  # rospy.get_param('~robot_number')
         rospy.init_node(f'{self.robot_number}_sensor_fusion_node')
-        self.lidar_sub = rospy.Subscriber(f'/{self.robot_number}/lidar', LaserScan, self.lidar_callback)
-        self.sonar_sub = rospy.Subscriber(f'/{self.robot_number}/sonar', Range, self.sonar_callback)
-        self.pub = rospy.Publisher(f'/{self.robot_number}/fused_scan', LaserScan, queue_size=10)
+
         self.lidar_data = None
         self.sonar_data = None
 
-    # ------------------------------------------------------------------ #
-    # Callbacks                                                          #
-    # ------------------------------------------------------------------ #
+        self.lidar_sub = rospy.Subscriber(
+            f'/{self.robot_number}/lidar',
+            LaserScan,
+            self.lidar_callback,
+        )
+        self.sonar_sub = rospy.Subscriber(
+            f'/{self.robot_number}/sonar',
+            Range,
+            self.sonar_callback,
+        )
+        self.pub = rospy.Publisher(
+            f'/{self.robot_number}/fused_scan',
+            LaserScan,
+            queue_size=10,
+        )
+
     def lidar_callback(self, data: LaserScan) -> None:
         """
         Store the most recent LiDAR scan.
@@ -93,25 +113,22 @@ class SensorFusionNode:
         Parameters
         ----------
         data : sensor_msgs.msg.LaserScan
-            Scan received from ``/lidar``.
+            Scan received from `/lidar`.
         """
         self.lidar_data = data
 
     def sonar_callback(self, data: Range) -> None:
         """
-        Store the sonar reading **and** trigger a fusion attempt.
+        Store the sonar reading and trigger a fusion attempt.
 
         Parameters
         ----------
         data : sensor_msgs.msg.Range
-            Range measurement received from ``/sonar``.
+            Range measurement received from `/sonar`.
         """
         self.sonar_data = data
-        self.publish_fused()            # try to fuse as soon as both inputs exist
+        self.publish_fused()
 
-    # ------------------------------------------------------------------ #
-    # Fusion logic                                                       #
-    # ------------------------------------------------------------------ #
     def merge_data(self) -> list[float]:
         """
         Combine the LiDAR and adapted sonar arrays element-wise.
@@ -119,7 +136,7 @@ class SensorFusionNode:
         Returns
         -------
         list[float]
-            ``len == len(self.lidar_data.ranges)`` – sum of both sensors.
+            Sum of both sensors; length == len(self.lidar_data.ranges).
         """
         return [
             self.lidar_data.ranges[i] + self.adapted_sonar[i]
@@ -128,18 +145,16 @@ class SensorFusionNode:
 
     def publish_fused(self) -> None:
         """
-        Produce and publish a fused :class:`LaserScan` if both inputs are ready.
+        Produce and publish a fused LaserScan if both inputs are ready.
 
         Workflow
         --------
-        #. Verify that **both** ``self.lidar_data`` *and* ``self.sonar_data`` are
-           populated.  
-        #. Use :class:`Adapter` to expand the single sonar value into a list
-           whose length equals the LiDAR beam count.  
-        #. Call :meth:`merge_data` to add the two arrays.  
-        #. Populate a fresh :class:`LaserScan`, copy the LiDAR header
-           (time + frame), insert geometry fields, attach the fused range list
-           and publish.
+        1. Verify both `self.lidar_data` and `self.sonar_data` are present.  
+        2. Use `Adapter` to expand the scalar sonar reading into a list
+           matching the LiDAR beam count.  
+        3. Call `merge_data()` to sum the two arrays.  
+        4. Populate a new `LaserScan`, copy LiDAR header and geometry fields,
+           attach fused `ranges`, and publish.
         """
         if not (self.lidar_data and self.sonar_data):
             return
@@ -162,44 +177,40 @@ class SensorFusionNode:
 
 class Adapter:
     """
-    Expand a *scalar* sonar range into a list matching the LiDAR beam count.
+    Expand a scalar sonar range into a list matching the LiDAR beam count.
 
-    The sonar value is inserted at the **centre index**; all other positions
-    are filled with zero so that simple addition effectively “embeds” the sonar
-    reading into the LiDAR fan.
+    The sonar value is inserted at the centre index; all other positions
+    are zero so that simple addition embeds the sonar reading into the LiDAR fan.
     """
-    def __call__(self, sonar_data, length=0):
+
+    def __call__(self, sonar_range: float, length: int = 0) -> list[float]:
         """
         Parameters
         ----------
         sonar_range : float
-            The distance reported by the ultrasound sensor.
+            Distance reported by the ultrasound sensor.
         length : int
             Desired output length (number of LiDAR beams).
 
         Returns
         -------
         list[float]
-            Zero-initialised list with ``sonar_range`` at index ``length // 2``.
+            Zero-filled list with `sonar_range` at index `length // 2`.
         """
-        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
-        new_data = [0] * length
-        new_data[length // 2] = sonar_data
-        return new_data
+        data = [0.0] * length
+        data[length // 2] = sonar_range
+        return data
 
 
-# ---------------------------------------------------------------------- #
-# Main                                                                   #
-# ---------------------------------------------------------------------- #
 if __name__ == '__main__':
     """
-    Instantiate :class:`SensorFusionNode` and publish fused scans at 10 Hz.
+    Instantiate `SensorFusionNode` and publish fused scans at 10 Hz.
 
-    The explicit loop guarantees output even if new sonar readings arrive
-    slower than the LiDAR frequency.
+    The explicit loop guarantees output even if sonar readings arrive slower
+    than LiDAR.
     """
     node = SensorFusionNode()
-    rate = rospy.Rate(10)               # 10 Hz
+    rate = rospy.Rate(10)  # 10 Hz
 
     while not rospy.is_shutdown():
         node.publish_fused()

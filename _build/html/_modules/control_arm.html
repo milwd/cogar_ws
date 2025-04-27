@@ -80,108 +80,125 @@
 <span class="sd">control_arm.py</span>
 <span class="sd">==============</span>
 
-<span class="sd">Closed-loop **ActionLib server** for positioning the TIAGo arm</span>
-<span class="sd">--------------------------------------------------------------</span>
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`control_arm.py` is a **closed-loop ActionLib server** that positions the TIAGo</span>
+<span class="sd">manipulator to a target joint angle (in degrees).  It applies a proportional</span>
+<span class="sd">control law on the arm’s angular velocity until the on-board encoder reports</span>
+<span class="sd">the target is reached within tolerance, or a timeout/pre-emption occurs.</span>
 
-<span class="sd">This node listens for :rosmsg:`tiago1/ArmControlAction` goals that specify a</span>
-<span class="sd">single **target joint angle** (in degrees).  It applies a proportional control</span>
-<span class="sd">law on the arm’s **angular velocity** until the on-board encoder reports that</span>
-<span class="sd">the target, within a configurable tolerance, has been reached or a timeout /  </span>
-<span class="sd">pre-emption occurs.</span>
+<span class="sd">Design goals</span>
+<span class="sd">------------</span>
+<span class="sd">* **Precise control** – proportional feedback on encoder readings.  </span>
+<span class="sd">* **Safety** – zero velocity published immediately on success, abort or pre-emption.  </span>
+<span class="sd">* **Responsiveness** – honours ActionLib pre-emption so higher layers can interrupt.</span>
 
-<span class="sd">ROS interface</span>
-<span class="sd">~~~~~~~~~~~~~</span>
+<span class="sd">Interfaces (strongly-typed, stateful)</span>
+<span class="sd">--------------------------------------</span>
+
 <span class="sd">.. list-table::</span>
 <span class="sd">   :header-rows: 1</span>
-<span class="sd">   :widths: 25 25 50</span>
+<span class="sd">   :widths: 12 30 25 45</span>
 
-<span class="sd">   * - Direction / type</span>
-<span class="sd">     - Name</span>
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Name / Topic</span>
+<span class="sd">     - Type</span>
 <span class="sd">     - Purpose</span>
-<span class="sd">   * - **publish** ``geometry_msgs/Twist``</span>
-<span class="sd">     - ``/cmd_vel/arm``</span>
-<span class="sd">     - Desired angular velocity about the arm’s primary axis  </span>
-<span class="sd">       (only :code:`angular.z` is used).</span>
-<span class="sd">   * - **subscribe** ``std_msgs/Int32``</span>
-<span class="sd">     - ``/encoder_arm``</span>
-<span class="sd">     - Current encoder position expressed in **degrees**.</span>
-<span class="sd">   * - **action server** ``tiago1/ArmControlAction``</span>
-<span class="sd">     - ``arm_control``</span>
-<span class="sd">     - Goal: ``degree`` (int), Feedback: **status** (string),  </span>
-<span class="sd">       Result: **success** (bool)</span>
+<span class="sd">   * - **Subscribe**</span>
+<span class="sd">     - ``/{robot}/encoder_arm``</span>
+<span class="sd">     - ``std_msgs/Int32``</span>
+<span class="sd">     - Current encoder position in degrees</span>
+<span class="sd">   * - **Publish**</span>
+<span class="sd">     - ``/{robot}/cmd_vel/arm``</span>
+<span class="sd">     - ``geometry_msgs/Twist``</span>
+<span class="sd">     - Desired angular velocity (`angular.z` only)</span>
+<span class="sd">   * - **Action server**</span>
+<span class="sd">     - ``/{robot}/arm_control``</span>
+<span class="sd">     - ``tiago1/ArmControlAction``</span>
+<span class="sd">     - Goal: `degree` (int)  </span>
+<span class="sd">       Feedback: joint status lists  </span>
+<span class="sd">       Result: `success` (bool)</span>
 
-<span class="sd">Control algorithm</span>
-<span class="sd">-----------------</span>
-<span class="sd">#. **Goal reception** – store target angle, define *tolerance* (°) and</span>
-<span class="sd">   *timeout* (s).  </span>
-<span class="sd">#. **10 Hz loop**  </span>
-<span class="sd">   • compute error = *target – encoder*  </span>
-<span class="sd">   • :math:`\omega_z = k_p \cdot error` with *k\_p = 0.01*  </span>
-<span class="sd">   • publish velocity; send feedback string  </span>
-<span class="sd">   • exit early if *|error| ≤ tolerance*, timeout expires, node is</span>
-<span class="sd">   pre-empted, or ROS shuts down.  </span>
-<span class="sd">#. **Outcome** – call :py:meth:`SimpleActionServer.set_succeeded`,</span>
-<span class="sd">   :py:meth:`set_aborted` or :py:meth:`set_preempted` with</span>
-<span class="sd">   :rosmsg:`tiago1/ArmControlResult`.</span>
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
+
+<span class="sd">• Encoder publishes valid degree readings on `/encoder_arm`.  </span>
+<span class="sd">• Action server is started before accepting goals.</span>
+
+<span class="sd">**Post-conditions**  </span>
+
+<span class="sd">• On success: publishes zero velocity, sets Action to succeeded.  </span>
+<span class="sd">• On timeout or encoder never reaches target: publishes zero velocity, sets aborted.  </span>
+<span class="sd">• On pre-emption: stops control, sets pre-empted.  </span>
+<span class="sd">• Feedback published at 10 Hz during execution.</span>
+
+<span class="sd">**Invariants**  </span>
+
+<span class="sd">• Loop frequency = 10 Hz ± ROS scheduler jitter.  </span>
+<span class="sd">• Velocity obeys `ω = k_p · error` with `k_p` constant.</span>
 
 <span class="sd">Tuning knobs</span>
 <span class="sd">------------</span>
-<span class="sd">*TOLERANCE* = 5 °  *TIMEOUT* = 10 s  *Kₚ* = 0.01 – tweak in</span>
-<span class="sd">:py:meth:`execute_cb` to match your hardware.</span>
+<span class="sd">* TOLERANCE = 5 °  </span>
+<span class="sd">* TIMEOUT   = 10 s  </span>
+<span class="sd">* Kₚ        = 0.01  </span>
 
-<span class="sd">Safety</span>
-<span class="sd">------</span>
-<span class="sd">The node publishes zero velocity immediately after success / abort to stop the</span>
-<span class="sd">arm, and it honours standard ActionLib pre-emption so higher layers can</span>
-<span class="sd">interrupt motion at any time.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">actionlib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Twist</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Int32</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArmControlAction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArmControlAction</span><span class="p">,</span> <span class="n">ArmControlFeedback</span><span class="p">,</span> <span class="n">ArmControlResult</span>
+
 
 <div class="viewcode-block" id="ControlArmServer">
 <a class="viewcode-back" href="../control_modules/control_arm.html#control_arm.ControlArmServer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ControlArmServer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Minimal proportional controller wrapped in an ActionLib server.</span>
+<span class="sd">    ActionLib server exposing the `arm_control` namespace with a proportional</span>
+<span class="sd">    joint controller.</span>
 
 <span class="sd">    Variables</span>
-<span class="sd">    ------------------</span>
-<span class="sd">    cmd_pub</span>
-<span class="sd">        :pyclass:`rospy.Publisher` that streams velocity commands to</span>
-<span class="sd">        ``/cmd_vel/arm``.</span>
-<span class="sd">    encoder_sub</span>
-<span class="sd">        :pyclass:`rospy.Subscriber` listening to ``/encoder_arm`` for position</span>
-<span class="sd">        feedback.</span>
-<span class="sd">    server</span>
-<span class="sd">        :pyclass:`actionlib.SimpleActionServer` that exposes the</span>
-<span class="sd">        **arm_control** action namespace.</span>
-<span class="sd">    encoder_val</span>
-<span class="sd">        Latest encoder reading in **degrees**; updated continuously by</span>
-<span class="sd">        :py:meth:`encoder_callback`.</span>
+<span class="sd">    ----------</span>
+<span class="sd">    encoder_val : int</span>
+<span class="sd">        Latest encoder reading (degrees).</span>
+<span class="sd">    cmd_pub : rospy.Publisher</span>
+<span class="sd">        Publishes `Twist` on `/cmd_vel/arm` to drive angular velocity.</span>
+<span class="sd">    server : actionlib.SimpleActionServer</span>
+<span class="sd">        Handles `ArmControlAction` goals, feedback, and results.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wire publishers/subscribers, start the ActionLib server.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/cmd_vel/arm&#39;</span><span class="p">,</span>
-                                       <span class="n">Twist</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/encoder_arm&#39;</span><span class="p">,</span>
-                                            <span class="n">Int32</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_callback</span><span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        - Advertise &#39;/cmd_vel/arm&#39; for sending velocity commands.</span>
-<span class="sd">        - Subscribe to &#39;/encoder_arm&#39; for encoder feedback.</span>
-<span class="sd">        - Set up and start SimpleActionServer for ArmControlAction.</span>
+<span class="sd">        1. Read `robot_number` from CLI.  </span>
+<span class="sd">        2. Initialise ROS node `&lt;robot&gt;_control_arm_node`.  </span>
+<span class="sd">        3. Advertise `/cmd_vel/arm` and subscribe to `/encoder_arm`.  </span>
+<span class="sd">        4. Set up and start the ActionLib server on `/arm_control`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_control_arm_node&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/cmd_vel/arm&#39;</span><span class="p">,</span> <span class="n">Twist</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/encoder_arm&#39;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_callback</span><span class="p">)</span>
+
+        <span class="c1"># Publisher for angular velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/cmd_vel/arm&#39;</span><span class="p">,</span>
+            <span class="n">Twist</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Subscriber for encoder readings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_val</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/encoder_arm&#39;</span><span class="p">,</span>
+            <span class="n">Int32</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoder_callback</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># ActionLib server setup (auto_start=False to configure before start)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionServer</span><span class="p">(</span>
             <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/arm_control&#39;</span><span class="p">,</span>
             <span class="n">ArmControlAction</span><span class="p">,</span>
@@ -189,86 +206,83 @@
             <span class="n">auto_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlArm] Action server ready.&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ControlArm] Action server `/arm_control` ready.&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_val</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                         encoder feedback                            #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ControlArmServer.encoder_callback">
 <a class="viewcode-back" href="../control_modules/control_arm.html#control_arm.ControlArmServer.encoder_callback">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">encoder_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Int32</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cache the most recent encoder position.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_val</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">data</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">encoder_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Int32</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cache the most recent encoder position.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : std_msgs.msg.Int32</span>
+<span class="sd">            Encoder reading in degrees.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_val</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span></div>
 
 
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                           action logic                              #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ControlArmServer.execute_cb">
 <a class="viewcode-back" href="../control_modules/control_arm.html#control_arm.ControlArmServer.execute_cb">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">execute_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">ArmControlAction</span><span class="o">.</span><span class="n">Goal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Main loop executed per goal.</span>
+<span class="sd">        Execute a proportional control loop to reach `goal.degree`.</span>
 
-<span class="sd">        Publishes velocities at 10 Hz until the arm reaches *goal.degree*,</span>
-<span class="sd">        is pre-empted, or times out.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        goal : ArmControlAction.Goal</span>
+<span class="sd">            Contains `degree` target angle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">feedback</span> <span class="o">=</span> <span class="n">ArmControlFeedback</span><span class="p">()</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">ArmControlResult</span><span class="p">()</span>
 
         <span class="n">target</span> <span class="o">=</span> <span class="n">goal</span><span class="o">.</span><span class="n">degree</span>
-        <span class="n">tolerance</span> <span class="o">=</span> <span class="mi">5</span>          <span class="c1"># degrees</span>
-        <span class="n">timeout</span> <span class="o">=</span> <span class="mf">10.0</span>         <span class="c1"># seconds</span>
-        <span class="n">k_p</span> <span class="o">=</span> <span class="mf">0.01</span>             <span class="c1"># proportional gain</span>
+        <span class="n">tolerance</span> <span class="o">=</span> <span class="mi">5</span>       <span class="c1"># degrees</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="mf">10.0</span>      <span class="c1"># seconds</span>
+        <span class="n">k_p</span> <span class="o">=</span> <span class="mf">0.01</span>          <span class="c1"># proportional gain</span>
 
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ControlArm] New goal → </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ControlArm] New goal received: </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
 
-        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Hz</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 10 Hz control loop</span>
         <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_val</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
-            <span class="c1"># ---------- house-keeping checks --------------------------- #</span>
             <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
                 <span class="k">return</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">is_preempt_requested</span><span class="p">():</span>
-                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ControlArm] Pre-empted.&quot;</span><span class="p">)</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ControlArm] Goal pre-empted.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Twist</span><span class="p">())</span>  <span class="c1"># stop arm</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">set_preempted</span><span class="p">()</span>
                 <span class="k">return</span>
             <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
-                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ControlArm] Timeout.&quot;</span><span class="p">)</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ControlArm] Timeout reached.&quot;</span><span class="p">)</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Twist</span><span class="p">())</span>      <span class="c1"># stop arm</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Twist</span><span class="p">())</span>  <span class="c1"># stop arm</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">set_aborted</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
                 <span class="k">return</span>
 
-            <span class="c1"># ---------- control law ------------------------------------ #</span>
+            <span class="c1"># Proportional control law</span>
             <span class="n">error</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_val</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
             <span class="n">cmd</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">k_p</span> <span class="o">*</span> <span class="n">error</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 
-            <span class="n">feedback</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
-            <span class="n">feedback</span><span class="o">.</span><span class="n">velocities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
-            <span class="n">feedback</span><span class="o">.</span><span class="n">efforts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
+            <span class="c1"># Populate simplistic feedback arrays (stub values)</span>
+            <span class="n">feedback</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span>
+            <span class="n">feedback</span><span class="o">.</span><span class="n">velocities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span>
+            <span class="n">feedback</span><span class="o">.</span><span class="n">efforts</span>    <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
+
             <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
 
-        <span class="c1"># ---------- success path --------------------------------------- #</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Twist</span><span class="p">())</span>  <span class="c1"># zero velocity</span>
+        <span class="c1"># Success: stop and report</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Twist</span><span class="p">())</span>
         <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">set_succeeded</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlArm] Target reached.&quot;</span><span class="p">)</span></div>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ControlArm] Target angle reached within tolerance.&quot;</span><span class="p">)</span></div>
 </div>
 
 
-<span class="c1"># ---------------------------------------------------------------------- #</span>
-<span class="c1">#                               bootstrap                                #</span>
-<span class="c1"># ---------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main entrypoint: initialize ROS node and run ControlArmServer.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ControlArmServer</span><span class="p">()</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>

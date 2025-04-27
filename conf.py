@@ -9,7 +9,7 @@ import os
 import subprocess
 import sys
 sys.path.insert(0, os.path.abspath('src/tiago1/scripts'))
-subprocess.call('doxygen Doxyfile.in', shell=True)
+#subprocess.call('doxygen Doxyfile.in', shell=True)
 show_authors = True
 
 project = 'cogar_ass1'
@@ -33,7 +33,8 @@ extensions = [
 'sphinx.ext.githubpages',
 "sphinx.ext.napoleon",
 'sphinx.ext.inheritance_diagram',
-'sphinx_ros'
+'sphinx_ros',
+'sphinxcontrib.mermaid'
 ]
 
 
@@ -76,7 +77,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {"navigation_depth": 3}
-html_static_path = ['_static']
+#html_static_path = ['_static']
 
 autosummary_generate = True 
 
@@ -87,3 +88,6 @@ napoleon_google_docstring = True
 napoleon_numpy_docstring  = True 
 autoclass_content = 'both'
 toc_object_entries = False
+
+mermaid_output_format = "png"
+mermaid_params = ["--width", "600", "--backgroundColor", "transparent"]
