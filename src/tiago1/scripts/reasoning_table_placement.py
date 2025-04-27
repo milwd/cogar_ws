@@ -32,6 +32,23 @@ Interfaces (strongly-typed, stateless)
      - ``std_msgs/String``
      - ``"PLACE_DISH" | "CLEAR_TABLE" | "NO_ACTION"``
 
+Food Placement Integration KPIs
+===============================
+
+.. list-table::
+   :header-rows: 1
+   :widths: 50 50
+
+   * - **Metric**
+     - **Target**
+   * - Placement decision time (`/placement_decision` → `/table_reasoning_commands`)
+     - ≤ 200 ms
+   * - Spot-detection accuracy (correctly free & stable spots)
+     - ≥ 95 %
+   * - Replanning responsiveness (after clutter update)
+     - ≤ 100 ms
+
+
 Decision → Command mapping
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 

@@ -79,6 +79,8 @@ Data life-cycle
 #. **Persistence** – every mutation triggers an immediate YAML flush.  
 #. **Recovery** – on startup, existing YAML is loaded; if malformed, a backup is restored or recreated.
 
+
+
 Implementation module
 ---------------------
 Full API documentation:

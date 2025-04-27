@@ -133,6 +133,23 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">     - ``tiago1/send_order``</span>
 <span class="sd">     - Appends the order to the orchestration FIFO.</span>
 
+<span class="sd">Order Verification &amp; Error Handling KPIs</span>
+<span class="sd">========================================</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 50 50</span>
+
+<span class="sd">   * - **Metric**</span>
+<span class="sd">     - **Target**</span>
+<span class="sd">   * - Verification latency (`/voice_recogn` → `/verif_T_manager`)</span>
+<span class="sd">     - ≤ 200 ms</span>
+<span class="sd">   * - Dish-match recall (valid dishes recognized)</span>
+<span class="sd">     - ≥ 98 %</span>
+<span class="sd">   * - Error-handling coverage (mis-orders triggering error code)</span>
+<span class="sd">     - ≥ 95 %</span>
+
+
 <span class="sd">Validation policy</span>
 <span class="sd">-----------------</span>
 <span class="sd">* **Syntax guard** – sentence *must* include “Can I have”.  </span>

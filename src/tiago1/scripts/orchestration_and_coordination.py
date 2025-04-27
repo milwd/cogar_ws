@@ -37,6 +37,23 @@ Interfaces (strongly-typed, stateful)
      - ``tiago1/send_order``
      - Push order (``id_client, list_of_orders``) into queue
 
+Orchestration System Integration KPIs
+-------------------------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 50 50
+
+   * - **Metric**
+     - **Target**
+   * - Task assignment latency (call to `/robot_state_decision` → response)
+     - ≤ 100 ms
+   * - Throughput (orders assigned per second)
+     - ≥ 20 orders/s
+   * - Conflict rate (duplicate table assignments)
+     - < 1 %
+
+
 Persistent storage
 ------------------
 *tiago_data.yaml* (beside this script) keeps the queue::

@@ -116,6 +116,23 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">     - ``std_msgs/String``</span>
 <span class="sd">     - ``&quot;PLACE_DISH&quot; | &quot;CLEAR_TABLE&quot; | &quot;NO_ACTION&quot;``</span>
 
+<span class="sd">Food Placement Integration KPIs</span>
+<span class="sd">===============================</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 50 50</span>
+
+<span class="sd">   * - **Metric**</span>
+<span class="sd">     - **Target**</span>
+<span class="sd">   * - Placement decision time (`/placement_decision` → `/table_reasoning_commands`)</span>
+<span class="sd">     - ≤ 200 ms</span>
+<span class="sd">   * - Spot-detection accuracy (correctly free &amp; stable spots)</span>
+<span class="sd">     - ≥ 95 %</span>
+<span class="sd">   * - Replanning responsiveness (after clutter update)</span>
+<span class="sd">     - ≤ 100 ms</span>
+
+
 <span class="sd">Decision → Command mapping</span>
 <span class="sd">^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
 

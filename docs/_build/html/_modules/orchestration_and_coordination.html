@@ -121,6 +121,23 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">     - ``tiago1/send_order``</span>
 <span class="sd">     - Push order (``id_client, list_of_orders``) into queue</span>
 
+<span class="sd">Orchestration System Integration KPIs</span>
+<span class="sd">-------------------------------------</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 50 50</span>
+
+<span class="sd">   * - **Metric**</span>
+<span class="sd">     - **Target**</span>
+<span class="sd">   * - Task assignment latency (call to `/robot_state_decision` → response)</span>
+<span class="sd">     - ≤ 100 ms</span>
+<span class="sd">   * - Throughput (orders assigned per second)</span>
+<span class="sd">     - ≥ 20 orders/s</span>
+<span class="sd">   * - Conflict rate (duplicate table assignments)</span>
+<span class="sd">     - &lt; 1 %</span>
+
+
 <span class="sd">Persistent storage</span>
 <span class="sd">------------------</span>
 <span class="sd">*tiago_data.yaml* (beside this script) keeps the queue::</span>

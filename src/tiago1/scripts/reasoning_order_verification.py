@@ -49,6 +49,23 @@ Interfaces (strongly-typed, stateless)
      - ``tiago1/send_order``
      - Appends the order to the orchestration FIFO.
 
+Order Verification & Error Handling KPIs
+========================================
+
+.. list-table::
+   :header-rows: 1
+   :widths: 50 50
+
+   * - **Metric**
+     - **Target**
+   * - Verification latency (`/voice_recogn` → `/verif_T_manager`)
+     - ≤ 200 ms
+   * - Dish-match recall (valid dishes recognized)
+     - ≥ 98 %
+   * - Error-handling coverage (mis-orders triggering error code)
+     - ≥ 95 %
+
+
 Validation policy
 -----------------
 * **Syntax guard** – sentence *must* include “Can I have”.  

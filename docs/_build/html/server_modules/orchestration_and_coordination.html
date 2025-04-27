@@ -133,6 +133,31 @@ Response ← <code class="docutils literal notranslate"><span class="pre">state_
 </tbody>
 </table>
 </section>
+<section id="orchestration-system-integration-kpis">
+<h3>Orchestration System Integration KPIs<a class="headerlink" href="#orchestration-system-integration-kpis" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Metric</strong></p></th>
+<th class="head"><p><strong>Target</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Task assignment latency (call to <cite>/robot_state_decision</cite> → response)</p></td>
+<td><p>≤ 100 ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>Throughput (orders assigned per second)</p></td>
+<td><p>≥ 20 orders/s</p></td>
+</tr>
+<tr class="row-even"><td><p>Conflict rate (duplicate table assignments)</p></td>
+<td><p>&lt; 1 %</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="persistent-storage">
 <h3>Persistent storage<a class="headerlink" href="#persistent-storage" title="Link to this heading"></a></h3>
 <p><em>tiago_data.yaml</em> (beside this script) keeps the queue:</p>
