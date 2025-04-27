@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camera Preprocessing &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Object Detection / Segmentation" href="object_detection.html" />
+    <link rel="prev" title="Camera" href="camera.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../vision.html">Subsystem Vision</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../vision.html#what-the-vision-subsystem-does">What the Vision subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vision.html#design-patterns">Design Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vision.html#component-roles">Component roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vision.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../vision.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="camera.html">Camera</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Camera Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="object_detection.html">Object Detection / Segmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distance_estimation.html">Distance Estimation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../vision.html">Subsystem Vision</a></li>
+      <li class="breadcrumb-item active">Camera Preprocessing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/vision_modules/camera_preprocessing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-camera_preprocessing">
+<span id="camera-preprocessing"></span><h1>Camera Preprocessing<a class="headerlink" href="#module-camera_preprocessing" title="Link to this heading"></a></h1>
+<section id="camera-preprocessing-py">
+<h2>camera_preprocessing.py<a class="headerlink" href="#camera-preprocessing-py" title="Link to this heading"></a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>camera_preprocessing.py</cite> is a <em>horizontal</em> (domain-independent) data-filter
+component that improves raw RGB + depth imagery before any perception or fusion
+module touches it.  Every robot sharing the same message contracts can reuse
+this node as-is, giving you a single place to tweak sensor quirks instead of a
+dozen ad-hoc patches spread across your stack.</p>
+</section>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 23.3%" />
+<col style="width: 20.8%" />
+<col style="width: 45.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Message type</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Required</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/camera</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>BGR8 frames</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Required</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/depth</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Any depth encoding</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/camera_processed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Same header; 5 × 5 Gaussian blur (σ ≈ 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/depth_processed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Same header; values &lt; 0.5 m set to 0</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p>Pre-conditions</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Incoming RGB must be 8-bit, 3-channel (BGR8).</p></li>
+<li><p>Depth resolution not larger than 1920×1080 (soft real-time ceiling).</p></li>
+</ul>
+</div></blockquote>
+<p>Post-conditions</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Header <cite>stamp</cite> and <cite>frame_id</cite> are <strong>identical</strong> between input and output.</p></li>
+<li><p>Latency from callback entry to publish is &lt; 12 ms on a 4-core laptop.</p></li>
+<li><p>Output resolution equals input (no accidental rescale).</p></li>
+</ul>
+</div></blockquote>
+<p>Invariants</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Peak RAM ≤ 5×(w×h×c) bytes (one temp copy plus output buffer).</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Protocol</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Subscribe to both raw topics.</p></li>
+<li><p>Publish processed counterparts for every incoming frame.</p></li>
+<li><p>No service calls or stateful dialogue; each message is handled independently.</p></li>
+</ol>
+</div></blockquote>
+</section>
+<section id="lifecycle">
+<h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Node name: <cite>{robot}_camera_preprocessing_node</cite>.</p></li>
+<li><p>Ready when its two publishers are advertised (no extra init service).</p></li>
+<li><p>Clean shutdown on Ctrl-C or <cite>rosnode kill</cite>, handled by <cite>rospy</cite>.</p></li>
+</ul>
+</section>
+<section id="quality-reusability-metrics">
+<h3>Quality &amp; Reusability Metrics<a class="headerlink" href="#quality-reusability-metrics" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Latency</strong> &lt; 12 ms → supports 30 Hz pipelines.</p></li>
+<li><p><strong>Throughput</strong> ≥ camera frame-rate (default 30 Hz).</p></li>
+<li><p><strong>Cyclomatic complexity</strong> &lt; 15 → easy to maintain / extend.</p></li>
+</ul>
+<p>Adding such a server is orthogonal to the current contract and does not break
+existing clients.</p>
+</section>
+<section id="implementation-notes">
+<h3>Implementation Notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>A single global <cite>CvBridge</cite> keeps conversion overhead low.</p></li>
+<li><p>Processing occurs inside subscriber callbacks (no poll loop).</p></li>
+<li><p>The duplicate publisher block at the end of <cite>__init__</cite> preserves existing
+downstream contracts; remove it only after all consumers migrate to the
+namespaced topics.</p></li>
+</ul>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camera_preprocessing.</span></span><span class="sig-name descname"><span class="pre">CameraPreprocessing</span></span><a class="reference internal" href="../_modules/camera_preprocessing.html#CameraPreprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>In-place enhancement for RGB and depth streams.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.depth_callback">
+<span class="sig-name descname"><span class="pre">depth_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/camera_preprocessing.html#CameraPreprocessing.depth_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.depth_callback" title="Link to this definition"></a></dt>
+<dd><p>Threshold low-range depth and forward.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.rgb_callback">
+<span class="sig-name descname"><span class="pre">rgb_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/camera_preprocessing.html#CameraPreprocessing.rgb_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.rgb_callback" title="Link to this definition"></a></dt>
+<dd><p>Denoise and forward an RGB frame.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camera.html" class="btn btn-neutral float-left" title="Camera" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="object_detection.html" class="btn btn-neutral float-right" title="Object Detection / Segmentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

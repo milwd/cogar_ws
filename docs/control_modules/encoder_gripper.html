@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encoder Gripper &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Force Sensor" href="force.html" />
+    <link rel="prev" title="Encoder Arm" href="encoder_arm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../control.html">Subsystem Control</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../control.html#what-the-control-subsystem-does">What the Control subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control.html#design-patterns">Design Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control.html#component-roles">Component roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../control.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="control_wheel.html">Control Wheel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control_arm.html">Control Arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control_gripper.html">Control Gripper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encoder_wheel.html">Encoder Wheel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encoder_arm.html">Encoder Arm</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Encoder Gripper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="force.html">Force Sensor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../control.html">Subsystem Control</a></li>
+      <li class="breadcrumb-item active">Encoder Gripper</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/control_modules/encoder_gripper.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="encoder-gripper">
+<h1>Encoder Gripper<a class="headerlink" href="#encoder-gripper" title="Link to this heading"></a></h1>
+<section id="encoder-gripper-py">
+<span id="module-encoder_gripper"></span><h2>encoder_gripper.py<a class="headerlink" href="#encoder-gripper-py" title="Link to this heading"></a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>encoder_gripper.py</cite> is a <strong>dummy gripper-position sensor</strong> that publishes
+pseudo-random gripper opening widths at a fixed rate.  It enables PID loops,
+dashboards and loggers to run when the physical gripper is offline or during CI.</p>
+</section>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13.8%" />
+<col style="width: 34.5%" />
+<col style="width: 51.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/encoder_gripper</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code> – simulated gripper opening width in mm (0–100)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p><strong>Pre-conditions</strong></p>
+<ul class="simple">
+<li><p>Node launched with a valid <cite>robot_id</cite> CLI argument.</p></li>
+<li><p>Subscribers expect gripper widths at ~10 Hz.</p></li>
+</ul>
+<p><strong>Post-conditions</strong></p>
+<ul class="simple">
+<li><p>Publishes exactly one <cite>Int32</cite> per loop iteration.</p></li>
+<li><p><cite>data</cite> field is an integer uniformly drawn from [0, _MAX_WIDTH].</p></li>
+<li><p>No internal state retained beyond the RNG.</p></li>
+</ul>
+<p><strong>Invariants</strong></p>
+<ul class="simple">
+<li><p>Loop frequency = <cite>_RATE</cite> ± ROS scheduler jitter.</p></li>
+<li><p>Width range fixed by <cite>_MAX_WIDTH</cite>.</p></li>
+</ul>
+</section>
+<section id="quality-of-service-kpis">
+<h3>Quality-of-Service KPIs<a class="headerlink" href="#quality-of-service-kpis" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27.8%" />
+<col style="width: 22.2%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Target</p></th>
+<th class="head"><p>Rationale</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Message rate</p></td>
+<td><p><strong>10 Hz ± 0.5 Hz</strong></p></td>
+<td><p>Keeps gripper controllers in sync.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Latency</p></td>
+<td><p><strong>&lt; 100 ms</strong></p></td>
+<td><p>Prevents stale position readings.</p></td>
+</tr>
+<tr class="row-even"><td><p>CPU load</p></td>
+<td><p><strong>&lt; 1 %</strong></p></td>
+<td><p>Safe on embedded CPU.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="implementation-notes">
+<h3>Implementation notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Uses <cite>random.randint(0, _MAX_WIDTH)</cite> for uniform width generation.</p></li>
+<li><p>All logic is in <cite>gripper_encoder()</cite>; the main loop maintains timing.</p></li>
+<li><p>Seed the RNG (<cite>random.seed(…)</cite>) before calling for reproducible tests.</p></li>
+</ul>
+</section>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="encoder_gripper.gripper_encoder">
+<span class="sig-prename descclassname"><span class="pre">encoder_gripper.</span></span><span class="sig-name descname"><span class="pre">gripper_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/encoder_gripper.html#gripper_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_gripper.gripper_encoder" title="Link to this definition"></a></dt>
+<dd><p>Initialise ROS publisher and broadcast random gripper widths until shutdown.</p>
+<section id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Read <cite>robot_id</cite> from CLI and initialise node <cite>&lt;robot&gt;_encoder_gripper&gt;</cite>.</p></li>
+<li><p>Advertise <cite>/robot/encoder_gripper</cite> (queue_size=10).</p></li>
+<li><p>Loop at <cite>_RATE</cite> Hz:</p>
+<ol class="loweralpha simple">
+<li><p>Generate <cite>width = randint(0, _MAX_WIDTH)</cite>.</p></li>
+<li><p>Publish <cite>Int32(width)</cite>.</p></li>
+<li><p>Sleep to maintain rate.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="encoder_arm.html" class="btn btn-neutral float-left" title="Encoder Arm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="force.html" class="btn btn-neutral float-right" title="Force Sensor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

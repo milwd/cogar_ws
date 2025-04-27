@@ -181,3 +181,4 @@ Successful launch:
    interaction/interaction_modules/speaker
    server
    server/server_modules/orchestration_and_coordination
+   server/server_modules/id_counter_server
