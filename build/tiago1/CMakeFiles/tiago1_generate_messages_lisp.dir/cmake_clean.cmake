@@ -21,6 +21,7 @@ file(REMOVE_RECURSE
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlGoal.lisp"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/MovementControlResult.lisp"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/msg/Voice_rec.lisp"
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/srv/GetNextId.lisp"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/srv/robotstatedecision.lisp"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/share/common-lisp/ros/tiago1/srv/send_order.lisp"
   "CMakeFiles/tiago1_generate_messages_lisp"

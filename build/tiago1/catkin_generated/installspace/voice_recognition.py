@@ -25,7 +25,7 @@ if __name__ == "__main__":
     try:
         keys = [0, 1, 2, 3, 4, 5]
         strings =[
-                    "Can I have some riso,shit",
+                    "Can I have some riso,ramen",
                     "Can I have some pasta",
                     "Can I have some pasta, pizza, sushi",
                     "Can I have steak",

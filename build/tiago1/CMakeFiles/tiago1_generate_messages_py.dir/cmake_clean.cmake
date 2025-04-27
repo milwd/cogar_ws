@@ -22,6 +22,7 @@ file(REMOVE_RECURSE
   "/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_MovementControlResult.py"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/_Voice_rec.py"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/msg/__init__.py"
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/srv/_GetNextId.py"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/srv/__init__.py"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/srv/_robotstatedecision.py"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/lib/python3/dist-packages/tiago1/srv/_send_order.py"

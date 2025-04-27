@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/ArmControlFeedback.h"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/ArmControlGoal.h"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/ArmControlResult.h"
+  "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/GetNextId.h"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/GripperControlAction.h"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/GripperControlActionFeedback.h"
   "/root/Desktop/cogar_ass1/cogar_ws/devel/include/tiago1/GripperControlActionGoal.h"
