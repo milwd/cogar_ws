@@ -196,6 +196,37 @@ with a thin orchestration layer balancing the fleet</p>
 <a class="reference internal image-reference" href="_images/run.gif"><img alt="Animated demo of the Autonomous Waiter in action" src="_images/run.gif" style="width: 70%;" />
 </a>
 </figure>
+</section>
+<section id="test-results">
+<h2>9. Test Results<a class="headerlink" href="#test-results" title="Link to this heading"></a></h2>
+<p>Faulty launch:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[TEST] Expected nodes: 39, Found nodes: 38</span>
+<span class="go">F[INFO] Integration tests complete.</span>
+
+<span class="go">======================================================================</span>
+<span class="go">FAIL: test_node_count (main.TestIntegration)</span>
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">  File &quot;cogar_ws/src/tiago1/test/integration_test.py&quot;, line 16, in test_node_count</span>
+<span class="go">    self.assertEqual(len(self.nodes), expected_node_count)</span>
+<span class="go">AssertionError: 38 != 39</span>
+
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">Ran 2 tests in 20.607s</span>
+
+<span class="go">FAILED (failures=1)</span>
+</pre></div>
+</div>
+<p>Successful launch:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[TEST] Expected nodes: 39, Found nodes: 39</span>
+<span class="go">[INFO] Integration tests complete.</span>
+
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">Ran 2 tests in 20.503s</span>
+
+<span class="go">OK</span>
+</pre></div>
+</div>
 <p class="rubric">Contents</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>

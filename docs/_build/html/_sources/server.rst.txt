@@ -90,3 +90,4 @@ Full API documentation:
    :caption: Server Component
 
    server_modules/orchestration_and_coordination
+   server_modules/id_counter_server

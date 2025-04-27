@@ -108,6 +108,41 @@ Here we have a live demo of the project, in the right-up we have roslaunch windo
 
      **Figure 2.** Project Demo.
 
+9. Test Results
+---------------
+Faulty launch:
+
+.. code-block:: console
+
+   [TEST] Expected nodes: 39, Found nodes: 38
+   F[INFO] Integration tests complete.
+
+   ======================================================================
+   FAIL: test_node_count (main.TestIntegration)
+   ----------------------------------------------------------------------
+   Traceback (most recent call last):
+     File "cogar_ws/src/tiago1/test/integration_test.py", line 16, in test_node_count
+       self.assertEqual(len(self.nodes), expected_node_count)
+   AssertionError: 38 != 39
+
+   ----------------------------------------------------------------------
+   Ran 2 tests in 20.607s
+
+   FAILED (failures=1)
+
+Successful launch:
+
+.. code-block:: console
+
+   [TEST] Expected nodes: 39, Found nodes: 39
+   [INFO] Integration tests complete.
+
+   ----------------------------------------------------------------------
+   Ran 2 tests in 20.503s
+
+   OK
+
+
 
 .. rubric:: Contents
 
@@ -146,3 +181,4 @@ Here we have a live demo of the project, in the right-up we have roslaunch windo
    interaction/interaction_modules/speaker
    server
    server/server_modules/orchestration_and_coordination
+   server/server_modules/id_counter_server
