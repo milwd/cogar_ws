@@ -4,12 +4,8 @@ Subsystem Brain
 
 What the “Brain” does
 ---------------------
-The Brain is the **central decision-making layer** of each TIAGo robot.  It takes in  
-– high-level customer intent (orders parsed from speech),  
-– real-time context (table occupancy, robot locations, task queue state), and  
-– execution feedback (navigation and manipulation results)  
+The Brain is the **central decision-making layer** of each TIAGo robot.  It takes in high-level customer intent (orders parsed from speech), real-time context (table occupancy, robot locations, task queue state), and execution feedback (navigation and manipulation results) and synthesises a **coherent, ordered plan of actions** for the robot to follow.  
 
-and synthesises a **coherent, ordered plan of actions** for the robot to follow.  
 Its responsibilities include:
 
   1. **Task arbitration**  
@@ -29,76 +25,23 @@ Its responsibilities include:
      so that announcements occur at natural breakpoints without overlapping.
 
 Design Patterns
-~~~~~~~~~~~~~~~~
-Below are the key design patterns applied in the Brain subsystem, with explanations of their roles and benefits.
+---------------
 
-- **Strategy**  
+Strategy
+~~~~~~~~
+In our Brain subsystem, **Reasoning Action** uses Strategy to encapsulate different table-placement and clearing heuristics.  For example, we can swap in a `FindPlacementStrategy` for simple “place-if-space” logic or a more sophisticated “optimal-object-arrangement” strategy without touching the orchestrator’s core.  This keeps placement logic **extensible** and **decoupled** from high-level task sequencing.
 
-  - **What it is**: Defines a family of interchangeable algorithms behind a common interface.  
+Observer
+~~~~~~~~
+**Task Manager** subscribes to `/task_feedback` and immediately reacts whenever a controller publishes status (e.g. “BASE_DONE” or “ARM_ABORTED”).  Rather than polling, it receives **push** notifications and can call `/robot_state_decision` as soon as a state change occurs.  This event-driven design keeps orchestration **responsive** and avoids unnecessary spinning loops.
 
-  - **Where used**:  
+Adapter
+~~~~~~~
+**Reasoning Table Placement** takes a raw decision string—like `"Decision: PLACE, IGNORE"`—and adapts it into the exact motor command (`"PLACE_DISH"`, `"CLEAR_TABLE"`, or `"NO_ACTION"`).  By centralizing this translation, the cognitive layer and the manipulation drivers remain **isolated**: we can change the downstream command alphabet without touching the decision logic.
 
-    - *Reasoning Action* can swap different Table-Placement strategies (e.g. “FindPlacement” vs. “Clearing”) without changing its core logic.  
- 
-  - **Why**:  
-
-    - Promotes **extensibility**—new reasoning heuristics can be added by implementing the same interface.
-
-    - Keeps high-level orchestration code **decoupled** from specific placement algorithms.
-
-- **Command**  
-
-  - **What it is**: Encapsulates a request as an object, decoupling the sender of a command from its executor.  
-  
-  - **Where used**:  
-
-    - Each ActionLib goal (`MovementControlAction`, `ArmControlAction`, `GripperControlAction`) wraps a motion or manipulation request.  
- 
-  - **Why**:  
-
-    - Enables **queuing**, **logging**, **undo** and **retry** of discrete robot actions.  
-    
-    - Standardizes how tasks are issued and tracked through feedback/result callbacks.
-
-- **Observer**  
-
-  - **What it is**: Objects (observers) register interest in state changes or events from another object (subject).  
-
-  - **Where used**:  
-
-    - *Task Manager* subscribes to `/task_feedback` and reacts whenever controllers publish status updates.  
- 
-  - **Why**:  
-
-    - Provides a **push-based** mechanism for keeping the orchestrator in sync with low-level controllers without tight polling loops.  
-    
-    - Simplifies **event-driven** reac­tion to success, failure or pre-emption.
-
-- **Adapter**  
-
-  - **What it is**: Converts the interface of one class into another the client expects.  
-
-  - **Where used**:  
-
-    - *Reasoning Table Placement* takes a high-level decision string (e.g. `"Decision: PLACE"`) and adapts it into the exact low-level command (`"PLACE_DISH"`) required by the manipulation stack.  
-  
-  - **Why**:  
-
-    - Isolates **format translation** between cognitive outputs and motor command inputs.  
-
-    - Allows the front-end reasoning logic to evolve independently of downstream command formats.
-
-- **Template Method**  
-
-  - **What it is**: Defines the skeleton of an algorithm in a base class, deferring some steps to subclasses.  
- 
-  - **Where used**:  
- 
-    - *Reasoning Speech Generation* implements a fixed loop—cache latest text, then republish at 1 Hz—while allowing future variants to override caching or timing behavior.  
- 
-  - **Why**:  
- 
-    - Ensures **consistent control flow** for speech throttling, while making it easy to customize individual steps (e.g. different throttling rates, latching policies) without rewriting the loop.
+Template Method
+~~~~~~~~~~~~~~~
+**Reasoning Speech Generation** implements a fixed two-step loop—**cache** the latest text command, then **publish** it at 1 Hz—while leaving the details of caching or latching to its own methods.  If we later need a variant that gates announcements by context or adapts the rate, we override just those hook methods, not the entire republishing flow.
 
 .. image:: images/brain_subsystem.png
    :alt: Component diagram of the Brain subsystem
@@ -106,7 +49,7 @@ Below are the key design patterns applied in the Brain subsystem, with explanati
    :width: 90%
 
 Component roles
-~~~~~~~~~~~~~~~
+---------------
 - **Reasoning Action**  
   - Receives a `nav_msgs/Path` (first waypoint) and a table-command string.  
   - Sends a sequence of three ActionLib goals (Command pattern):  
@@ -165,5 +108,5 @@ Detailed API docs for each Brain component can be found below.
 
    brain_modules/reasoning_action
    brain_modules/reasoning_table_placement
-   brain_modules/task_manager
    brain_modules/reasoning_speech_generation
+   brain_modules/task_manager

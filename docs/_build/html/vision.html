@@ -46,10 +46,16 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Vision</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#what-the-vision-subsystem-does">What the Vision subsystem does</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#component-roles">Component roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-vision-subsystem-does">What the Vision subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-patterns">Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#strategy">Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observer">Observer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adapter">Adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decorator">Decorator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-method">Template Method</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#component-roles">Component roles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementation-modules">Implementation modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="vision_modules/camera.html">Camera</a></li>
@@ -95,24 +101,58 @@
 <h1>Subsystem Vision<a class="headerlink" href="#subsystem-vision" title="Link to this heading"></a></h1>
 <section id="what-the-vision-subsystem-does">
 <h2>What the Vision subsystem does<a class="headerlink" href="#what-the-vision-subsystem-does" title="Link to this heading"></a></h2>
-<p>The Vision layer captures raw RGB‐D streams and transforms them into a sparse, actionable <strong>Object Map</strong>.
-It is responsible for acquiring sensor data, cleaning it, detecting relevant entities (plates, hands, obstacles)
-and estimating their 3D positions for downstream planning and manipulation.</p>
+<p>The Vision layer is responsible for turning raw RGB-D sensor streams into a concise <strong>Object Map</strong> that downstream planners and manipulators can use.  Its end-to-end workflow is:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>Capture</strong>
+The <strong>Camera</strong> node streams synchronized color and depth frames.</p></li>
+<li><p><strong>Clean &amp; Normalize</strong>
+<strong>Camera Preprocessing</strong> applies lens undistortion, colour-balance and denoising filters in a reusable pipeline.</p></li>
+<li><p><strong>Perceive</strong>
+<strong>Object Detection</strong> locates plates, hands and obstacles in each frame at a steady 1 Hz, producing bounding-box hypotheses.</p></li>
+<li><p><strong>Localize</strong>
+<strong>Distance Estimation</strong> fuses those bounding boxes with depth pixels to compute metric XYZ coordinates, emitting a final <cite>cogar_msgs/ObjectMap</cite>.</p></li>
+</ol>
+</div></blockquote>
 <a class="reference internal image-reference" href="_images/vision_subsystem.png"><img alt="Component diagram of the Vision subsystem" class="align-center" src="_images/vision_subsystem.png" style="width: 90%;" />
 </a>
+</section>
+<section id="design-patterns">
+<h2>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h2>
+<section id="strategy">
+<h3>Strategy<a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
+<p>In our Vision subsystem, <strong>Object Detection</strong> uses Strategy to swap between different detection implementations—whether a placeholder stub, a classical CV method or a deep-learning model—without touching the rest of the pipeline.  This keeps detection logic <strong>extensible</strong> and <strong>decoupled</strong> from downstream consumers.</p>
+</section>
+<section id="observer">
+<h3>Observer<a class="headerlink" href="#observer" title="Link to this heading"></a></h3>
+<p><strong>Camera Preprocessing</strong> subscribes to <cite>/camera</cite> and <cite>/depth</cite> and processes each frame as soon as it arrives.  By reacting to new-image events rather than polling, we guarantee that every frame is handled exactly once and with minimal latency.</p>
+</section>
+<section id="adapter">
+<h3>Adapter<a class="headerlink" href="#adapter" title="Link to this heading"></a></h3>
+<p><strong>Camera</strong> uses <cite>CvBridge</cite> to adapt ROS <cite>sensor_msgs/Image</cite> messages into OpenCV <cite>numpy</cite> arrays and back.  This isolates ROS message formats from CV code, making sensor-to-image integration seamless and maintainable.</p>
+</section>
+<section id="decorator">
+<h3>Decorator<a class="headerlink" href="#decorator" title="Link to this heading"></a></h3>
+<p><strong>Camera Preprocessing</strong> chains filters—undistort → colour-balance → 5×5 Gaussian blur—by wrapping each output in the next filter.  We can add, remove or reorder filters without modifying the subscription logic.</p>
+</section>
+<section id="template-method">
+<h3>Template Method<a class="headerlink" href="#template-method" title="Link to this heading"></a></h3>
+<p><strong>Distance Estimation</strong> provides a fixed flow—parse detection results, sample depth, back-project to XYZ, publish—while allowing future variants to customize parsing or projection without rewriting the overall pipeline.</p>
+</section>
+</section>
 <section id="component-roles">
-<h3>Component roles<a class="headerlink" href="#component-roles" title="Link to this heading"></a></h3>
+<h2>Component roles<a class="headerlink" href="#component-roles" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Camera</strong>
-- Publishes synchronized <strong>RGB</strong> and <strong>Depth</strong> frames on <cite>/camera</cite> and <cite>/depth</cite> at <strong>1,280×720</strong> &#64; <strong>10 Hz</strong>.</p></li>
+- Publishes <cite>/camera</cite> (<cite>sensor_msgs/Image</cite>) and <cite>/depth</cite> (<cite>sensor_msgs/Image</cite>) at <strong>1,280×720 &#64; 10 Hz</strong>.
+- Implements the <strong>Adapter</strong> pattern via <cite>CvBridge</cite> for ROS↔OpenCV conversions.</p></li>
 <li><p><strong>Camera Preprocessing</strong>
-- Subscribes to raw images, performs undistortion, colour‐balance and 5×5 Gaussian denoising, then republishes on <cite>/camera_processed</cite> and <cite>/depth_processed</cite>.</p></li>
+- Subscribes to raw streams, applies an undistort + Gaussian blur + colour-balance <strong>pipeline</strong> (Decorator pattern), and republishes on <cite>/camera_processed</cite> and <cite>/depth_processed</cite>.</p></li>
 <li><p><strong>Object Detection</strong>
-- Listens to <cite>/camera_processed</cite> and emits a <cite>vision_msgs/Detection2DArray</cite> of detected plates, hands and obstacles at <strong>1 Hz</strong>.</p></li>
+- Listens to <cite>/camera_processed</cite>, applies a detection algorithm chosen by the <strong>Strategy</strong> pattern, and publishes <cite>vision_msgs/Detection2DArray</cite> on <cite>/object_hypotheses</cite> at <strong>1 Hz</strong>.</p></li>
 <li><p><strong>Distance Estimation</strong>
-- Consumes <cite>/object_hypotheses</cite> and <cite>/depth_processed</cite>, back‐projects centre pixels (or bounding‐box centres) into metric XYZ, and outputs a <cite>cogar_msgs/ObjectMap</cite>.</p></li>
+- Subscribes to <cite>/object_hypotheses</cite> and <cite>/depth_processed</cite>, uses a <strong>Template Method</strong>–style base class to parse, project via pinhole intrinsics and publish a <cite>cogar_msgs/ObjectMap</cite> on <cite>/object_map</cite>.</p></li>
 </ul>
-</section>
 </section>
 <section id="ros-interfaces-kpis">
 <h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>
@@ -131,26 +171,26 @@ and estimating their 3D positions for downstream planning and manipulation.</p>
 <tbody>
 <tr class="row-even"><td><p><strong>`/camera`, `/depth`</strong></p></td>
 <td><p><cite>sensor_msgs/Image</cite></p></td>
-<td><p>10 Hz, end-to-end sensor latency ≤ 200 ms</p></td>
+<td><p>10 Hz capture rate; end-to-end acquisition latency ≤ 200 ms</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>`/camera_processed`, `/depth_processed`</strong></p></td>
 <td><p><cite>sensor_msgs/Image</cite></p></td>
-<td><p>Preprocessing adds &lt; 25 ms; depth completeness ≥ 99 %</p></td>
+<td><p>Preprocessing adds &lt; 25 ms latency; depth completeness ≥ 99 %</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>`/object_hypotheses`</strong></p></td>
 <td><p><cite>vision_msgs/Detection2DArray</cite></p></td>
-<td><p>Detection mAP ≥ 0.75 (IoU 0.5) on plate set</p></td>
+<td><p>Detection mAP ≥ 0.75 (IoU 0.5) on plate set, published ≤ 1 s after frame</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>`/object_map`</strong></p></td>
 <td><p><cite>cogar_msgs/ObjectMap</cite></p></td>
-<td><p>Published ≤ 300 ms after frame capture</p></td>
+<td><p>Metric positions published ≤ 300 ms after detections</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="implementation-modules">
 <h2>Implementation modules<a class="headerlink" href="#implementation-modules" title="Link to this heading"></a></h2>
-<p>Detailed API docs for each Vision component are linked below:</p>
+<p>Detailed API docs for each Vision component:</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Vision Components</span></p>
 <ul>

@@ -157,8 +157,8 @@ Server
    brain
    brain/brain_modules/reasoning_action
    brain/brain_modules/reasoning_table_placement
-   brain/brain_modules/task_manager
    brain/brain_modules/reasoning_speech_generation
+   brain/brain_modules/task_manager
    navigation
    navigation/navigation_modules/sonar
    navigation/navigation_modules/lidar

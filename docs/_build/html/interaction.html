@@ -50,7 +50,17 @@
 <li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Interaction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#purpose">Purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-interaction-subsystem-does">What the Interaction subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-patterns">Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#observer">Observer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adapter">Adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strategy">Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-method">Template Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command">Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chain-of-responsibility">Chain of Responsibility</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#component-roles">Component roles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementation-modules">Implementation modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="interaction_modules/voice_recognition.html">Voice Recognition</a></li>
@@ -90,18 +100,60 @@
              
   <section id="subsystem-interaction">
 <h1>Subsystem Interaction<a class="headerlink" href="#subsystem-interaction" title="Link to this heading"></a></h1>
-<section id="purpose">
-<h2>Purpose<a class="headerlink" href="#purpose" title="Link to this heading"></a></h2>
-<p>The Interaction layer is the robot’s <strong>voice and ears</strong>:</p>
-<ul class="simple">
-<li><p><strong>Microphone</strong> – captures or fakes raw audio events.</p></li>
-<li><p><strong>Voice Recognition</strong> – converts those events into plain-text commands.</p></li>
-<li><p><strong>Reasoning Order Verification</strong> – validates customer requests before they
-enter the orchestration queue.</p></li>
-<li><p><strong>Speaker</strong> – delivers synthesised sentences to nearby diners.</p></li>
-</ul>
+<section id="what-the-interaction-subsystem-does">
+<h2>What the Interaction subsystem does<a class="headerlink" href="#what-the-interaction-subsystem-does" title="Link to this heading"></a></h2>
+<p>The Interaction layer is responsible for all spoken I/O between customers and the TIAGo fleet:</p>
+<ol class="arabic simple">
+<li><p><strong>Capture</strong> raw audio events (or simulate them) from microphones.</p></li>
+<li><p><strong>Recognise</strong> spoken commands, converting integer “utterances” into plain‐text.</p></li>
+<li><p><strong>Validate</strong> customer orders (“Can I have …”) before they enter the task queue, catching missing requests or unknown dishes.</p></li>
+<li><p><strong>Announce</strong> robot status and customer notifications in a human‐friendly, rate‐controlled fashion.</p></li>
+</ol>
 <a class="reference internal image-reference" href="_images/interaction_subsystem.png"><img alt="Component diagram of the Interaction subsystem" class="align-center" src="_images/interaction_subsystem.png" style="width: 90%;" />
 </a>
+</section>
+<section id="design-patterns">
+<h2>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h2>
+<section id="observer">
+<h3>Observer<a class="headerlink" href="#observer" title="Link to this heading"></a></h3>
+<p><strong>voice_recognition.py</strong> and <strong>speaker.py</strong> both subscribe to topics (mic_channel or speaker_channel) and process each incoming message as soon as it arrives.  This push‐based design eliminates polling and guarantees each event is handled exactly once, keeping latency low and resource usage efficient.</p>
+</section>
+<section id="adapter">
+<h3>Adapter<a class="headerlink" href="#adapter" title="Link to this heading"></a></h3>
+<p><strong>voice_recognition.py</strong> implements a dictionary‐based adapter that maps raw <cite>Int32</cite> codes into natural‐language sentences.  By centralising this mapping, the downstream order verification node never sees numeric keys—only human‐readable text—keeping the ASR stub and the verification logic cleanly separated.</p>
+</section>
+<section id="strategy">
+<h3>Strategy<a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
+<p><strong>reasoning_order_verification.py</strong> uses a simple substring‐match strategy to detect the “Can I have” fragment and a list‐matching strategy for dish recognition.  In the future we could swap in a more sophisticated NLP strategy (e.g. regex‐based, ML‐based entity extraction) without changing the orchestration of parse → validate → publish.</p>
+</section>
+<section id="template-method">
+<h3>Template Method<a class="headerlink" href="#template-method" title="Link to this heading"></a></h3>
+<p><strong>speech_generator.py</strong> implements a fixed two‐step loop—<strong>cache</strong> incoming text, then <strong>publish</strong> it at 1 Hz—while allowing customization of caching or republishing hooks.  To introduce context‐aware gating or dynamic rate adaptation, we override only those hook methods, not the entire republishing flow.</p>
+</section>
+<section id="command">
+<h3>Command<a class="headerlink" href="#command" title="Link to this heading"></a></h3>
+<p><strong>reasoning_order_verification.py</strong> wraps validated orders in a <cite>tiago1/Voice_rec</cite> message and also constructs a <cite>send_orderRequest</cite> for the <cite>/robot_state_decision_add</cite> service.  Both the publish and service‐call act like commands that can be retried, queued or extended, decoupling the verification logic from the rest of the orchestration.</p>
+</section>
+<section id="chain-of-responsibility">
+<h3>Chain of Responsibility<a class="headerlink" href="#chain-of-responsibility" title="Link to this heading"></a></h3>
+<p>In <strong>reasoning_order_verification.py</strong>, the <cite>parse_order()</cite> method applies a sequence of checks—polite‐request guard, dish‐matching guard, then structured message creation or error emission.  We can insert additional validation steps (e.g. profanity filter, multi‐language support) simply by adding new handlers to this chain without rewriting existing logic.</p>
+</section>
+</section>
+<section id="component-roles">
+<h2>Component roles<a class="headerlink" href="#component-roles" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>microphone.py</strong>
+- Publishes a random or real <cite>std_msgs/Int32</cite> on <cite>/&lt;robot&gt;/mic_channel</cite> to emulate microphone events at 1 Hz.</p></li>
+<li><p><strong>voice_recognition.py</strong>
+- Subscribes to <cite>/mic_channel</cite>, maps each <cite>Int32</cite> key → sentence via a lookup dict, and publishes <cite>std_msgs/String</cite> on <cite>/voice_recogn</cite>.</p></li>
+<li><p><strong>reasoning_order_verification.py</strong>
+- Listens to <cite>/voice_recogn</cite>, checks for the fragment <strong>“Can I have”</strong> and valid dishes from a <cite>food_list</cite>.
+- On success, publishes a structured <cite>tiago1/Voice_rec</cite> to <cite>/verif_T_manager</cite> and calls the <cite>send_order</cite> service; on failure, emits error codes (1 = no dish, 2 = missing phrase) on <cite>/error_from_interaction</cite>.</p></li>
+<li><p><strong>speech_generator.py</strong>
+- Buffers the latest text command from <cite>/task_speech_command</cite> and republishes it at 1 Hz on <cite>/speaker_channel</cite>, ensuring no more than one announcement per second.</p></li>
+<li><p><strong>speaker.py</strong>
+- Subscribes to <cite>/speaker_channel</cite> and immediately relays each <cite>std_msgs/String</cite> to <cite>/speaker_output</cite>, with latching so late‐joining TTS drivers still hear the last message.</p></li>
+</ul>
 </section>
 <section id="ros-interfaces-kpis">
 <h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>

@@ -47,17 +47,21 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Brain</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#what-the-brain-does">What the “Brain” does</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#design-patterns">Design Patterns</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#component-roles">Component roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-brain-does">What the “Brain” does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-patterns">Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#strategy">Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observer">Observer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adapter">Adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-method">Template Method</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#component-roles">Component roles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementation-modules">Implementation modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="brain_modules/reasoning_action.html">Reasoning Action</a></li>
 <li class="toctree-l3"><a class="reference internal" href="brain_modules/reasoning_table_placement.html">Reasoning Table Placement</a></li>
-<li class="toctree-l3"><a class="reference internal" href="brain_modules/task_manager.html">Task Manager</a></li>
 <li class="toctree-l3"><a class="reference internal" href="brain_modules/reasoning_speech_generation.html">Reasoning Speech Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="brain_modules/task_manager.html">Task Manager</a></li>
 </ul>
 </li>
 </ul>
@@ -96,12 +100,8 @@
 <h1>Subsystem Brain<a class="headerlink" href="#subsystem-brain" title="Link to this heading"></a></h1>
 <section id="what-the-brain-does">
 <h2>What the “Brain” does<a class="headerlink" href="#what-the-brain-does" title="Link to this heading"></a></h2>
-<p>The Brain is the <strong>central decision-making layer</strong> of each TIAGo robot.  It takes in
-– high-level customer intent (orders parsed from speech),
-– real-time context (table occupancy, robot locations, task queue state), and
-– execution feedback (navigation and manipulation results)</p>
-<p>and synthesises a <strong>coherent, ordered plan of actions</strong> for the robot to follow.
-Its responsibilities include:</p>
+<p>The Brain is the <strong>central decision-making layer</strong> of each TIAGo robot.  It takes in high-level customer intent (orders parsed from speech), real-time context (table occupancy, robot locations, task queue state), and execution feedback (navigation and manipulation results) and synthesises a <strong>coherent, ordered plan of actions</strong> for the robot to follow.</p>
+<p>Its responsibilities include:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p><strong>Task arbitration</strong>
@@ -118,95 +118,30 @@ Buffering and throttling spoken notifications (e.g. “Your sushi is here”)
 so that announcements occur at natural breakpoints without overlapping.</p></li>
 </ol>
 </div></blockquote>
+</section>
 <section id="design-patterns">
-<h3>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h3>
-<p>Below are the key design patterns applied in the Brain subsystem, with explanations of their roles and benefits.</p>
-<ul class="simple">
-<li><p><strong>Strategy</strong></p>
-<ul>
-<li><p><strong>What it is</strong>: Defines a family of interchangeable algorithms behind a common interface.</p></li>
-<li><p><strong>Where used</strong>:</p>
-<ul>
-<li><p><em>Reasoning Action</em> can swap different Table-Placement strategies (e.g. “FindPlacement” vs. “Clearing”) without changing its core logic.</p></li>
-</ul>
-</li>
-<li><p><strong>Why</strong>:</p>
-<ul>
-<li><p>Promotes <strong>extensibility</strong>—new reasoning heuristics can be added by implementing the same interface.</p></li>
-<li><p>Keeps high-level orchestration code <strong>decoupled</strong> from specific placement algorithms.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Command</strong></p>
-<ul>
-<li><p><strong>What it is</strong>: Encapsulates a request as an object, decoupling the sender of a command from its executor.</p></li>
-<li><p><strong>Where used</strong>:</p>
-<ul>
-<li><p>Each ActionLib goal (<cite>MovementControlAction</cite>, <cite>ArmControlAction</cite>, <cite>GripperControlAction</cite>) wraps a motion or manipulation request.</p></li>
-</ul>
-</li>
-<li><p><strong>Why</strong>:</p>
-<ul>
-<li><p>Enables <strong>queuing</strong>, <strong>logging</strong>, <strong>undo</strong> and <strong>retry</strong> of discrete robot actions.</p></li>
-<li><p>Standardizes how tasks are issued and tracked through feedback/result callbacks.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Observer</strong></p>
-<ul>
-<li><p><strong>What it is</strong>: Objects (observers) register interest in state changes or events from another object (subject).</p></li>
-<li><p><strong>Where used</strong>:</p>
-<ul>
-<li><p><em>Task Manager</em> subscribes to <cite>/task_feedback</cite> and reacts whenever controllers publish status updates.</p></li>
-</ul>
-</li>
-<li><p><strong>Why</strong>:</p>
-<ul>
-<li><p>Provides a <strong>push-based</strong> mechanism for keeping the orchestrator in sync with low-level controllers without tight polling loops.</p></li>
-<li><p>Simplifies <strong>event-driven</strong> reac­tion to success, failure or pre-emption.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Adapter</strong></p>
-<ul>
-<li><p><strong>What it is</strong>: Converts the interface of one class into another the client expects.</p></li>
-<li><p><strong>Where used</strong>:</p>
-<ul>
-<li><p><em>Reasoning Table Placement</em> takes a high-level decision string (e.g. <cite>“Decision: PLACE”</cite>) and adapts it into the exact low-level command (<cite>“PLACE_DISH”</cite>) required by the manipulation stack.</p></li>
-</ul>
-</li>
-<li><p><strong>Why</strong>:</p>
-<ul>
-<li><p>Isolates <strong>format translation</strong> between cognitive outputs and motor command inputs.</p></li>
-<li><p>Allows the front-end reasoning logic to evolve independently of downstream command formats.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Template Method</strong></p>
-<ul>
-<li><p><strong>What it is</strong>: Defines the skeleton of an algorithm in a base class, deferring some steps to subclasses.</p></li>
-<li><p><strong>Where used</strong>:</p>
-<ul>
-<li><p><em>Reasoning Speech Generation</em> implements a fixed loop—cache latest text, then republish at 1 Hz—while allowing future variants to override caching or timing behavior.</p></li>
-</ul>
-</li>
-<li><p><strong>Why</strong>:</p>
-<ul>
-<li><p>Ensures <strong>consistent control flow</strong> for speech throttling, while making it easy to customize individual steps (e.g. different throttling rates, latching policies) without rewriting the loop.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<h2>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h2>
+<section id="strategy">
+<h3>Strategy<a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
+<p>In our Brain subsystem, <strong>Reasoning Action</strong> uses Strategy to encapsulate different table-placement and clearing heuristics.  For example, we can swap in a <cite>FindPlacementStrategy</cite> for simple “place-if-space” logic or a more sophisticated “optimal-object-arrangement” strategy without touching the orchestrator’s core.  This keeps placement logic <strong>extensible</strong> and <strong>decoupled</strong> from high-level task sequencing.</p>
+</section>
+<section id="observer">
+<h3>Observer<a class="headerlink" href="#observer" title="Link to this heading"></a></h3>
+<p><strong>Task Manager</strong> subscribes to <cite>/task_feedback</cite> and immediately reacts whenever a controller publishes status (e.g. “BASE_DONE” or “ARM_ABORTED”).  Rather than polling, it receives <strong>push</strong> notifications and can call <cite>/robot_state_decision</cite> as soon as a state change occurs.  This event-driven design keeps orchestration <strong>responsive</strong> and avoids unnecessary spinning loops.</p>
+</section>
+<section id="adapter">
+<h3>Adapter<a class="headerlink" href="#adapter" title="Link to this heading"></a></h3>
+<p><strong>Reasoning Table Placement</strong> takes a raw decision string—like <cite>“Decision: PLACE, IGNORE”</cite>—and adapts it into the exact motor command (<cite>“PLACE_DISH”</cite>, <cite>“CLEAR_TABLE”</cite>, or <cite>“NO_ACTION”</cite>).  By centralizing this translation, the cognitive layer and the manipulation drivers remain <strong>isolated</strong>: we can change the downstream command alphabet without touching the decision logic.</p>
+</section>
+<section id="template-method">
+<h3>Template Method<a class="headerlink" href="#template-method" title="Link to this heading"></a></h3>
+<p><strong>Reasoning Speech Generation</strong> implements a fixed two-step loop—<strong>cache</strong> the latest text command, then <strong>publish</strong> it at 1 Hz—while leaving the details of caching or latching to its own methods.  If we later need a variant that gates announcements by context or adapts the rate, we override just those hook methods, not the entire republishing flow.</p>
 <a class="reference internal image-reference" href="_images/brain_subsystem.png"><img alt="Component diagram of the Brain subsystem" class="align-center" src="_images/brain_subsystem.png" style="width: 90%;" />
 </a>
 </section>
+</section>
 <section id="component-roles">
-<h3>Component roles<a class="headerlink" href="#component-roles" title="Link to this heading"></a></h3>
+<h2>Component roles<a class="headerlink" href="#component-roles" title="Link to this heading"></a></h2>
 <ul>
 <li><p><strong>Reasoning Action</strong>
 - Receives a <cite>nav_msgs/Path</cite> (first waypoint) and a table-command string.
@@ -235,7 +170,6 @@ so that announcements occur at natural breakpoints without overlapping.</p></li>
 - Runs a 1 Hz republish loop (Template Method) to <cite>/speaker_channel</cite>, ensuring at most one announcement per second.
 - Uses ROS latching so late subscribers still receive the current sentence.</p></li>
 </ul>
-</section>
 </section>
 <section id="ros-interfaces-kpis">
 <h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>
@@ -283,8 +217,8 @@ so that announcements occur at natural breakpoints without overlapping.</p></li>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="brain_modules/reasoning_action.html">Reasoning Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brain_modules/reasoning_table_placement.html">Reasoning Table Placement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="brain_modules/task_manager.html">Task Manager</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brain_modules/reasoning_speech_generation.html">Reasoning Speech Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain_modules/task_manager.html">Task Manager</a></li>
 </ul>
 </div>
 </section>

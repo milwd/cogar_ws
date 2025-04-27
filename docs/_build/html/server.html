@@ -51,11 +51,17 @@
 <li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#role-in-the-architecture">Role in the architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#data-life-cycle">Data life-cycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-server-subsystem-does">What the Server subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-patterns">Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#singleton">Singleton</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strategy">Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-method">Template Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command">Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observer">Observer</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-life-cycle">Data life-cycle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementation-module">Implementation module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="server_modules/orchestration_and_coordination.html">Orchestration And Coordination</a></li>
 </ul>
@@ -90,20 +96,53 @@
              
   <section id="subsystem-server">
 <h1>Subsystem Server<a class="headerlink" href="#subsystem-server" title="Link to this heading"></a></h1>
-<section id="role-in-the-architecture">
-<h2>Role in the architecture<a class="headerlink" href="#role-in-the-architecture" title="Link to this heading"></a></h2>
-<p>While each TIAGo executes its own navigation and manipulation stack, <strong>one
-central server</strong> coordinates the <em>workflow</em>:</p>
-<ul class="simple">
-<li><p>stores every verified customer order in a <strong>persistent FIFO queue</strong>,</p></li>
-<li><p>assigns the next order to whichever robot reports the state <strong>Free</strong> or
-<strong>Wait</strong>,</p></li>
-<li><p>returns a “Busy → order list” transition so the robot can start execution.</p></li>
-</ul>
-<p>The logic lives in a single script,
-<a href="#id1"><span class="problematic" id="id2">:pyfile:`orchestration_and_coordination.py`</span></a>.</p>
+<section id="what-the-server-subsystem-does">
+<h2>What the Server subsystem does<a class="headerlink" href="#what-the-server-subsystem-does" title="Link to this heading"></a></h2>
+<p>The central Server component, <strong>orchestration_and_coordination.py</strong>, manages the global workflow across all TIAGo robots:</p>
+<ol class="arabic simple">
+<li><p><strong>Order ingestion</strong>
+Exposes <cite>/robot_state_decision_add</cite> (tiago1/send_order) so that verified orders arrive and are appended to a <strong>persistent FIFO</strong> (<cite>tiago_data.yaml</cite>).</p></li>
+<li><p><strong>Order dispatch</strong>
+Implements <cite>/robot_state_decision</cite> (tiago1/robotstatedecision) which robots call with their current state (<cite>Free</cite>, <cite>Wait</cite>, etc.).
+- If the robot is <cite>Free</cite> and the queue is nonempty, the server <strong>pops</strong> the next order and returns it with <cite>Busy</cite>.
+- If the queue is empty, returns <cite>Wait</cite>.
+- If the robot is already <cite>Busy</cite>, acknowledges without popping.</p></li>
+<li><p><strong>Persistence &amp; resilience</strong>
+All changes (adds/removes) are flushed immediately to YAML.  On restart the server recovers the queue in &lt;1 s, and a corrupted file triggers automatic reconstruction from a backup.</p></li>
+</ol>
 <a class="reference internal image-reference" href="_images/server_subsystem.png"><img alt="Deployment diagram – server, robots and services" class="align-center" src="_images/server_subsystem.png" style="width: 85%;" />
 </a>
+</section>
+<section id="design-patterns">
+<h2>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h2>
+<section id="singleton">
+<h3>Singleton<a class="headerlink" href="#singleton" title="Link to this heading"></a></h3>
+<p>In our server, the <cite>OrderQueue</cite> class wraps all YAML I/O and in-memory queue state.  By making it a singleton, every service callback, recovery routine and backup handler uses the same instance, preventing concurrent writes and ensuring <strong>consistency</strong> across the node.</p>
+</section>
+<section id="strategy">
+<h3>Strategy<a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
+<p>Currently the server uses a FIFO strategy (<cite>FirstInFirstOutStrategy</cite>), but by abstracting dispatch logic into a pluggable <cite>DispatchStrategy</cite> interface, we could swap in a <strong>priority-based</strong> strategy (e.g., urgent orders first) or <strong>round-robin</strong> across tables without touching the service handlers themselves.</p>
+</section>
+<section id="template-method">
+<h3>Template Method<a class="headerlink" href="#template-method" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>The <cite>ServiceHandler</cite> base class in the server defines:</dt><dd><ol class="arabic simple">
+<li><p><strong>authenticate &amp; validate</strong> request</p></li>
+<li><p><strong>execute</strong> (add or dispatch)</p></li>
+<li><p><strong>format</strong> and <strong>return</strong> response</p></li>
+</ol>
+</dd>
+</dl>
+<p>By overriding only the <cite>execute()</cite> hook for <cite>AddOrderHandler</cite> and <cite>DispatchOrderHandler</cite>, we enforce a consistent flow—validation, execution, persistence, response—for both services.</p>
+</section>
+<section id="command">
+<h3>Command<a class="headerlink" href="#command" title="Link to this heading"></a></h3>
+<p>Every incoming <cite>send_orderRequest</cite> or <cite>robotstatedecisionRequest</cite> is wrapped in a <cite>Command</cite> subclass (<cite>AddOrderCommand</cite>, <cite>DispatchOrderCommand</cite>) with an <cite>execute()</cite> method.  This allows uniform logging, retry logic, or queuing of failed commands without duplicating service code.</p>
+</section>
+<section id="observer">
+<h3>Observer<a class="headerlink" href="#observer" title="Link to this heading"></a></h3>
+<p>The <cite>OrderQueue</cite> singleton notifies registered observers (e.g., a backup manager, a metrics logger) whenever an order is added or removed.  Observers then perform side‐effects—writing backups, updating monitoring dashboards—<strong>automatically</strong>, keeping the core queue logic free of ancillary concerns.</p>
+</section>
 </section>
 <section id="ros-interfaces-kpis">
 <h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>
@@ -122,31 +161,29 @@ central server</strong> coordinates the <em>workflow</em>:</p>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code> (srv)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">tiago1/robotstatedecision</span></code></p></td>
-<td><p>99.9 % success, response &lt; 100 ms, <em>Busy</em> → order size ≥ 1</p></td>
+<td><p>≥ 99.9 % success, response &lt; 100 ms; returning <cite>Busy</cite> only when queue ≥ 1</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code> (srv)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">tiago1/send_order</span></code></p></td>
-<td><p>Writes to YAML within 50 ms, handles 20 requests / s</p></td>
+<td><p>YAML write &lt; 50 ms, supports ≥ 20 req/s</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tiago_data.yaml</span></code> (file I/O)</p></td>
 <td><p>YAML</p></td>
-<td><p>Survives restart, corrupt file recovery &lt; 1 s</p></td>
+<td><p>Survive restart; corruption detection &amp; recovery &lt; 1 s</p></td>
 </tr>
 </tbody>
 </table>
-<section id="data-life-cycle">
-<h3>Data life-cycle<a class="headerlink" href="#data-life-cycle" title="Link to this heading"></a></h3>
-<ol class="arabic simple">
-<li><p><strong>Order added</strong> – verification node calls
-<code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code>.</p></li>
-<li><p><strong>Server saves</strong> the new entry to <em>tiago_data.yaml</em> and logs
-<em>“order added”</em>.</p></li>
-<li><p>A robot reports <em>Free</em> ➜ server pops the queue and returns the task with
-state <em>Busy</em>.</p></li>
-<li><p>When all robots report <em>Busy</em> and the queue empties, new robots receive the
-response <em>Wait</em> until a fresh order arrives.</p></li>
-</ol>
 </section>
+<section id="data-life-cycle">
+<h2>Data life-cycle<a class="headerlink" href="#data-life-cycle" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Order added</strong> – <cite>send_order</cite> service appends to in-memory queue and saves YAML.</p></li>
+<li><p><strong>Robot query</strong> – <cite>robotstatedecision</cite> service reads queue head and robot state:
+- <cite>Free</cite> → pop &amp; return order + set <cite>Busy</cite>.
+- <cite>Wait</cite> or empty queue → return <cite>Wait</cite>.</p></li>
+<li><p><strong>Persistence</strong> – every mutation triggers an immediate YAML flush.</p></li>
+<li><p><strong>Recovery</strong> – on startup, existing YAML is loaded; if malformed, a backup is restored or recreated.</p></li>
+</ol>
 </section>
 <section id="implementation-module">
 <h2>Implementation module<a class="headerlink" href="#implementation-module" title="Link to this heading"></a></h2>

@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Sonar" href="navigation_modules/sonar.html" />
-    <link rel="prev" title="Reasoning Speech Generation" href="brain_modules/reasoning_speech_generation.html" /> 
+    <link rel="prev" title="Task Manager" href="brain_modules/task_manager.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,7 +48,18 @@
 <li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Navigation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mission">Mission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-navigation-subsystem-does">What the Navigation subsystem does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-patterns">Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#strategy">Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observer">Observer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adapter">Adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-method">Template Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#facade">Facade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#factory">Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chain-of-responsibility-pipeline">Chain of Responsibility (Pipeline)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#component-roles">Component roles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementation-modules">Implementation modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="navigation_modules/sonar.html">Sonar</a></li>
@@ -91,20 +102,69 @@
              
   <section id="subsystem-navigation">
 <h1>Subsystem Navigation<a class="headerlink" href="#subsystem-navigation" title="Link to this heading"></a></h1>
-<section id="mission">
-<h2>Mission<a class="headerlink" href="#mission" title="Link to this heading"></a></h2>
-<p>The Navigation stack answers two questions:</p>
+<section id="what-the-navigation-subsystem-does">
+<h2>What the Navigation subsystem does<a class="headerlink" href="#what-the-navigation-subsystem-does" title="Link to this heading"></a></h2>
+<p>The Navigation stack answers two fundamental questions for each TIAGo robot:</p>
 <ol class="arabic simple">
-<li><p><strong>Where am I?</strong> – <cite>slam.py</cite> builds and updates a 3-D map while estimating
-the robot pose.</p></li>
-<li><p><strong>How do I reach the goal?</strong> – <cite>path_planning.py</cite> turns the pose plus a
-target into a collision-free trajectory.</p></li>
+<li><p><strong>Where am I?</strong>
+The <strong>SLAM</strong> node builds and updates a map (via <cite>/map</cite>) and estimates the robot’s pose (<cite>/odom_slam</cite>), ensuring downstream components know the robot’s location in a global frame.</p></li>
+<li><p><strong>How do I reach my goal?</strong>
+The <strong>Path Planner</strong> consumes the current map and odometry to generate a collision-free trajectory (<cite>/planned_path</cite>), handing off waypoints to the motion controllers.</p></li>
 </ol>
-<p>To feed those core functions the subsystem fuses range data from <strong>LiDAR</strong> and
-<strong>SONAR</strong>, produces a dense cost-map and continuously replans if new obstacles
-appear.</p>
+<p>To support those core functions, the subsystem also:</p>
+<ul class="simple">
+<li><p><strong>Scans the environment</strong> with synthetic <strong>LiDAR</strong> and <strong>Sonar</strong> sensors.</p></li>
+<li><p><strong>Fuses</strong> their data into a coherent cost-map (<cite>/costmap</cite> or fused scan) for obstacle avoidance.</p></li>
+<li><p><strong>Continuously replans</strong> if new obstacles appear or the goal moves.</p></li>
+</ul>
 <a class="reference internal image-reference" href="_images/navigation_subsystem.png"><img alt="Component diagram of the Navigation subsystem" class="align-center" src="_images/navigation_subsystem.png" style="width: 90%;" />
 </a>
+</section>
+<section id="design-patterns">
+<h2>Design Patterns<a class="headerlink" href="#design-patterns" title="Link to this heading"></a></h2>
+<section id="strategy">
+<h3>Strategy<a class="headerlink" href="#strategy" title="Link to this heading"></a></h3>
+<p>In our Navigation subsystem, <strong>Path Planning</strong> uses Strategy so we can replace the dummy one-waypoint planner with A*, D*, RRT or any other planning algorithm simply by supplying a new implementation of the same interface.  This keeps planning logic <strong>extensible</strong> and <strong>decoupled</strong> from the rest of the navigation flow.</p>
+</section>
+<section id="observer">
+<h3>Observer<a class="headerlink" href="#observer" title="Link to this heading"></a></h3>
+<p><strong>Sensor Fusion</strong> subscribes to both <cite>/lidar</cite> and <cite>/sonar</cite> topics and triggers its fusion logic whenever new data arrives.  This event-driven design ensures that cost-map updates and fused scans happen exactly when fresh sensor measurements are available, without expensive polling loops.</p>
+</section>
+<section id="adapter">
+<h3>Adapter<a class="headerlink" href="#adapter" title="Link to this heading"></a></h3>
+<p>In <strong>Sensor Fusion</strong>, the <cite>Adapter</cite> class transforms the sonar’s single scalar range into a pseudo-LiDAR scan of equal length.  By encapsulating this conversion in a dedicated adapter, the fusion logic and downstream consumers remain <strong>agnostic</strong> to the sonar’s original message format.</p>
+</section>
+<section id="template-method">
+<h3>Template Method<a class="headerlink" href="#template-method" title="Link to this heading"></a></h3>
+<p>Our <strong>SLAM</strong> node stub implements a fixed callback flow—receive fused scan, build blank occupancy grid, publish map, publish identity odometry—while leaving the <cite>update_map(…)</cite> and <cite>update_pose(…)</cite> hooks for a real SLAM backend to override.  This ensures a consistent processing pipeline and simplifies integration of a full SLAM solution later.</p>
+</section>
+<section id="facade">
+<h3>Facade<a class="headerlink" href="#facade" title="Link to this heading"></a></h3>
+<p>Our <strong>SLAM</strong> node is exactly Facade: it hides all the real mapping, pose-estimation and TF bookkeeping behind a simple interface (<cite>/map</cite>, <cite>/odom_slam</cite>).  Downstream code never needs to know whether we’re running RTAB-Map, GMapping or our blank stub—just publish a scan, and a map &amp; odometry appear.</p>
+</section>
+<section id="factory">
+<h3>Factory<a class="headerlink" href="#factory" title="Link to this heading"></a></h3>
+<p>In each Navigation node (e.g. <strong>lidar.py</strong>, <strong>sonar.py</strong>, <strong>path_planning.py</strong>), we factor the setup of ROS publishers, subscribers and message constructors into small helper functions.  That way, if we need a different message type or QoS settings, we change only the factory, not every callback.</p>
+</section>
+<section id="chain-of-responsibility-pipeline">
+<h3>Chain of Responsibility (Pipeline)<a class="headerlink" href="#chain-of-responsibility-pipeline" title="Link to this heading"></a></h3>
+<p>Our <strong>Sensor Fusion</strong> logic is effectively a fusion pipeline—LiDAR → Adapter → merge → publish—where each stage handles part of the work.  We can insert new fusion strategies (e.g. a Kalman filter) into the chain without rewriting the entire node.</p>
+</section>
+</section>
+<section id="component-roles">
+<h2>Component roles<a class="headerlink" href="#component-roles" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>lidar.py</strong>
+- Synthesises a <cite>sensor_msgs/LaserScan</cite> at 10 Hz over 180°; acts as a stand-in LiDAR sensor.</p></li>
+<li><p><strong>sonar.py</strong>
+- Publishes <cite>sensor_msgs/Range</cite> (ultrasound) at 10 Hz; used for short-range obstacle detection.</p></li>
+<li><p><strong>sensor_fusion.py</strong>
+- Observes <cite>/lidar</cite> and <cite>/sonar</cite>, adapts sonar via the Adapter pattern, merges the two scans element-wise, and republishes a fused <cite>LaserScan</cite> for downstream cost-map consumers.</p></li>
+<li><p><strong>slam.py</strong>
+- Facade/stub for SLAM: subscribes to fused scans, generates a blank <cite>nav_msgs/OccupancyGrid</cite> and an identity <cite>nav_msgs/Odometry</cite>, and publishes both on <cite>/map</cite> and <cite>/odom_slam</cite>.  Hooks (<cite>update_map</cite>, <cite>update_pose</cite>) are provided for real mapping and localization.</p></li>
+<li><p><strong>path_planning.py</strong>
+- Implements a dummy global planner using the Strategy pattern: when both map and odometry are available, publishes a one-waypoint <cite>nav_msgs/Path</cite> at 1 Hz on <cite>/planned_path</cite>.</p></li>
+</ul>
 </section>
 <section id="ros-interfaces-kpis">
 <h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>
@@ -121,25 +181,25 @@ appear.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/scan</span></code> ← <em>lidar.py</em></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code></p></td>
-<td><p>10 Hz, 360°, ≤ 50 ms latency</p></td>
+<tr class="row-even"><td><p><strong>`/lidar`</strong></p></td>
+<td><p><cite>sensor_msgs/LaserScan</cite></p></td>
+<td><p>10 Hz, 180° sweep; ≤ 50 ms sensor latency</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/sonar_cloud</span></code> ← <em>sonar.py</em></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/PointCloud2</span></code></p></td>
-<td><p>5 Hz, 120° front arc</p></td>
+<tr class="row-odd"><td><p><strong>`/sonar`</strong></p></td>
+<td><p><cite>sensor_msgs/Range</cite></p></td>
+<td><p>10 Hz, single-beam; near-range obstacle detection</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/costmap</span></code> ← <em>sensor_fusion.py</em></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code></p></td>
-<td><p>Update ≤ 150 ms after new scan</p></td>
+<tr class="row-even"><td><p><strong>`/fused_scan`</strong></p></td>
+<td><p><cite>sensor_msgs/LaserScan</cite></p></td>
+<td><p>Fusion ≤ 100 ms after new sonar or LiDAR input</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/slam_out_pose</span></code> ← <em>slam.py</em></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseWithCovarianceStamped</span></code></p></td>
-<td><p>Drift ≤ 0.5 % of distance</p></td>
+<tr class="row-odd"><td><p><strong>`/map`, `/odom_slam`</strong></p></td>
+<td><p><cite>nav_msgs/OccupancyGrid</cite>, <cite>nav_msgs/Odometry</cite></p></td>
+<td><p>Map update and odometry publish ≤ 200 ms after fused scan (stub meets immediately)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/planned_path</span></code> ← <em>path_planning.py</em></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code></p></td>
-<td><p>First waypoint ≤ 0.5 m from robot, replans ≤ 300 ms after cost-map change</p></td>
+<tr class="row-even"><td><p><strong>`/planned_path`</strong></p></td>
+<td><p><cite>nav_msgs/Path</cite></p></td>
+<td><p>First waypoint ≤ 0.5 m from robot; replanning ≤ 300 ms after cost-map change</p></td>
 </tr>
 </tbody>
 </table>
@@ -164,7 +224,7 @@ appear.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="brain_modules/reasoning_speech_generation.html" class="btn btn-neutral float-left" title="Reasoning Speech Generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="brain_modules/task_manager.html" class="btn btn-neutral float-left" title="Task Manager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="navigation_modules/sonar.html" class="btn btn-neutral float-right" title="Sonar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
