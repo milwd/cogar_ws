@@ -1,7 +1,7 @@
 # Autonomous Waiters
 
 **Team Name:** ACM Robatics Solution  
-**Contributors:** Arian, Milad, Christain
+**Contributors:** Arian Tavoosi, Milad Rabiei, Christian Negri Ravera
 
 ## 1. Introduction
 
