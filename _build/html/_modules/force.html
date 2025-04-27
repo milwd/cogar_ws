@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -77,10 +78,10 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">force.py</span>
-<span class="sd">========</span>
+<span class="sd">=========</span>
 
 <span class="sd">Synthetic **end-effector force sensor** for manipulation pipelines</span>
-<span class="sd">-----------------------------------------------------------------</span>
+<span class="sd">-------------------------------------------------------------------</span>
 
 <span class="sd">Grasp controllers, compliant planners and safety monitors often rely on a</span>
 <span class="sd">continuous force signal.  When real hardware is absent (desktop development,</span>
@@ -102,7 +103,7 @@
 
 <span class="sd">Characteristics</span>
 <span class="sd">---------------</span>
-<span class="sd">* **Rate** 10 Hz (set by :pydata:`rate`).  </span>
+<span class="sd">* **Rate** 10 Hz.  </span>
 <span class="sd">* **Distribution** Uniform *U*(0 N, 50 N).  </span>
 <span class="sd">  Swap for a Gaussian or a replay from a CSV file if you need repeatable</span>
 <span class="sd">  sequences or more realistic dynamics.</span>
@@ -113,10 +114,12 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Float32</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="force_sensor">
-<a class="viewcode-back" href="../actuation.html#force.force_sensor">[docs]</a>
+<a class="viewcode-back" href="../control_modules/force.html#force.force_sensor">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">force_sensor</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Emit fake force values at 10 Hz until ROS shutdown.</span>
@@ -127,15 +130,14 @@
 <span class="sd">    #. Advertise ``/force``.  </span>
 <span class="sd">    #. In the main loop generate a random float, publish it, sleep.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;force&#39;</span><span class="p">)</span>
+    <span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_force&#39;</span><span class="p">)</span></div>
 
-    <span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/force&#39;</span><span class="p">,</span> <span class="n">Float32</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>                            <span class="c1"># 10 Hz</span>
-
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-        <span class="n">newton</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">)</span>           <span class="c1"># 0 – 50 N</span>
-        <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Float32</span><span class="p">(</span><span class="n">newton</span><span class="p">))</span>
-        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
+    <span class="c1"># pub = rospy.Publisher(&#39;/force&#39;, Float32, queue_size=10)</span>
+    <span class="c1"># rate = rospy.Rate(10)</span>
+    <span class="c1"># while not rospy.is_shutdown():</span>
+    <span class="c1">#     pub.publish(Float32(random.uniform(0, 5)))</span>
+    <span class="c1">#     rate.sleep()</span>
 
 
 

@@ -4,7 +4,7 @@ encoder_arm.py
 ==============
 
 Synthetic **joint-position sensor** for development without hardware
--------------------------------------------------------------------
+--------------------------------------------------------------------
 
 Many nodes—controllers, loggers, dashboards—need a continuous stream of arm
 encoder data.  When the real TIAGo arm is not connected, this script fakes the
@@ -53,7 +53,6 @@ def arm_encoder() -> None:
     #. Loop until shutdown: generate a random angle, publish, then sleep to
        maintain the target frequency.
     """
-<<<<<<< HEAD
     robot_number = sys.argv[1]#rospy.get_param('~robot_number')
     rospy.init_node(f'{robot_number}_encoder_arm')
     pub = rospy.Publisher(f'/{robot_number}/encoder_arm', Int32, queue_size=10)

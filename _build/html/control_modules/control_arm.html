@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Control Arm &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Control Gripper" href="control_gripper.html" />
+    <link rel="prev" title="Control Wheel" href="control_wheel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../control.html">Subsystem Control</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../control.html#mission">Mission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../control.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="control_wheel.html">Control Wheel</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Control Arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control_gripper.html">Control Gripper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encoder_wheel.html">Encoder Wheel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encoder_arm.html">Encoder Arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encoder_gripper.html">Encoder Gripper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="force.html">Force</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../control.html">Subsystem Control</a></li>
+      <li class="breadcrumb-item active">Control Arm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/control_modules/control_arm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-control_arm">
+<span id="control-arm"></span><h1>Control Arm<a class="headerlink" href="#module-control_arm" title="Link to this heading"></a></h1>
+<section id="control-arm-py">
+<h2>control_arm.py<a class="headerlink" href="#control-arm-py" title="Link to this heading"></a></h2>
+<section id="closed-loop-actionlib-server-for-positioning-the-tiago-arm">
+<h3>Closed-loop <strong>ActionLib server</strong> for positioning the TIAGo arm<a class="headerlink" href="#closed-loop-actionlib-server-for-positioning-the-tiago-arm" title="Link to this heading"></a></h3>
+<p>This node listens for <a href="#id1"><span class="problematic" id="id2">:rosmsg:`tiago1/ArmControlAction`</span></a> goals that specify a
+single <strong>target joint angle</strong> (in degrees).  It applies a proportional control
+law on the arm’s <strong>angular velocity</strong> until the on-board encoder reports that
+the target, within a configurable tolerance, has been reached or a timeout /
+pre-emption occurs.</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">geometry_msgs/Twist</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/cmd_vel/arm</span></code></p></td>
+<td><p>Desired angular velocity about the arm’s primary axis
+(only <code class="code docutils literal notranslate"><span class="pre">angular.z</span></code> is used).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>subscribe</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/encoder_arm</span></code></p></td>
+<td><p>Current encoder position expressed in <strong>degrees</strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>action server</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/ArmControlAction</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">arm_control</span></code></p></td>
+<td><p>Goal: <code class="docutils literal notranslate"><span class="pre">degree</span></code> (int), Feedback: <strong>status</strong> (string),
+Result: <strong>success</strong> (bool)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="control-algorithm">
+<h3>Control algorithm<a class="headerlink" href="#control-algorithm" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Goal reception</strong> – store target angle, define <em>tolerance</em> (°) and
+<em>timeout</em> (s).</p></li>
+<li><p><strong>10 Hz loop</strong>
+• compute error = <em>target – encoder</em>
+• <span class="math notranslate nohighlight">\(\omega_z = k_p \cdot error\)</span> with <em>k_p = 0.01</em>
+• publish velocity; send feedback string
+• exit early if <em>|error| ≤ tolerance</em>, timeout expires, node is
+pre-empted, or ROS shuts down.</p></li>
+<li><p><strong>Outcome</strong> – call <code class="xref py py-meth docutils literal notranslate"><span class="pre">SimpleActionServer.set_succeeded()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">set_aborted()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_preempted()</span></code> with
+<a href="#id3"><span class="problematic" id="id4">:rosmsg:`tiago1/ArmControlResult`</span></a>.</p></li>
+</ol>
+</section>
+<section id="tuning-knobs">
+<h3>Tuning knobs<a class="headerlink" href="#tuning-knobs" title="Link to this heading"></a></h3>
+<p><em>TOLERANCE</em> = 5 °  <em>TIMEOUT</em> = 10 s  <em>Kₚ</em> = 0.01 – tweak in
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">execute_cb()</span></code> to match your hardware.</p>
+</section>
+<section id="safety">
+<h3>Safety<a class="headerlink" href="#safety" title="Link to this heading"></a></h3>
+<p>The node publishes zero velocity immediately after success / abort to stop the
+arm, and it honours standard ActionLib pre-emption so higher layers can
+interrupt motion at any time.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">control_arm.</span></span><span class="sig-name descname"><span class="pre">ControlArmServer</span></span><a class="reference internal" href="../_modules/control_arm.html#ControlArmServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Minimal proportional controller wrapped in an ActionLib server.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>cmd_pub</dt><dd><p><a href="#id5"><span class="problematic" id="id6">:pyclass:`rospy.Publisher`</span></a> that streams velocity commands to
+<code class="docutils literal notranslate"><span class="pre">/cmd_vel/arm</span></code>.</p>
+</dd>
+<dt>encoder_sub</dt><dd><p><a href="#id7"><span class="problematic" id="id8">:pyclass:`rospy.Subscriber`</span></a> listening to <code class="docutils literal notranslate"><span class="pre">/encoder_arm</span></code> for position
+feedback.</p>
+</dd>
+<dt>server</dt><dd><p><a href="#id9"><span class="problematic" id="id10">:pyclass:`actionlib.SimpleActionServer`</span></a> that exposes the
+<strong>arm_control</strong> action namespace.</p>
+</dd>
+<dt>encoder_val</dt><dd><p>Latest encoder reading in <strong>degrees</strong>; updated continuously by
+<a class="reference internal" href="#control_arm.ControlArmServer.encoder_callback" title="control_arm.ControlArmServer.encoder_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">encoder_callback()</span></code></a>.</p>
+</dd>
+</dl>
+<p>Wire publishers/subscribers, start the ActionLib server.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer.encoder_callback">
+<span class="sig-name descname"><span class="pre">encoder_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg.Int32</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/control_arm.html#ControlArmServer.encoder_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer.encoder_callback" title="Link to this definition"></a></dt>
+<dd><p>Cache the most recent encoder position.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer.encoder_sub">
+<span class="sig-name descname"><span class="pre">encoder_sub</span></span><a class="headerlink" href="#control_arm.ControlArmServer.encoder_sub" title="Link to this definition"></a></dt>
+<dd><ul class="simple">
+<li><p>Advertise ‘/cmd_vel/arm’ for sending velocity commands.</p></li>
+<li><p>Subscribe to ‘/encoder_arm’ for encoder feedback.</p></li>
+<li><p>Set up and start SimpleActionServer for ArmControlAction.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer.execute_cb">
+<span class="sig-name descname"><span class="pre">execute_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.msg.ArmControlAction.Goal</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/control_arm.html#ControlArmServer.execute_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer.execute_cb" title="Link to this definition"></a></dt>
+<dd><p>Main loop executed per goal.</p>
+<p>Publishes velocities at 10 Hz until the arm reaches <em>goal.degree</em>,
+is pre-empted, or times out.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="control_wheel.html" class="btn btn-neutral float-left" title="Control Wheel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="control_gripper.html" class="btn btn-neutral float-right" title="Control Gripper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -75,7 +75,7 @@ highlight_language = 'python'
 source_suffix = '.rst'
 master_doc = 'index'
 html_theme = 'sphinx_rtd_theme'
-html_theme_options = {"navigation_depth": 2}
+html_theme_options = {"navigation_depth": 3}
 html_static_path = ['_static']
 
 autosummary_generate = True 

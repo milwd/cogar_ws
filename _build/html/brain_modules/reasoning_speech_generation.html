@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reasoning Speech Generation &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Subsystem Navigation" href="../navigation.html" />
+    <link rel="prev" title="Task Manager" href="task_manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../brain.html">Subsystem Brain</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../brain.html#what-the-brain-does">What the “Brain” does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../brain.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../brain.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="reasoning_action.html">Reasoning Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reasoning_table_placement.html">Reasoning Table Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_manager.html">Task Manager</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reasoning Speech Generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../brain.html">Subsystem Brain</a></li>
+      <li class="breadcrumb-item active">Reasoning Speech Generation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/brain_modules/reasoning_speech_generation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-reasoning_speech_generation">
+<span id="reasoning-speech-generation"></span><h1>Reasoning Speech Generation<a class="headerlink" href="#module-reasoning_speech_generation" title="Link to this heading"></a></h1>
+<section id="speech-generator-py">
+<h2>speech_generator.py<a class="headerlink" href="#speech-generator-py" title="Link to this heading"></a></h2>
+<section id="text-to-speech-relay-node-for-restaurant-announcements">
+<h3>Text-to-Speech <strong>relay node</strong> for restaurant announcements<a class="headerlink" href="#text-to-speech-relay-node-for-restaurant-announcements" title="Link to this heading"></a></h3>
+<p>The cognitive layer of the sushi-waiter architecture thinks in sentences:
+<em>“Table 3, your Dragon Roll is here”</em>, <em>“Apologies for the delay”</em>, <em>“Order
+cancelled, returning to station”</em>.  Something has to turn those strings into
+audible sound.  <strong>speech_generator.py</strong> fills that gap while staying totally
+agnostic about <em>how</em> the audio is produced.</p>
+</section>
+<section id="design-philosophy">
+<h3>Design philosophy<a class="headerlink" href="#design-philosophy" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Decoupling</strong> – upstream reasoning nodes push text to a <em>single</em> topic
+(<code class="docutils literal notranslate"><span class="pre">/task_speech_command</span></code>).  Downstream, you may connect <em>any</em> TTS driver
+(Festival, <cite>sound_play</cite>, cloud API, proprietary speaker), as long as it
+listens to <code class="docutils literal notranslate"><span class="pre">/speaker_channel</span></code>.</p></li>
+<li><p><strong>State buffering</strong> – the latest line is cached so that late-joining
+subscribers (e.g. the speaker driver restarting) still receive the current
+sentence.</p></li>
+<li><p><strong>Rate control</strong> – messages are re-emitted at <strong>1 Hz</strong> to avoid flooding the
+audio backend while giving it enough chances to catch up.</p></li>
+</ul>
+<section id="ros-topics">
+<h4>ROS topics<a class="headerlink" href="#ros-topics" title="Link to this heading"></a></h4>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">Node interface</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 25.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Type / semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/task_speech_command</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – UTF-8 input from the cognitive layer</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>publish</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/speaker_channel</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – identical text, forwarded once per second</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="reasoning_speech_generation.SpeechGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_speech_generation.</span></span><span class="sig-name descname"><span class="pre">SpeechGenerator</span></span><a class="reference internal" href="../_modules/reasoning_speech_generation.html#SpeechGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_speech_generation.SpeechGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Thin, timer-driven <strong>republisher</strong>.</p>
+<section id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>A subscriber callback stores the newest incoming sentence
+in <a href="#id1"><span class="problematic" id="id2">:pyattr:`self.msg`</span></a>.</p></li>
+<li><p>The main loop publishes that stored message once every second.
+If no message has been received yet, it publishes nothing,
+thereby avoiding empty utterances.</p></li>
+</ol>
+<p>The class holds no additional state – perfect for hot-reloading or
+replacement in unit tests.</p>
+<p>Initialize the SpeechGenerator node:</p>
+<ul class="simple">
+<li><p>Initialize ROS node ‘speech_gen_node’.</p></li>
+<li><p>Subscribe to ‘/task_speech_command’ for speech commands.</p></li>
+<li><p>Advertise ‘/speaker_channel’ for speaking output.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_speech_generation.SpeechGenerator.publish_msg">
+<span class="sig-name descname"><span class="pre">publish_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/reasoning_speech_generation.html#SpeechGenerator.publish_msg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_speech_generation.SpeechGenerator.publish_msg" title="Link to this definition"></a></dt>
+<dd><p>Republish the buffered sentence (if any) at the current loop tick.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_speech_generation.SpeechGenerator.speaker_callback">
+<span class="sig-name descname"><span class="pre">speaker_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reasoning_speech_generation.html#SpeechGenerator.speaker_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_speech_generation.SpeechGenerator.speaker_callback" title="Link to this definition"></a></dt>
+<dd><p>Store the newest sentence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>std_msgs.msg.String</em>) – UTF-8 text coming from the cognitive layer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="task_manager.html" class="btn btn-neutral float-left" title="Task Manager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../navigation.html" class="btn btn-neutral float-right" title="Subsystem Navigation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

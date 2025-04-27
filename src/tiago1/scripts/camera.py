@@ -18,16 +18,22 @@ Why a dummy camera?
       physical sensors.  
     • *Isolation* – failures in consumer nodes are never due to flaky hardware.
 
-Published topics
-----------------
-=====================  =============  ==============================
-Topic name             Type           Content
----------------------  -------------  ------------------------------
-``/camera``            ``sensor_msgs/Image`` 24-bit BGR image read
-                                      from *image.jpg*
-``/depth``             ``sensor_msgs/Image`` 8-bit signed, all-ones  
-                                      array the same resolution as the RGB
-=====================  =============  ==============================
+ROS topics
+----------
+.. list-table::
+   :header-rows: 1
+   :widths: 25 25 50
+
+   * - Topic name
+     - Type
+     - Content
+   * - ``/camera``
+     - ``sensor_msgs/Image``
+     - 24-bit BGR image read from *image.jpg*
+   * - ``/depth``
+     - ``sensor_msgs/Image``
+     - 8-bit signed mono array (all ones) – same resolution as RGB
+
 
 Both messages share *wall-clock* time stamps and are published at **10 Hz** so
 that synchronisation filters (e.g. message_filters) treat them as a stereo

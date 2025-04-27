@@ -26,7 +26,7 @@ ROS interface
 
 Characteristics
 ---------------
-* **Rate** 10 Hz (see :pydata:`rate`).  
+* **Rate** 10 Hz.  
 * **Distribution** Uniform *U*(0, 100) → every tick is independent.  
   Swap for a random walk if you prefer smoother traces.
 

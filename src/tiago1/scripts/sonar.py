@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
 sonar.py
-========
+=========
 
 Synthetic **ultrasound range-finder** for quick sensor-fusion prototyping
-------------------------------------------------------------------------
+-------------------------------------------------------------------------
 
 This node mimics a 1-D sonar module by broadcasting a constant
 :pyclass:`sensor_msgs.msg.Range` message.  Navigation, fusion and obstacle

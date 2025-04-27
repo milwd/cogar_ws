@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLAM &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Path Planning" href="path_planning.html" />
+    <link rel="prev" title="Sensor Fusion" href="sensor_fusion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../navigation.html#mission">Mission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../navigation.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../navigation.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sonar.html">Sonar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lidar.html">Lidar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sensor_fusion.html">Sensor Fusion</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">SLAM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="path_planning.html">Path Planning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../navigation.html">Subsystem Navigation</a></li>
+      <li class="breadcrumb-item active">SLAM</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/navigation_modules/slam.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-slam">
+<span id="slam"></span><h1>SLAM<a class="headerlink" href="#module-slam" title="Link to this heading"></a></h1>
+<section id="slam-py">
+<h2>slam.py<a class="headerlink" href="#slam-py" title="Link to this heading"></a></h2>
+<p>Minimal <strong>SLAM façade</strong> — publishes a blank map + identity odometry so the
+navigation stack can launch before the real SLAM backend is ready.</p>
+<section id="purpose">
+<h3>Purpose<a class="headerlink" href="#purpose" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Bring-up</strong>: rviz, move_base and other consumers expect <cite>/map</cite> and <cite>/odom</cite>
+to exist; this stub unblocks integration work in early project stages.</p></li>
+<li><p><strong>Interface contract</strong>: documents <em>exactly</em> which message types and frames
+the future SLAM solution must honour.</p></li>
+</ul>
+</section>
+<section id="topic-interface">
+<h3>Topic interface<a class="headerlink" href="#topic-interface" title="Link to this heading"></a></h3>
+<p><strong>Subscribes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code> (<code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code>) – pre-filtered 2-D scan produced
+by the sensor-fusion node.</p></li>
+</ul>
+<p><strong>Publishes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/map</span></code>  (<code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code>) – 10 × 10 cell grid, 5 cm resolution,
+centred at 0,0; currently all <em>unknown/free</em> (value 0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/odom</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code>) – identity pose in <code class="docutils literal notranslate"><span class="pre">odom</span></code> frame, zero
+twist; child frame <code class="docutils literal notranslate"><span class="pre">base_link</span></code>.</p></li>
+</ul>
+</section>
+<section id="coordinate-frames">
+<h3>Coordinate frames<a class="headerlink" href="#coordinate-frames" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">map</span></code>  ←— identity TF —→ <code class="docutils literal notranslate"><span class="pre">odom</span></code>  ←— [[ real TF broadcaster ]] —→ <code class="docutils literal notranslate"><span class="pre">base_link</span></code></p>
+<p>The stub does <strong>not</strong> broadcast TF transforms; downstream nodes must rely on
+static transforms or their own broadcasters until a full SLAM stack replaces
+this script.</p>
+</section>
+<section id="replace-me-sections">
+<h3>Replace-me sections<a class="headerlink" href="#replace-me-sections" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">update_map(data)</span></code> – insert occupancy grid update from scan + pose.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_pose(data)</span></code> – insert state-estimation output (EKF, graph-SLAM…).</p></li>
+</ul>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="slam.SLAM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slam.</span></span><span class="sig-name descname"><span class="pre">SLAM</span></span><a class="reference internal" href="../_modules/slam.html#SLAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Straight-forward container for publishers + subscriber.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>map_pub</dt><dd><p>Latched publisher for the occupancy grid so late subscribers
+receive the most recent map instantly.</p>
+</dd>
+<dt>odom_pub</dt><dd><p>Latched publisher for odometry for the same reason.</p>
+</dd>
+</dl>
+<p>Initialise the ROS node and wire its single input + two outputs.</p>
+</section>
+<section id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Call <a href="#id1"><span class="problematic" id="id2">:pyfunc:`rospy.init_node`</span></a> with a descriptive name.</p></li>
+<li><p>Subscribe to the pre-filtered <strong>fused</strong> laser scan.  Queue size 1
+keeps latency low while scans stream in (20–30 Hz typical).</p></li>
+<li><p>Advertise both outputs with <em>latch=True</em> so tools like rviz see
+the very first map/odom without waiting a full second.</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="slam.SLAM.callback">
+<span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slam.html#SLAM.callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback" title="Link to this definition"></a></dt>
+<dd><p>Handle each incoming fused scan.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scan_msg</strong> (<em>sensor_msgs.msg.LaserScan</em>) – Currently ignored; present to show where real SLAM would ingest
+range data.</p>
+</dd>
+</dl>
+<section id="pipeline">
+<h3>Pipeline<a class="headerlink" href="#pipeline" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Blank map</strong> – 10 × 10 cells, 0.05 m resolution, centred at
+(-2.5, -2.5) so (0,0) lies roughly in the middle.  All cell values
+initialised to <em>0</em> (free/unknown).</p></li>
+<li><p><strong>Identity odometry</strong> – pose = (0,0,0) + unit quaternion,
+twist = (0,0,0).</p></li>
+<li><p>Publish both messages.  In a real implementation steps 1 &amp; 2 would
+be replaced by <em>update_map</em> and <em>update_pose</em> respectively.</p></li>
+</ol>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slam.SLAM.callback_odom">
+<span class="sig-name descname"><span class="pre">callback_odom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slam.html#SLAM.callback_odom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback_odom" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sensor_fusion.html" class="btn btn-neutral float-left" title="Sensor Fusion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="path_planning.html" class="btn btn-neutral float-right" title="Path Planning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

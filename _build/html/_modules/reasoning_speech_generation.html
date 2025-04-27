@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -121,10 +122,12 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
 
 
 <div class="viewcode-block" id="SpeechGenerator">
-<a class="viewcode-back" href="../reasoning.html#reasoning_speech_generation.SpeechGenerator">[docs]</a>
+<a class="viewcode-back" href="../brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SpeechGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Thin, timer-driven **republisher**.</span>
@@ -142,34 +145,22 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialise the ROS node, I/O topics and internal buffer.&quot;&quot;&quot;</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;speech_gen_node&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the SpeechGenerator node:</span>
 
-        <span class="c1"># Single-message buffer; None means “no sentence available yet”.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">:</span> <span class="n">String</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="c1"># ---------- subscriber -------------------------------------------------</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-            <span class="s2">&quot;/task_speech_command&quot;</span><span class="p">,</span>      <span class="c1"># high-level input</span>
-            <span class="n">String</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_speech_cb</span><span class="p">,</span>
-            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="c1"># ---------- publisher --------------------------------------------------</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pub_speak</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
-            <span class="s2">&quot;/speaker_channel&quot;</span><span class="p">,</span>          <span class="c1"># low-level output</span>
-            <span class="n">String</span><span class="p">,</span>
-            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-            <span class="n">latch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                  <span class="c1"># keep last msg for late joiners</span>
-        <span class="p">)</span>
-
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[SpeechGenerator] Node ready – waiting for sentences.&quot;</span><span class="p">)</span>
-
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                         subscriber callback                         #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_speech_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="sd">        - Initialize ROS node &#39;speech_gen_node&#39;.</span>
+<span class="sd">        - Subscribe to &#39;/task_speech_command&#39; for speech commands.</span>
+<span class="sd">        - Advertise &#39;/speaker_channel&#39; for speaking output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_speech_gen_node&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/task_speech_command&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">speaker_callback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub_speak</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/speaker_channel&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="SpeechGenerator.speaker_callback">
+<a class="viewcode-back" href="../brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator.speaker_callback">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">speaker_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Store the newest sentence.</span>
 
@@ -179,13 +170,14 @@
 <span class="sd">            UTF-8 text coming from the cognitive layer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[SpeechGenerator] Buffered: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[SpeechGenerator] Buffered: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
 
     <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="c1">#                         periodic publisher                          #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="SpeechGenerator.publish_msg">
-<a class="viewcode-back" href="../reasoning.html#reasoning_speech_generation.SpeechGenerator.publish_msg">[docs]</a>
+<a class="viewcode-back" href="../brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator.publish_msg">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">publish_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Republish the buffered sentence (if any) at the current loop tick.</span>

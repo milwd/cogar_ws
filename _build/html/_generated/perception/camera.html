@@ -43,11 +43,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -95,8 +96,31 @@ physical sensors.</p></li>
 </dd>
 </dl>
 </section>
-<section id="published-topics">
-<h3>Published topics<a class="headerlink" href="#published-topics" title="Link to this heading"></a></h3>
+<section id="ros-topics">
+<h3>ROS topics<a class="headerlink" href="#ros-topics" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Content</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/camera</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>24-bit BGR image read from <em>image.jpg</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/depth</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>8-bit signed mono array (all ones) – same resolution as RGB</p></td>
+</tr>
+</tbody>
+</table>
 <p>Both messages share <em>wall-clock</em> time stamps and are published at <strong>10 Hz</strong> so
 that synchronisation filters (e.g. message_filters) treat them as a stereo
 pair.</p>
@@ -111,7 +135,7 @@ Change the path if you move the file; no other configuration is required.</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#camera.publish" title="camera.publish"><code class="xref py py-obj docutils literal notranslate"><span class="pre">publish</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../vision_modules/camera.html#camera.publish" title="camera.publish"><code class="xref py py-obj docutils literal notranslate"><span class="pre">publish</span></code></a>()</p></td>
 <td><p>Bootstrap the node and stream frames until ROS shuts down.</p></td>
 </tr>
 </tbody>

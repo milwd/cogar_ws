@@ -43,11 +43,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -152,7 +153,7 @@ subscribe to a custom message carrying bounding boxes and class labels.</p></li>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.main" title="distance_estimation.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../vision_modules/distance_estimation.html#distance_estimation.main" title="distance_estimation.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>()</p></td>
 <td><p>Spin the node until ROS master shuts down.</p></td>
 </tr>
 </tbody>
@@ -160,16 +161,16 @@ subscribe to a custom message carrying bounding boxes and class labels.</p></li>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.ClearingStrategy" title="distance_estimation.ClearingStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClearingStrategy</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../vision_modules/distance_estimation.html#distance_estimation.ClearingStrategy" title="distance_estimation.ClearingStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClearingStrategy</span></code></a>()</p></td>
 <td><p>Simple clearing heuristic.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.DistanceEstimator" title="distance_estimation.DistanceEstimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DistanceEstimator</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator" title="distance_estimation.DistanceEstimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DistanceEstimator</span></code></a>()</p></td>
 <td><p>Combines perception and reasoning in one ROS node.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.FindPlacementStrategy" title="distance_estimation.FindPlacementStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FindPlacementStrategy</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../vision_modules/distance_estimation.html#distance_estimation.FindPlacementStrategy" title="distance_estimation.FindPlacementStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FindPlacementStrategy</span></code></a>()</p></td>
 <td><p><em>Minimal-viable</em> placement logic.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../perception.html#distance_estimation.TableAnalysisStrategy" title="distance_estimation.TableAnalysisStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableAnalysisStrategy</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../vision_modules/distance_estimation.html#distance_estimation.TableAnalysisStrategy" title="distance_estimation.TableAnalysisStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableAnalysisStrategy</span></code></a>()</p></td>
 <td><p>Abstract contract for any <em>table-state</em> decision algorithm.</p></td>
 </tr>
 </tbody>

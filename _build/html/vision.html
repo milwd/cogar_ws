@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subsystem Vision &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Camera" href="vision_modules/camera.html" />
+    <link rel="prev" title="Autonomous Waiters – Complete Project Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Subsystem Vision</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-modules">Implementation modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="vision_modules/camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision_modules/camera_preprocessing.html">Camera Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision_modules/object_detection.html">Object Detection / Segmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision_modules/distance_estimation.html">Distance Estimation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Subsystem Vision</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/vision.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="subsystem-vision">
+<h1>Subsystem Vision<a class="headerlink" href="#subsystem-vision" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <strong>Vision</strong> subsystem converts raw RGB-D data into a sparse <em>Object Map</em> for
+down-stream planners.  It comprises four components:</p>
+<ul class="simple">
+<li><p><strong>Camera</strong> – publishes RGB and depth frames.</p></li>
+<li><p><strong>Camera Preprocessing</strong> – undistorts, colour-balances and denoises.</p></li>
+<li><p><strong>Object Detection / Segmentation</strong> – detects plates, hands and obstacles.</p></li>
+<li><p><strong>Distance Estimation</strong> – fuses masks with depth to output metric distances.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/vision_subsystem.png"><img alt="Component diagram of the Vision subsystem" class="align-center" src="_images/vision_subsystem.png" style="width: 90%;" />
+</a>
+</section>
+<section id="ros-interfaces-kpis">
+<h2>ROS interfaces &amp; KPIs<a class="headerlink" href="#ros-interfaces-kpis" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32.0%" />
+<col style="width: 23.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic / Service</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>KPI / Note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/camera</span></code>
+<code class="docutils literal notranslate"><span class="pre">/depth</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>1280×720 &#64; 10 Hz, ≤ 200 ms latency</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/img_processed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Undistorted RGB, &lt; 25 ms extra latency</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/object_hypotheses</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vision_msgs/Detection2DArray</span></code></p></td>
+<td><p>≥ 0.75 mAP (IoU 0.5) on sushi-dish set</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/depth_processed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Hole-filled depth, &lt; 1 % invalid pixels</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/object_map</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cogar_msgs/ObjectMap</span></code></p></td>
+<td><p>Published ≤ 300 ms after frame start</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="implementation-modules">
+<h2>Implementation modules<a class="headerlink" href="#implementation-modules" title="Link to this heading"></a></h2>
+<p>The pages below document every public class, function and parameter of each
+Vision component.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Vision Components</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="vision_modules/camera.html">Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision_modules/camera_preprocessing.html">Camera Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision_modules/object_detection.html">Object Detection / Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision_modules/distance_estimation.html">Distance Estimation</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Autonomous Waiters – Complete Project Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vision_modules/camera.html" class="btn btn-neutral float-right" title="Camera" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

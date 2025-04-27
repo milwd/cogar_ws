@@ -71,8 +71,10 @@ class ReasoningOrderVerification:
     """
     Parse spoken orders, validate them, publish structured messages and
     interact with the orchestration queue.
+
     Variables
     ----------
+
     server_robots : int
         Numerical identifier for the target orchestration queue (kept for
         future use – the current implementation always contacts the same
@@ -83,6 +85,7 @@ class ReasoningOrderVerification:
 
     Variables
     ----------
+
     msg : std_msgs.msg.String | None
         Buffer holding the most recent sentence received from the ASR.
     counter_id : int
@@ -90,6 +93,7 @@ class ReasoningOrderVerification:
     error_code : int
         Last error reported (0 = no error).
     """
+    
     def __init__(self, server_robots,food_list):
         """
         Initialize the ReasoningOrderVerification node.

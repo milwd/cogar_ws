@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -74,117 +75,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for orchestration_and_coordination</h1><div class="highlight"><pre>
-<span></span><span class="c1"># #!/usr/bin/env python</span>
-<span class="c1"># import rospy</span>
-<span class="c1"># import yaml</span>
-<span class="c1"># import os</span>
-<span class="c1"># from std_msgs.msg import String</span>
-<span class="c1"># from tiago1.srv import robotstatedecision</span>
-
-<span class="c1"># class orchestration_and_coordination():</span>
-<span class="c1">#     def __init__(self):</span>
-<span class="c1">#         rospy.init_node(&quot;orchestration_and_coordination_node&quot;)</span>
-<span class="c1">#         self.orc_coor_pub = rospy.Subscrbe(&quot;/orc_coord_info&quot;)</span>
-<span class="c1">#         self.yaml_pat = &quot;tiago_data.yaml&quot;</span>
-<span class="c1">#         self.service = rospy.Service(&quot;/robot_state_decision&quot;, robotstatedecision, self.handle_request)</span>
-<span class="c1">#         self.service_order = rospy.Service(&quot;/robot_state_decision&quot;, robotstatedecision, self.handle_request_new_order)</span>
-<span class="c1">#         self.data = {&quot;robot&quot;:[]}</span>
-
-<span class="c1">#     def handle_request(self,req):</span>
-<span class="c1">#         get_order = self.obtain_order()</span>
-<span class="c1">#         self.data = None</span>
-<span class="c1">#         # Risposte in base allo stato ricevuto</span>
-<span class="c1">#         if get_order == -1:</span>
-<span class="c1">#             return robotstatedecision(state_output= req.state_input ,order=&quot;&quot;,success =False)</span>
-<span class="c1">#         elif get_order ==None:</span>
-<span class="c1">#             return robotstatedecision(state_output=&quot;Wait&quot; ,order=&quot;&quot;,success =True)</span>
-<span class="c1">#         elif get_order is not None  and (req.state_input == &quot;Free&quot; or req.state_input == &quot;Wait&quot;)  :</span>
-<span class="c1">#             return robotstatedecision(state_output=&quot;Busy&quot;, order=get_order,success=True)</span>
-        
-        
-        
-
-<span class="c1">#     def obtain_order(self):</span>
-<span class="c1">#         first_order = None</span>
-<span class="c1">#         if &quot;robots&quot; in self.data and self.data[&quot;robots&quot;]:</span>
-<span class="c1">#             robot = self.data[&quot;robots&quot;][0]</span>
-<span class="c1">#             if &quot;order&quot; in robot and robot[&quot;order&quot;]:</span>
-<span class="c1">#                 first_order = robot[&quot;order&quot;].pop(0)</span>
-<span class="c1">#                 rospy.loginfo(f&quot;Popped first order: {first_order}&quot;)</span>
-<span class="c1">#                 with open(self.yaml_path, &#39;w&#39;) as file:</span>
-<span class="c1">#                     yaml.dump(self.data, file)</span>
-<span class="c1">#                 return first_order</span>
-<span class="c1">#             else:</span>
-<span class="c1">#                 rospy.logwarn(&quot;No orders available to pop for robot.&quot;)</span>
-<span class="c1">#                 return None</span>
-<span class="c1">#         else:</span>
-<span class="c1">#             rospy.logwarn(&quot;No robots found in YAML.&quot;)</span>
-<span class="c1">#             return -1</span>
-        
-<span class="c1">#     def handle_request_new_order(self, req):</span>
-<span class="c1">#         order = req.order </span>
-<span class="c1">#         self.add_order_to_yaml(order)     </span>
-        
-   
-<span class="c1">#     def add_order_to_yaml(self, order):</span>
-<span class="c1">#         if &quot;robots&quot; in self.data and self.data[&quot;robots&quot;]:</span>
-<span class="c1">#             # Add to the first robot&#39;s order list</span>
-<span class="c1">#             # robot = self.data[&quot;robots&quot;][0]</span>
-
-<span class="c1">#             if &quot;order&quot; not in robot or robot[&quot;order&quot;] is None:</span>
-<span class="c1">#                 robot[&quot;order&quot;] = []</span>
-
-<span class="c1">#             robot[&quot;order&quot;].append(order)</span>
-<span class="c1">#             rospy.loginfo(f&quot;Added order &#39;{order}&#39; to robot {robot.get(&#39;name&#39;, &#39;unknown&#39;)}.&quot;)</span>
-
-<span class="c1">#             # Save back to the file</span>
-<span class="c1">#             with open(self.yaml_path, &#39;w&#39;) as file:</span>
-<span class="c1">#                 yaml.dump(self.data, file)</span>
-<span class="c1">#         else:</span>
-<span class="c1">#             rospy.logwarn(&quot;No robots found in YAML. Cannot add order.&quot;)</span>
-        
-<span class="c1">#     # def add_order_to_yaml(self, client_id, food_items):</span>
-<span class="c1">#     #     yaml_path = os.path.join(os.path.dirname(__file__), &quot;tiago_data.yaml&quot;)</span>
-
-<span class="c1">#     #     # Load existing data or create empty structure</span>
-<span class="c1">#     #     if os.path.exists(yaml_path):</span>
-<span class="c1">#     #         with open(yaml_path, &#39;r&#39;) as file:</span>
-<span class="c1">#     #             data = yaml.safe_load(file) or {&quot;robots&quot;: []}</span>
-<span class="c1">#     #     else:</span>
-<span class="c1">#     #         data = {&quot;robots&quot;: []}</span>
-
-<span class="c1">#     #     # Look for the robot with the given client_id</span>
-<span class="c1">#     #     robot_found = False</span>
-<span class="c1">#     #     for robot in data[&quot;robots&quot;]:</span>
-<span class="c1">#     #         if robot.get(&quot;id_client&quot;) == client_id:</span>
-<span class="c1">#     #             robot_found = True</span>
-<span class="c1">#     #             robot.setdefault(&quot;order&quot;, []).extend(food_items)</span>
-<span class="c1">#     #             break</span>
-
-<span class="c1">#     #     # If robot with client_id not found, create a new entry</span>
-<span class="c1">#     #     if not robot_found:</span>
-<span class="c1">#     #         new_robot = {</span>
-<span class="c1">#     #             &quot;order&quot;: food_items,</span>
-<span class="c1">#     #             &quot;id_client&quot;: client_id,</span>
-<span class="c1">#     #         }</span>
-<span class="c1">#     #         data[&quot;robots&quot;].append(new_robot)</span>
-
-<span class="c1">#     #     # Save updated data back to the YAML file</span>
-<span class="c1">#     #     with open(yaml_path, &#39;w&#39;) as file:</span>
-<span class="c1">#     #         yaml.safe_dump(data, file)</span>
-
-<span class="c1">#     #     rospy.loginfo(f&quot;Order for client {client_id} added: {food_items}&quot;)</span>
-
-<span class="c1"># if __name__ == &quot;__main__&quot;:</span>
-    
-<span class="c1">#     try:</span>
-<span class="c1">#         orchestrationReasoner = orchestration_and_coordination()</span>
-<span class="c1">#         while not rospy.is_shutdown():</span>
-<span class="c1">#             orchestrationReasoner.process()</span>
-<span class="c1">#     except rospy.ROSInterruptException:</span>
-<span class="c1">#         pass</span>
-
-<span class="c1">#!/usr/bin/env python</span>
+<span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">orchestration_and_coordination.py</span>
 <span class="sd">=================================</span>
@@ -253,62 +144,142 @@
     <span class="n">send_order</span><span class="p">,</span>         <span class="n">send_orderResponse</span><span class="p">,</span>
 <span class="p">)</span>
 
+<span class="c1"># -- State Machine Base Classes --</span>
+
+<div class="viewcode-block" id="State">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.State">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">State</span><span class="p">:</span>
+<div class="viewcode-block" id="State.handle">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.State.handle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Each state must implement the handle method.&quot;</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="FreeState">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.FreeState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FreeState</span><span class="p">(</span><span class="n">State</span><span class="p">):</span>
+<div class="viewcode-block" id="FreeState.handle">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.FreeState.handle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">obtain_order</span><span class="p">()</span>
+        <span class="n">robot_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">robot_id</span>
+        <span class="k">if</span> <span class="n">order</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="n">BusyState</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span><span class="n">state_output</span><span class="o">=</span><span class="s2">&quot;Busy&quot;</span><span class="p">,</span> <span class="n">id_client</span><span class="o">=</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;id_client&quot;</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;food_list&quot;</span><span class="p">],</span> <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="n">WaitState</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span><span class="n">state_output</span><span class="o">=</span><span class="s2">&quot;Wait&quot;</span><span class="p">,</span> <span class="n">id_client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[],</span> <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="WaitState">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.WaitState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WaitState</span><span class="p">(</span><span class="n">State</span><span class="p">):</span>
+<div class="viewcode-block" id="WaitState.handle">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.WaitState.handle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">obtain_order</span><span class="p">()</span>
+        <span class="n">robot_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">robot_id</span>
+        <span class="k">if</span> <span class="n">order</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="n">BusyState</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span><span class="n">state_output</span><span class="o">=</span><span class="s2">&quot;Busy&quot;</span><span class="p">,</span> <span class="n">id_client</span><span class="o">=</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;id_client&quot;</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;food_list&quot;</span><span class="p">],</span> <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span><span class="n">state_output</span><span class="o">=</span><span class="s2">&quot;Wait&quot;</span><span class="p">,</span> <span class="n">id_client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[],</span> <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="BusyState">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.BusyState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BusyState</span><span class="p">(</span><span class="n">State</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyState.handle">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.BusyState.handle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="c1"># it is still a dummy implementation</span>
+        <span class="n">robot_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">robot_id</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="n">FreeState</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span><span class="n">state_output</span><span class="o">=</span><span class="s2">&quot;Busy&quot;</span><span class="p">,</span> <span class="n">id_client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[],</span> <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+</div>
+
+
 
 <div class="viewcode-block" id="orchestration_and_coordination">
-<a class="viewcode-back" href="../orchestration.html#orchestration_and_coordination.orchestration_and_coordination">[docs]</a>
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">orchestration_and_coordination</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Persistent order queue + state-transition helper.</span>
-
-<span class="sd">    Instance Variables</span>
-<span class="sd">    ------------------</span>
-<span class="sd">    yaml_path</span>
-<span class="sd">        Absolute path to *tiago_data.yaml*.</span>
-<span class="sd">    data</span>
-<span class="sd">        Dict in memory; always contains the key ``&quot;orders&quot;`` mapping to a list.</span>
-<span class="sd">    service / service_order</span>
-<span class="sd">        :pyclass:`rospy.Service` handles for the two APIs.</span>
+<span class="sd">    Variables</span>
+<span class="sd">    ----------</span>
+<span class="sd">    yaml_path : str</span>
+<span class="sd">        Filesystem path to the YAML file storing pending orders.</span>
+<span class="sd">    data : dict</span>
+<span class="sd">        In-memory representation of orders, with key &quot;orders&quot; mapping to a list.</span>
+<span class="sd">    service : rospy.Service</span>
+<span class="sd">        Service server for &#39;/robot_state_decision&#39;.</span>
+<span class="sd">    service_order : rospy.Service</span>
+<span class="sd">        Service server for &#39;/robot_state_decision_add&#39;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the orchestration node:</span>
 
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                             startup                                 #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="sd">        - Initialize ROS node &#39;orchestration_and_coordination_node&#39;.</span>
+<span class="sd">        - Determine YAML storage path for orders.</span>
+<span class="sd">        - Advertise two services: robot_state_decision and robot_state_decision_add.</span>
+<span class="sd">        - Load existing orders from disk.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;orchestration_and_coordination_node&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_robots</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;number_of_robots&quot;</span><span class="p">))</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">yaml_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;tiago_data.yaml&quot;</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yaml_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;tiago_data.yaml&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_robots</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">services</span>       <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">services_order</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_states</span> <span class="o">=</span> <span class="p">{</span><span class="n">robot_id</span><span class="p">:</span> <span class="n">FreeState</span><span class="p">()</span> <span class="k">for</span> <span class="n">robot_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot_list</span><span class="p">}</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
-            <span class="s2">&quot;/robot_state_decision&quot;</span><span class="p">,</span>
-            <span class="n">robotstatedecision</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handle_request</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">robot_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">robot_id</span><span class="si">}</span><span class="s2">/robot_state_decision&quot;</span><span class="p">,</span>
+                <span class="n">robotstatedecision</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_request</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">services_order</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">robot_id</span><span class="si">}</span><span class="s2">/robot_state_decision_add&quot;</span><span class="p">,</span>
+                <span class="n">send_order</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_request_new_order</span>
+            <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">service_order</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
-            <span class="s2">&quot;/robot_state_decision_add&quot;</span><span class="p">,</span>
-            <span class="n">send_order</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handle_request_new_order</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;orders&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_states</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;orders&quot;</span><span class="p">:</span> <span class="p">[]}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+        
+<div class="viewcode-block" id="orchestration_and_coordination.set_state">
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.set_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transitioning to state: </span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_states</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span></div>
+
 
     <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="c1">#                        YAML persistence                             #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="orchestration_and_coordination.load_data">
-<a class="viewcode-back" href="../orchestration.html#orchestration_and_coordination.orchestration_and_coordination.load_data">[docs]</a>
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.load_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Load the order list from disk (creates an empty one if missing).&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaml_path</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaml_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{</span><span class="s2">&quot;orders&quot;</span><span class="p">:</span> <span class="p">[]}</span></div>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaml_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{</span><span class="s2">&quot;orders&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;orders&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaml_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="orchestration_and_coordination.save_data">
-<a class="viewcode-back" href="../orchestration.html#orchestration_and_coordination.orchestration_and_coordination.save_data">[docs]</a>
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.save_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write :pyattr:`data` back to *tiago_data.yaml*.&quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yaml_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -319,54 +290,45 @@
     <span class="c1">#                        queue operations                             #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="orchestration_and_coordination.obtain_order">
-<a class="viewcode-back" href="../orchestration.html#orchestration_and_coordination.orchestration_and_coordination.obtain_order">[docs]</a>
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.obtain_order">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">obtain_order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Pop and return the *oldest* order, or *None* if the queue is empty.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;orders&quot;</span><span class="p">]:</span>
-            <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;orders&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">first_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;orders&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">()</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Orchestrator] Dispatched order → </span><span class="si">{</span><span class="n">order</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">order</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Popped order: </span><span class="si">{</span><span class="n">first_order</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">first_order</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;No orders found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
-        <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[Orchestrator] No orders in queue.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
 
-
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                         service handlers                            #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="orchestration_and_coordination.handle_request">
-<a class="viewcode-back" href="../orchestration.html#orchestration_and_coordination.orchestration_and_coordination.handle_request">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">handle_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">robotstatedecision</span><span class="o">.</span><span class="n">Request</span>
-                       <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">robotstatedecisionResponse</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement the finite-state transition described above.&quot;&quot;&quot;</span>
-        <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obtain_order</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>                                   <span class="c1"># queue empty</span>
-            <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span>
-                <span class="n">state_output</span><span class="o">=</span><span class="s2">&quot;Wait&quot;</span><span class="p">,</span>
-                <span class="n">order</span><span class="o">=</span><span class="p">[],</span>
-                <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="p">)</span>
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.handle_request">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        req : tiago1.srv.robotstatedecisionRequest</span>
+<span class="sd">            Incoming request containing &#39;state_input&#39;.</span>
 
-        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">state_input</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;Free&quot;</span><span class="p">,</span> <span class="s2">&quot;Wait&quot;</span><span class="p">}:</span>             <span class="c1"># take job</span>
-            <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span>
-                <span class="n">state_output</span><span class="o">=</span><span class="s2">&quot;Busy&quot;</span><span class="p">,</span>
-                <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;food_list&quot;</span><span class="p">],</span>
-                <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        robotstatedecisionResponse</span>
+<span class="sd">            - state_output: &quot;Busy&quot; if Free/Wait and an order exists, else original state or &quot;Wait&quot;.</span>
+<span class="sd">            - order: list of food items for the robot to serve.</span>
+<span class="sd">            - success: True on valid transition with order, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">robot_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">robot_id</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot_states</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">)</span></div>
 
-        <span class="k">return</span> <span class="n">robotstatedecisionResponse</span><span class="p">(</span>                  <span class="c1"># robot busy</span>
-            <span class="n">state_output</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">state_input</span><span class="p">,</span>
-            <span class="n">order</span><span class="o">=</span><span class="p">[],</span>
-            <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="orchestration_and_coordination.handle_request_new_order">
-<a class="viewcode-back" href="../orchestration.html#orchestration_and_coordination.orchestration_and_coordination.handle_request_new_order">[docs]</a>
+<a class="viewcode-back" href="../server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.handle_request_new_order">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">handle_request_new_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">send_order</span><span class="o">.</span><span class="n">Request</span>
                                  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">send_orderResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Append a new order sent by the order-verification node.&quot;&quot;&quot;</span>
@@ -377,8 +339,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;orders&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_order</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">()</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Orchestrator] Added order ← </span><span class="si">{</span><span class="n">new_order</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">send_orderResponse</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;order added&quot;</span><span class="p">)</span></div>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added new order to YAML: </span><span class="si">{</span><span class="n">new_order</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">send_orderResponse</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Order successfully added&quot;</span><span class="p">)</span></div>
 </div>
 
 

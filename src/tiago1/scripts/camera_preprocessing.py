@@ -16,16 +16,28 @@ Why preprocess?
     • *Separation of concerns* – hardware quirks are handled once in this node
       instead of scattered across the codebase.
 
-Topic contracts
----------------
-==========================  ================  ==================================
-Topic                       Type             Role
---------------------------  ---------------  ----------------------------------
-``/camera``                 ``sensor_msgs/Image``  Raw 24-bit BGR frames
-``/depth``                  ``sensor_msgs/Image``  Raw depth map (any encoding)
-``/camera_processed``       ``sensor_msgs/Image``  Denoised / colour-corrected
-``/depth_processed``        ``sensor_msgs/Image``  Thresholded / hole-filled
-==========================  ================  ==================================
+ROS Topics
+-------
+.. list-table::
+   :header-rows: 1
+   :widths: 30 25 45
+
+   * - Topic
+     - Type
+     - Role
+   * - ``/camera``
+     - ``sensor_msgs/Image``
+     - Raw 24-bit BGR frames
+   * - ``/depth``
+     - ``sensor_msgs/Image``
+     - Raw depth map (any encoding)
+   * - ``/camera_processed``
+     - ``sensor_msgs/Image``
+     - Denoised / colour-corrected RGB
+   * - ``/depth_processed``
+     - ``sensor_msgs/Image``
+     - Thresholded / hole-filled depth
+
 
 All processed messages retain the **original header stamps** so that time-based
 synchronisation in later stages remains intact.

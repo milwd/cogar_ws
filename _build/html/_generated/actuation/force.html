@@ -43,11 +43,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -110,8 +111,8 @@ that the rest of the stack can still run and be exercised.</p>
 <section id="characteristics">
 <h3>Characteristics<a class="headerlink" href="#characteristics" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>Rate</strong> 10 Hz (set by <a href="#id1"><span class="problematic" id="id2">:pydata:`rate`</span></a>).</p></li>
-<li><p><strong>Distribution</strong> Uniform <a href="#id3"><span class="problematic" id="id4">*</span></a>U*(0 N, 50 N).
+<li><p><strong>Rate</strong> 10 Hz.</p></li>
+<li><p><strong>Distribution</strong> Uniform <a href="#id1"><span class="problematic" id="id2">*</span></a>U*(0 N, 50 N).
 Swap for a Gaussian or a replay from a CSV file if you need repeatable
 sequences or more realistic dynamics.</p></li>
 </ul>
@@ -121,7 +122,7 @@ sequences or more realistic dynamics.</p></li>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../actuation.html#force.force_sensor" title="force.force_sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">force_sensor</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../control_modules/force.html#force.force_sensor" title="force.force_sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">force_sensor</span></code></a>()</p></td>
 <td><p>Emit fake force values at 10 Hz until ROS shutdown.</p></td>
 </tr>
 </tbody>

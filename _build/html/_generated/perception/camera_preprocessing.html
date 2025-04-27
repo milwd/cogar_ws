@@ -43,11 +43,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -93,8 +94,39 @@ instead of scattered across the codebase.</p></li>
 </ul>
 </dd>
 </dl>
-<section id="topic-contracts">
-<h3>Topic contracts<a class="headerlink" href="#topic-contracts" title="Link to this heading"></a></h3>
+<section id="ros-topics">
+<h3>ROS Topics<a class="headerlink" href="#ros-topics" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Role</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/camera</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Raw 24-bit BGR frames</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/depth</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Raw depth map (any encoding)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/camera_processed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Denoised / colour-corrected RGB</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/depth_processed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
+<td><p>Thresholded / hole-filled depth</p></td>
+</tr>
+</tbody>
+</table>
 <p>All processed messages retain the <strong>original header stamps</strong> so that time-based
 synchronisation in later stages remains intact.</p>
 </section>
@@ -113,7 +145,7 @@ synchronisation in later stages remains intact.</p>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../perception.html#camera_preprocessing.CameraPreprocessing" title="camera_preprocessing.CameraPreprocessing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CameraPreprocessing</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing" title="camera_preprocessing.CameraPreprocessing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CameraPreprocessing</span></code></a>()</p></td>
 <td><p>Perform in-place enhancement of RGB and depth streams.</p></td>
 </tr>
 </tbody>

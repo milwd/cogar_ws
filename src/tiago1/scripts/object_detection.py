@@ -11,14 +11,22 @@ string describing three items.  It runs at **1 Hz**, slow enough to be replaced
 later by a real detector running on GPU/CPU accelerators without affecting
 subscriber timing.
 
-Topic contracts
----------------
-==========================  =============  ======================================
-Topic                       Type           Direction
---------------------------  -------------  --------------------------------------
-``/camera_preprocessed``    ``sensor_msgs/Image``   **Subscribed** – cleaned RGB
-``/camera_detections``      ``std_msgs/String``     **Published** – placeholder
-==========================  =============  ======================================
+ROS topics
+----------
+.. list-table::
+   :header-rows: 1
+   :widths: 30 25 45
+
+   * - Topic
+     - Type
+     - Direction / Meaning
+   * - ``/camera_preprocessed``
+     - ``sensor_msgs/Image``
+     - **Subscribed** — cleaned RGB image fed into the detector
+   * - ``/camera_detections``
+     - ``std_msgs/String``
+     - **Published** — placeholder JSON string describing detections
+
 
 The published text follows the simple format:
 

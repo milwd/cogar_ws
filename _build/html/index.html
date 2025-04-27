@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assignment 1 Documentation &mdash; cogar_ass1 1.0 documentation</title>
+  <title>Autonomous Waiters – Complete Project Documentation &mdash; cogar_ass1 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Perception Components" href="perception.html" /> 
+    <link rel="next" title="Subsystem Vision" href="vision.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,11 +45,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -66,7 +67,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Assignment 1 Documentation</li>
+      <li class="breadcrumb-item active">Autonomous Waiters – Complete Project Documentation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,110 +77,155 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="assignment-1-documentation">
-<span id="index"></span><h1>Assignment 1 Documentation<a class="headerlink" href="#assignment-1-documentation" title="Link to this heading"></a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>This project implements <strong>Topic 2 – Autonomous Waiters in a Sushi Restaurant</strong>.
-A fleet of five PAL-Robotics TIAGo robots cooperates to serve dishes, clear tables and return to the station. :contentReference[oaicite:0]{index=0}&amp;#8203;:contentReference[oaicite:1]{index=1}</p>
-<section id="key-software-components">
-<h3>Key software components<a class="headerlink" href="#key-software-components" title="Link to this heading"></a></h3>
+  <section id="autonomous-waiters-complete-project-documentation">
+<span id="index"></span><h1>Autonomous Waiters – Complete Project Documentation<a class="headerlink" href="#autonomous-waiters-complete-project-documentation" title="Link to this heading"></a></h1>
+<section id="why-this-project">
+<h2>Why this project?<a class="headerlink" href="#why-this-project" title="Link to this heading"></a></h2>
+<p>Busy sushi restaurants lose revenue when diners wait too long or receive the
+wrong dish.
+Your solution deploys <strong>five PAL-Robotics TIAGo robots</strong> that handle order
+delivery, table clearing and basic customer interaction – freeing staff for
+tasks that need a human touch. :contentReference[oaicite:0]{index=0}&amp;#8203;:contentReference[oaicite:1]{index=1}</p>
+<section id="key-goals">
+<h3>Key goals<a class="headerlink" href="#key-goals" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Timely delivery</strong> – select the closest available robot, plan an
+obstacle-free path and adapt on the fly.</p></li>
+<li><p><strong>Error-free serving</strong> – detect mismatched orders and handle disputes
+gracefully.</p></li>
+<li><p><strong>Scalability</strong> – a central orchestrator must coordinate multiple robots
+without bottlenecks.</p></li>
+<li><p><strong>Recoverability</strong> – every component is restart-safe; no single point of
+failure.</p></li>
+</ul>
+</section>
+</section>
+<section id="hardware-platform">
+<h2>Hardware platform<a class="headerlink" href="#hardware-platform" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>TIAGo base with differential drive</p></li>
+<li><p>7-DoF arm + parallel gripper</p></li>
+<li><p>RGB-D camera, LiDAR, SONAR, force sensor, microphones, speakers</p></li>
+</ul>
+</section>
+<section id="software-architecture">
+<h2>Software architecture<a class="headerlink" href="#software-architecture" title="Link to this heading"></a></h2>
+<p>The stack follows a classic <em>perception → reasoning → actuation</em> pipeline plus
+a thin orchestration layer that balances the fleet.</p>
+</section>
+<section id="codebase-tour">
+<h2>Codebase tour<a class="headerlink" href="#codebase-tour" title="Link to this heading"></a></h2>
+<p>Below you’ll find <strong>every script</strong> you wrote, grouped by the component layer
+they belong to.  Each bullet links to the detailed API page generated by
+<em>autodoc</em>.</p>
+<section id="vision">
+<h3>Vision<a class="headerlink" href="#vision" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>camera.py</cite> – static RGB + synthetic depth generator</p></li>
+<li><p><cite>camera_preprocessing.py</cite> – colour correction &amp; ROI cropping</p></li>
+<li><p><cite>lidar.py</cite>, <cite>sonar.py</cite> – 2-D obstacle clouds</p></li>
+<li><p><cite>object_detection.py</cite> – YOLO-v8 wrapper for plate and hand detection</p></li>
+<li><p><cite>sensor_fusion.py</cite> – fuse RGB-D, LiDAR and SONAR into a cost map</p></li>
+<li><p><cite>microphone_node.py</cite> – raw microphone frames</p></li>
+<li><p><cite>distance_estimation.py</cite> – depth-based size → distance converter</p></li>
+</ul>
+</section>
+<section id="reasoning-planning">
+<h3>Reasoning &amp; Planning<a class="headerlink" href="#reasoning-planning" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>path_planning.py</cite> – A*/D* hybrid global planner</p></li>
+<li><p><cite>reasoning_action.py</cite> – turns symbolic commands into ActionLib goals</p></li>
+<li><p><cite>reasoning_order_verification.py</cite> – parses <em>“Can I have …”</em> utterances</p></li>
+<li><p><cite>reasoning_table_placement.py</cite> – finds a free, stable spot for the dish</p></li>
+<li><p><cite>slam.py</cite> – RTAB-Map wrapper for map building</p></li>
+</ul>
+</section>
+<section id="actuation-low-level-control">
+<h3>Actuation &amp; Low-level Control<a class="headerlink" href="#actuation-low-level-control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>control_wheel.py</cite> – proportional wheel controller (base)</p></li>
+<li><p><cite>control_arm.py</cite> – ActionLib server for joint-space moves</p></li>
+<li><p><cite>control_gripper.py</cite> – open/close with timeout + feedback</p></li>
+<li><p><cite>encoder_wheel.py</cite>, <cite>encoder_arm.py</cite>, <cite>encoder_gripper.py</cite> – synthetic
+encoders for CI</p></li>
+</ul>
+</section>
+<section id="interaction">
+<h3>Interaction<a class="headerlink" href="#interaction" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>speech_generator.py</cite> – buffers sentences and drips them to TTS</p></li>
+<li><p><cite>voice_recognition.py</cite> – integer → phrase stub ASR</p></li>
+<li><p><cite>speaker.py</cite> – last-mile relay to the loudspeaker</p></li>
+</ul>
+</section>
+<section id="orchestration-management">
+<h3>Orchestration &amp; Management<a class="headerlink" href="#orchestration-management" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>orchestration_and_coordination.py</cite> – YAML-backed order queue + state
+gateway</p></li>
+<li><p><cite>task_manager.py</cite> – event aggregator, calls <cite>robot_state_decision</cite> to fetch
+the next task</p></li>
+</ul>
+</section>
+</section>
+<section id="data-flow-example">
+<h2>Data-flow example<a class="headerlink" href="#data-flow-example" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p><strong>Orchestration System</strong>
-• Dynamically allocates each order to the best-placed robot.
-• Prevents table congestion by queuing robots if necessary.</p></li>
-<li><p><strong>Reasoning about Food Placement</strong>
-• Analyses the table layout with camera + depth data.
-• Chooses a free, stable spot and adapts if the table is cluttered.</p></li>
-<li><p><strong>Order Verification &amp; Error Handling</strong>
-• Announces the dish, waits for customer confirmation.
-• Registers disputes and notifies human staff. :contentReference[oaicite:2]{index=2}&amp;#8203;:contentReference[oaicite:3]{index=3}</p></li>
+<li><p><cite>voice_recognition.py</cite> publishes <em>“Can I have sushi”</em></p></li>
+<li><p><cite>reasoning_order_verification.py</cite> extracts <strong>sushi</strong> and calls
+<cite>send_order</cite> → queue stores the order</p></li>
+<li><p>A <strong>Free</strong> robot pings <cite>/robot_state_decision</cite> and receives the sushi task</p></li>
+<li><p><cite>reasoning_action.py</cite> converts the plan into
+<cite>control_wheel</cite> → <cite>control_arm</cite> → <cite>control_gripper</cite> goals</p></li>
+<li><p>On success <cite>control_*</cite> nodes emit <em>ARM_DONE</em>, <em>GRIPPER_DONE</em>, … which the
+<cite>task_manager</cite> feeds back into the orchestrator.</p></li>
 </ol>
 </section>
+<section id="development-testing">
+<h2>Development &amp; testing<a class="headerlink" href="#development-testing" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Sim-only CI</strong> – synthetic encoders (<cite>encoder_*</cite>) and the fake force sensor
+(<cite>force.py</cite>) let you run unit tests on GitHub Actions with zero hardware.</p></li>
+<li><p><strong>Recording sessions</strong> – use <cite>camera_preprocessing.py –record</cite> to save
+synchronised RGB-D bags for offline ML training.</p></li>
+<li><p><strong>Hot reload</strong> – every ActionLib server respects pre-emption; launch filess
+can restart individual components without bringing down the whole stack.</p></li>
+</ul>
 </section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<p>Clone the repository into your catkin workspace, build, then source the setup file:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/catkin_ws/src
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;your-org&gt;/cogar_ws.git
-<span class="nb">cd</span><span class="w"> </span>..
-catkin_make
-<span class="nb">source</span><span class="w"> </span>devel/setup.bash
+<section id="running-the-system">
+<h2>Running the system<a class="headerlink" href="#running-the-system" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># one-liner that launches Gazebo, RViz and every node</span>
+roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>sushi_fleet.launch
+
+<span class="c1"># manual: bring up orchestrator, then a single robot instance</span>
+rosrun<span class="w"> </span>cogar_ws<span class="w"> </span>orchestration_and_coordination.py<span class="w"> </span><span class="p">&amp;</span>
+roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>tiago_bringup.launch<span class="w"> </span>robot_id:<span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
-<p>Make sure the required ROS Noetic dependencies are installed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>ros-noetic-actionlib<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>ros-noetic-geometry-msgs<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>ros-noetic-std-msgs<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>ros-noetic-std-srvs<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>ros-noetic-nav-msgs
-</pre></div>
-</div>
-</section>
-<section id="how-to-launch">
-<h2>How to Launch<a class="headerlink" href="#how-to-launch" title="Link to this heading"></a></h2>
-<p><strong>Step 1 – bring up the whole stack</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>sushi_waiter.launch
-</pre></div>
-</div>
-<p><strong>Step 2 – assign an order manually (example)</strong></p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rosservice call /assign_order &quot;table_id: 4
-dish_name: &#39;Dragon Roll&#39;&quot;
-</pre></div>
-</div>
-<p><strong>Step 3 – verify / cancel</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/order_verification
-rosservice<span class="w"> </span>call<span class="w"> </span>/cancel_order<span class="w"> </span><span class="s2">&quot;table_id: 4&quot;</span>
-</pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A map must be available in <em>$(rospack find cogar_ws)/maps/</em>.
+Run <cite>slam.py –save</cite> the first time on a new restaurant layout.</p>
 </div>
 </section>
-<section id="proof-of-work">
-<h2>Proof of Work<a class="headerlink" href="#proof-of-work" title="Link to this heading"></a></h2>
-<img alt="Demo – robot serving a table" src="static/robot_serving.gif" />
-<img alt="Demo – table clearing sequence" src="static/table_clearing.gif" />
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Component diagrams, behavioural models and KPIs are documented under each
+module page.</p></li>
+<li><p>The assignment brief (slides 13–15) is embedded in <em>docs/assets</em> for quick
+reference. :contentReference[oaicite:2]{index=2}&amp;#8203;:contentReference[oaicite:3]{index=3}</p></li>
+</ul>
+<p class="rubric">Navigate the code</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#camera-py">camera.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#camera-preprocessing-py">camera_preprocessing.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#lidar-py">lidar.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#sonar-py">sonar.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#object-detection-py">object_detection.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#sensor-fusion-py">sensor_fusion.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#distance-estimation-py">distance_estimation.py</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#path-planning-py">path_planning.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning-action-py">reasoning_action.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning-order-verification-py">reasoning_order_verification.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning-table-placement-py">reasoning_table_placement.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#speech-generator-py">speech_generator.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#slam-py">slam.py</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#control-arm-py">control_arm.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#control-gripper-py">control_gripper.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#control-wheel-py">control_wheel.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder-arm-py">encoder_arm.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder-gripper-py">encoder_gripper.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder-wheel-py">encoder_wheel.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#force-py">force.py</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="interaction.html#voice-recognition-py">voice_recognition.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="interaction.html#speaker-py">speaker.py</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="orchestration.html#orchestration-and-coordination-py">orchestration_and_coordination.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="orchestration.html#task-manager-py">task_manager.py</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
 </ul>
 </div>
 </section>
@@ -189,7 +235,7 @@ rosservice<span class="w"> </span>call<span class="w"> </span>/cancel_order<span
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="perception.html" class="btn btn-neutral float-right" title="Perception Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="vision.html" class="btn btn-neutral float-right" title="Subsystem Vision" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

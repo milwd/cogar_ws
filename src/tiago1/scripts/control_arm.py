@@ -66,6 +66,7 @@ from geometry_msgs.msg import Twist
 from std_msgs.msg import Int32
 import time
 import sys
+from tiago1.msg import ArmControlAction
 
 class ControlArmServer:
     """

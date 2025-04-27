@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -77,6 +78,7 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
@@ -98,19 +100,27 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="perception.html#sensor_fusion.Adapter">Adapter (class in sensor_fusion)</a>
+      <li><a href="navigation_modules/sensor_fusion.html#sensor_fusion.Adapter">Adapter (class in sensor_fusion)</a>
 </li>
-      <li><a href="perception.html#distance_estimation.ClearingStrategy.analyze">analyze() (distance_estimation.ClearingStrategy method)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.ClearingStrategy.analyze">analyze() (distance_estimation.ClearingStrategy method)</a>
 
       <ul>
-        <li><a href="perception.html#distance_estimation.FindPlacementStrategy.analyze">(distance_estimation.FindPlacementStrategy method)</a>
+        <li><a href="vision_modules/distance_estimation.html#distance_estimation.FindPlacementStrategy.analyze">(distance_estimation.FindPlacementStrategy method)</a>
 </li>
-        <li><a href="perception.html#distance_estimation.TableAnalysisStrategy.analyze">(distance_estimation.TableAnalysisStrategy method)</a>
+        <li><a href="vision_modules/distance_estimation.html#distance_estimation.TableAnalysisStrategy.analyze">(distance_estimation.TableAnalysisStrategy method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actuation.html#encoder_arm.arm_encoder">arm_encoder() (in module encoder_arm)</a>
+      <li><a href="control_modules/encoder_arm.html#encoder_arm.arm_encoder">arm_encoder() (in module encoder_arm)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.BusyState">BusyState (class in orchestration_and_coordination)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -118,56 +128,64 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reasoning.html#slam.SLAM.callback">callback() (slam.SLAM method)</a>
+      <li><a href="navigation_modules/slam.html#slam.SLAM.callback">callback() (slam.SLAM method)</a>
+</li>
+      <li><a href="navigation_modules/slam.html#slam.SLAM.callback_odom">callback_odom() (slam.SLAM method)</a>
 </li>
       <li>
     camera
 
       <ul>
-        <li><a href="_generated/perception/camera.html#module-camera">module</a>, <a href="perception.html#module-camera">[1]</a>
+        <li><a href="_generated/perception/camera.html#module-camera">module</a>, <a href="vision_modules/camera.html#module-camera">[1]</a>
 </li>
       </ul></li>
       <li>
     camera_preprocessing
 
       <ul>
-        <li><a href="_generated/perception/camera_preprocessing.html#module-camera_preprocessing">module</a>, <a href="perception.html#module-camera_preprocessing">[1]</a>
+        <li><a href="_generated/perception/camera_preprocessing.html#module-camera_preprocessing">module</a>, <a href="vision_modules/camera_preprocessing.html#module-camera_preprocessing">[1]</a>
 </li>
       </ul></li>
-      <li><a href="perception.html#camera_preprocessing.CameraPreprocessing">CameraPreprocessing (class in camera_preprocessing)</a>
+      <li><a href="vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing">CameraPreprocessing (class in camera_preprocessing)</a>
 </li>
-      <li><a href="orchestration.html#task_manager.TaskManager.change_state">change_state() (task_manager.TaskManager method)</a>
+      <li><a href="brain_modules/task_manager.html#task_manager.TaskManager.change_state">change_state() (task_manager.TaskManager method)</a>
 </li>
-      <li><a href="perception.html#distance_estimation.ClearingStrategy">ClearingStrategy (class in distance_estimation)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.ClearingStrategy">ClearingStrategy (class in distance_estimation)</a>
 </li>
+      <li><a href="control_modules/control_gripper.html#control_gripper.ControlGripperServer.cmd_pub">cmd_pub (control_gripper.ControlGripperServer attribute)</a>
+
+      <ul>
+        <li><a href="control_modules/control_wheel.html#control_wheel.ControlMovementServer.cmd_pub">(control_wheel.ControlMovementServer attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     control_arm
 
       <ul>
-        <li><a href="actuation.html#module-control_arm">module</a>
+        <li><a href="control_modules/control_arm.html#module-control_arm">module</a>
 </li>
       </ul></li>
       <li>
     control_gripper
 
       <ul>
-        <li><a href="actuation.html#module-control_gripper">module</a>
+        <li><a href="control_modules/control_gripper.html#module-control_gripper">module</a>
 </li>
       </ul></li>
       <li>
     control_wheel
 
       <ul>
-        <li><a href="actuation.html#module-control_wheel">module</a>
+        <li><a href="control_modules/control_wheel.html#module-control_wheel">module</a>
 </li>
       </ul></li>
-      <li><a href="actuation.html#control_arm.ControlArmServer">ControlArmServer (class in control_arm)</a>
+      <li><a href="control_modules/control_arm.html#control_arm.ControlArmServer">ControlArmServer (class in control_arm)</a>
 </li>
-      <li><a href="actuation.html#control_gripper.ControlGripperServer">ControlGripperServer (class in control_gripper)</a>
+      <li><a href="control_modules/control_gripper.html#control_gripper.ControlGripperServer">ControlGripperServer (class in control_gripper)</a>
 </li>
-      <li><a href="actuation.html#control_wheel.ControlMovementServer">ControlMovementServer (class in control_wheel)</a>
+      <li><a href="control_modules/control_wheel.html#control_wheel.ControlMovementServer">ControlMovementServer (class in control_wheel)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -175,26 +193,26 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reasoning.html#reasoning_table_placement.ReasoningTablePlacement.decision_callback">decision_callback() (reasoning_table_placement.ReasoningTablePlacement method)</a>
+      <li><a href="brain_modules/reasoning_table_placement.html#reasoning_table_placement.ReasoningTablePlacement.decision_callback">decision_callback() (reasoning_table_placement.ReasoningTablePlacement method)</a>
 </li>
-      <li><a href="perception.html#camera_preprocessing.CameraPreprocessing.depth_callback">depth_callback() (camera_preprocessing.CameraPreprocessing method)</a>
+      <li><a href="vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing.depth_callback">depth_callback() (camera_preprocessing.CameraPreprocessing method)</a>
 
       <ul>
-        <li><a href="perception.html#distance_estimation.DistanceEstimator.depth_callback">(distance_estimation.DistanceEstimator method)</a>
+        <li><a href="vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.depth_callback">(distance_estimation.DistanceEstimator method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="perception.html#distance_estimation.DistanceEstimator.detection_callback">detection_callback() (distance_estimation.DistanceEstimator method)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.detection_callback">detection_callback() (distance_estimation.DistanceEstimator method)</a>
 </li>
       <li>
     distance_estimation
 
       <ul>
-        <li><a href="_generated/perception/distance_estimation.html#module-distance_estimation">module</a>, <a href="perception.html#module-distance_estimation">[1]</a>
+        <li><a href="_generated/perception/distance_estimation.html#module-distance_estimation">module</a>, <a href="vision_modules/distance_estimation.html#module-distance_estimation">[1]</a>
 </li>
       </ul></li>
-      <li><a href="perception.html#distance_estimation.DistanceEstimator">DistanceEstimator (class in distance_estimation)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator">DistanceEstimator (class in distance_estimation)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -206,33 +224,35 @@
     encoder_arm
 
       <ul>
-        <li><a href="_generated/actuation/encoder_arm.html#module-encoder_arm">module</a>, <a href="actuation.html#module-encoder_arm">[1]</a>
+        <li><a href="_generated/actuation/encoder_arm.html#module-encoder_arm">module</a>, <a href="control_modules/encoder_arm.html#module-encoder_arm">[1]</a>
 </li>
       </ul></li>
-      <li><a href="actuation.html#control_arm.ControlArmServer.encoder_callback">encoder_callback() (control_arm.ControlArmServer method)</a>
+      <li><a href="control_modules/control_arm.html#control_arm.ControlArmServer.encoder_callback">encoder_callback() (control_arm.ControlArmServer method)</a>
 </li>
       <li>
     encoder_gripper
 
       <ul>
-        <li><a href="_generated/actuation/encoder_gripper.html#module-encoder_gripper">module</a>, <a href="actuation.html#module-encoder_gripper">[1]</a>
+        <li><a href="_generated/actuation/encoder_gripper.html#module-encoder_gripper">module</a>, <a href="control_modules/encoder_gripper.html#module-encoder_gripper">[1]</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="control_modules/control_arm.html#control_arm.ControlArmServer.encoder_sub">encoder_sub (control_arm.ControlArmServer attribute)</a>
+</li>
       <li>
     encoder_wheel
 
       <ul>
-        <li><a href="_generated/actuation/encoder_wheel.html#module-encoder_wheel">module</a>, <a href="actuation.html#module-encoder_wheel">[1]</a>
+        <li><a href="_generated/actuation/encoder_wheel.html#module-encoder_wheel">module</a>, <a href="control_modules/encoder_wheel.html#module-encoder_wheel">[1]</a>
 </li>
       </ul></li>
-      <li><a href="actuation.html#control_arm.ControlArmServer.execute_cb">execute_cb() (control_arm.ControlArmServer method)</a>
+      <li><a href="control_modules/control_arm.html#control_arm.ControlArmServer.execute_cb">execute_cb() (control_arm.ControlArmServer method)</a>
 
       <ul>
-        <li><a href="actuation.html#control_gripper.ControlGripperServer.execute_cb">(control_gripper.ControlGripperServer method)</a>
+        <li><a href="control_modules/control_gripper.html#control_gripper.ControlGripperServer.execute_cb">(control_gripper.ControlGripperServer method)</a>
 </li>
-        <li><a href="actuation.html#control_wheel.ControlMovementServer.execute_cb">(control_wheel.ControlMovementServer method)</a>
+        <li><a href="control_modules/control_wheel.html#control_wheel.ControlMovementServer.execute_cb">(control_wheel.ControlMovementServer method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -241,18 +261,20 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="perception.html#distance_estimation.FindPlacementStrategy">FindPlacementStrategy (class in distance_estimation)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.FindPlacementStrategy">FindPlacementStrategy (class in distance_estimation)</a>
 </li>
       <li>
     force
 
       <ul>
-        <li><a href="_generated/actuation/force.html#module-force">module</a>, <a href="actuation.html#module-force">[1]</a>
+        <li><a href="_generated/actuation/force.html#module-force">module</a>, <a href="control_modules/force.html#module-force">[1]</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actuation.html#force.force_sensor">force_sensor() (in module force)</a>
+      <li><a href="control_modules/force.html#force.force_sensor">force_sensor() (in module force)</a>
+</li>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.FreeState">FreeState (class in orchestration_and_coordination)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -260,7 +282,7 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actuation.html#encoder_gripper.gripper_encoder">gripper_encoder() (in module encoder_gripper)</a>
+      <li><a href="control_modules/encoder_gripper.html#encoder_gripper.gripper_encoder">gripper_encoder() (in module encoder_gripper)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -268,11 +290,21 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="orchestration.html#orchestration_and_coordination.orchestration_and_coordination.handle_request">handle_request() (orchestration_and_coordination.orchestration_and_coordination method)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.BusyState.handle">handle() (orchestration_and_coordination.BusyState method)</a>
+
+      <ul>
+        <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.FreeState.handle">(orchestration_and_coordination.FreeState method)</a>
 </li>
+        <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.State.handle">(orchestration_and_coordination.State method)</a>
+</li>
+        <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.WaitState.handle">(orchestration_and_coordination.WaitState method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="orchestration.html#orchestration_and_coordination.orchestration_and_coordination.handle_request_new_order">handle_request_new_order() (orchestration_and_coordination.orchestration_and_coordination method)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.handle_request">handle_request() (orchestration_and_coordination.orchestration_and_coordination method)</a>
+</li>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.handle_request_new_order">handle_request_new_order() (orchestration_and_coordination.orchestration_and_coordination method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -280,7 +312,7 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="perception.html#object_detection.ObjectDetector.image_callback">image_callback() (object_detection.ObjectDetector method)</a>
+      <li><a href="vision_modules/object_detection.html#object_detection.ObjectDetector.image_callback">image_callback() (object_detection.ObjectDetector method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -292,19 +324,19 @@
     lidar
 
       <ul>
-        <li><a href="_generated/perception/lidar.html#module-lidar">module</a>, <a href="perception.html#module-lidar">[1]</a>
+        <li><a href="_generated/perception/lidar.html#module-lidar">module</a>, <a href="navigation_modules/lidar.html#module-lidar">[1]</a>
 </li>
       </ul></li>
-      <li><a href="perception.html#sensor_fusion.SensorFusionNode.lidar_callback">lidar_callback() (sensor_fusion.SensorFusionNode method)</a>
+      <li><a href="navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.lidar_callback">lidar_callback() (sensor_fusion.SensorFusionNode method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="orchestration.html#orchestration_and_coordination.orchestration_and_coordination.load_data">load_data() (orchestration_and_coordination.orchestration_and_coordination method)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.load_data">load_data() (orchestration_and_coordination.orchestration_and_coordination method)</a>
 </li>
-      <li><a href="reasoning.html#path_planning.PathPlanner.loop">loop() (path_planning.PathPlanner method)</a>
+      <li><a href="navigation_modules/path_planning.html#path_planning.PathPlanner.loop">loop() (path_planning.PathPlanner method)</a>
 
       <ul>
-        <li><a href="reasoning.html#reasoning_action.ReasoningAction.loop">(reasoning_action.ReasoningAction method)</a>
+        <li><a href="brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.loop">(reasoning_action.ReasoningAction method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -313,67 +345,76 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="perception.html#distance_estimation.main">main() (in module distance_estimation)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.main">main() (in module distance_estimation)</a>
 
       <ul>
-        <li><a href="reasoning.html#reasoning_table_placement.main">(in module reasoning_table_placement)</a>
+        <li><a href="brain_modules/reasoning_table_placement.html#reasoning_table_placement.main">(in module reasoning_table_placement)</a>
 </li>
       </ul></li>
-      <li><a href="reasoning.html#path_planning.PathPlanner.map_callback">map_callback() (path_planning.PathPlanner method)</a>
+      <li><a href="navigation_modules/path_planning.html#path_planning.PathPlanner.map_callback">map_callback() (path_planning.PathPlanner method)</a>
 </li>
-      <li><a href="perception.html#sensor_fusion.SensorFusionNode.merge_data">merge_data() (sensor_fusion.SensorFusionNode method)</a>
+      <li><a href="navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.merge_data">merge_data() (sensor_fusion.SensorFusionNode method)</a>
 </li>
+      <li>
+    microphone
+
+      <ul>
+        <li><a href="interaction_modules/microphone.html#module-microphone">module</a>
+</li>
+      </ul></li>
       <li>
     module
 
       <ul>
-        <li><a href="_generated/perception/camera.html#module-camera">camera</a>, <a href="perception.html#module-camera">[1]</a>
+        <li><a href="_generated/perception/camera.html#module-camera">camera</a>, <a href="vision_modules/camera.html#module-camera">[1]</a>
 </li>
-        <li><a href="_generated/perception/camera_preprocessing.html#module-camera_preprocessing">camera_preprocessing</a>, <a href="perception.html#module-camera_preprocessing">[1]</a>
+        <li><a href="_generated/perception/camera_preprocessing.html#module-camera_preprocessing">camera_preprocessing</a>, <a href="vision_modules/camera_preprocessing.html#module-camera_preprocessing">[1]</a>
 </li>
-        <li><a href="actuation.html#module-control_arm">control_arm</a>
+        <li><a href="control_modules/control_arm.html#module-control_arm">control_arm</a>
 </li>
-        <li><a href="actuation.html#module-control_gripper">control_gripper</a>
+        <li><a href="control_modules/control_gripper.html#module-control_gripper">control_gripper</a>
 </li>
-        <li><a href="actuation.html#module-control_wheel">control_wheel</a>
+        <li><a href="control_modules/control_wheel.html#module-control_wheel">control_wheel</a>
 </li>
-        <li><a href="_generated/perception/distance_estimation.html#module-distance_estimation">distance_estimation</a>, <a href="perception.html#module-distance_estimation">[1]</a>
+        <li><a href="_generated/perception/distance_estimation.html#module-distance_estimation">distance_estimation</a>, <a href="vision_modules/distance_estimation.html#module-distance_estimation">[1]</a>
 </li>
-        <li><a href="_generated/actuation/encoder_arm.html#module-encoder_arm">encoder_arm</a>, <a href="actuation.html#module-encoder_arm">[1]</a>
+        <li><a href="_generated/actuation/encoder_arm.html#module-encoder_arm">encoder_arm</a>, <a href="control_modules/encoder_arm.html#module-encoder_arm">[1]</a>
 </li>
-        <li><a href="_generated/actuation/encoder_gripper.html#module-encoder_gripper">encoder_gripper</a>, <a href="actuation.html#module-encoder_gripper">[1]</a>
+        <li><a href="_generated/actuation/encoder_gripper.html#module-encoder_gripper">encoder_gripper</a>, <a href="control_modules/encoder_gripper.html#module-encoder_gripper">[1]</a>
 </li>
-        <li><a href="_generated/actuation/encoder_wheel.html#module-encoder_wheel">encoder_wheel</a>, <a href="actuation.html#module-encoder_wheel">[1]</a>
+        <li><a href="_generated/actuation/encoder_wheel.html#module-encoder_wheel">encoder_wheel</a>, <a href="control_modules/encoder_wheel.html#module-encoder_wheel">[1]</a>
 </li>
-        <li><a href="_generated/actuation/force.html#module-force">force</a>, <a href="actuation.html#module-force">[1]</a>
+        <li><a href="_generated/actuation/force.html#module-force">force</a>, <a href="control_modules/force.html#module-force">[1]</a>
 </li>
-        <li><a href="_generated/perception/lidar.html#module-lidar">lidar</a>, <a href="perception.html#module-lidar">[1]</a>
+        <li><a href="_generated/perception/lidar.html#module-lidar">lidar</a>, <a href="navigation_modules/lidar.html#module-lidar">[1]</a>
 </li>
-        <li><a href="_generated/perception/object_detection.html#module-object_detection">object_detection</a>, <a href="perception.html#module-object_detection">[1]</a>
+        <li><a href="interaction_modules/microphone.html#module-microphone">microphone</a>
 </li>
-        <li><a href="orchestration.html#module-orchestration_and_coordination">orchestration_and_coordination</a>
+        <li><a href="_generated/perception/object_detection.html#module-object_detection">object_detection</a>, <a href="vision_modules/object_detection.html#module-object_detection">[1]</a>
 </li>
-        <li><a href="_generated/reasoning/path_planning.html#module-path_planning">path_planning</a>, <a href="reasoning.html#module-path_planning">[1]</a>
+        <li><a href="server_modules/orchestration_and_coordination.html#module-orchestration_and_coordination">orchestration_and_coordination</a>
 </li>
-        <li><a href="reasoning.html#module-reasoning_action">reasoning_action</a>
+        <li><a href="_generated/reasoning/path_planning.html#module-path_planning">path_planning</a>, <a href="navigation_modules/path_planning.html#module-path_planning">[1]</a>
 </li>
-        <li><a href="reasoning.html#module-reasoning_order_verification">reasoning_order_verification</a>
+        <li><a href="brain_modules/reasoning_action.html#module-reasoning_action">reasoning_action</a>
 </li>
-        <li><a href="reasoning.html#module-reasoning_speech_generation">reasoning_speech_generation</a>
+        <li><a href="interaction_modules/reasoning_order_verification.html#module-reasoning_order_verification">reasoning_order_verification</a>
 </li>
-        <li><a href="_generated/reasoning/reasoning_table_placement.html#module-reasoning_table_placement">reasoning_table_placement</a>, <a href="reasoning.html#module-reasoning_table_placement">[1]</a>
+        <li><a href="brain_modules/reasoning_speech_generation.html#module-reasoning_speech_generation">reasoning_speech_generation</a>
 </li>
-        <li><a href="_generated/perception/sensor_fusion.html#module-sensor_fusion">sensor_fusion</a>, <a href="perception.html#module-sensor_fusion">[1]</a>
+        <li><a href="_generated/reasoning/reasoning_table_placement.html#module-reasoning_table_placement">reasoning_table_placement</a>, <a href="brain_modules/reasoning_table_placement.html#module-reasoning_table_placement">[1]</a>
 </li>
-        <li><a href="_generated/reasoning/slam.html#module-slam">slam</a>, <a href="reasoning.html#module-slam">[1]</a>
+        <li><a href="_generated/perception/sensor_fusion.html#module-sensor_fusion">sensor_fusion</a>, <a href="navigation_modules/sensor_fusion.html#module-sensor_fusion">[1]</a>
 </li>
-        <li><a href="_generated/perception/sonar.html#module-sonar">sonar</a>, <a href="perception.html#module-sonar">[1]</a>
+        <li><a href="_generated/reasoning/slam.html#module-slam">slam</a>, <a href="navigation_modules/slam.html#module-slam">[1]</a>
 </li>
-        <li><a href="_generated/interaction/speaker.html#module-speaker">speaker</a>, <a href="interaction.html#module-speaker">[1]</a>
+        <li><a href="_generated/perception/sonar.html#module-sonar">sonar</a>, <a href="navigation_modules/sonar.html#module-sonar">[1]</a>
 </li>
-        <li><a href="orchestration.html#module-task_manager">task_manager</a>
+        <li><a href="_generated/interaction/speaker.html#module-speaker">speaker</a>, <a href="interaction_modules/speaker.html#module-speaker">[1]</a>
 </li>
-        <li><a href="_generated/interaction/voice_recognition.html#module-voice_recognition">voice_recognition</a>, <a href="interaction.html#module-voice_recognition">[1]</a>
+        <li><a href="brain_modules/task_manager.html#module-task_manager">task_manager</a>
+</li>
+        <li><a href="_generated/interaction/voice_recognition.html#module-voice_recognition">voice_recognition</a>, <a href="interaction_modules/voice_recognition.html#module-voice_recognition">[1]</a>
 </li>
       </ul></li>
   </ul></td>
@@ -386,25 +427,25 @@
     object_detection
 
       <ul>
-        <li><a href="_generated/perception/object_detection.html#module-object_detection">module</a>, <a href="perception.html#module-object_detection">[1]</a>
+        <li><a href="_generated/perception/object_detection.html#module-object_detection">module</a>, <a href="vision_modules/object_detection.html#module-object_detection">[1]</a>
 </li>
       </ul></li>
-      <li><a href="perception.html#object_detection.ObjectDetector">ObjectDetector (class in object_detection)</a>
+      <li><a href="vision_modules/object_detection.html#object_detection.ObjectDetector">ObjectDetector (class in object_detection)</a>
 </li>
-      <li><a href="orchestration.html#orchestration_and_coordination.orchestration_and_coordination.obtain_order">obtain_order() (orchestration_and_coordination.orchestration_and_coordination method)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.obtain_order">obtain_order() (orchestration_and_coordination.orchestration_and_coordination method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reasoning.html#path_planning.PathPlanner.odom_callback">odom_callback() (path_planning.PathPlanner method)</a>
+      <li><a href="navigation_modules/path_planning.html#path_planning.PathPlanner.odom_callback">odom_callback() (path_planning.PathPlanner method)</a>
 </li>
       <li>
     orchestration_and_coordination
 
       <ul>
-        <li><a href="orchestration.html#module-orchestration_and_coordination">module</a>
+        <li><a href="server_modules/orchestration_and_coordination.html#module-orchestration_and_coordination">module</a>
 </li>
       </ul></li>
-      <li><a href="orchestration.html#orchestration_and_coordination.orchestration_and_coordination">orchestration_and_coordination (class in orchestration_and_coordination)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination">orchestration_and_coordination (class in orchestration_and_coordination)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -412,42 +453,44 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="perception.html#distance_estimation.DistanceEstimator.parse_detections">parse_detections() (distance_estimation.DistanceEstimator static method)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.parse_detections">parse_detections() (distance_estimation.DistanceEstimator static method)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_order_verification.ReasoningOrderVerification.parse_order">parse_order() (reasoning_order_verification.ReasoningOrderVerification method)</a>
+      <li><a href="interaction_modules/reasoning_order_verification.html#reasoning_order_verification.ReasoningOrderVerification.parse_order">parse_order() (reasoning_order_verification.ReasoningOrderVerification method)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_action.ReasoningAction.path_callback">path_callback() (reasoning_action.ReasoningAction method)</a>
+      <li><a href="brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.path_callback">path_callback() (reasoning_action.ReasoningAction method)</a>
 </li>
       <li>
     path_planning
 
       <ul>
-        <li><a href="_generated/reasoning/path_planning.html#module-path_planning">module</a>, <a href="reasoning.html#module-path_planning">[1]</a>
+        <li><a href="_generated/reasoning/path_planning.html#module-path_planning">module</a>, <a href="navigation_modules/path_planning.html#module-path_planning">[1]</a>
 </li>
       </ul></li>
-      <li><a href="reasoning.html#path_planning.PathPlanner">PathPlanner (class in path_planning)</a>
+      <li><a href="navigation_modules/path_planning.html#path_planning.PathPlanner">PathPlanner (class in path_planning)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_action.ReasoningAction.perform_table_command">perform_table_command() (reasoning_action.ReasoningAction method)</a>
+      <li><a href="brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.perform_table_command">perform_table_command() (reasoning_action.ReasoningAction method)</a>
+</li>
+      <li><a href="navigation_modules/path_planning.html#path_planning.PathPlanner.plan_path">plan_path() (path_planning.PathPlanner method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reasoning.html#path_planning.PathPlanner.plan_path">plan_path() (path_planning.PathPlanner method)</a>
+      <li><a href="interaction_modules/voice_recognition.html#voice_recognition.VoiceRecognition.process_data">process_data() (voice_recognition.VoiceRecognition method)</a>
 </li>
-      <li><a href="interaction.html#voice_recognition.VoiceRecognition.process_data">process_data() (voice_recognition.VoiceRecognition method)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.project_to_robot_frame">project_to_robot_frame() (distance_estimation.DistanceEstimator static method)</a>
 </li>
-      <li><a href="perception.html#distance_estimation.DistanceEstimator.project_to_robot_frame">project_to_robot_frame() (distance_estimation.DistanceEstimator static method)</a>
-</li>
-      <li><a href="perception.html#camera.publish">publish() (in module camera)</a>
+      <li><a href="vision_modules/camera.html#camera.publish">publish() (in module camera)</a>
 
       <ul>
-        <li><a href="perception.html#lidar.publish">(in module lidar)</a>
+        <li><a href="navigation_modules/lidar.html#lidar.publish">(in module lidar)</a>
 </li>
-        <li><a href="perception.html#sonar.publish">(in module sonar)</a>
+        <li><a href="interaction_modules/microphone.html#microphone.publish">(in module microphone)</a>
+</li>
+        <li><a href="navigation_modules/sonar.html#sonar.publish">(in module sonar)</a>
 </li>
       </ul></li>
-      <li><a href="perception.html#sensor_fusion.SensorFusionNode.publish_fused">publish_fused() (sensor_fusion.SensorFusionNode method)</a>
+      <li><a href="navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.publish_fused">publish_fused() (sensor_fusion.SensorFusionNode method)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_speech_generation.SpeechGenerator.publish_msg">publish_msg() (reasoning_speech_generation.SpeechGenerator method)</a>
+      <li><a href="brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator.publish_msg">publish_msg() (reasoning_speech_generation.SpeechGenerator method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -459,21 +502,21 @@
     reasoning_action
 
       <ul>
-        <li><a href="reasoning.html#module-reasoning_action">module</a>
+        <li><a href="brain_modules/reasoning_action.html#module-reasoning_action">module</a>
 </li>
       </ul></li>
       <li>
     reasoning_order_verification
 
       <ul>
-        <li><a href="reasoning.html#module-reasoning_order_verification">module</a>
+        <li><a href="interaction_modules/reasoning_order_verification.html#module-reasoning_order_verification">module</a>
 </li>
       </ul></li>
       <li>
     reasoning_speech_generation
 
       <ul>
-        <li><a href="reasoning.html#module-reasoning_speech_generation">module</a>
+        <li><a href="brain_modules/reasoning_speech_generation.html#module-reasoning_speech_generation">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -482,16 +525,18 @@
     reasoning_table_placement
 
       <ul>
-        <li><a href="_generated/reasoning/reasoning_table_placement.html#module-reasoning_table_placement">module</a>, <a href="reasoning.html#module-reasoning_table_placement">[1]</a>
+        <li><a href="_generated/reasoning/reasoning_table_placement.html#module-reasoning_table_placement">module</a>, <a href="brain_modules/reasoning_table_placement.html#module-reasoning_table_placement">[1]</a>
 </li>
       </ul></li>
-      <li><a href="reasoning.html#reasoning_action.ReasoningAction">ReasoningAction (class in reasoning_action)</a>
+      <li><a href="brain_modules/reasoning_action.html#reasoning_action.ReasoningAction">ReasoningAction (class in reasoning_action)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_order_verification.ReasoningOrderVerification">ReasoningOrderVerification (class in reasoning_order_verification)</a>
+      <li><a href="interaction_modules/reasoning_order_verification.html#reasoning_order_verification.ReasoningOrderVerification">ReasoningOrderVerification (class in reasoning_order_verification)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_table_placement.ReasoningTablePlacement">ReasoningTablePlacement (class in reasoning_table_placement)</a>
+      <li><a href="brain_modules/reasoning_table_placement.html#reasoning_table_placement.ReasoningTablePlacement">ReasoningTablePlacement (class in reasoning_table_placement)</a>
 </li>
-      <li><a href="perception.html#camera_preprocessing.CameraPreprocessing.rgb_callback">rgb_callback() (camera_preprocessing.CameraPreprocessing method)</a>
+      <li><a href="vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing.rgb_callback">rgb_callback() (camera_preprocessing.CameraPreprocessing method)</a>
+</li>
+      <li><a href="vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing.robot_number">robot_number (camera_preprocessing.CameraPreprocessing attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -499,27 +544,33 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="orchestration.html#orchestration_and_coordination.orchestration_and_coordination.save_data">save_data() (orchestration_and_coordination.orchestration_and_coordination method)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.save_data">save_data() (orchestration_and_coordination.orchestration_and_coordination method)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_order_verification.ReasoningOrderVerification.send_request">send_request() (reasoning_order_verification.ReasoningOrderVerification method)</a>
+      <li><a href="interaction_modules/reasoning_order_verification.html#reasoning_order_verification.ReasoningOrderVerification.send_request">send_request() (reasoning_order_verification.ReasoningOrderVerification method)</a>
+
+      <ul>
+        <li><a href="brain_modules/task_manager.html#task_manager.TaskManager.send_request">(task_manager.TaskManager method)</a>
 </li>
+      </ul></li>
       <li>
     sensor_fusion
 
       <ul>
-        <li><a href="_generated/perception/sensor_fusion.html#module-sensor_fusion">module</a>, <a href="perception.html#module-sensor_fusion">[1]</a>
+        <li><a href="_generated/perception/sensor_fusion.html#module-sensor_fusion">module</a>, <a href="navigation_modules/sensor_fusion.html#module-sensor_fusion">[1]</a>
 </li>
       </ul></li>
-      <li><a href="perception.html#sensor_fusion.SensorFusionNode">SensorFusionNode (class in sensor_fusion)</a>
+      <li><a href="navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode">SensorFusionNode (class in sensor_fusion)</a>
+</li>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.orchestration_and_coordination.set_state">set_state() (orchestration_and_coordination.orchestration_and_coordination method)</a>
 </li>
       <li>
     slam
 
       <ul>
-        <li><a href="_generated/reasoning/slam.html#module-slam">module</a>, <a href="reasoning.html#module-slam">[1]</a>
+        <li><a href="_generated/reasoning/slam.html#module-slam">module</a>, <a href="navigation_modules/slam.html#module-slam">[1]</a>
 </li>
       </ul></li>
-      <li><a href="reasoning.html#slam.SLAM">SLAM (class in slam)</a>
+      <li><a href="navigation_modules/slam.html#slam.SLAM">SLAM (class in slam)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -527,25 +578,31 @@
     sonar
 
       <ul>
-        <li><a href="_generated/perception/sonar.html#module-sonar">module</a>, <a href="perception.html#module-sonar">[1]</a>
+        <li><a href="_generated/perception/sonar.html#module-sonar">module</a>, <a href="navigation_modules/sonar.html#module-sonar">[1]</a>
 </li>
       </ul></li>
-      <li><a href="perception.html#sensor_fusion.SensorFusionNode.sonar_callback">sonar_callback() (sensor_fusion.SensorFusionNode method)</a>
+      <li><a href="navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.sonar_callback">sonar_callback() (sensor_fusion.SensorFusionNode method)</a>
 </li>
       <li>
     speaker
 
       <ul>
-        <li><a href="_generated/interaction/speaker.html#module-speaker">module</a>, <a href="interaction.html#module-speaker">[1]</a>
+        <li><a href="_generated/interaction/speaker.html#module-speaker">module</a>, <a href="interaction_modules/speaker.html#module-speaker">[1]</a>
 </li>
       </ul></li>
-      <li><a href="interaction.html#speaker.Speaker">Speaker (class in speaker)</a>
+      <li><a href="interaction_modules/speaker.html#speaker.Speaker">Speaker (class in speaker)</a>
 </li>
-      <li><a href="interaction.html#speaker.Speaker.speaker_callback">speaker_callback() (speaker.Speaker method)</a>
+      <li><a href="brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator.speaker_callback">speaker_callback() (reasoning_speech_generation.SpeechGenerator method)</a>
+
+      <ul>
+        <li><a href="interaction_modules/speaker.html#speaker.Speaker.speaker_callback">(speaker.Speaker method)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_speech_generation.SpeechGenerator">SpeechGenerator (class in reasoning_speech_generation)</a>
+      </ul></li>
+      <li><a href="brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator">SpeechGenerator (class in reasoning_speech_generation)</a>
 </li>
-      <li><a href="reasoning.html#reasoning_order_verification.ReasoningOrderVerification.string_callback">string_callback() (reasoning_order_verification.ReasoningOrderVerification method)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.State">State (class in orchestration_and_coordination)</a>
+</li>
+      <li><a href="interaction_modules/reasoning_order_verification.html#reasoning_order_verification.ReasoningOrderVerification.string_callback">string_callback() (reasoning_order_verification.ReasoningOrderVerification method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -553,22 +610,22 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reasoning.html#reasoning_action.ReasoningAction.table_command_callback">table_command_callback() (reasoning_action.ReasoningAction method)</a>
+      <li><a href="brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.table_command_callback">table_command_callback() (reasoning_action.ReasoningAction method)</a>
 </li>
-      <li><a href="perception.html#distance_estimation.TableAnalysisStrategy">TableAnalysisStrategy (class in distance_estimation)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.TableAnalysisStrategy">TableAnalysisStrategy (class in distance_estimation)</a>
 </li>
       <li>
     task_manager
 
       <ul>
-        <li><a href="orchestration.html#module-task_manager">module</a>
+        <li><a href="brain_modules/task_manager.html#module-task_manager">module</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="orchestration.html#task_manager.TaskManager">TaskManager (class in task_manager)</a>
+      <li><a href="brain_modules/task_manager.html#task_manager.TaskManager">TaskManager (class in task_manager)</a>
 </li>
-      <li><a href="perception.html#distance_estimation.DistanceEstimator.try_estimate_positions">try_estimate_positions() (distance_estimation.DistanceEstimator method)</a>
+      <li><a href="vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.try_estimate_positions">try_estimate_positions() (distance_estimation.DistanceEstimator method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -580,12 +637,12 @@
     voice_recognition
 
       <ul>
-        <li><a href="_generated/interaction/voice_recognition.html#module-voice_recognition">module</a>, <a href="interaction.html#module-voice_recognition">[1]</a>
+        <li><a href="_generated/interaction/voice_recognition.html#module-voice_recognition">module</a>, <a href="interaction_modules/voice_recognition.html#module-voice_recognition">[1]</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="interaction.html#voice_recognition.VoiceRecognition">VoiceRecognition (class in voice_recognition)</a>
+      <li><a href="interaction_modules/voice_recognition.html#voice_recognition.VoiceRecognition">VoiceRecognition (class in voice_recognition)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -593,11 +650,13 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reasoning.html#reasoning_action.ReasoningAction.wait_for_servers">wait_for_servers() (reasoning_action.ReasoningAction method)</a>
+      <li><a href="brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.wait_for_servers">wait_for_servers() (reasoning_action.ReasoningAction method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="actuation.html#encoder_wheel.wheel_encoder">wheel_encoder() (in module encoder_wheel)</a>
+      <li><a href="server_modules/orchestration_and_coordination.html#orchestration_and_coordination.WaitState">WaitState (class in orchestration_and_coordination)</a>
+</li>
+      <li><a href="control_modules/encoder_wheel.html#encoder_wheel.wheel_encoder">wheel_encoder() (in module encoder_wheel)</a>
 </li>
   </ul></td>
 </tr></table>

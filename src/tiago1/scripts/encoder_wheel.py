@@ -27,7 +27,7 @@ ROS interface
 
 Node behaviour
 --------------
-* **Frequency** 10 Hz (controlled by :pydata:`rate`).  
+* **Frequency** 10 Hz.  
 * **Tick generator** Uniform *U*(0, 999) – every message is independent.  
   For smoother traces swap the one-liner for a *random-walk* or sine table.
 

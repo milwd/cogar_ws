@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
 force.py
-========
+=========
 
 Synthetic **end-effector force sensor** for manipulation pipelines
------------------------------------------------------------------
+-------------------------------------------------------------------
 
 Grasp controllers, compliant planners and safety monitors often rely on a
 continuous force signal.  When real hardware is absent (desktop development,
@@ -26,7 +26,7 @@ ROS interface
 
 Characteristics
 ---------------
-* **Rate** 10 Hz (set by :pydata:`rate`).  
+* **Rate** 10 Hz.  
 * **Distribution** Uniform *U*(0 N, 50 N).  
   Swap for a Gaussian or a replay from a CSV file if you need repeatable
   sequences or more realistic dynamics.

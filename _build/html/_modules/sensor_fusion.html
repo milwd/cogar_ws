@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -118,10 +119,11 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="n">Range</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="SensorFusionNode">
-<a class="viewcode-back" href="../perception.html#sensor_fusion.SensorFusionNode">[docs]</a>
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SensorFusionNode</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Merge LiDAR and sonar information into a single :class:`LaserScan`.</span>
@@ -146,30 +148,25 @@
     <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="c1"># Initialisation                                                     #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register the node, wire subscriptions and publisher and</span>
 <span class="sd">        initialise state containers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;sensor_fusion_node&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">lidar_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-            <span class="s1">&#39;/lidar&#39;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_callback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sonar_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-            <span class="s1">&#39;/sonar&#39;</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sonar_callback</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
-            <span class="s1">&#39;/fused_scan&#39;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span> <span class="o">=</span> <span class="kc">None</span>          <span class="c1"># type: LaserScan | None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sonar_data</span> <span class="o">=</span> <span class="kc">None</span>          <span class="c1"># type: Range | None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">adapted_sonar</span> <span class="o">=</span> <span class="p">[]</span>         <span class="c1"># type: list[float]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_sensor_fusion_node&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lidar_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/lidar&#39;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_callback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sonar_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/sonar&#39;</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sonar_callback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/fused_scan&#39;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sonar_data</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="c1"># Callbacks                                                          #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="SensorFusionNode.lidar_callback">
-<a class="viewcode-back" href="../perception.html#sensor_fusion.SensorFusionNode.lidar_callback">[docs]</a>
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.lidar_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">lidar_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">LaserScan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Store the most recent LiDAR scan.</span>
@@ -183,7 +180,7 @@
 
 
 <div class="viewcode-block" id="SensorFusionNode.sonar_callback">
-<a class="viewcode-back" href="../perception.html#sensor_fusion.SensorFusionNode.sonar_callback">[docs]</a>
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.sonar_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sonar_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Range</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Store the sonar reading **and** trigger a fusion attempt.</span>
@@ -201,7 +198,7 @@
     <span class="c1"># Fusion logic                                                       #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="SensorFusionNode.merge_data">
-<a class="viewcode-back" href="../perception.html#sensor_fusion.SensorFusionNode.merge_data">[docs]</a>
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.merge_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Combine the LiDAR and adapted sonar arrays element-wise.</span>
@@ -218,7 +215,7 @@
 
 
 <div class="viewcode-block" id="SensorFusionNode.publish_fused">
-<a class="viewcode-back" href="../perception.html#sensor_fusion.SensorFusionNode.publish_fused">[docs]</a>
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.publish_fused">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">publish_fused</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Produce and publish a fused :class:`LaserScan` if both inputs are ready.</span>
@@ -256,7 +253,7 @@
 
 
 <div class="viewcode-block" id="Adapter">
-<a class="viewcode-back" href="../perception.html#sensor_fusion.Adapter">[docs]</a>
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.Adapter">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Adapter</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Expand a *scalar* sonar range into a list matching the LiDAR beam count.</span>
@@ -265,8 +262,7 @@
 <span class="sd">    are filled with zero so that simple addition effectively “embeds” the sonar</span>
 <span class="sd">    reading into the LiDAR fan.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sonar_range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sonar_data</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -280,9 +276,9 @@
 <span class="sd">        list[float]</span>
 <span class="sd">            Zero-initialised list with ``sonar_range`` at index ``length // 2``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">new_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">length</span>
-        <span class="k">if</span> <span class="n">length</span><span class="p">:</span>                       <span class="c1"># guard against division by zero</span>
-            <span class="n">new_data</span><span class="p">[</span><span class="n">length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sonar_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">length</span>
+        <span class="n">new_data</span><span class="p">[</span><span class="n">length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sonar_data</span>
         <span class="k">return</span> <span class="n">new_data</span></div>
 
 

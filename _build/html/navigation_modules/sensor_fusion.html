@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sensor Fusion &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SLAM" href="slam.html" />
+    <link rel="prev" title="Lidar" href="lidar.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../navigation.html#mission">Mission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../navigation.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../navigation.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sonar.html">Sonar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lidar.html">Lidar</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Sensor Fusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slam.html">SLAM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="path_planning.html">Path Planning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../navigation.html">Subsystem Navigation</a></li>
+      <li class="breadcrumb-item active">Sensor Fusion</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/navigation_modules/sensor_fusion.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sensor_fusion">
+<span id="sensor-fusion"></span><h1>Sensor Fusion<a class="headerlink" href="#module-sensor_fusion" title="Link to this heading"></a></h1>
+<section id="sensor-fusion-py">
+<h2>sensor_fusion.py<a class="headerlink" href="#sensor-fusion-py" title="Link to this heading"></a></h2>
+<section id="ros-fusion-node-that-combines-planar-lidar-and-single-beam-sonar">
+<h3>ROS <strong>fusion node</strong> that combines planar LiDAR and single-beam sonar<a class="headerlink" href="#ros-fusion-node-that-combines-planar-lidar-and-single-beam-sonar" title="Link to this heading"></a></h3>
+<p>The node listens to</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/lidar</span></code>   ( <a href="#id1"><span class="problematic" id="id2">:sensor_msgs:`LaserScan`</span></a> )</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/sonar</span></code>  ( <a href="#id3"><span class="problematic" id="id4">:sensor_msgs:`Range`</span></a> — ultrasound )</p></li>
+</ul>
+<p>and emits a <strong>synthetic, fused scan</strong> on</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code>  ( <a href="#id5"><span class="problematic" id="id6">:sensor_msgs:`LaserScan`</span></a> )</p></li>
+</ul>
+<p>The fusion strategy is deliberately simple:</p>
+<ol class="arabic simple">
+<li><p>Convert the sonar’s <em>scalar</em> range into a <strong>pseudo-scan</strong> whose length
+matches the LiDAR beam count.</p></li>
+<li><p>Insert the sonar reading at the centre index, leave all other values «0».</p></li>
+<li><p>Add the two arrays element-wise.</p></li>
+</ol>
+<p>This yields a quick placeholder that exercises downstream consumers without
+complex probabilistic filters.</p>
+</section>
+<section id="topic-contracts">
+<h3>Topic contracts<a class="headerlink" href="#topic-contracts" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Dir.</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/lidar</span></code></p></td>
+<td><p>LaserScan</p></td>
+<td><p>sub</p></td>
+<td><p>180 ° LiDAR produced by <em>lidar.py</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/sonar</span></code></p></td>
+<td><p>Range</p></td>
+<td><p>sub</p></td>
+<td><p>1-D ultrasound produced by <em>sonar.py</em></p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code> | LaserScan</p></td>
+<td><p>pub</p></td>
+<td><p>LiDAR beams + centred sonar reading</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="sensor_fusion.Adapter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sensor_fusion.</span></span><span class="sig-name descname"><span class="pre">Adapter</span></span><a class="reference internal" href="../_modules/sensor_fusion.html#Adapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.Adapter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Expand a <em>scalar</em> sonar range into a list matching the LiDAR beam count.</p>
+<p>The sonar value is inserted at the <strong>centre index</strong>; all other positions
+are filled with zero so that simple addition effectively “embeds” the sonar
+reading into the LiDAR fan.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sensor_fusion.</span></span><span class="sig-name descname"><span class="pre">SensorFusionNode</span></span><a class="reference internal" href="../_modules/sensor_fusion.html#SensorFusionNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Merge LiDAR and sonar information into a single <code class="xref py py-class docutils literal notranslate"><span class="pre">LaserScan</span></code>.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>lidar_sub<span class="classifier">rospy.Subscriber</span></dt><dd><p>Receives scans from <code class="docutils literal notranslate"><span class="pre">/lidar</span></code>.</p>
+</dd>
+<dt>sonar_sub<span class="classifier">rospy.Subscriber</span></dt><dd><p>Receives ranges from <code class="docutils literal notranslate"><span class="pre">/sonar</span></code>.</p>
+</dd>
+<dt>pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Emits the fused scan on <code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code>.</p>
+</dd>
+<dt>lidar_data<span class="classifier">sensor_msgs.msg.LaserScan | None</span></dt><dd><p>Last LiDAR scan received.</p>
+</dd>
+<dt>sonar_data<span class="classifier">sensor_msgs.msg.Range | None</span></dt><dd><p>Last sonar reading received.</p>
+</dd>
+<dt>adapted_sonar<span class="classifier">list[float]</span></dt><dd><p>Sonar value replicated into a list matching the LiDAR beam count.</p>
+</dd>
+</dl>
+<p>Register the node, wire subscriptions and publisher and
+initialise state containers.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.lidar_callback">
+<span class="sig-name descname"><span class="pre">lidar_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.LaserScan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/sensor_fusion.html#SensorFusionNode.lidar_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode.lidar_callback" title="Link to this definition"></a></dt>
+<dd><p>Store the most recent LiDAR scan.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>sensor_msgs.msg.LaserScan</em>) – Scan received from <code class="docutils literal notranslate"><span class="pre">/lidar</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.merge_data">
+<span class="sig-name descname"><span class="pre">merge_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/sensor_fusion.html#SensorFusionNode.merge_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode.merge_data" title="Link to this definition"></a></dt>
+<dd><p>Combine the LiDAR and adapted sonar arrays element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">==</span> <span class="pre">len(self.lidar_data.ranges)</span></code> – sum of both sensors.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.publish_fused">
+<span class="sig-name descname"><span class="pre">publish_fused</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/sensor_fusion.html#SensorFusionNode.publish_fused"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode.publish_fused" title="Link to this definition"></a></dt>
+<dd><p>Produce and publish a fused <code class="xref py py-class docutils literal notranslate"><span class="pre">LaserScan</span></code> if both inputs are ready.</p>
+<section id="workflow">
+<h3>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Verify that <strong>both</strong> <code class="docutils literal notranslate"><span class="pre">self.lidar_data</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">self.sonar_data</span></code> are
+populated.</p></li>
+<li><p>Use <a class="reference internal" href="#sensor_fusion.Adapter" title="sensor_fusion.Adapter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Adapter</span></code></a> to expand the single sonar value into a list
+whose length equals the LiDAR beam count.</p></li>
+<li><p>Call <a class="reference internal" href="#sensor_fusion.SensorFusionNode.merge_data" title="sensor_fusion.SensorFusionNode.merge_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">merge_data()</span></code></a> to add the two arrays.</p></li>
+<li><p>Populate a fresh <code class="xref py py-class docutils literal notranslate"><span class="pre">LaserScan</span></code>, copy the LiDAR header
+(time + frame), insert geometry fields, attach the fused range list
+and publish.</p></li>
+</ol>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.sonar_callback">
+<span class="sig-name descname"><span class="pre">sonar_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.Range</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/sensor_fusion.html#SensorFusionNode.sonar_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode.sonar_callback" title="Link to this definition"></a></dt>
+<dd><p>Store the sonar reading <strong>and</strong> trigger a fusion attempt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>sensor_msgs.msg.Range</em>) – Range measurement received from <code class="docutils literal notranslate"><span class="pre">/sonar</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lidar.html" class="btn btn-neutral float-left" title="Lidar" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slam.html" class="btn btn-neutral float-right" title="SLAM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

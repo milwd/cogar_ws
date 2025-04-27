@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -120,14 +121,14 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">actionlib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Twist</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nav_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">MovementControlAction</span><span class="p">,</span> <span class="n">MovementControlFeedback</span><span class="p">,</span> <span class="n">MovementControlResult</span>
-<span class="p">)</span>
-
+<span class="kn">from</span><span class="w"> </span><span class="nn">nav_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="n">Odometry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">PoseStamped</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">MovementControlAction</span><span class="p">,</span> <span class="n">MovementControlFeedback</span><span class="p">,</span> <span class="n">MovementControlResult</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <div class="viewcode-block" id="ControlMovementServer">
-<a class="viewcode-back" href="../actuation.html#control_wheel.ControlMovementServer">[docs]</a>
+<a class="viewcode-back" href="../control_modules/control_wheel.html#control_wheel.ControlMovementServer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ControlMovementServer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Minimal ActionLib wrapper driving the robot base towards the first waypoint.</span>
@@ -145,8 +146,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/cmd_vel/wheel&#39;</span><span class="p">,</span>
                                        <span class="n">Twist</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        - Advertise &#39;/cmd_vel/wheel&#39; for velocity commands.</span>
+<span class="sd">        - Set up and start the SimpleActionServer for MovementControlAction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_control_movement_node&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/cmd_vel/wheel&#39;</span><span class="p">,</span> <span class="n">Twist</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionServer</span><span class="p">(</span>
-            <span class="s1">&#39;movement_control&#39;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/movement_control&#39;</span><span class="p">,</span>
             <span class="n">MovementControlAction</span><span class="p">,</span>
             <span class="n">execute_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_cb</span><span class="p">,</span>
             <span class="n">auto_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -158,7 +166,7 @@
     <span class="c1">#                          action logic                               #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ControlMovementServer.execute_cb">
-<a class="viewcode-back" href="../actuation.html#control_wheel.ControlMovementServer.execute_cb">[docs]</a>
+<a class="viewcode-back" href="../control_modules/control_wheel.html#control_wheel.ControlMovementServer.execute_cb">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">execute_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">MovementControlAction</span><span class="o">.</span><span class="n">Goal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Drive once towards the first pose in :pyattr:`goal.path`.</span>
@@ -194,13 +202,8 @@
         <span class="n">feedback</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Driving to first waypoint &quot;</span>
                            <span class="sa">f</span><span class="s2">&quot;of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">goal</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">poses</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
-
-        <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>   <span class="c1"># give wheels time to move</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">is_preempt_requested</span><span class="p">():</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ControlMovement] Pre-empted during motion.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">set_preempted</span><span class="p">()</span>
-            <span class="k">return</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># time to reach each point</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
         <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">set_succeeded</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
@@ -213,7 +216,9 @@
 <span class="c1">#                                bootstrap                               #</span>
 <span class="c1"># ---------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;control_movement_node&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main entrypoint: initialize ROS node and start ControlMovementServer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ControlMovementServer</span><span class="p">()</span>
     <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
 </pre></div>

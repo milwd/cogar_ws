@@ -49,11 +49,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -88,6 +89,7 @@
    <a href="#cap-e"><strong>e</strong></a> | 
    <a href="#cap-f"><strong>f</strong></a> | 
    <a href="#cap-l"><strong>l</strong></a> | 
+   <a href="#cap-m"><strong>m</strong></a> | 
    <a href="#cap-o"><strong>o</strong></a> | 
    <a href="#cap-p"><strong>p</strong></a> | 
    <a href="#cap-r"><strong>r</strong></a> | 
@@ -103,27 +105,27 @@
      <tr>
        <td></td>
        <td>
-       <a href="perception.html#module-camera"><code class="xref">camera</code></a></td><td>
+       <a href="vision_modules/camera.html#module-camera"><code class="xref">camera</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="perception.html#module-camera_preprocessing"><code class="xref">camera_preprocessing</code></a></td><td>
+       <a href="vision_modules/camera_preprocessing.html#module-camera_preprocessing"><code class="xref">camera_preprocessing</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="actuation.html#module-control_arm"><code class="xref">control_arm</code></a></td><td>
+       <a href="control_modules/control_arm.html#module-control_arm"><code class="xref">control_arm</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="actuation.html#module-control_gripper"><code class="xref">control_gripper</code></a></td><td>
+       <a href="control_modules/control_gripper.html#module-control_gripper"><code class="xref">control_gripper</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="actuation.html#module-control_wheel"><code class="xref">control_wheel</code></a></td><td>
+       <a href="control_modules/control_wheel.html#module-control_wheel"><code class="xref">control_wheel</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-d"><td></td><td>
@@ -131,7 +133,7 @@
      <tr>
        <td></td>
        <td>
-       <a href="perception.html#module-distance_estimation"><code class="xref">distance_estimation</code></a></td><td>
+       <a href="vision_modules/distance_estimation.html#module-distance_estimation"><code class="xref">distance_estimation</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-e"><td></td><td>
@@ -139,17 +141,17 @@
      <tr>
        <td></td>
        <td>
-       <a href="actuation.html#module-encoder_arm"><code class="xref">encoder_arm</code></a></td><td>
+       <a href="control_modules/encoder_arm.html#module-encoder_arm"><code class="xref">encoder_arm</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="actuation.html#module-encoder_gripper"><code class="xref">encoder_gripper</code></a></td><td>
+       <a href="control_modules/encoder_gripper.html#module-encoder_gripper"><code class="xref">encoder_gripper</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="actuation.html#module-encoder_wheel"><code class="xref">encoder_wheel</code></a></td><td>
+       <a href="control_modules/encoder_wheel.html#module-encoder_wheel"><code class="xref">encoder_wheel</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-f"><td></td><td>
@@ -157,7 +159,7 @@
      <tr>
        <td></td>
        <td>
-       <a href="actuation.html#module-force"><code class="xref">force</code></a></td><td>
+       <a href="control_modules/force.html#module-force"><code class="xref">force</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-l"><td></td><td>
@@ -165,7 +167,15 @@
      <tr>
        <td></td>
        <td>
-       <a href="perception.html#module-lidar"><code class="xref">lidar</code></a></td><td>
+       <a href="navigation_modules/lidar.html#module-lidar"><code class="xref">lidar</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-m"><td></td><td>
+       <strong>m</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="interaction_modules/microphone.html#module-microphone"><code class="xref">microphone</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-o"><td></td><td>
@@ -173,12 +183,12 @@
      <tr>
        <td></td>
        <td>
-       <a href="perception.html#module-object_detection"><code class="xref">object_detection</code></a></td><td>
+       <a href="vision_modules/object_detection.html#module-object_detection"><code class="xref">object_detection</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="orchestration.html#module-orchestration_and_coordination"><code class="xref">orchestration_and_coordination</code></a></td><td>
+       <a href="server_modules/orchestration_and_coordination.html#module-orchestration_and_coordination"><code class="xref">orchestration_and_coordination</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-p"><td></td><td>
@@ -186,7 +196,7 @@
      <tr>
        <td></td>
        <td>
-       <a href="reasoning.html#module-path_planning"><code class="xref">path_planning</code></a></td><td>
+       <a href="navigation_modules/path_planning.html#module-path_planning"><code class="xref">path_planning</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-r"><td></td><td>
@@ -194,22 +204,22 @@
      <tr>
        <td></td>
        <td>
-       <a href="reasoning.html#module-reasoning_action"><code class="xref">reasoning_action</code></a></td><td>
+       <a href="brain_modules/reasoning_action.html#module-reasoning_action"><code class="xref">reasoning_action</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="reasoning.html#module-reasoning_order_verification"><code class="xref">reasoning_order_verification</code></a></td><td>
+       <a href="interaction_modules/reasoning_order_verification.html#module-reasoning_order_verification"><code class="xref">reasoning_order_verification</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="reasoning.html#module-reasoning_speech_generation"><code class="xref">reasoning_speech_generation</code></a></td><td>
+       <a href="brain_modules/reasoning_speech_generation.html#module-reasoning_speech_generation"><code class="xref">reasoning_speech_generation</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="reasoning.html#module-reasoning_table_placement"><code class="xref">reasoning_table_placement</code></a></td><td>
+       <a href="brain_modules/reasoning_table_placement.html#module-reasoning_table_placement"><code class="xref">reasoning_table_placement</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-s"><td></td><td>
@@ -217,22 +227,22 @@
      <tr>
        <td></td>
        <td>
-       <a href="perception.html#module-sensor_fusion"><code class="xref">sensor_fusion</code></a></td><td>
+       <a href="navigation_modules/sensor_fusion.html#module-sensor_fusion"><code class="xref">sensor_fusion</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="reasoning.html#module-slam"><code class="xref">slam</code></a></td><td>
+       <a href="navigation_modules/slam.html#module-slam"><code class="xref">slam</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="perception.html#module-sonar"><code class="xref">sonar</code></a></td><td>
+       <a href="navigation_modules/sonar.html#module-sonar"><code class="xref">sonar</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="interaction.html#module-speaker"><code class="xref">speaker</code></a></td><td>
+       <a href="interaction_modules/speaker.html#module-speaker"><code class="xref">speaker</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-t"><td></td><td>
@@ -240,7 +250,7 @@
      <tr>
        <td></td>
        <td>
-       <a href="orchestration.html#module-task_manager"><code class="xref">task_manager</code></a></td><td>
+       <a href="brain_modules/task_manager.html#module-task_manager"><code class="xref">task_manager</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-v"><td></td><td>
@@ -248,7 +258,7 @@
      <tr>
        <td></td>
        <td>
-       <a href="interaction.html#module-voice_recognition"><code class="xref">voice_recognition</code></a></td><td>
+       <a href="interaction_modules/voice_recognition.html#module-voice_recognition"><code class="xref">voice_recognition</code></a></td><td>
        <em></em></td></tr>
    </table>
 

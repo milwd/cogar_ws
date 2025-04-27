@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reasoning Action &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Reasoning Table Placement" href="reasoning_table_placement.html" />
+    <link rel="prev" title="Subsystem Brain" href="../brain.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../brain.html">Subsystem Brain</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../brain.html#what-the-brain-does">What the “Brain” does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../brain.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../brain.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reasoning Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reasoning_table_placement.html">Reasoning Table Placement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_manager.html">Task Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reasoning_speech_generation.html">Reasoning Speech Generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../brain.html">Subsystem Brain</a></li>
+      <li class="breadcrumb-item active">Reasoning Action</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/brain_modules/reasoning_action.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-reasoning_action">
+<span id="reasoning-action"></span><h1>Reasoning Action<a class="headerlink" href="#module-reasoning_action" title="Link to this heading"></a></h1>
+<section id="reasoning-action-py">
+<h2>reasoning_action.py<a class="headerlink" href="#reasoning-action-py" title="Link to this heading"></a></h2>
+<section id="high-level-task-orchestrator-turns-symbolic-plans-into-concrete-actionlib-goals">
+<h3>High-level <strong>task orchestrator</strong> – turns symbolic plans into concrete ActionLib goals<a class="headerlink" href="#high-level-task-orchestrator-turns-symbolic-plans-into-concrete-actionlib-goals" title="Link to this heading"></a></h3>
+<p><cite>ReasoningAction</cite> sits at the interface between <em>planning</em> (which decides <em>what</em>
+the robot should do) and <em>execution</em> (which knows <em>how</em> to move).
+It ingests a <em>navigation path</em> plus a <em>table-level command</em> and then drives the
+three low-level ActionLib servers that move the base, position the arm and open
+/ close the gripper.  When the whole sequence finishes – or when any part fails
+– the node emits a single feedback string for downstream logging or GUI use.</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Type / semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/planned_path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code> – global or local path from the planner</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/table_reasoning_commands</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – symbolic action at table (<em>PLACE</em>, <em>CLEAR</em>, …)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>publish</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">task_feedback</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – human-readable success / failure status</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>action client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">movement_control</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/MovementControlAction</span></code> – follow the path</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>action client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">arm_control</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/ArmControlAction</span></code> – position forearm / wrist</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>action client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gripper_control</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/GripperControlAction</span></code> – grasp or release the dish</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="execution-pipeline">
+<h3>Execution pipeline<a class="headerlink" href="#execution-pipeline" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Path reception</strong> – as soon as a new <code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code> arrives, flag
+<a href="#id1"><span class="problematic" id="id2">:pyattr:`path_received`</span></a> becomes <em>True</em>.</p></li>
+<li><p><strong>Movement phase</strong> – a <cite>MovementControlGoal</cite> with the full path is sent to
+the base controller.  The node blocks until a result appears.</p></li>
+<li><p><strong>Conditional manipulation</strong> – only if the base reports <em>success</em> does the
+node dispatch the arm and gripper goals, ensuring the robot is in position
+before manipulating objects.</p></li>
+<li><p><strong>Feedback</strong> – a single sentence is published to <code class="docutils literal notranslate"><span class="pre">task_feedback</span></code> summarising
+the outcome.  UI widgets, loggers or higher-level reasoners can subscribe to
+that topic to update state machines or dashboards.</p></li>
+</ol>
+</section>
+<section id="customisation-hooks">
+<h3>Customisation hooks<a class="headerlink" href="#customisation-hooks" title="Link to this heading"></a></h3>
+<p><em>Override</em> <code class="xref py py-meth docutils literal notranslate"><span class="pre">perform_table_command()</span></code> to translate each symbolic table
+command (PLACE, CLEAR, INSPECT…) into a concrete sequence of arm / gripper
+actions.  The default implementation is a stub.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_action.</span></span><span class="sig-name descname"><span class="pre">ReasoningAction</span></span><a class="reference internal" href="../_modules/reasoning_action.html#ReasoningAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Coordinates navigation and manipulation through three ActionLib clients.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>path_received</dt><dd><p><em>True</em> as soon as a new path arrives; the flag is cleared after the
+path has been processed.</p>
+</dd>
+<dt>path_msg</dt><dd><p>Latest <code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code> received from the planner.</p>
+</dd>
+<dt>task_feedback_pub</dt><dd><p>Latched publisher used by GUIs or loggers to track high-level task
+completion.</p>
+</dd>
+<dt>movement_client / arm_client / gripper_client</dt><dd><p>Pre-connected ActionLib clients; connection is verified in
+<a class="reference internal" href="#reasoning_action.ReasoningAction.wait_for_servers" title="reasoning_action.ReasoningAction.wait_for_servers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">wait_for_servers()</span></code></a>.</p>
+</dd>
+</dl>
+<p>Bring up the node, connect to topics and block until all three action
+servers are online.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.loop">
+<span class="sig-name descname"><span class="pre">loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/reasoning_action.html#ReasoningAction.loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.loop" title="Link to this definition"></a></dt>
+<dd><p>Run a 1 Hz cycle:</p>
+<ul class="simple">
+<li><p>if a fresh path is queued, send it to the base controller and wait
+synchronously for completion;</p></li>
+<li><p>if movement succeeds, execute arm and gripper macros;</p></li>
+<li><p>publish a one-line summary on <code class="docutils literal notranslate"><span class="pre">task_feedback</span></code>.</p></li>
+</ul>
+<p>The method blocks until ROS shutdown.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.path_callback">
+<span class="sig-name descname"><span class="pre">path_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">nav_msgs.msg.Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/reasoning_action.html#ReasoningAction.path_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.path_callback" title="Link to this definition"></a></dt>
+<dd><p>Store the incoming path for deferred execution in the main loop.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.perform_table_command">
+<span class="sig-name descname"><span class="pre">perform_table_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/reasoning_action.html#ReasoningAction.perform_table_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.perform_table_command" title="Link to this definition"></a></dt>
+<dd><p>Translate <em>decision</em> into arm / gripper goals.</p>
+<p>Override this stub in subclasses to implement behaviour such as:</p>
+<ul class="simple">
+<li><p><strong>PLACE</strong> – lower arm to 3 cm above table, open gripper.</p></li>
+<li><p><strong>CLEAR</strong> – close gripper, raise arm to carry height.</p></li>
+</ul>
+<p>The default implementation does nothing so the example still compiles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.table_command_callback">
+<span class="sig-name descname"><span class="pre">table_command_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg.String</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/reasoning_action.html#ReasoningAction.table_command_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.table_command_callback" title="Link to this definition"></a></dt>
+<dd><p>Forward the symbolic command to <a class="reference internal" href="#reasoning_action.ReasoningAction.perform_table_command" title="reasoning_action.ReasoningAction.perform_table_command"><code class="xref py py-meth docutils literal notranslate"><span class="pre">perform_table_command()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.wait_for_servers">
+<span class="sig-name descname"><span class="pre">wait_for_servers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/reasoning_action.html#ReasoningAction.wait_for_servers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.wait_for_servers" title="Link to this definition"></a></dt>
+<dd><p>Poll each ActionLib server at 1 Hz until the trio is ready.  Startup
+proceeds only when base, arm <strong>and</strong> gripper controllers are up; this
+prevents goal loss at boot.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../brain.html" class="btn btn-neutral float-left" title="Subsystem Brain" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reasoning_table_placement.html" class="btn btn-neutral float-right" title="Reasoning Table Placement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

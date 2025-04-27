@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -92,16 +93,28 @@
 <span class="sd">    • *Separation of concerns* – hardware quirks are handled once in this node</span>
 <span class="sd">      instead of scattered across the codebase.</span>
 
-<span class="sd">Topic contracts</span>
-<span class="sd">---------------</span>
-<span class="sd">==========================  ================  ==================================</span>
-<span class="sd">Topic                       Type             Role</span>
-<span class="sd">--------------------------  ---------------  ----------------------------------</span>
-<span class="sd">``/camera``                 ``sensor_msgs/Image``  Raw 24-bit BGR frames</span>
-<span class="sd">``/depth``                  ``sensor_msgs/Image``  Raw depth map (any encoding)</span>
-<span class="sd">``/camera_processed``       ``sensor_msgs/Image``  Denoised / colour-corrected</span>
-<span class="sd">``/depth_processed``        ``sensor_msgs/Image``  Thresholded / hole-filled</span>
-<span class="sd">==========================  ================  ==================================</span>
+<span class="sd">ROS Topics</span>
+<span class="sd">-------</span>
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 30 25 45</span>
+
+<span class="sd">   * - Topic</span>
+<span class="sd">     - Type</span>
+<span class="sd">     - Role</span>
+<span class="sd">   * - ``/camera``</span>
+<span class="sd">     - ``sensor_msgs/Image``</span>
+<span class="sd">     - Raw 24-bit BGR frames</span>
+<span class="sd">   * - ``/depth``</span>
+<span class="sd">     - ``sensor_msgs/Image``</span>
+<span class="sd">     - Raw depth map (any encoding)</span>
+<span class="sd">   * - ``/camera_processed``</span>
+<span class="sd">     - ``sensor_msgs/Image``</span>
+<span class="sd">     - Denoised / colour-corrected RGB</span>
+<span class="sd">   * - ``/depth_processed``</span>
+<span class="sd">     - ``sensor_msgs/Image``</span>
+<span class="sd">     - Thresholded / hole-filled depth</span>
+
 
 <span class="sd">All processed messages retain the **original header stamps** so that time-based</span>
 <span class="sd">synchronisation in later stages remains intact.</span>
@@ -121,10 +134,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cv_bridge</span><span class="w"> </span><span class="kn">import</span> <span class="n">CvBridge</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="CameraPreprocessing">
-<a class="viewcode-back" href="../perception.html#camera_preprocessing.CameraPreprocessing">[docs]</a>
+<a class="viewcode-back" href="../vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">CameraPreprocessing</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform in-place enhancement of RGB and depth streams.</span>
@@ -144,31 +158,24 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register the node, wire the pubs/subs and leave the callbacks running.</span>
 
 <span class="sd">        No explicit main loop is necessary; ``rospy.spin()`` in *main* keeps the</span>
 <span class="sd">        process alive and dispatches incoming messages to the callbacks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;camera_preprocessing_node&#39;</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_camera_preprocessing_node&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span> <span class="o">=</span> <span class="n">CvBridge</span><span class="p">()</span>
 
-        <span class="c1"># ---------- Subscriptions -------------------------------------------</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rgb_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-            <span class="s2">&quot;/camera&quot;</span><span class="p">,</span>
-            <span class="n">Image</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rgb_callback</span><span class="p">,</span>
-            <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">buff_size</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">22</span><span class="p">,</span>          <span class="c1"># ~4 MiB buffer for 640×480×3 images</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgb_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/camera&quot;</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgb_callback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/depth&quot;</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth_callback</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">depth_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-            <span class="s2">&quot;/depth&quot;</span><span class="p">,</span>
-            <span class="n">Image</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">depth_callback</span><span class="p">,</span>
-            <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">buff_size</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">22</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgb_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/camera_processed&quot;</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/depth_processed&quot;</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
 
         <span class="c1"># ---------- Publications -------------------------------------------</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rgb_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
@@ -180,7 +187,7 @@
     <span class="c1"># Callbacks                                                             #</span>
     <span class="c1"># --------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="CameraPreprocessing.rgb_callback">
-<a class="viewcode-back" href="../perception.html#camera_preprocessing.CameraPreprocessing.rgb_callback">[docs]</a>
+<a class="viewcode-back" href="../vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing.rgb_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rgb_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Denoise and forward an RGB frame.</span>
@@ -215,7 +222,7 @@
 
 
 <div class="viewcode-block" id="CameraPreprocessing.depth_callback">
-<a class="viewcode-back" href="../perception.html#camera_preprocessing.CameraPreprocessing.depth_callback">[docs]</a>
+<a class="viewcode-back" href="../vision_modules/camera_preprocessing.html#camera_preprocessing.CameraPreprocessing.depth_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">depth_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clean up a depth map and re-emit it.</span>

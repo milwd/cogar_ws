@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -130,11 +131,13 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Voice_rec</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">robotstatedecision</span><span class="p">,</span> <span class="n">robotstatedecisionRequest</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="TaskManager">
-<a class="viewcode-back" href="../orchestration.html#task_manager.TaskManager">[docs]</a>
+<a class="viewcode-back" href="../brain_modules/task_manager.html#task_manager.TaskManager">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TaskManager</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Aggregates feedback and relays it to the orchestration service.</span>
@@ -150,58 +153,98 @@
 <span class="sd">        for future extensions such as *order context* in the service call).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                            bootstrap                                #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;task_manager_node&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the TaskManager node.</span>
 
-        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;/robot_state_decision&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;/robot_state_decision&#39;</span><span class="p">,</span>
-                                                <span class="n">robotstatedecision</span><span class="p">)</span>
+<span class="sd">        - Initialize ROS node &#39;task_manager_node&#39;.</span>
+<span class="sd">        - Wait for the &#39;/robot_state_decision&#39; service to become available.</span>
+<span class="sd">        - Create a ServiceProxy to &#39;/robot_state_decision&#39;.</span>
+<span class="sd">        - Subscribe to &#39;/feedback_acion&#39; for state feedback.</span>
+<span class="sd">        - Subscribe to &#39;/verif_T_manager&#39; for verified orders.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Now using argument for robot number</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_task_manager_node&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Wait for service to be ready</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/robot_state_decision&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/robot_state_decision&#39;</span><span class="p">,</span> <span class="n">robotstatedecision</span><span class="p">)</span>
+
+        <span class="c1"># Subscriber and Publisher</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/feedback_acion&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feed_callback_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialogue_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/speaker_channel&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Internal state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_input</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">] Node initialized and ready.&quot;</span><span class="p">)</span>
 
         <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/feedback_acion&quot;</span><span class="p">,</span>
                          <span class="n">String</span><span class="p">,</span>
                          <span class="bp">self</span><span class="o">.</span><span class="n">_cb_feedback</span><span class="p">,</span>
                          <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : std_msgs.msg.String</span>
+<span class="sd">            Message on &#39;/feedback_acion&#39; containing the current robot state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">] Received feedback: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_input</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>  <span class="c1"># Just keep the string (not the full msg)</span>
 
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/verif_T_manager&quot;</span><span class="p">,</span>
-                         <span class="n">String</span><span class="p">,</span>         <span class="c1"># Voice_rec would be better; keep as-is</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">_cb_order</span><span class="p">,</span>
-                         <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">order_msg</span><span class="p">:</span> <span class="n">String</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[TaskManager] Node ready.&quot;</span><span class="p">)</span>
-
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                       subscriber callbacks                          #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_cb_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the new state string and immediately trigger a decision.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">change_state</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_cb_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remember the latest verified order (placeholder for future use).&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">order_msg</span> <span class="o">=</span> <span class="n">msg</span>
-
-    <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                      interaction with service                       #</span>
-    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="TaskManager.change_state">
-<a class="viewcode-back" href="../orchestration.html#task_manager.TaskManager.change_state">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">change_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;If :pyattr:`state` is set, call the decision service once.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
+<a class="viewcode-back" href="../brain_modules/task_manager.html#task_manager.TaskManager.change_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trigger a state-based service request using the latest state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_request</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TaskManager.send_request">
+<a class="viewcode-back" href="../brain_modules/task_manager.html#task_manager.TaskManager.send_request">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call the &#39;/robot_state_decision&#39; service with the current state.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        rospy.ServiceException</span>
+<span class="sd">            If the service call fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">req</span> <span class="o">=</span> <span class="n">robotstatedecisionRequest</span><span class="p">(</span><span class="n">state_input</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager] Decision → </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">next_task</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager] Service call failed: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">robotstatedecisionRequest</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">state_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_input</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">robot_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">] Sending request with state: </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">state_input</span><span class="si">}</span><span class="s2"> and robot_id: </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">robot_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">] Received None response from service.&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">] Server response: success=</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">success</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Prepare message depending on the server response</span>
+            <span class="n">mss</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">state_output</span> <span class="o">==</span> <span class="s2">&quot;Busy&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">order</span><span class="p">:</span>  <span class="c1"># Empty order</span>
+                    <span class="n">mss</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;Order obtained before, am busy getting to it!&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">mss</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;I will get to </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">id_client</span><span class="si">}</span><span class="s2">, whose order is </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">order</span><span class="si">}</span><span class="s2">.&quot;</span>
+
+            <span class="k">elif</span> <span class="n">response</span><span class="o">.</span><span class="n">state_output</span> <span class="o">==</span> <span class="s2">&quot;Wait&quot;</span><span class="p">:</span>
+                <span class="n">mss</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;ok I will Wait, probably I&#39;ve got better things to do.&quot;</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mss</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Received unknown state output: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">state_output</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialogue_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">mss</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">] Published dialogue message: </span><span class="si">{</span><span class="n">mss</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">] Service call failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 </div>
 
 
@@ -211,8 +254,11 @@
 <span class="c1"># ---------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">TaskManager</span><span class="p">()</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>            <span class="c1"># callbacks drive everything</span>
+        <span class="n">task_manager</span> <span class="o">=</span> <span class="n">TaskManager</span><span class="p">()</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># 0.5 Hz (every 2 seconds)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+            <span class="n">task_manager</span><span class="o">.</span><span class="n">change_state</span><span class="p">()</span>
+            <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
         <span class="k">pass</span>
 </pre></div>

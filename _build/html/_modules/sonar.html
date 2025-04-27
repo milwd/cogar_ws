@@ -42,11 +42,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
 </ul>
 
         </div>
@@ -77,10 +78,10 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">sonar.py</span>
-<span class="sd">========</span>
+<span class="sd">=========</span>
 
 <span class="sd">Synthetic **ultrasound range-finder** for quick sensor-fusion prototyping</span>
-<span class="sd">------------------------------------------------------------------------</span>
+<span class="sd">-------------------------------------------------------------------------</span>
 
 <span class="sd">This node mimics a 1-D sonar module by broadcasting a constant</span>
 <span class="sd">:pyclass:`sensor_msgs.msg.Range` message.  Navigation, fusion and obstacle</span>
@@ -109,11 +110,12 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Range</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="publish">
-<a class="viewcode-back" href="../perception.html#sonar.publish">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">publish</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a class="viewcode-back" href="../navigation_modules/sonar.html#sonar.publish">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">publish</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Spawn the node and stream **Range** messages until ROS shuts down.</span>
 
@@ -133,36 +135,23 @@
 <span class="sd">       e. Stores the constant distance *3 m* in :pyattr:`~sensor_msgs.msg.Range.range`.  </span>
 <span class="sd">       f. Publishes the message.  </span>
 <span class="sd">       g. Sleeps the remaining time to keep the period at 100 ms.</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    * Replace the single constant with a random value or scripted profile to</span>
-<span class="sd">      create more realistic test stimuli.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/sonar&quot;</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;sonar_node&quot;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_sonar_node&#39;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/sonar&#39;</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
 
-    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 10 Hz → 100 ms period</span>
-
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-        <span class="n">sonar</span> <span class="o">=</span> <span class="n">Range</span><span class="p">()</span>
-
-        <span class="c1"># ---------- Header --------------------------------------------------</span>
-        <span class="n">sonar</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-        <span class="n">sonar</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;sonar&quot;</span>
-
-        <span class="c1"># ---------- Sensor metadata ----------------------------------------</span>
-        <span class="n">sonar</span><span class="o">.</span><span class="n">radiation_type</span> <span class="o">=</span> <span class="n">Range</span><span class="o">.</span><span class="n">ULTRASOUND</span>
-        <span class="n">sonar</span><span class="o">.</span><span class="n">field_of_view</span> <span class="o">=</span> <span class="mf">0.1</span>           <span class="c1"># rad</span>
-        <span class="n">sonar</span><span class="o">.</span><span class="n">min_range</span> <span class="o">=</span> <span class="mf">0.2</span>               <span class="c1"># m</span>
-        <span class="n">sonar</span><span class="o">.</span><span class="n">max_range</span> <span class="o">=</span> <span class="mf">4.0</span>               <span class="c1"># m</span>
-
-        <span class="c1"># ---------- Measurement --------------------------------------------</span>
-        <span class="n">sonar</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="mf">3.0</span>                   <span class="c1"># m (synthetic reading)</span>
-
-        <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">sonar</span><span class="p">)</span>
-        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
-
+    <span class="c1"># rate = rospy.Rate(10)  # 10hz</span>
+    <span class="c1"># while not rospy.is_shutdown():</span>
+    <span class="c1">#     sonar = Range()</span>
+    <span class="c1">#     sonar.header.stamp = rospy.Time.now()</span>
+    <span class="c1">#     sonar.header.frame_id = &quot;sonar&quot;</span>
+    <span class="c1">#     sonar.radiation_type = Range.ULTRASOUND</span>
+    <span class="c1">#     sonar.field_of_view = 0.1</span>
+    <span class="c1">#     sonar.min_range = 0.2</span>
+    <span class="c1">#     sonar.max_range = 4.0</span>
+    <span class="c1">#     sonar.range = 3.0</span>
+    <span class="c1">#     pub.publish(sonar)</span>
+    <span class="c1">#     rate.sleep()</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Reasoning Speech Generation" href="reasoning_speech_generation.html" />
+    <link rel="prev" title="Reasoning Table Placement" href="reasoning_table_placement.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../brain.html">Subsystem Brain</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../brain.html#what-the-brain-does">What the “Brain” does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../brain.html#ros-interfaces-kpis">ROS interfaces &amp; KPIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../brain.html#implementation-modules">Implementation modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="reasoning_action.html">Reasoning Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reasoning_table_placement.html">Reasoning Table Placement</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Task Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reasoning_speech_generation.html">Reasoning Speech Generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../brain.html">Subsystem Brain</a></li>
+      <li class="breadcrumb-item active">Task Manager</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/brain_modules/task_manager.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-task_manager">
+<span id="task-manager"></span><h1>Task Manager<a class="headerlink" href="#module-task_manager" title="Link to this heading"></a></h1>
+<section id="task-manager-py">
+<h2>task_manager.py<a class="headerlink" href="#task-manager-py" title="Link to this heading"></a></h2>
+<section id="central-state-orchestrator-queries-the-decision-service-and-drives-the-task-loop">
+<h3>Central <strong>state orchestrator</strong> – queries the decision service and drives the task loop<a class="headerlink" href="#central-state-orchestrator-queries-the-decision-service-and-drives-the-task-loop" title="Link to this heading"></a></h3>
+<p><cite>TaskManager</cite> listens to two event streams:</p>
+<ol class="arabic simple">
+<li><p><strong>Action feedback</strong> (<code class="docutils literal notranslate"><span class="pre">/feedback_acion</span></code>) – one-line summaries published by
+the low-level controllers (navigation finished, manipulation failed …).</p></li>
+<li><p><strong>Verified orders</strong> (<code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code>) – customer requests already
+checked by the order-verification node.</p></li>
+</ol>
+<p>Every time a new feedback line arrives the manager calls the
+<code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code> service, handing over the current <em>state string</em>.
+The service replies with the next action the robot should perform, enabling a
+clean separation between <em>decision logic</em> (in the service) and <em>event
+aggregation</em> (in this node).</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>subscribe</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/feedback_acion</span></code></p></td>
+<td><p>Latest controller status (e.g. <em>“ARM_DONE”</em> or <em>“BASE_FAILED”</em>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>subscribe</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/Voice_rec</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code></p></td>
+<td><p>Structured customer order; stored but <strong>not</strong> sent to the service yet</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>service client</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/robotstatedecision</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code></p></td>
+<td><p>Request → <strong>state_input</strong> (string)
+Response ← next symbolic task / acknowledgement</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="execution-loop">
+<h3>Execution loop<a class="headerlink" href="#execution-loop" title="Link to this heading"></a></h3>
+<p><em>On every feedback update</em></p>
+<ol class="arabic simple">
+<li><p>Cache the new state string.</p></li>
+<li><p>Call the decision service with that state.</p></li>
+<li><p>Log the returned instruction (no further dispatching in this stub).</p></li>
+</ol>
+<p>Extend <code class="xref py py-meth docutils literal notranslate"><span class="pre">change_state()</span></code> if you want to forward the decision to other
+nodes or to trigger timers / retries.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="task_manager.TaskManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">task_manager.</span></span><span class="sig-name descname"><span class="pre">TaskManager</span></span><a class="reference internal" href="../_modules/task_manager.html#TaskManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task_manager.TaskManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Aggregates feedback and relays it to the orchestration service.</p>
+<section id="instance-variables">
+<h2>Instance Variables<a class="headerlink" href="#instance-variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>server_client</dt><dd><p><a href="#id1"><span class="problematic" id="id2">:pyclass:`rospy.ServiceProxy`</span></a> for <code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code>.</p>
+</dd>
+<dt>state</dt><dd><p>Last status string received from <code class="docutils literal notranslate"><span class="pre">/feedback_acion</span></code>.</p>
+</dd>
+<dt>order_msg</dt><dd><p>Cached message from <code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code> (currently unused, but kept
+for future extensions such as <em>order context</em> in the service call).</p>
+</dd>
+</dl>
+<p>Initialize the TaskManager node.</p>
+<ul class="simple">
+<li><p>Initialize ROS node ‘task_manager_node’.</p></li>
+<li><p>Wait for the ‘/robot_state_decision’ service to become available.</p></li>
+<li><p>Create a ServiceProxy to ‘/robot_state_decision’.</p></li>
+<li><p>Subscribe to ‘/feedback_acion’ for state feedback.</p></li>
+<li><p>Subscribe to ‘/verif_T_manager’ for verified orders.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="task_manager.TaskManager.change_state">
+<span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/task_manager.html#TaskManager.change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task_manager.TaskManager.change_state" title="Link to this definition"></a></dt>
+<dd><p>Trigger a state-based service request using the latest state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="task_manager.TaskManager.send_request">
+<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/task_manager.html#TaskManager.send_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task_manager.TaskManager.send_request" title="Link to this definition"></a></dt>
+<dd><p>Call the ‘/robot_state_decision’ service with the current state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rospy.ServiceException</strong> – If the service call fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="reasoning_table_placement.html" class="btn btn-neutral float-left" title="Reasoning Table Placement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reasoning_speech_generation.html" class="btn btn-neutral float-right" title="Reasoning Speech Generation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

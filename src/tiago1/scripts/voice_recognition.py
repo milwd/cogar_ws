@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
 voice_recognition.py
-====================
+=====================
 
 Audio-to-text **stub** – turns a numeric microphone channel into canned sentences
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
 
 Real ASR engines are heavyweight and sometimes unavailable (e.g. on CI).  
 This node fakes the pipeline by translating an *integer* published on
