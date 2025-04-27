@@ -22,6 +22,11 @@ Reasoning & Planning Components
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: reasoning_speech_generation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: slam
    :members:
    :undoc-members:

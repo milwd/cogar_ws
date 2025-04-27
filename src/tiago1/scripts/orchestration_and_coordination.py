@@ -1,20 +1,71 @@
 #!/usr/bin/env python
 """
 orchestration_and_coordination.py
+=================================
 
-ROS node for order orchestration and coordination in the sushi restaurant.
-Offers two services:
- - /robot_state_decision: returns the next order and robot state based on current input state.
- - /robot_state_decision_add: adds a new order to the pending orders list.
+**Order queue + state gateway** for a fleet of sushi-waiter robots
+------------------------------------------------------------------
 
-Loads and saves orders to a YAML file alongside the node.
+The node owns a *persistent* FIFO of customer orders and exposes two ROS
+services:
+
+* ``/robot_state_decision`` – given the current **state** of a robot
+  (``Free``, ``Busy``, ``Wait`` …) it returns the **next task** and updates the
+  state machine.
+* ``/robot_state_decision_add`` – appends a freshly verified customer order to
+  the queue.
+
+All orders survive restarts thanks to a YAML file on disk.
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 25 35 40
+
+   * - Type
+     - Name
+     - Semantics
+   * - **service** ``tiago1/robotstatedecision``
+     - ``/robot_state_decision``
+     - Input  → **state_input** (str)  
+       Output → **state_output** (str), **order** (string list), **success** (bool)
+   * - **service** ``tiago1/send_order``
+     - ``/robot_state_decision_add``
+     - Input  → **order.id_client**, **order.list_of_orders**  
+       Output → **message** (“order added”)
+
+Persistent storage
+------------------
+Orders are stored in *tiago_data.yaml* next to this script::
+
+   orders:
+     - id_client: 7
+       food_list: ['sushi', 'pasta']
+     - id_client: 9
+       food_list: ['ramen']
+
+The file is loaded on every service call so multiple orchestrators (or manual
+edits) stay in sync.
+
+Decision rules
+--------------
+#. If the queue is **empty** → return ``state_output = "Wait"`` and
+   ``success = False``.  
+#. If *state_input* is ``Free`` or ``Wait`` and **an order exists** → pop the
+   first order, return it with ``state_output = "Busy"`` and
+   ``success = True``.  
+#. Otherwise echo the original state and set ``success = False``.
+
 """
 
-import rospy
-import yaml
 import os
-from tiago1.srv import robotstatedecision, robotstatedecisionResponse
-from tiago1.srv import send_order, send_orderResponse
+import yaml
+import rospy
+from tiago1.srv import (
+    robotstatedecision, robotstatedecisionResponse,
+    send_order,         send_orderResponse,
+)
 
 # -- State Machine Base Classes --
 
@@ -50,12 +101,10 @@ class BusyState(State):
         context.set_state(robot_id, FreeState())
         return robotstatedecisionResponse(state_output="Busy", id_client=None, order=[], success=True)
 
-# -- Orchestration Node --
 
 class orchestration_and_coordination:
     """
-    Manages order queue and robot state transitions via ROS services.
-
+    Persistent order queue + state-transition helper.
     Variables
     ----------
     yaml_path : str
@@ -107,16 +156,11 @@ class orchestration_and_coordination:
         rospy.loginfo(f"Transitioning to state: {state.__class__.__name__}")
         self.robot_states[robot_id] = state
 
-    def load_data(self):
-        """
-        Load pending orders from the YAML file into memory.
-        Creates an empty structure if the file does not exist.
-
-        Raises
-        ------
-        IOError
-            If the YAML file exists but cannot be read.
-        """
+    # ------------------------------------------------------------------ #
+    #                        YAML persistence                             #
+    # ------------------------------------------------------------------ #
+    def load_data(self) -> None:
+        """Load the order list from disk (creates an empty one if missing)."""
         if os.path.exists(self.yaml_path):
             with open(self.yaml_path, 'r') as file:
                 self.data = yaml.safe_load(file) or {"orders": []}
@@ -125,23 +169,17 @@ class orchestration_and_coordination:
             with open(self.yaml_path, 'w') as file:
                 yaml.dump(self.data, file)
 
-    def save_data(self):
-        """
-        Persist the current in-memory orders list to the YAML file.
-        Overwrites the existing file.
-        """
-        with open(self.yaml_path, 'w') as file:
-            yaml.dump(self.data, file)
+    def save_data(self) -> None:
+        """Write :pyattr:`data` back to *tiago_data.yaml*."""
+        with open(self.yaml_path, "w", encoding="utf-8") as f:
+            yaml.dump(self.data, f)
 
-    def obtain_order(self):
+    # ------------------------------------------------------------------ #
+    #                        queue operations                             #
+    # ------------------------------------------------------------------ #
+    def obtain_order(self) -> dict | None:
         """
-        Pop the first pending order from the queue.
-
-        Returns
-        -------
-        dict or None
-            The order dictionary with keys 'id_client' and 'food_list',
-            or None if no orders are pending.
+        Pop and return the *oldest* order, or *None* if the queue is empty.
         """
         self.load_data()
         if self.data["orders"]:
@@ -155,8 +193,6 @@ class orchestration_and_coordination:
 
     def handle_request(self, req):
         """
-        Service callback for '/robot_state_decision'.
-
         Parameters
         ----------
         req : tiago1.srv.robotstatedecisionRequest
@@ -172,35 +208,25 @@ class orchestration_and_coordination:
         robot_id = req.robot_id
         return self.robot_states[robot_id].handle(self, req)
 
-    def handle_request_new_order(self, req):
-        """
-        Service callback for '/robot_state_decision_add'.
 
-        Parameters
-        ----------
-        req : tiago1.srv.send_orderRequest
-            Incoming request containing 'order' with fields 'id_client' and 'list_of_orders'.
-
-        Returns
-        -------
-        send_orderResponse
-            - message: confirmation string ("order added").
-        """
+    def handle_request_new_order(self, req: send_order.Request
+                                 ) -> send_orderResponse:
+        """Append a new order sent by the order-verification node."""
         new_order = {
             "id_client": req.order.id_client,
-            "food_list": list(req.order.list_of_orders)
+            "food_list": list(req.order.list_of_orders),
         }
         self.load_data()
         self.data["orders"].append(new_order)
         self.save_data()
-
         rospy.loginfo(f"Added new order to YAML: {new_order}")
         return send_orderResponse(message="Order successfully added")
 
+
+# ---------------------------------------------------------------------- #
+#                               bootstrap                                #
+# ---------------------------------------------------------------------- #
 if __name__ == "__main__":
-    """
-    Main entrypoint: instantiate the orchestration node and spin.
-    """
     try:
         orchestration_and_coordination()
         rospy.spin()

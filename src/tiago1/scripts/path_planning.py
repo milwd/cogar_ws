@@ -1,9 +1,34 @@
 #!/usr/bin/env python
 """
 path_planning.py
+================
 
-ROS node for simple path planning. Subscribes to a map and odometry, generates a
-dummy single‐waypoint path, and publishes it on '/planned_path' at 1 Hz.
+Skeleton **Path-planning** node — generates a *single dummy waypoint* so that
+navigation stacks downstream (local planners, controllers, visualisers) have
+something to chew on while the *real* global planner is under development.
+
+
+Topic interface
+---------------
+
+**Subscribes**
+
+* ``/map``  (``nav_msgs/OccupancyGrid``) – static or SLAM‐generated map.
+* ``/odom`` (``nav_msgs/Odometry``) – robot pose in the map frame.
+
+**Publishes**
+
+* ``/planned_path`` (``nav_msgs/Path``) – single-waypoint global plan, updated at 1 Hz.
+
+
+Assumptions
+--------------------------
+* The map frame is identical to the odometry frame (no TF transform applied).
+* Goal is hard-coded at **(1.0 m, 1.0 m)** in the map frame.
+* Orientation is left at its default (all zeros → identity quaternion).
+* Only **one** waypoint is produced; real planners would push a sequence.
+
+
 """
 
 import rospy
@@ -11,28 +36,34 @@ from nav_msgs.msg import Path, OccupancyGrid, Odometry
 from geometry_msgs.msg import PoseStamped
 import sys
 
+
 class PathPlanner:
     """
-    Plans and publishes a navigation path based on the latest map and odometry.
+    Lightweight wrapper around two subscribers and one publisher.
 
-    Attributes
+    Variables
     ----------
     map : nav_msgs.msg.OccupancyGrid or None
-        Most recently received occupancy grid map.
+        Latest occupancy grid; stored *verbatim* until needed.
     odom : nav_msgs.msg.Odometry or None
-        Most recently received robot odometry.
+        Latest robot pose; used to demonstrate dependency on localisation.
     path_pub : rospy.Publisher
-        Publishes generated Path messages on '/planned_path'.
+        Advertises ``/planned_path``; queue size 1 is fine at 1 Hz.
     """
 
+    # --------------------------------------------------------------------- #
+    #                               SETUP                                   #
+    # --------------------------------------------------------------------- #
     def __init__(self):
         """
-        Initialize the PathPlanner node.
+        Register the node and hook up I/O.
 
-        - Initialize ROS node 'path_planning_node'.
-        - Subscribe to '/map' for OccupancyGrid messages.
-        - Subscribe to '/odom' for Odometry messages.
-        - Advertise '/planned_path' for Path messages.
+        Steps
+        -----
+        1. Initialise ROS with the node name *path_planning_node*.
+        2. Subscribe to the global map (``/map``) and robot odometry (``/odom``).
+        3. Create a latched publisher for ``/planned_path`` so that late-joining
+           nodes immediately receive the most recent Path.
         """
         self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
         rospy.init_node(f'{self.robot_number}_path_planning_node')
@@ -45,69 +76,73 @@ class PathPlanner:
 
         self.path_pub = rospy.Publisher(f'/{self.robot_number}/planned_path', Path, queue_size=1)
 
+    # --------------------------------------------------------------------- #
+    #                             CALLBACKS                                 #
+    # --------------------------------------------------------------------- #
     def map_callback(self, msg):
-        """
-        Callback for receiving the map.
-
-        Parameters
-        ----------
-        msg : nav_msgs.msg.OccupancyGrid
-            The occupancy grid of the environment.
-        """
+        """Store the latest occupancy grid for later use."""
         self.map = msg
 
     def odom_callback(self, msg):
-        """
-        Callback for receiving robot odometry.
-
-        Parameters
-        ----------
-        msg : nav_msgs.msg.Odometry
-            The current robot pose and twist.
-        """
+        """Store the latest odometry message."""
         self.odom = msg
 
+    # --------------------------------------------------------------------- #
+    #                       PATH-GENERATION LOGIC                           #
+    # --------------------------------------------------------------------- #
     def plan_path(self):
         """
-        Generate and publish a dummy path if map and odometry are available.
+        Publish a *one-step* global plan when prerequisites are met.
 
-        Process
-        -------
-        1. Check that both self.map and self.odom are not None.
-        2. Construct a Path message with a single PoseStamped waypoint at (1.0, 1.0).
-        3. Log the action and publish the Path on '/planned_path'.
+        Preconditions
+        -------------
+        • ``self.map``           is not *None*  
+        • ``self.odom``          is not *None*
+
+        Behaviour
+        ---------
+        * Construct :class:`nav_msgs.msg.Path` stamped in the **map frame**.
+        * Append a single :class:`geometry_msgs.msg.PoseStamped` at *(1 m, 1 m)*.
+        * Publish and log at INFO level (runs every second).
         """
-        if self.map and self.odom:
-            path = Path()
-            path.header.stamp = rospy.Time.now()
-            path.header.frame_id = self.map.header.frame_id
+        if not (self.map and self.odom):
+            return  # Wait until both pieces of data arrive
 
-            pose = PoseStamped()
-            pose.header.stamp = rospy.Time.now()
-            pose.header.frame_id = self.map.header.frame_id
-            pose.pose.position.x = 1.0  # dummy goal X
-            pose.pose.position.y = 1.0  # dummy goal Y
+        # ---------- build Path message ----------------------------------- #
+        path = Path()
+        path.header.stamp = rospy.Time.now()
+        path.header.frame_id = self.map.header.frame_id  # keep frames aligned
 
-            path.poses.append(pose)
+        # Dummy goal pose -------------------------------------------------- #
+        pose = PoseStamped()
+        pose.header.stamp = path.header.stamp
+        pose.header.frame_id = path.header.frame_id
+        pose.pose.position.x = 1.0
+        pose.pose.position.y = 1.0
+        # Orientation left at default (identity)
 
-            rospy.loginfo("[PathPlanner] Publishing path to '/planned_path'.")
-            self.path_pub.publish(path)
+        path.poses.append(pose)
 
+        # Publish once per call (1 Hz from main loop)
+        self.path_pub.publish(path)
+        rospy.loginfo_throttle(30, "[PathPlanner] Published dummy path.")
+
+    # --------------------------------------------------------------------- #
+    #                               MAIN LOOP                               #
+    # --------------------------------------------------------------------- #
     def loop(self):
-        """
-        Main loop: call plan_path() at 1 Hz until shutdown.
-        """
+        """Invoke :py:meth:`plan_path` at **1 Hz** until ROS shutdown."""
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             self.plan_path()
             rate.sleep()
 
-if __name__ == '__main__':
-    """
-    Main entrypoint: instantiate PathPlanner and enter its loop.
-    """
+
+# ------------------------------------------------------------------------- #
+#                               ENTRY POINT                                 #
+# ------------------------------------------------------------------------- #
+if __name__ == "__main__":
     try:
-        planner = PathPlanner()
-        planner.loop()
+        PathPlanner().loop()
     except rospy.ROSInterruptException:
         pass

@@ -1,45 +1,94 @@
 #! /usr/bin/env python
 """
 reasoning_order_verification.py
+===============================
 
-ROS node that verifies voice-recognized orders against a predefined menu.
-Subscribes to '/voice_recogn' for voice commands, parses phrases like
-"Can I have <dish>", matches against valid dishes, publishes verified orders
-to '/verif_T_manager', notifies errors on '/error_from_interaction', and
-forwards orders via the '/robot_state_decision_add' service.
+Natural–language **order gatekeeper** between speech recognition
+and the orchestration layer
+----------------------------------------------------------------
+
+When a customer speaks, the voice-recognition pipeline converts the sentence
+into plain text and publishes it on ``/voice_recogn``.  This node checks that
+the sentence **1) actually requests something** and **2) mentions a dish that
+exists**, then forwards the structured order to the task-manager while
+reporting any problems on a dedicated error channel.
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 20 25 55
+
+   * - Direction
+     - Name
+     - Type / semantics
+   * - **subscribe**
+     - ``/voice_recogn``
+     - ``std_msgs/String`` – raw text captured by ASR
+   * - **publish**
+     - ``/verif_T_manager``
+     - ``tiago1/Voice_rec`` – validated order, ready for planning
+   * - **publish**
+     - ``/error_from_interaction``
+     - ``std_msgs/Int32`` – 1 = unknown dish, 2 = missing *“Can I have”*
+   * - **service client**
+     - ``/robot_state_decision_add``
+     - ``tiago1/send_order`` – push the order into the orchestration FIFO
+
+Validation policy
+-----------------
+#. **Syntax guard** – the sentence *must* contain the polite request  
+   fragment *“Can I have”*.  Anything else is ignored to prevent false
+   triggers such as background chatter.  
+#. **Menu match** – at least one entry from *food_list* must appear in the
+   remainder of the sentence.  The match is *substring-based* and therefore
+   case-sensitive; tailor *food_list* accordingly (e.g. use lowercase if your
+   ASR outputs lowercase).  
+#. **Multi-dish support** – if the customer orders several items in one
+   breath (“Can I have **sushi** and **pasta** please”), all matches are packed
+   into a single ``Voice_rec`` message so that the kitchen receives a single
+   ticket.
+
+Error codes
+-----------
+* **1** – no recognised dish in the sentence  
+* **2** – polite request fragment not found
+
+Both errors are *recoverable*: the waiter robot simply prompts the customer to
+repeat or rephrase the order.
+
 """
 
 import rospy
 from std_msgs.msg import String, Int32
 from tiago1.msg import Voice_rec
-<<<<<<< HEAD
-
 from tiago1.srv import send_order,send_orderRequest
 import sys
 
 
+
 class ReasoningOrderVerification:
     """
-    Verifies voice orders and interacts with the orchestration service.
+    Parse spoken orders, validate them, publish structured messages and
+    interact with the orchestration queue.
+    Variables
+    ----------
+    server_robots : int
+        Numerical identifier for the target orchestration queue (kept for
+        future use – the current implementation always contacts the same
+        service).
+    food_list : list[str]
+        Canonical dish names; matching is **substring-based** and therefore
+        case-sensitive.
 
     Variables
     ----------
-    server : int
-        Identifier for the orchestration service (placeholder).
-    food_list : list of str
-        Valid dish names to recognize in voice commands.
-    msg : std_msgs.msg.String or None
-        Last received voice recognition message.
-    server_client : rospy.ServiceProxy
-        Client proxy for the '/robot_state_decision_add' send_order service.
-    error_notification : rospy.Publisher
-        Publishes error codes (Int32) on '/error_from_interaction'.
-    verific_taskmanager : rospy.Publisher
-        Publishes verified orders (Voice_rec) on '/verif_T_manager'.
+    msg : std_msgs.msg.String | None
+        Buffer holding the most recent sentence received from the ASR.
     counter_id : int
-        Unique identifier counter for each order.
+        Auto-incrementing ticket number attached to every successful order.
     error_code : int
-        Last error code: 0=no error, 1=no dish found, 2=missing request phrase.
+        Last error reported (0 = no error).
     """
     def __init__(self, server_robots,food_list):
         """
@@ -81,19 +130,8 @@ class ReasoningOrderVerification:
             
     def parse_order(self):
         """
-        Parse and verify the latest voice command, then publish or report errors.
-
-        Process
-        -------
-        1. Log the received message.
-        2. Check that self.msg contains "Can I have".
-        3. Extract valid dishes from self.food_list present in the message.
-        4. If dishes found:
-           a. Create a Voice_rec order with id_client and list_of_orders.
-           b. Publish on '/verif_T_manager' and increment counter_id.
-        5. If no dishes found or phrase missing:
-           a. Set error_code (1=no dish, 2=missing phrase), publish on '/error_from_interaction'.
-           b. Reset error_code to 0.
+        Inspect :pyattr:`self.msg`; if valid, publish a ``Voice_rec`` order and
+        forward it to the orchestration queue.  Otherwise emit an error code.
         """
         # rospy.loginfo(f"Received voice message: {self.msg}")
         if self.msg is not None and self.msg != '':
@@ -122,23 +160,60 @@ class ReasoningOrderVerification:
 
                 self.error_code = 0
 
-    def send_request(self, order):
-        """
-        Send a verified order to the orchestration service.
+        sentence = self.msg.data
+        self.msg = None  # mark as consumed
 
-        Parameters
-        ----------
-        order : tiago1.msg.Voice_rec
-            Order message containing id_client and list_of_orders fields.
+        # ---------- rule 1: polite request present? ----------------------- #
+        if "Can I have" not in sentence:
+            self._raise_error(2, "Missing polite request fragment.")
+            return
+
+        # ---------- rule 2: at least one valid dish? ---------------------- #
+        found_items = [dish for dish in self.food_list if dish in sentence]
+        if not found_items:
+            self._raise_error(1, "No known dish mentioned.")
+            return
+
+        # ---------- build & publish structured order ---------------------- #
+        order = Voice_rec()
+        order.id_client = self.counter_id
+        order.list_of_orders.extend(found_items)
+
+        self.verific_taskmanager.publish(order)
+        rospy.loginfo(f"[OrderVerifier] Order accepted → {order}")
+
+        # Optional: push directly to orchestration queue
+        self.send_request(order)
+
+        self.counter_id += 1
+
+    # --------------------------------------------------------------------- #
+    #                              helpers                                  #
+    # --------------------------------------------------------------------- #
+    def _raise_error(self, code: int, log_msg: str) -> None:
+        """Publish *code* to ``/error_from_interaction`` and log a warning."""
+        self.error_notification.publish(code)
+        rospy.logwarn(f"[OrderVerifier] {log_msg} (code {code})")
+
+    def send_request(self, order: Voice_rec) -> None:
+        """
+        Forward the validated order to the orchestration service.
+
+        The service appends the ticket to a FIFO consumed by the task manager,
+        allowing multiple robots to share a common queue without race
+        conditions.
         """
         try:
-            request = send_orderRequest()
-            request.order = order
-            response = self.server_client(request)
-            rospy.loginfo(f"Response from service: {response.message}")
-        except rospy.ServiceException as e:
-            rospy.logerr(f"Service call failed: {e}")
+            req = send_orderRequest(order=order)
+            resp = self.server_client(req)
+            rospy.loginfo(f"[OrderVerifier] Service response: {resp.message}")
+        except rospy.ServiceException as exc:
+            rospy.logerr(f"[OrderVerifier] Service call failed: {exc}")
 
+
+# ------------------------------------------------------------------------- #
+#                                   main                                    #
+# ------------------------------------------------------------------------- #
 if __name__ == "__main__":
     """
     Main entrypoint: instantiate the verification node and run parse_order() at 1 Hz.
@@ -153,5 +228,4 @@ if __name__ == "__main__":
             verifier.parse_order()
             rate.sleep()
     except rospy.ROSInterruptException:
-        rospy.logerr("ReasoningOrderVerification node interrupted.")
-        pass
+        rospy.logerr("[OrderVerifier] Node interrupted – shutting down.")

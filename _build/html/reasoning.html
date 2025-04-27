@@ -47,29 +47,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Reasoning &amp; Planning Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#path_planning.PathPlanner"><code class="docutils literal notranslate"><span class="pre">PathPlanner</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#path_planning.PathPlanner.map"><code class="docutils literal notranslate"><span class="pre">PathPlanner.map</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#path_planning.PathPlanner.odom"><code class="docutils literal notranslate"><span class="pre">PathPlanner.odom</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#path_planning.PathPlanner.path_pub"><code class="docutils literal notranslate"><span class="pre">PathPlanner.path_pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#path_planning.PathPlanner.loop"><code class="docutils literal notranslate"><span class="pre">PathPlanner.loop()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#path_planning.PathPlanner.map_callback"><code class="docutils literal notranslate"><span class="pre">PathPlanner.map_callback()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#path_planning.PathPlanner.odom_callback"><code class="docutils literal notranslate"><span class="pre">PathPlanner.odom_callback()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#path_planning.PathPlanner.plan_path"><code class="docutils literal notranslate"><span class="pre">PathPlanner.plan_path()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#reasoning_table_placement.ReasoningTablePlacement"><code class="docutils literal notranslate"><span class="pre">ReasoningTablePlacement</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#reasoning_table_placement.ReasoningTablePlacement.decision_sub"><code class="docutils literal notranslate"><span class="pre">ReasoningTablePlacement.decision_sub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reasoning_table_placement.ReasoningTablePlacement.command_pub"><code class="docutils literal notranslate"><span class="pre">ReasoningTablePlacement.command_pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reasoning_table_placement.ReasoningTablePlacement.decision_callback"><code class="docutils literal notranslate"><span class="pre">ReasoningTablePlacement.decision_callback()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#reasoning_table_placement.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#slam.SLAM"><code class="docutils literal notranslate"><span class="pre">SLAM</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#slam.SLAM.map_pub"><code class="docutils literal notranslate"><span class="pre">SLAM.map_pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#slam.SLAM.odom_pub"><code class="docutils literal notranslate"><span class="pre">SLAM.odom_pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#slam.SLAM.callback"><code class="docutils literal notranslate"><span class="pre">SLAM.callback()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#path-planning-py">path_planning.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reasoning-action-py">reasoning_action.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reasoning-order-verification-py">reasoning_order_verification.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reasoning-table-placement-py">reasoning_table_placement.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#speech-generator-py">speech_generator.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#slam-py">slam.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a></li>
@@ -103,201 +86,657 @@
              
   <section id="reasoning-planning-components">
 <h1>Reasoning &amp; Planning Components<a class="headerlink" href="#reasoning-planning-components" title="Link to this heading"></a></h1>
-<p id="module-path_planning">path_planning.py</p>
-<p>ROS node for simple path planning. Subscribes to a map and odometry, generates a
-dummy single‐waypoint path, and publishes it on ‘/planned_path’ at 1 Hz.</p>
+<section id="path-planning-py">
+<span id="module-path_planning"></span><h2>path_planning.py<a class="headerlink" href="#path-planning-py" title="Link to this heading"></a></h2>
+<p>Skeleton <strong>Path-planning</strong> node — generates a <em>single dummy waypoint</em> so that
+navigation stacks downstream (local planners, controllers, visualisers) have
+something to chew on while the <em>real</em> global planner is under development.</p>
+<section id="topic-interface">
+<h3>Topic interface<a class="headerlink" href="#topic-interface" title="Link to this heading"></a></h3>
+<p><strong>Subscribes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/map</span></code>  (<code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code>) – static or SLAM‐generated map.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/odom</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code>) – robot pose in the map frame.</p></li>
+</ul>
+<p><strong>Publishes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/planned_path</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code>) – single-waypoint global plan, updated at 1 Hz.</p></li>
+</ul>
+</section>
+<section id="assumptions">
+<h3>Assumptions<a class="headerlink" href="#assumptions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>The map frame is identical to the odometry frame (no TF transform applied).</p></li>
+<li><p>Goal is hard-coded at <strong>(1.0 m, 1.0 m)</strong> in the map frame.</p></li>
+<li><p>Orientation is left at its default (all zeros → identity quaternion).</p></li>
+<li><p>Only <strong>one</strong> waypoint is produced; real planners would push a sequence.</p></li>
+</ul>
+</section>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="path_planning.PathPlanner">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">path_planning.</span></span><span class="sig-name descname"><span class="pre">PathPlanner</span></span><a class="reference internal" href="_modules/path_planning.html#PathPlanner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#path_planning.PathPlanner" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Plans and publishes a navigation path based on the latest map and odometry.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="path_planning.PathPlanner.map">
-<span class="sig-name descname"><span class="pre">map</span></span><a class="headerlink" href="#path_planning.PathPlanner.map" title="Link to this definition"></a></dt>
-<dd><p>Most recently received occupancy grid map.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>nav_msgs.msg.OccupancyGrid or None</p>
+<p>Lightweight wrapper around two subscribers and one publisher.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>map<span class="classifier">nav_msgs.msg.OccupancyGrid or None</span></dt><dd><p>Latest occupancy grid; stored <em>verbatim</em> until needed.</p>
+</dd>
+<dt>odom<span class="classifier">nav_msgs.msg.Odometry or None</span></dt><dd><p>Latest robot pose; used to demonstrate dependency on localisation.</p>
+</dd>
+<dt>path_pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Advertises <code class="docutils literal notranslate"><span class="pre">/planned_path</span></code>; queue size 1 is fine at 1 Hz.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="path_planning.PathPlanner.odom">
-<span class="sig-name descname"><span class="pre">odom</span></span><a class="headerlink" href="#path_planning.PathPlanner.odom" title="Link to this definition"></a></dt>
-<dd><p>Most recently received robot odometry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>nav_msgs.msg.Odometry or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="path_planning.PathPlanner.path_pub">
-<span class="sig-name descname"><span class="pre">path_pub</span></span><a class="headerlink" href="#path_planning.PathPlanner.path_pub" title="Link to this definition"></a></dt>
-<dd><p>Publishes generated Path messages on ‘/planned_path’.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p>Register the node and hook up I/O.</p>
+</section>
+<section id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Initialise ROS with the node name <em>path_planning_node</em>.</p></li>
+<li><p>Subscribe to the global map (<code class="docutils literal notranslate"><span class="pre">/map</span></code>) and robot odometry (<code class="docutils literal notranslate"><span class="pre">/odom</span></code>).</p></li>
+<li><p>Create a latched publisher for <code class="docutils literal notranslate"><span class="pre">/planned_path</span></code> so that late-joining
+nodes immediately receive the most recent Path.</p></li>
+</ol>
 <dl class="py method">
 <dt class="sig sig-object py" id="path_planning.PathPlanner.loop">
 <span class="sig-name descname"><span class="pre">loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/path_planning.html#PathPlanner.loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#path_planning.PathPlanner.loop" title="Link to this definition"></a></dt>
-<dd><p>Main loop: call plan_path() at 1 Hz until shutdown.</p>
+<dd><p>Invoke <a class="reference internal" href="#path_planning.PathPlanner.plan_path" title="path_planning.PathPlanner.plan_path"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plan_path()</span></code></a> at <strong>1 Hz</strong> until ROS shutdown.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="path_planning.PathPlanner.map_callback">
 <span class="sig-name descname"><span class="pre">map_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/path_planning.html#PathPlanner.map_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#path_planning.PathPlanner.map_callback" title="Link to this definition"></a></dt>
-<dd><p>Callback for receiving the map.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>msg</strong> (<em>nav_msgs.msg.OccupancyGrid</em>) – The occupancy grid of the environment.</p>
-</dd>
-</dl>
+<dd><p>Store the latest occupancy grid for later use.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="path_planning.PathPlanner.odom_callback">
 <span class="sig-name descname"><span class="pre">odom_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/path_planning.html#PathPlanner.odom_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#path_planning.PathPlanner.odom_callback" title="Link to this definition"></a></dt>
-<dd><p>Callback for receiving robot odometry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>msg</strong> (<em>nav_msgs.msg.Odometry</em>) – The current robot pose and twist.</p>
-</dd>
-</dl>
+<dd><p>Store the latest odometry message.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="path_planning.PathPlanner.plan_path">
 <span class="sig-name descname"><span class="pre">plan_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/path_planning.html#PathPlanner.plan_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#path_planning.PathPlanner.plan_path" title="Link to this definition"></a></dt>
-<dd><p>Generate and publish a dummy path if map and odometry are available.</p>
-<section id="process">
-<h2>Process<a class="headerlink" href="#process" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p>Check that both self.map and self.odom are not None.</p></li>
-<li><p>Construct a Path message with a single PoseStamped waypoint at (1.0, 1.0).</p></li>
-<li><p>Log the action and publish the Path on ‘/planned_path’.</p></li>
-</ol>
+<dd><p>Publish a <em>one-step</em> global plan when prerequisites are met.</p>
+<section id="preconditions">
+<h3>Preconditions<a class="headerlink" href="#preconditions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">self.map</span></code>           is not <em>None</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.odom</span></code>          is not <em>None</em></p></li>
+</ul>
+</section>
+<section id="behaviour">
+<h3>Behaviour<a class="headerlink" href="#behaviour" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Construct <code class="xref py py-class docutils literal notranslate"><span class="pre">nav_msgs.msg.Path</span></code> stamped in the <strong>map frame</strong>.</p></li>
+<li><p>Append a single <code class="xref py py-class docutils literal notranslate"><span class="pre">geometry_msgs.msg.PoseStamped</span></code> at <em>(1 m, 1 m)</em>.</p></li>
+<li><p>Publish and log at INFO level (runs every second).</p></li>
+</ul>
 </section>
 </dd></dl>
 
+</section>
 </dd></dl>
 
-<p id="module-reasoning_table_placement">reasoning_table_placement.py</p>
-<p>ROS node that listens to placement decisions and publishes table
-commands accordingly. Converts high-level decisions (“PLACE”, “CLEAR”)
-into low-level commands (“PLACE_DISH”, “CLEAR_TABLE”) for execution.</p>
+<section id="reasoning-action-py">
+<span id="module-reasoning_action"></span><h2>reasoning_action.py<a class="headerlink" href="#reasoning-action-py" title="Link to this heading"></a></h2>
+<section id="high-level-task-orchestrator-turns-symbolic-plans-into-concrete-actionlib-goals">
+<h3>High-level <strong>task orchestrator</strong> – turns symbolic plans into concrete ActionLib goals<a class="headerlink" href="#high-level-task-orchestrator-turns-symbolic-plans-into-concrete-actionlib-goals" title="Link to this heading"></a></h3>
+<p><cite>ReasoningAction</cite> sits at the interface between <em>planning</em> (which decides <em>what</em>
+the robot should do) and <em>execution</em> (which knows <em>how</em> to move).
+It ingests a <em>navigation path</em> plus a <em>table-level command</em> and then drives the
+three low-level ActionLib servers that move the base, position the arm and open
+/ close the gripper.  When the whole sequence finishes – or when any part fails
+– the node emits a single feedback string for downstream logging or GUI use.</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Type / semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/planned_path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code> – global or local path from the planner</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/table_reasoning_commands</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – symbolic action at table (<em>PLACE</em>, <em>CLEAR</em>, …)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>publish</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">task_feedback</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – human-readable success / failure status</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>action client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">movement_control</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/MovementControlAction</span></code> – follow the path</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>action client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">arm_control</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/ArmControlAction</span></code> – position forearm / wrist</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>action client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gripper_control</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/GripperControlAction</span></code> – grasp or release the dish</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="execution-pipeline">
+<h3>Execution pipeline<a class="headerlink" href="#execution-pipeline" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Path reception</strong> – as soon as a new <code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code> arrives, flag
+<a href="#id1"><span class="problematic" id="id2">:pyattr:`path_received`</span></a> becomes <em>True</em>.</p></li>
+<li><p><strong>Movement phase</strong> – a <cite>MovementControlGoal</cite> with the full path is sent to
+the base controller.  The node blocks until a result appears.</p></li>
+<li><p><strong>Conditional manipulation</strong> – only if the base reports <em>success</em> does the
+node dispatch the arm and gripper goals, ensuring the robot is in position
+before manipulating objects.</p></li>
+<li><p><strong>Feedback</strong> – a single sentence is published to <code class="docutils literal notranslate"><span class="pre">task_feedback</span></code> summarising
+the outcome.  UI widgets, loggers or higher-level reasoners can subscribe to
+that topic to update state machines or dashboards.</p></li>
+</ol>
+</section>
+<section id="customisation-hooks">
+<h3>Customisation hooks<a class="headerlink" href="#customisation-hooks" title="Link to this heading"></a></h3>
+<p><em>Override</em> <code class="xref py py-meth docutils literal notranslate"><span class="pre">perform_table_command()</span></code> to translate each symbolic table
+command (PLACE, CLEAR, INSPECT…) into a concrete sequence of arm / gripper
+actions.  The default implementation is a stub.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_action.</span></span><span class="sig-name descname"><span class="pre">ReasoningAction</span></span><a class="reference internal" href="_modules/reasoning_action.html#ReasoningAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Coordinates navigation and manipulation through three ActionLib clients.</p>
+<section id="id3">
+<h2>Variables<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>path_received</dt><dd><p><em>True</em> as soon as a new path arrives; the flag is cleared after the
+path has been processed.</p>
+</dd>
+<dt>path_msg</dt><dd><p>Latest <code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code> received from the planner.</p>
+</dd>
+<dt>task_feedback_pub</dt><dd><p>Latched publisher used by GUIs or loggers to track high-level task
+completion.</p>
+</dd>
+<dt>movement_client / arm_client / gripper_client</dt><dd><p>Pre-connected ActionLib clients; connection is verified in
+<a class="reference internal" href="#reasoning_action.ReasoningAction.wait_for_servers" title="reasoning_action.ReasoningAction.wait_for_servers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">wait_for_servers()</span></code></a>.</p>
+</dd>
+</dl>
+<p>Bring up the node, connect to topics and block until all three action
+servers are online.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.loop">
+<span class="sig-name descname"><span class="pre">loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_action.html#ReasoningAction.loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.loop" title="Link to this definition"></a></dt>
+<dd><p>Run a 1 Hz cycle:</p>
+<ul class="simple">
+<li><p>if a fresh path is queued, send it to the base controller and wait
+synchronously for completion;</p></li>
+<li><p>if movement succeeds, execute arm and gripper macros;</p></li>
+<li><p>publish a one-line summary on <code class="docutils literal notranslate"><span class="pre">task_feedback</span></code>.</p></li>
+</ul>
+<p>The method blocks until ROS shutdown.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.path_callback">
+<span class="sig-name descname"><span class="pre">path_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">nav_msgs.msg.Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_action.html#ReasoningAction.path_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.path_callback" title="Link to this definition"></a></dt>
+<dd><p>Store the incoming path for deferred execution in the main loop.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.perform_table_command">
+<span class="sig-name descname"><span class="pre">perform_table_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_action.html#ReasoningAction.perform_table_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.perform_table_command" title="Link to this definition"></a></dt>
+<dd><p>Translate <em>decision</em> into arm / gripper goals.</p>
+<p>Override this stub in subclasses to implement behaviour such as:</p>
+<ul class="simple">
+<li><p><strong>PLACE</strong> – lower arm to 3 cm above table, open gripper.</p></li>
+<li><p><strong>CLEAR</strong> – close gripper, raise arm to carry height.</p></li>
+</ul>
+<p>The default implementation does nothing so the example still compiles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.table_command_callback">
+<span class="sig-name descname"><span class="pre">table_command_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg.String</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_action.html#ReasoningAction.table_command_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.table_command_callback" title="Link to this definition"></a></dt>
+<dd><p>Forward the symbolic command to <a class="reference internal" href="#reasoning_action.ReasoningAction.perform_table_command" title="reasoning_action.ReasoningAction.perform_table_command"><code class="xref py py-meth docutils literal notranslate"><span class="pre">perform_table_command()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_action.ReasoningAction.wait_for_servers">
+<span class="sig-name descname"><span class="pre">wait_for_servers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_action.html#ReasoningAction.wait_for_servers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_action.ReasoningAction.wait_for_servers" title="Link to this definition"></a></dt>
+<dd><p>Poll each ActionLib server at 1 Hz until the trio is ready.  Startup
+proceeds only when base, arm <strong>and</strong> gripper controllers are up; this
+prevents goal loss at boot.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<section id="reasoning-order-verification-py">
+<span id="module-reasoning_order_verification"></span><h2>reasoning_order_verification.py<a class="headerlink" href="#reasoning-order-verification-py" title="Link to this heading"></a></h2>
+<p>Natural–language <strong>order gatekeeper</strong> between speech recognition
+and the orchestration layer
+—————————————————————-</p>
+<p>When a customer speaks, the voice-recognition pipeline converts the sentence
+into plain text and publishes it on <code class="docutils literal notranslate"><span class="pre">/voice_recogn</span></code>.  This node checks that
+the sentence <strong>1) actually requests something</strong> and <strong>2) mentions a dish that
+exists</strong>, then forwards the structured order to the task-manager while
+reporting any problems on a dedicated error channel.</p>
+<section id="id4">
+<h3>ROS interface<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 25.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Type / semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/voice_recogn</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – raw text captured by ASR</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>publish</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/Voice_rec</span></code> – validated order, ready for planning</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>publish</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/error_from_interaction</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code> – 1 = unknown dish, 2 = missing <em>“Can I have”</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>service client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/send_order</span></code> – push the order into the orchestration FIFO</p></td>
+</tr>
+</tbody>
+</table>
+<section id="validation-policy">
+<h4>Validation policy<a class="headerlink" href="#validation-policy" title="Link to this heading"></a></h4>
+<ol class="arabic simple">
+<li><p><strong>Syntax guard</strong> – the sentence <em>must</em> contain the polite request
+fragment <em>“Can I have”</em>.  Anything else is ignored to prevent false
+triggers such as background chatter.</p></li>
+<li><p><strong>Menu match</strong> – at least one entry from <em>food_list</em> must appear in the
+remainder of the sentence.  The match is <em>substring-based</em> and therefore
+case-sensitive; tailor <em>food_list</em> accordingly (e.g. use lowercase if your
+ASR outputs lowercase).</p></li>
+<li><p><strong>Multi-dish support</strong> – if the customer orders several items in one
+breath (“Can I have <strong>sushi</strong> and <strong>pasta</strong> please”), all matches are packed
+into a single <code class="docutils literal notranslate"><span class="pre">Voice_rec</span></code> message so that the kitchen receives a single
+ticket.</p></li>
+</ol>
+</section>
+<section id="error-codes">
+<h4>Error codes<a class="headerlink" href="#error-codes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>1</strong> – no recognised dish in the sentence</p></li>
+<li><p><strong>2</strong> – polite request fragment not found</p></li>
+</ul>
+<p>Both errors are <em>recoverable</em>: the waiter robot simply prompts the customer to
+repeat or rephrase the order.</p>
+</section>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_order_verification.</span></span><span class="sig-name descname"><span class="pre">ReasoningOrderVerification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_robots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">food_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reasoning_order_verification.html#ReasoningOrderVerification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Parse spoken orders, validate them, publish structured messages and
+interact with the orchestration queue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server_robots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Numerical identifier for the target orchestration queue (kept for
+future use – the current implementation always contacts the same
+service).</p></li>
+<li><p><strong>food_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – Canonical dish names; matching is <strong>substring-based</strong> and therefore
+case-sensitive.</p></li>
+<li><p><strong>Variables</strong></p></li>
+<li><p><strong>----------</strong></p></li>
+<li><p><strong>msg</strong> (<em>std_msgs.msg.String</em><em> | </em><em>None</em>) – Buffer holding the most recent sentence received from the ASR.</p></li>
+<li><p><strong>counter_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Auto-incrementing ticket number attached to every successful order.</p></li>
+<li><p><strong>error_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Last error reported (0 = no error).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification.parse_order">
+<span class="sig-name descname"><span class="pre">parse_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_order_verification.html#ReasoningOrderVerification.parse_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification.parse_order" title="Link to this definition"></a></dt>
+<dd><p>Inspect <a href="#id5"><span class="problematic" id="id6">:pyattr:`self.msg`</span></a>; if valid, publish a <code class="docutils literal notranslate"><span class="pre">Voice_rec</span></code> order and
+forward it to the orchestration queue.  Otherwise emit an error code.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification.send_request">
+<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.msg.Voice_rec</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_order_verification.html#ReasoningOrderVerification.send_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification.send_request" title="Link to this definition"></a></dt>
+<dd><p>Forward the validated order to the orchestration service.</p>
+<p>The service appends the ticket to a FIFO consumed by the task manager,
+allowing multiple robots to share a common queue without race
+conditions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification.string_callback">
+<span class="sig-name descname"><span class="pre">string_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg.String</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_order_verification.html#ReasoningOrderVerification.string_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification.string_callback" title="Link to this definition"></a></dt>
+<dd><p>Store the latest ASR output for processing in the main loop.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="reasoning-table-placement-py">
+<span id="module-reasoning_table_placement"></span><h2>reasoning_table_placement.py<a class="headerlink" href="#reasoning-table-placement-py" title="Link to this heading"></a></h2>
+<section id="node-purpose">
+<h3>Node purpose<a class="headerlink" href="#node-purpose" title="Link to this heading"></a></h3>
+<p><em>Bridge from cognition to manipulation.</em>
+It listens to high-level placement <strong>decisions</strong> coming from
+<code class="docutils literal notranslate"><span class="pre">/placement_decision</span></code> (produced by <em>distance_estimator</em>) and converts
+them into low-level <strong>commands</strong> that the manipulation stack
+understands.</p>
+<section id="decision-command-mapping">
+<h4>Decision → Command mapping<a class="headerlink" href="#decision-command-mapping" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Decision</p></th>
+<th class="head"><p>Command sent</p></th>
+<th class="head"><p>Rationale</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PLACE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PLACE_DISH</span></code></p></td>
+<td><p>There is room for one more plate on the table.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CLEAR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLEAR_TABLE</span></code></p></td>
+<td><p>Table is finished; remove crockery.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>other</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NO_ACTION</span></code></p></td>
+<td><p>Either “FULL” or “IGNORE” → do nothing now.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="why-a-dedicated-mapper">
+<h3>Why a dedicated mapper?<a class="headerlink" href="#why-a-dedicated-mapper" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Decoupling</strong> – you can swap in a smarter reasoning algorithm without
+touching the gripper driver, or vice-versa.</p></li>
+<li><p><strong>Future proof</strong> – if the execution layer later moves from simple
+string commands to, e.g., action goals or behaviour-tree ticks, only
+<em>this</em> file needs editing.</p></li>
+</ul>
+</section>
+<section id="ros-topic-interface">
+<h3>ROS topic interface<a class="headerlink" href="#ros-topic-interface" title="Link to this heading"></a></h3>
+<p><strong>Subscribes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/placement_decision</span></code>  : <code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code>
+Example payload → <code class="docutils literal notranslate"><span class="pre">&quot;Decision:</span> <span class="pre">PLACE,</span> <span class="pre">IGNORE&quot;</span></code></p></li>
+</ul>
+<p><strong>Publishes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/table_reasoning_commands</span></code>  : <code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code>
+One of <code class="docutils literal notranslate"><span class="pre">&quot;PLACE_DISH&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;CLEAR_TABLE&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;NO_ACTION&quot;</span></code>.</p></li>
+</ul>
+</section>
+<section id="implementation-notes">
+<h3>Implementation notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>A simple <em>substring</em> check keeps the logic robust against future
+additions to the decision string (timestamps, confidence scores …).</p></li>
+<li><p>The publisher queues <strong>10</strong> messages to absorb short bursts without
+back-pressure.</p></li>
+<li><p>All log lines are throttled or filtered to keep the ROS console tidy.</p></li>
+</ul>
+</section>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="reasoning_table_placement.ReasoningTablePlacement">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_table_placement.</span></span><span class="sig-name descname"><span class="pre">ReasoningTablePlacement</span></span><a class="reference internal" href="_modules/reasoning_table_placement.html#ReasoningTablePlacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_table_placement.ReasoningTablePlacement" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Subscribes to placement decisions and publishes table placement commands.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="reasoning_table_placement.ReasoningTablePlacement.decision_sub">
-<span class="sig-name descname"><span class="pre">decision_sub</span></span><a class="headerlink" href="#reasoning_table_placement.ReasoningTablePlacement.decision_sub" title="Link to this definition"></a></dt>
-<dd><p>Subscriber to ‘/placement_decision’ for receiving decisions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Subscriber</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="reasoning_table_placement.ReasoningTablePlacement.command_pub">
-<span class="sig-name descname"><span class="pre">command_pub</span></span><a class="headerlink" href="#reasoning_table_placement.ReasoningTablePlacement.command_pub" title="Link to this definition"></a></dt>
-<dd><p>Publisher to ‘/table_reasoning_commands’ for sending commands.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p>Runtime object that wires subscribers → callbacks → publisher.</p>
+<p>Public API consists solely of the constructor; the rest is handled
+internally until ROS shuts down.</p>
+<p>Launch the node and register its single pub/sub pair.</p>
+<section id="id7">
+<h2>Steps<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Initialise ROS with the node name
+<code class="docutils literal notranslate"><span class="pre">reasoning_table_placement_node</span></code>.</p></li>
+<li><p>Subscribe to high-level decisions on <code class="docutils literal notranslate"><span class="pre">/placement_decision</span></code>.</p></li>
+<li><p>Advertise low-level commands on <code class="docutils literal notranslate"><span class="pre">/table_reasoning_commands</span></code>.</p></li>
+<li><p>Log a start-up banner so launch files can confirm health.</p></li>
+</ol>
 <dl class="py method">
 <dt class="sig sig-object py" id="reasoning_table_placement.ReasoningTablePlacement.decision_callback">
 <span class="sig-name descname"><span class="pre">decision_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reasoning_table_placement.html#ReasoningTablePlacement.decision_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_table_placement.ReasoningTablePlacement.decision_callback" title="Link to this definition"></a></dt>
-<dd><p>Process incoming placement decisions and publish corresponding commands.</p>
+<dd><p>Translate <em>cognitive</em> decision → <em>motor</em> command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>msg</strong> (<em>std_msgs.msg.String</em>) – The incoming decision message containing decision keywords.</p></li>
-<li><p><strong>Process</strong></p></li>
-<li><p><strong>-------</strong></p></li>
-<li><p><strong>&quot;CLEAR&quot;.</strong> (<em>- Parse msg.data for keywords &quot;PLACE&quot; or</em>)</p></li>
-<li><p><strong>commands</strong> (<em>- Map decisions to</em>)</p></li>
-<li><p><strong>'/table_reasoning_commands'.</strong> (<em>- Publish the appropriate command on</em>)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>msg</strong> (<em>std_msgs.msg.String</em>) – <p>Expected payload examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Decision: PLACE, CLEAR&quot;</span>
+<span class="s2">&quot;Decision: FULL, IGNORE&quot;</span>
+</pre></div>
+</div>
+</p>
 </dd>
 </dl>
+<section id="translation-logic">
+<h3>Translation logic<a class="headerlink" href="#translation-logic" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>If the string contains <strong>``”PLACE”``</strong> → emit <code class="docutils literal notranslate"><span class="pre">&quot;PLACE_DISH&quot;</span></code>.</p></li>
+<li><p>Else if it contains <strong>``”CLEAR”``</strong> → emit <code class="docutils literal notranslate"><span class="pre">&quot;CLEAR_TABLE&quot;</span></code>.</p></li>
+<li><p>Otherwise emit <code class="docutils literal notranslate"><span class="pre">&quot;NO_ACTION&quot;</span></code> so downstream nodes know the
+message was processed but no physical action is required.</p></li>
+</ul>
+<p>The simple <em>contains</em> check is intentionally robust: future
+reasoning nodes may prepend extra metadata (timestamps, scores,
+etc.) without breaking this mapper.</p>
+</section>
 </dd></dl>
 
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="reasoning_table_placement.main">
 <span class="sig-prename descclassname"><span class="pre">reasoning_table_placement.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reasoning_table_placement.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_table_placement.main" title="Link to this definition"></a></dt>
-<dd><p>Main entry point: instantiate ReasoningTablePlacement and spin ROS.</p>
+<dd><p>Instantiate the node object and hand control to ROS.</p>
+<p>Only <cite>rospy.ROSInterruptException</cite> is swallowed; any other exception
+is allowed to propagate with a full traceback for debugging.</p>
 </dd></dl>
 
-<p id="module-slam">slam.py</p>
-<p>ROS node stub for Simultaneous Localization and Mapping (SLAM). Subscribes to
-fused LaserScan data, publishes an empty OccupancyGrid map and Odometry message.
-Replace stub logic with actual SLAM algorithms to update map and robot pose.</p>
+<section id="speech-generator-py">
+<span id="module-reasoning_speech_generation"></span><h2>speech_generator.py<a class="headerlink" href="#speech-generator-py" title="Link to this heading"></a></h2>
+<section id="text-to-speech-relay-node-for-restaurant-announcements">
+<h3>Text-to-Speech <strong>relay node</strong> for restaurant announcements<a class="headerlink" href="#text-to-speech-relay-node-for-restaurant-announcements" title="Link to this heading"></a></h3>
+<p>The cognitive layer of the sushi-waiter architecture thinks in sentences:
+<em>“Table 3, your Dragon Roll is here”</em>, <em>“Apologies for the delay”</em>, <em>“Order
+cancelled, returning to station”</em>.  Something has to turn those strings into
+audible sound.  <strong>speech_generator.py</strong> fills that gap while staying totally
+agnostic about <em>how</em> the audio is produced.</p>
+</section>
+<section id="design-philosophy">
+<h3>Design philosophy<a class="headerlink" href="#design-philosophy" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Decoupling</strong> – upstream reasoning nodes push text to a <em>single</em> topic
+(<code class="docutils literal notranslate"><span class="pre">/task_speech_command</span></code>).  Downstream, you may connect <em>any</em> TTS driver
+(Festival, <cite>sound_play</cite>, cloud API, proprietary speaker), as long as it
+listens to <code class="docutils literal notranslate"><span class="pre">/speaker_channel</span></code>.</p></li>
+<li><p><strong>State buffering</strong> – the latest line is cached so that late-joining
+subscribers (e.g. the speaker driver restarting) still receive the current
+sentence.</p></li>
+<li><p><strong>Rate control</strong> – messages are re-emitted at <strong>1 Hz</strong> to avoid flooding the
+audio backend while giving it enough chances to catch up.</p></li>
+</ul>
+<section id="ros-topics">
+<h4>ROS topics<a class="headerlink" href="#ros-topics" title="Link to this heading"></a></h4>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-text">Node interface</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 25.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Type / semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/task_speech_command</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – UTF-8 input from the cognitive layer</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>publish</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/speaker_channel</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – identical text, forwarded once per second</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="reasoning_speech_generation.SpeechGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_speech_generation.</span></span><span class="sig-name descname"><span class="pre">SpeechGenerator</span></span><a class="reference internal" href="_modules/reasoning_speech_generation.html#SpeechGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_speech_generation.SpeechGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Thin, timer-driven <strong>republisher</strong>.</p>
+<section id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>A subscriber callback stores the newest incoming sentence
+in <a href="#id8"><span class="problematic" id="id9">:pyattr:`self.msg`</span></a>.</p></li>
+<li><p>The main loop publishes that stored message once every second.
+If no message has been received yet, it publishes nothing,
+thereby avoiding empty utterances.</p></li>
+</ol>
+<p>The class holds no additional state – perfect for hot-reloading or
+replacement in unit tests.</p>
+<p>Initialise the ROS node, I/O topics and internal buffer.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reasoning_speech_generation.SpeechGenerator.publish_msg">
+<span class="sig-name descname"><span class="pre">publish_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/reasoning_speech_generation.html#SpeechGenerator.publish_msg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_speech_generation.SpeechGenerator.publish_msg" title="Link to this definition"></a></dt>
+<dd><p>Republish the buffered sentence (if any) at the current loop tick.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<section id="slam-py">
+<span id="module-slam"></span><h2>slam.py<a class="headerlink" href="#slam-py" title="Link to this heading"></a></h2>
+<p>Minimal <strong>SLAM façade</strong> — publishes a blank map + identity odometry so the
+navigation stack can launch before the real SLAM backend is ready.</p>
+<section id="purpose">
+<h3>Purpose<a class="headerlink" href="#purpose" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Bring-up</strong>: rviz, move_base and other consumers expect <cite>/map</cite> and <cite>/odom</cite>
+to exist; this stub unblocks integration work in early project stages.</p></li>
+<li><p><strong>Interface contract</strong>: documents <em>exactly</em> which message types and frames
+the future SLAM solution must honour.</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Topic interface<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p><strong>Subscribes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code> (<code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code>) – pre-filtered 2-D scan produced
+by the sensor-fusion node.</p></li>
+</ul>
+<p><strong>Publishes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/map</span></code>  (<code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code>) – 10 × 10 cell grid, 5 cm resolution,
+centred at 0,0; currently all <em>unknown/free</em> (value 0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/odom</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code>) – identity pose in <code class="docutils literal notranslate"><span class="pre">odom</span></code> frame, zero
+twist; child frame <code class="docutils literal notranslate"><span class="pre">base_link</span></code>.</p></li>
+</ul>
+</section>
+<section id="coordinate-frames">
+<h3>Coordinate frames<a class="headerlink" href="#coordinate-frames" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">map</span></code>  ←— identity TF —→ <code class="docutils literal notranslate"><span class="pre">odom</span></code>  ←— [[ real TF broadcaster ]] —→ <code class="docutils literal notranslate"><span class="pre">base_link</span></code></p>
+<p>The stub does <strong>not</strong> broadcast TF transforms; downstream nodes must rely on
+static transforms or their own broadcasters until a full SLAM stack replaces
+this script.</p>
+</section>
+<section id="replace-me-sections">
+<h3>Replace-me sections<a class="headerlink" href="#replace-me-sections" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">update_map(data)</span></code> – insert occupancy grid update from scan + pose.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_pose(data)</span></code> – insert state-estimation output (EKF, graph-SLAM…).</p></li>
+</ul>
+</section>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="slam.SLAM">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slam.</span></span><span class="sig-name descname"><span class="pre">SLAM</span></span><a class="reference internal" href="_modules/slam.html#SLAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>SLAM node that generates and publishes map and odometry from sensor data.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="slam.SLAM.map_pub">
-<span class="sig-name descname"><span class="pre">map_pub</span></span><a class="headerlink" href="#slam.SLAM.map_pub" title="Link to this definition"></a></dt>
-<dd><p>Publisher for the OccupancyGrid map on ‘/map’.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
+<p>Straight-forward container for publishers + subscriber.</p>
+<section id="id11">
+<h2>Variables<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>map_pub</dt><dd><p>Latched publisher for the occupancy grid so late subscribers
+receive the most recent map instantly.</p>
+</dd>
+<dt>odom_pub</dt><dd><p>Latched publisher for odometry for the same reason.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="slam.SLAM.odom_pub">
-<span class="sig-name descname"><span class="pre">odom_pub</span></span><a class="headerlink" href="#slam.SLAM.odom_pub" title="Link to this definition"></a></dt>
-<dd><p>Publisher for Odometry messages on ‘/odom’.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p>Initialise the ROS node and wire its single input + two outputs.</p>
+</section>
+<section id="id12">
+<h2>Steps<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Call <a href="#id13"><span class="problematic" id="id14">:pyfunc:`rospy.init_node`</span></a> with a descriptive name.</p></li>
+<li><p>Subscribe to the pre-filtered <strong>fused</strong> laser scan.  Queue size 1
+keeps latency low while scans stream in (20–30 Hz typical).</p></li>
+<li><p>Advertise both outputs with <em>latch=True</em> so tools like rviz see
+the very first map/odom without waiting a full second.</p></li>
+</ol>
 <dl class="py method">
 <dt class="sig sig-object py" id="slam.SLAM.callback">
-<span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slam.html#SLAM.callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback" title="Link to this definition"></a></dt>
-<dd><p>Callback for incoming fused LaserScan data.</p>
+<span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slam.html#SLAM.callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slam.SLAM.callback" title="Link to this definition"></a></dt>
+<dd><p>Handle each incoming fused scan.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>sensor_msgs.msg.LaserScan</em>) – Incoming fused scan to be used for SLAM.</p></li>
-<li><p><strong>Process</strong></p></li>
-<li><p><strong>-------</strong></p></li>
-<li><p><strong>resolution</strong> (<em>1. Create an empty OccupancyGrid with fixed</em>)</p></li>
-<li><p><strong>size</strong></p></li>
-<li><p><strong>origin.</strong> (<em>and</em>)</p></li>
-<li><p><strong>space</strong><strong>)</strong><strong>.</strong> (<em>2. Initialize map_msg.data as zeros</em><em> (</em><em>unknown/free</em>)</p></li>
-<li><p><strong>twist.</strong> (<em>3. Create an empty Odometry message with identity pose and zero</em>)</p></li>
-<li><p><strong>odom_msg.</strong> (<em>4. Publish both map_msg and</em>)</p></li>
-<li><p><strong>updates.</strong> (<em>5. Notes in code indicate where to replace with real SLAM</em>)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>scan_msg</strong> (<em>sensor_msgs.msg.LaserScan</em>) – Currently ignored; present to show where real SLAM would ingest
+range data.</p>
 </dd>
 </dl>
+<section id="pipeline">
+<h3>Pipeline<a class="headerlink" href="#pipeline" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Blank map</strong> – 10 × 10 cells, 0.05 m resolution, centred at
+(-2.5, -2.5) so (0,0) lies roughly in the middle.  All cell values
+initialised to <em>0</em> (free/unknown).</p></li>
+<li><p><strong>Identity odometry</strong> – pose = (0,0,0) + unit quaternion,
+twist = (0,0,0).</p></li>
+<li><p>Publish both messages.  In a real implementation steps 1 &amp; 2 would
+be replaced by <em>update_map</em> and <em>update_pose</em> respectively.</p></li>
+</ol>
+</section>
 </dd></dl>
 
+</section>
 </dd></dl>
 
 </section>

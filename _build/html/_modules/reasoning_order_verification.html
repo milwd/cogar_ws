@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reasoning_order_verification &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">reasoning_order_verification</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for reasoning_order_verification</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">reasoning_order_verification.py</span>
+<span class="sd">===============================</span>
+
+<span class="sd">Natural–language **order gatekeeper** between speech recognition</span>
+<span class="sd">and the orchestration layer</span>
+<span class="sd">----------------------------------------------------------------</span>
+
+<span class="sd">When a customer speaks, the voice-recognition pipeline converts the sentence</span>
+<span class="sd">into plain text and publishes it on ``/voice_recogn``.  This node checks that</span>
+<span class="sd">the sentence **1) actually requests something** and **2) mentions a dish that</span>
+<span class="sd">exists**, then forwards the structured order to the task-manager while</span>
+<span class="sd">reporting any problems on a dedicated error channel.</span>
+
+<span class="sd">ROS interface</span>
+<span class="sd">~~~~~~~~~~~~~</span>
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 20 25 55</span>
+
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Name</span>
+<span class="sd">     - Type / semantics</span>
+<span class="sd">   * - **subscribe**</span>
+<span class="sd">     - ``/voice_recogn``</span>
+<span class="sd">     - ``std_msgs/String`` – raw text captured by ASR</span>
+<span class="sd">   * - **publish**</span>
+<span class="sd">     - ``/verif_T_manager``</span>
+<span class="sd">     - ``tiago1/Voice_rec`` – validated order, ready for planning</span>
+<span class="sd">   * - **publish**</span>
+<span class="sd">     - ``/error_from_interaction``</span>
+<span class="sd">     - ``std_msgs/Int32`` – 1 = unknown dish, 2 = missing *“Can I have”*</span>
+<span class="sd">   * - **service client**</span>
+<span class="sd">     - ``/robot_state_decision_add``</span>
+<span class="sd">     - ``tiago1/send_order`` – push the order into the orchestration FIFO</span>
+
+<span class="sd">Validation policy</span>
+<span class="sd">-----------------</span>
+<span class="sd">#. **Syntax guard** – the sentence *must* contain the polite request  </span>
+<span class="sd">   fragment *“Can I have”*.  Anything else is ignored to prevent false</span>
+<span class="sd">   triggers such as background chatter.  </span>
+<span class="sd">#. **Menu match** – at least one entry from *food_list* must appear in the</span>
+<span class="sd">   remainder of the sentence.  The match is *substring-based* and therefore</span>
+<span class="sd">   case-sensitive; tailor *food_list* accordingly (e.g. use lowercase if your</span>
+<span class="sd">   ASR outputs lowercase).  </span>
+<span class="sd">#. **Multi-dish support** – if the customer orders several items in one</span>
+<span class="sd">   breath (“Can I have **sushi** and **pasta** please”), all matches are packed</span>
+<span class="sd">   into a single ``Voice_rec`` message so that the kitchen receives a single</span>
+<span class="sd">   ticket.</span>
+
+<span class="sd">Error codes</span>
+<span class="sd">-----------</span>
+<span class="sd">* **1** – no recognised dish in the sentence  </span>
+<span class="sd">* **2** – polite request fragment not found</span>
+
+<span class="sd">Both errors are *recoverable*: the waiter robot simply prompts the customer to</span>
+<span class="sd">repeat or rephrase the order.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span><span class="p">,</span> <span class="n">Int32</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Voice_rec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">send_order</span><span class="p">,</span> <span class="n">send_orderRequest</span>
+
+
+<div class="viewcode-block" id="ReasoningOrderVerification">
+<a class="viewcode-back" href="../reasoning.html#reasoning_order_verification.ReasoningOrderVerification">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReasoningOrderVerification</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse spoken orders, validate them, publish structured messages and</span>
+<span class="sd">    interact with the orchestration queue.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    server_robots : int</span>
+<span class="sd">        Numerical identifier for the target orchestration queue (kept for</span>
+<span class="sd">        future use – the current implementation always contacts the same</span>
+<span class="sd">        service).</span>
+<span class="sd">    food_list : list[str]</span>
+<span class="sd">        Canonical dish names; matching is **substring-based** and therefore</span>
+<span class="sd">        case-sensitive.</span>
+
+<span class="sd">    Variables</span>
+<span class="sd">    ----------</span>
+<span class="sd">    msg : std_msgs.msg.String | None</span>
+<span class="sd">        Buffer holding the most recent sentence received from the ASR.</span>
+<span class="sd">    counter_id : int</span>
+<span class="sd">        Auto-incrementing ticket number attached to every successful order.</span>
+<span class="sd">    error_code : int</span>
+<span class="sd">        Last error reported (0 = no error).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_robots</span><span class="p">,</span> <span class="n">food_list</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;reasoning_order_verification_node&#39;</span><span class="p">)</span>
+
+        <span class="c1"># --------------------------- parameters --------------------------- #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server_robots</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">food_list</span> <span class="o">=</span> <span class="n">food_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">:</span> <span class="n">String</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_code</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 0=no error, 1=unknown dish, 2=missing phrase</span>
+
+        <span class="c1"># --------------------------- I/O setup ---------------------------- #</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/voice_recogn&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_callback</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;/robot_state_decision_add&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+            <span class="s1">&#39;/robot_state_decision_add&#39;</span><span class="p">,</span> <span class="n">send_order</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_notification</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s1">&#39;/error_from_interaction&#39;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verific_taskmanager</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s1">&#39;/verif_T_manager&#39;</span><span class="p">,</span> <span class="n">Voice_rec</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span>
+        <span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[OrderVerifier] Ready – listening for voice commands.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1">#                               callback                                 #</span>
+    <span class="c1"># --------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="ReasoningOrderVerification.string_callback">
+<a class="viewcode-back" href="../reasoning.html#reasoning_order_verification.ReasoningOrderVerification.string_callback">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">string_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the latest ASR output for processing in the main loop.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[OrderVerifier] Received: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1">#                          core verification                             #</span>
+    <span class="c1"># --------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="ReasoningOrderVerification.parse_order">
+<a class="viewcode-back" href="../reasoning.html#reasoning_order_verification.ReasoningOrderVerification.parse_order">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inspect :pyattr:`self.msg`; if valid, publish a ``Voice_rec`` order and</span>
+<span class="sd">        forward it to the orchestration queue.  Otherwise emit an error code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># nothing to do yet</span>
+
+        <span class="n">sentence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># mark as consumed</span>
+
+        <span class="c1"># ---------- rule 1: polite request present? ----------------------- #</span>
+        <span class="k">if</span> <span class="s2">&quot;Can I have&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_raise_error</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Missing polite request fragment.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># ---------- rule 2: at least one valid dish? ---------------------- #</span>
+        <span class="n">found_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">dish</span> <span class="k">for</span> <span class="n">dish</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">food_list</span> <span class="k">if</span> <span class="n">dish</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found_items</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_raise_error</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;No known dish mentioned.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># ---------- build &amp; publish structured order ---------------------- #</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">Voice_rec</span><span class="p">()</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">id_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter_id</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">list_of_orders</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">found_items</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">verific_taskmanager</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[OrderVerifier] Order accepted → </span><span class="si">{</span><span class="n">order</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Optional: push directly to orchestration queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter_id</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+
+    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1">#                              helpers                                  #</span>
+    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_raise_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">log_msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Publish *code* to ``/error_from_interaction`` and log a warning.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_notification</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[OrderVerifier] </span><span class="si">{</span><span class="n">log_msg</span><span class="si">}</span><span class="s2"> (code </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ReasoningOrderVerification.send_request">
+<a class="viewcode-back" href="../reasoning.html#reasoning_order_verification.ReasoningOrderVerification.send_request">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">Voice_rec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward the validated order to the orchestration service.</span>
+
+<span class="sd">        The service appends the ticket to a FIFO consumed by the task manager,</span>
+<span class="sd">        allowing multiple robots to share a common queue without race</span>
+<span class="sd">        conditions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">send_orderRequest</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[OrderVerifier] Service response: </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[OrderVerifier] Service call failed: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------- #</span>
+<span class="c1">#                                   main                                    #</span>
+<span class="c1"># ------------------------------------------------------------------------- #</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dish_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ragu&quot;</span><span class="p">,</span> <span class="s2">&quot;sugo&quot;</span><span class="p">,</span> <span class="s2">&quot;pasta&quot;</span><span class="p">,</span> <span class="s2">&quot;kebab&quot;</span><span class="p">,</span> <span class="s2">&quot;sushi&quot;</span><span class="p">]</span>
+        <span class="n">verifier</span> <span class="o">=</span> <span class="n">ReasoningOrderVerification</span><span class="p">(</span><span class="n">server_robots</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                              <span class="n">food_list</span><span class="o">=</span><span class="n">dish_list</span><span class="p">)</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Hz</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+            <span class="n">verifier</span><span class="o">.</span><span class="n">parse_order</span><span class="p">()</span>
+            <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;[OrderVerifier] Node interrupted – shutting down.&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

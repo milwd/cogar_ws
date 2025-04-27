@@ -1,30 +1,55 @@
-# force.py
-
 #!/usr/bin/env python
 """
 force.py
+========
 
-ROS node that simulates a force sensor by publishing random force readings.
-Publishes Float32 messages on '/force' at 10 Hz for testing manipulation tasks.
+Synthetic **end-effector force sensor** for manipulation pipelines
+-----------------------------------------------------------------
+
+Grasp controllers, compliant planners and safety monitors often rely on a
+continuous force signal.  When real hardware is absent (desktop development,
+CI/CD, remote teaching) this node publishes *pseudo-random* force values so
+that the rest of the stack can still run and be exercised.
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 25 35 40
+
+   * - Direction / type
+     - Name
+     - Semantics
+   * - **publish** ``std_msgs/Float32``
+     - ``/force``
+     - Simulated contact force **in Newtons** (0 – 50 N)
+
+Characteristics
+---------------
+* **Rate** 10 Hz (set by :pydata:`rate`).  
+* **Distribution** Uniform *U*(0 N, 50 N).  
+  Swap for a Gaussian or a replay from a CSV file if you need repeatable
+  sequences or more realistic dynamics.
+
+The node shuts down automatically on Ctrl-C or ``rosnode kill``.
 """
 
+import random
 import rospy
 from std_msgs.msg import Float32
 import random
 import sys
 
-def force_sensor():
-    """
-    Initialize the ROS node and publish simulated force sensor values.
 
-    Process
-    -------
-    1. Initialize ROS node 'force'.
-    2. Advertise '/force' for Float32 messages.
-    3. Loop at 10 Hz:
-       a. Generate a random force value between 0 and 5 Newtons.
-       b. Wrap the value in a Float32 message and publish.
-       c. Sleep to maintain loop rate.
+def force_sensor() -> None:
+    """
+    Emit fake force values at 10 Hz until ROS shutdown.
+
+    Steps
+    -----
+    #. Initialise the node as **force**.  
+    #. Advertise ``/force``.  
+    #. In the main loop generate a random float, publish it, sleep.
     """
     robot_number = sys.argv[1]#rospy.get_param('~robot_number')
     rospy.init_node(f'{robot_number}_force')
@@ -35,8 +60,9 @@ def force_sensor():
     #     rate.sleep()
 
 
+
+# ---------------------------------------------------------------------- #
+#                               bootstrap                                #
+# ---------------------------------------------------------------------- #
 if __name__ == '__main__':
-    """
-    Main entrypoint: start the force sensor publisher.
-    """
     force_sensor()

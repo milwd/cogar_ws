@@ -41,7 +41,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
@@ -75,14 +76,52 @@
              
   <section id="module-encoder_gripper">
 <span id="encoder-gripper"></span><h1>encoder_gripper<a class="headerlink" href="#module-encoder_gripper" title="Link to this heading"></a></h1>
-<p>encoder_gripper.py</p>
-<p>ROS node that simulates the gripper encoder by publishing random encoder readings.
-Publishes Int32 messages on ‘/encoder_gripper’ at 10 Hz for testing downstream controllers.</p>
+<section id="encoder-gripper-py">
+<h2>encoder_gripper.py<a class="headerlink" href="#encoder-gripper-py" title="Link to this heading"></a></h2>
+<section id="dummy-gripper-position-sensor-for-controller-and-ui-testing">
+<h3>Dummy <strong>gripper-position sensor</strong> for controller and UI testing<a class="headerlink" href="#dummy-gripper-position-sensor-for-controller-and-ui-testing" title="Link to this heading"></a></h3>
+<p>When the physical TIAGo gripper is offline—or when you run the stack in CI—this
+node supplies a stand-in encoder signal.  A stream of pseudo-random integers is
+enough for downstream PID loops, dashboards or loggers to stay alive and be
+exercised.</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/encoder_gripper</span></code></p></td>
+<td><p>Simulated opening width <strong>in millimetres</strong> (0 – 100 mm)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="characteristics">
+<h3>Characteristics<a class="headerlink" href="#characteristics" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Rate</strong> 10 Hz (see <a href="#id1"><span class="problematic" id="id2">:pydata:`rate`</span></a>).</p></li>
+<li><p><strong>Distribution</strong> Uniform <a href="#id3"><span class="problematic" id="id4">*</span></a>U*(0, 100) → every tick is independent.
+Swap for a random walk if you prefer smoother traces.</p></li>
+</ul>
+<p>The node ends automatically on ROS shutdown.</p>
+</section>
+</section>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../actuation.html#encoder_gripper.gripper_encoder" title="encoder_gripper.gripper_encoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gripper_encoder</span></code></a>()</p></td>
-<td><p>Initialize the ROS node and publish simulated gripper encoder values.</p></td>
+<td><p>Advertise <code class="docutils literal notranslate"><span class="pre">/encoder_gripper</span></code> and publish fake readings forever.</p></td>
 </tr>
 </tbody>
 </table>

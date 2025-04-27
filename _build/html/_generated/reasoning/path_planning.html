@@ -41,7 +41,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
@@ -75,14 +76,38 @@
              
   <section id="module-path_planning">
 <span id="path-planning"></span><h1>path_planning<a class="headerlink" href="#module-path_planning" title="Link to this heading"></a></h1>
-<p>path_planning.py</p>
-<p>ROS node for simple path planning. Subscribes to a map and odometry, generates a
-dummy single‐waypoint path, and publishes it on ‘/planned_path’ at 1 Hz.</p>
+<section id="path-planning-py">
+<h2>path_planning.py<a class="headerlink" href="#path-planning-py" title="Link to this heading"></a></h2>
+<p>Skeleton <strong>Path-planning</strong> node — generates a <em>single dummy waypoint</em> so that
+navigation stacks downstream (local planners, controllers, visualisers) have
+something to chew on while the <em>real</em> global planner is under development.</p>
+<section id="topic-interface">
+<h3>Topic interface<a class="headerlink" href="#topic-interface" title="Link to this heading"></a></h3>
+<p><strong>Subscribes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/map</span></code>  (<code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code>) – static or SLAM‐generated map.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/odom</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code>) – robot pose in the map frame.</p></li>
+</ul>
+<p><strong>Publishes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/planned_path</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code>) – single-waypoint global plan, updated at 1 Hz.</p></li>
+</ul>
+</section>
+<section id="assumptions">
+<h3>Assumptions<a class="headerlink" href="#assumptions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>The map frame is identical to the odometry frame (no TF transform applied).</p></li>
+<li><p>Goal is hard-coded at <strong>(1.0 m, 1.0 m)</strong> in the map frame.</p></li>
+<li><p>Orientation is left at its default (all zeros → identity quaternion).</p></li>
+<li><p>Only <strong>one</strong> waypoint is produced; real planners would push a sequence.</p></li>
+</ul>
+</section>
+</section>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../reasoning.html#path_planning.PathPlanner" title="path_planning.PathPlanner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathPlanner</span></code></a>()</p></td>
-<td><p>Plans and publishes a navigation path based on the latest map and odometry.</p></td>
+<td><p>Lightweight wrapper around two subscribers and one publisher.</p></td>
 </tr>
 </tbody>
 </table>

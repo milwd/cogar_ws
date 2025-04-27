@@ -1,10 +1,55 @@
 #! /usr/bin/env python
 """
 task_manager.py
+===============
 
-ROS node that manages robot tasks by querying the robot state decision service.
-Subscribes to action feedback and verified orders, tracks the current robot state,
-and invokes the '/robot_state_decision' service to retrieve next tasks.
+Central **state orchestrator** – queries the decision service and drives the task loop
+-------------------------------------------------------------------------------------
+
+`TaskManager` listens to two event streams:
+
+1. **Action feedback** (``/feedback_acion``) – one-line summaries published by
+   the low-level controllers (navigation finished, manipulation failed …).
+2. **Verified orders** (``/verif_T_manager``) – customer requests already
+   checked by the order-verification node.
+
+Every time a new feedback line arrives the manager calls the
+``/robot_state_decision`` service, handing over the current *state string*.
+The service replies with the next action the robot should perform, enabling a
+clean separation between *decision logic* (in the service) and *event
+aggregation* (in this node).
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 25 35 40
+
+   * - Direction / type
+     - Name
+     - Semantics
+   * - **subscribe** ``std_msgs/String``
+     - ``/feedback_acion``
+     - Latest controller status (e.g. *"ARM_DONE"* or *"BASE_FAILED"*)
+   * - **subscribe** ``tiago1/Voice_rec``
+     - ``/verif_T_manager``
+     - Structured customer order; stored but **not** sent to the service yet
+   * - **service client** ``tiago1/robotstatedecision``
+     - ``/robot_state_decision``
+     - Request → **state_input** (string)  
+       Response ← next symbolic task / acknowledgement
+
+Execution loop
+--------------
+*On every feedback update*
+
+#. Cache the new state string.
+#. Call the decision service with that state.
+#. Log the returned instruction (no further dispatching in this stub).
+
+Extend :py:meth:`change_state` if you want to forward the decision to other
+nodes or to trigger timers / retries.
+
 """
 
 import rospy
@@ -16,16 +61,17 @@ import sys
 
 class TaskManager:
     """
-    Manages high-level task sequencing by interacting with the orchestration service.
+    Aggregates feedback and relays it to the orchestration service.
 
-    Attributes
-    ----------
-    server_client : rospy.ServiceProxy
-        Client proxy for the '/robot_state_decision' service.
-    state : str or None
-        Most recent state received from '/feedback_acion'.
-    m : str or None
-        Most recent verified order message received from '/verif_T_manager'.
+    Instance Variables
+    ------------------
+    server_client
+        :pyclass:`rospy.ServiceProxy` for ``/robot_state_decision``.
+    state
+        Last status string received from ``/feedback_acion``.
+    order_msg
+        Cached message from ``/verif_T_manager`` (currently unused, but kept
+        for future extensions such as *order context* in the service call).
     """
 
     def __init__(self):
@@ -54,10 +100,11 @@ class TaskManager:
 
         rospy.loginfo(f"[TaskManager {self.robot_number}] Node initialized and ready.")
 
-    def feed_callback_state(self, msg):
+        rospy.Subscriber("/feedback_acion",
+                         String,
+                         self._cb_feedback,
+                         queue_size=10)
         """
-        Callback for receiving action feedback.
-
         Parameters
         ----------
         msg : std_msgs.msg.String
@@ -116,10 +163,10 @@ class TaskManager:
             rospy.logerr(f"[TaskManager {self.robot_number}] Service call failed: {e}")
 
 
+# ---------------------------------------------------------------------- #
+#                               bootstrap                                #
+# ---------------------------------------------------------------------- #
 if __name__ == "__main__":
-    """
-    Main entrypoint: instantiate TaskManager and continuously invoke change_state().
-    """
     try:
         task_manager = TaskManager()
         rate = rospy.Rate(0.5)  # 0.5 Hz (every 2 seconds)

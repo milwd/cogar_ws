@@ -17,6 +17,7 @@
       <script src="_static/documentation_options.js?v=f2a433a1"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,10 +49,13 @@
 <li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Actuation &amp; Control Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#encoder_arm.arm_encoder"><code class="docutils literal notranslate"><span class="pre">arm_encoder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#encoder_gripper.gripper_encoder"><code class="docutils literal notranslate"><span class="pre">gripper_encoder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#encoder_wheel.wheel_encoder"><code class="docutils literal notranslate"><span class="pre">wheel_encoder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#force.force_sensor"><code class="docutils literal notranslate"><span class="pre">force_sensor()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#control-arm-py">control_arm.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#control-gripper-py">control_gripper.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#control-wheel-py">control_wheel.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encoder-arm-py">encoder_arm.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encoder-gripper-py">encoder_gripper.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encoder-wheel-py">encoder_wheel.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#force-py">force.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a></li>
@@ -84,82 +88,484 @@
              
   <section id="actuation-control-components">
 <h1>Actuation &amp; Control Components<a class="headerlink" href="#actuation-control-components" title="Link to this heading"></a></h1>
-<p id="module-encoder_arm">encoder_arm.py</p>
-<p>ROS node that simulates the arm encoder by publishing random encoder readings.
-Publishes Int32 messages on ‘/encoder_arm’ at 10 Hz for testing downstream controllers.</p>
+<section id="control-arm-py">
+<span id="module-control_arm"></span><h2>control_arm.py<a class="headerlink" href="#control-arm-py" title="Link to this heading"></a></h2>
+<section id="closed-loop-actionlib-server-for-positioning-the-tiago-arm">
+<h3>Closed-loop <strong>ActionLib server</strong> for positioning the TIAGo arm<a class="headerlink" href="#closed-loop-actionlib-server-for-positioning-the-tiago-arm" title="Link to this heading"></a></h3>
+<p>This node listens for <a href="#id1"><span class="problematic" id="id2">:rosmsg:`tiago1/ArmControlAction`</span></a> goals that specify a
+single <strong>target joint angle</strong> (in degrees).  It applies a proportional control
+law on the arm’s <strong>angular velocity</strong> until the on-board encoder reports that
+the target, within a configurable tolerance, has been reached or a timeout /
+pre-emption occurs.</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">geometry_msgs/Twist</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/cmd_vel/arm</span></code></p></td>
+<td><p>Desired angular velocity about the arm’s primary axis
+(only <code class="code docutils literal notranslate"><span class="pre">angular.z</span></code> is used).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>subscribe</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/encoder_arm</span></code></p></td>
+<td><p>Current encoder position expressed in <strong>degrees</strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>action server</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/ArmControlAction</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">arm_control</span></code></p></td>
+<td><p>Goal: <code class="docutils literal notranslate"><span class="pre">degree</span></code> (int), Feedback: <strong>status</strong> (string),
+Result: <strong>success</strong> (bool)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="control-algorithm">
+<h3>Control algorithm<a class="headerlink" href="#control-algorithm" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Goal reception</strong> – store target angle, define <em>tolerance</em> (°) and
+<em>timeout</em> (s).</p></li>
+<li><p><strong>10 Hz loop</strong>
+• compute error = <em>target – encoder</em>
+• <span class="math notranslate nohighlight">\(\omega_z = k_p \cdot error\)</span> with <em>k_p = 0.01</em>
+• publish velocity; send feedback string
+• exit early if <em>|error| ≤ tolerance</em>, timeout expires, node is
+pre-empted, or ROS shuts down.</p></li>
+<li><p><strong>Outcome</strong> – call <code class="xref py py-meth docutils literal notranslate"><span class="pre">SimpleActionServer.set_succeeded()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">set_aborted()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_preempted()</span></code> with
+<a href="#id3"><span class="problematic" id="id4">:rosmsg:`tiago1/ArmControlResult`</span></a>.</p></li>
+</ol>
+</section>
+<section id="tuning-knobs">
+<h3>Tuning knobs<a class="headerlink" href="#tuning-knobs" title="Link to this heading"></a></h3>
+<p><em>TOLERANCE</em> = 5 °  <em>TIMEOUT</em> = 10 s  <em>Kₚ</em> = 0.01 – tweak in
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">execute_cb()</span></code> to match your hardware.</p>
+</section>
+<section id="safety">
+<h3>Safety<a class="headerlink" href="#safety" title="Link to this heading"></a></h3>
+<p>The node publishes zero velocity immediately after success / abort to stop the
+arm, and it honours standard ActionLib pre-emption so higher layers can
+interrupt motion at any time.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">control_arm.</span></span><span class="sig-name descname"><span class="pre">ControlArmServer</span></span><a class="reference internal" href="_modules/control_arm.html#ControlArmServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Minimal proportional controller wrapped in an ActionLib server.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>cmd_pub</dt><dd><p><a href="#id5"><span class="problematic" id="id6">:pyclass:`rospy.Publisher`</span></a> that streams velocity commands to
+<code class="docutils literal notranslate"><span class="pre">/cmd_vel/arm</span></code>.</p>
+</dd>
+<dt>encoder_sub</dt><dd><p><a href="#id7"><span class="problematic" id="id8">:pyclass:`rospy.Subscriber`</span></a> listening to <code class="docutils literal notranslate"><span class="pre">/encoder_arm</span></code> for position
+feedback.</p>
+</dd>
+<dt>server</dt><dd><p><a href="#id9"><span class="problematic" id="id10">:pyclass:`actionlib.SimpleActionServer`</span></a> that exposes the
+<strong>arm_control</strong> action namespace.</p>
+</dd>
+<dt>encoder_val</dt><dd><p>Latest encoder reading in <strong>degrees</strong>; updated continuously by
+<a class="reference internal" href="#control_arm.ControlArmServer.encoder_callback" title="control_arm.ControlArmServer.encoder_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">encoder_callback()</span></code></a>.</p>
+</dd>
+</dl>
+<p>Wire publishers/subscribers, start the ActionLib server.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer.encoder_callback">
+<span class="sig-name descname"><span class="pre">encoder_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg.Int32</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/control_arm.html#ControlArmServer.encoder_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer.encoder_callback" title="Link to this definition"></a></dt>
+<dd><p>Cache the most recent encoder position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer.execute_cb">
+<span class="sig-name descname"><span class="pre">execute_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.msg.ArmControlAction.Goal</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/control_arm.html#ControlArmServer.execute_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer.execute_cb" title="Link to this definition"></a></dt>
+<dd><p>Main loop executed per goal.</p>
+<p>Publishes velocities at 10 Hz until the arm reaches <em>goal.degree</em>,
+is pre-empted, or times out.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<section id="control-gripper-py">
+<span id="module-control_gripper"></span><h2>control_gripper.py<a class="headerlink" href="#control-gripper-py" title="Link to this heading"></a></h2>
+<section id="action-level-binary-actuator-for-the-tiago-gripper">
+<h3>Action-level <strong>binary actuator</strong> for the TIAGo gripper<a class="headerlink" href="#action-level-binary-actuator-for-the-tiago-gripper" title="Link to this heading"></a></h3>
+<p>The node exposes a <a href="#id11"><span class="problematic" id="id12">:ros:`tiago1/GripperControlAction`</span></a> server that either
+<strong>closes</strong> (grip) or <strong>opens</strong> (release) the end-effector.
+A single boolean goal, <em>True</em> → grip, <em>False</em> → release, is converted into a
+<a href="#id13"><span class="problematic" id="id14">:rosmsg:`std_msgs/Bool`</span></a> command published on <code class="docutils literal notranslate"><span class="pre">/cmd_vel/gripper</span></code>.
+After a short configurable delay the server replies with a <em>succeeded</em> or
+<em>pre-empted / aborted</em> result.</p>
+<section id="id15">
+<h4>ROS interface<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/cmd_vel/gripper</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> → close, <code class="docutils literal notranslate"><span class="pre">False</span></code> → open</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>action server</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/GripperControlAction</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gripper_control</span></code></p></td>
+<td><p>Goal → <code class="docutils literal notranslate"><span class="pre">gripnogrip</span></code> (bool)
+Feedback → <strong>status</strong> (string)
+Result → <strong>success</strong> (bool)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="execution-logic">
+<h3>Execution logic<a class="headerlink" href="#execution-logic" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>On goal reception the server checks for an immediate pre-emption request.</p></li>
+<li><p>The boolean command is forwarded to the <em>cmd</em> topic.</p></li>
+<li><p>A short wait (2 s by default) gives the hardware time to settle.</p></li>
+<li><p>A success result is returned; if the goal was pre-empted or a ROS shutdown
+occurred, the appropriate ActionLib state is set instead.</p></li>
+</ol>
+<p>Timing, waiting strategy and topic names are easily changed in
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">execute_cb()</span></code>.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="control_gripper.ControlGripperServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">control_gripper.</span></span><span class="sig-name descname"><span class="pre">ControlGripperServer</span></span><a class="reference internal" href="_modules/control_gripper.html#ControlGripperServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_gripper.ControlGripperServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Lightweight ActionLib wrapper around a boolean gripper command topic.</p>
+<section id="id16">
+<h2>Variables<a class="headerlink" href="#id16" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>cmd_pub</dt><dd><p><a href="#id17"><span class="problematic" id="id18">:pyclass:`rospy.Publisher`</span></a> streaming <code class="docutils literal notranslate"><span class="pre">std_msgs/Bool</span></code> to
+<code class="docutils literal notranslate"><span class="pre">/cmd_vel/gripper</span></code>.</p>
+</dd>
+<dt>server</dt><dd><p><a href="#id19"><span class="problematic" id="id20">:pyclass:`actionlib.SimpleActionServer`</span></a> handling the
+<strong>gripper_control</strong> namespace.</p>
+</dd>
+</dl>
+<p>Advertise publisher and start the ActionLib server.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="control_gripper.ControlGripperServer.execute_cb">
+<span class="sig-name descname"><span class="pre">execute_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.msg.GripperControlAction.Goal</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/control_gripper.html#ControlGripperServer.execute_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_gripper.ControlGripperServer.execute_cb" title="Link to this definition"></a></dt>
+<dd><p>Act on <em>goal.gripnogrip</em> and report the outcome to the Action client.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<section id="control-wheel-py">
+<span id="module-control_wheel"></span><h2>control_wheel.py<a class="headerlink" href="#control-wheel-py" title="Link to this heading"></a></h2>
+<section id="action-level-base-controller-for-following-a-coarse-navigation-path">
+<h3>Action-level <strong>base controller</strong> for following a coarse navigation path<a class="headerlink" href="#action-level-base-controller-for-following-a-coarse-navigation-path" title="Link to this heading"></a></h3>
+<p><cite>ControlMovementServer</cite> exposes the <a href="#id21"><span class="problematic" id="id22">:ros:`tiago1/MovementControlAction`</span></a>
+namespace.  Each goal carries a complete <a href="#id23"><span class="problematic" id="id24">:rosmsg:`nav_msgs/Path`</span></a>; the server
+steers the robot towards the <strong>first waypoint only</strong> with a proportional
+controller and then reports <em>succeeded</em>.  Replace the placeholder loop with a
+full trajectory tracker when integrating real localisation / odometry.</p>
+<section id="id25">
+<h4>ROS interface<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">geometry_msgs/Twist</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/cmd_vel/wheel</span></code></p></td>
+<td><p>Linear velocity in the map frame – only <code class="docutils literal notranslate"><span class="pre">x</span></code>/<code class="docutils literal notranslate"><span class="pre">y</span></code> are used</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>action server</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/MovementControlAction</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">movement_control</span></code></p></td>
+<td><p>Goal → <code class="docutils literal notranslate"><span class="pre">path</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Path</span></code>)
+Feedback → <strong>status</strong> (string)
+Result → <strong>success</strong> (bool)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="control-logic">
+<h3>Control logic<a class="headerlink" href="#control-logic" title="Link to this heading"></a></h3>
+<p><em>Read first waypoint → compute planar error → send velocity</em></p>
+<p><span class="math notranslate nohighlight">\(v_x = k_p \cdot \Delta x,\; v_y = k_p \cdot \Delta y\)</span> with
+<em>kₚ = 0.01</em>.
+The controller runs <strong>once</strong> per goal (fire-and-forget stub).  Real deployment
+should iterate over every pose, add angular control and stop conditions.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="control_wheel.ControlMovementServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">control_wheel.</span></span><span class="sig-name descname"><span class="pre">ControlMovementServer</span></span><a class="reference internal" href="_modules/control_wheel.html#ControlMovementServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_wheel.ControlMovementServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Minimal ActionLib wrapper driving the robot base towards the first waypoint.</p>
+<section id="id26">
+<h2>Variables<a class="headerlink" href="#id26" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>cmd_pub</dt><dd><p>Publishes <a href="#id27"><span class="problematic" id="id28">:rosmsg:`geometry_msgs/Twist`</span></a> on <code class="docutils literal notranslate"><span class="pre">/cmd_vel/wheel</span></code>.</p>
+</dd>
+<dt>server</dt><dd><p>Action server handling <strong>movement_control</strong> goals.</p>
+</dd>
+</dl>
+<p>Advertise publisher and bring up the ActionLib server.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="control_wheel.ControlMovementServer.execute_cb">
+<span class="sig-name descname"><span class="pre">execute_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.msg.MovementControlAction.Goal</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/control_wheel.html#ControlMovementServer.execute_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_wheel.ControlMovementServer.execute_cb" title="Link to this definition"></a></dt>
+<dd><p>Drive once towards the first pose in <a href="#id29"><span class="problematic" id="id30">:pyattr:`goal.path`</span></a>.</p>
+<p>Succeeds after a fixed 2-second actuation delay.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<section id="encoder-arm-py">
+<span id="module-encoder_arm"></span><h2>encoder_arm.py<a class="headerlink" href="#encoder-arm-py" title="Link to this heading"></a></h2>
+<section id="synthetic-joint-position-sensor-for-development-without-hardware">
+<h3>Synthetic <strong>joint-position sensor</strong> for development without hardware<a class="headerlink" href="#synthetic-joint-position-sensor-for-development-without-hardware" title="Link to this heading"></a></h3>
+<p>Many nodes—controllers, loggers, dashboards—need a continuous stream of arm
+encoder data.  When the real TIAGo arm is not connected, this script fakes the
+signal by emitting <em>pseudo-random</em> readings at a fixed rate so that the rest of
+the stack can still run and be tested.</p>
+<section id="id31">
+<h4>ROS interface<a class="headerlink" href="#id31" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/encoder_arm</span></code></p></td>
+<td><p>Simulated joint angle in <strong>degrees</strong> (0 – 359)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="behaviour">
+<h3>Behaviour<a class="headerlink" href="#behaviour" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Frequency</strong> 10 Hz (configurable via the <a href="#id32"><span class="problematic" id="id33">:pydata:`rate`</span></a> variable).</p></li>
+<li><p><strong>Value generator</strong> A plain call to <a href="#id34"><span class="problematic" id="id35">:pymeth:`random.uniform(0, 359)`</span></a> rounded
+to an integer gives the appearance of a freely moving joint without any
+kinematic constraints.  Replace this with a <em>random walk</em> or a deterministic
+table if you need smoother motion or repeatability.</p></li>
+</ul>
+<p>The node quits automatically when ROS shuts down (Ctrl-C or <code class="docutils literal notranslate"><span class="pre">rosnode</span> <span class="pre">kill</span></code>).</p>
+</section>
+</section>
 <dl class="py function">
 <dt class="sig sig-object py" id="encoder_arm.arm_encoder">
-<span class="sig-prename descclassname"><span class="pre">encoder_arm.</span></span><span class="sig-name descname"><span class="pre">arm_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder_arm.html#arm_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_arm.arm_encoder" title="Link to this definition"></a></dt>
-<dd><p>Initialize the ROS node and publish simulated arm encoder values.</p>
-<section id="process">
-<h2>Process<a class="headerlink" href="#process" title="Link to this heading"></a></h2>
+<span class="sig-prename descclassname"><span class="pre">encoder_arm.</span></span><span class="sig-name descname"><span class="pre">arm_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/encoder_arm.html#arm_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_arm.arm_encoder" title="Link to this definition"></a></dt>
+<dd><p>Spin a 10 Hz loop that publishes fake encoder positions.</p>
+<section id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Initialize ROS node ‘encoder_arm’.</p></li>
-<li><p>Create a Publisher on ‘/encoder_arm’ for Int32 messages.</p></li>
-<li><p>Loop at 10 Hz until shutdown:
-a. Generate a random float between 0 and 5.
-b. Wrap in Int32 and publish.
-c. Sleep to maintain loop rate.</p></li>
+<li><p>Initialise the ROS node under the name <strong>encoder_arm</strong>.</p></li>
+<li><p>Advertise <code class="docutils literal notranslate"><span class="pre">/encoder_arm</span></code> as an <a href="#id36"><span class="problematic" id="id37">:pyclass:`Int32`</span></a> publisher.</p></li>
+<li><p>Loop until shutdown: generate a random angle, publish, then sleep to
+maintain the target frequency.</p></li>
 </ol>
 </section>
 </dd></dl>
 
-<p id="module-encoder_gripper">encoder_gripper.py</p>
-<p>ROS node that simulates the gripper encoder by publishing random encoder readings.
-Publishes Int32 messages on ‘/encoder_gripper’ at 10 Hz for testing downstream controllers.</p>
+<section id="encoder-gripper-py">
+<span id="module-encoder_gripper"></span><h2>encoder_gripper.py<a class="headerlink" href="#encoder-gripper-py" title="Link to this heading"></a></h2>
+<section id="dummy-gripper-position-sensor-for-controller-and-ui-testing">
+<h3>Dummy <strong>gripper-position sensor</strong> for controller and UI testing<a class="headerlink" href="#dummy-gripper-position-sensor-for-controller-and-ui-testing" title="Link to this heading"></a></h3>
+<p>When the physical TIAGo gripper is offline—or when you run the stack in CI—this
+node supplies a stand-in encoder signal.  A stream of pseudo-random integers is
+enough for downstream PID loops, dashboards or loggers to stay alive and be
+exercised.</p>
+<section id="id38">
+<h4>ROS interface<a class="headerlink" href="#id38" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/encoder_gripper</span></code></p></td>
+<td><p>Simulated opening width <strong>in millimetres</strong> (0 – 100 mm)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="characteristics">
+<h3>Characteristics<a class="headerlink" href="#characteristics" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Rate</strong> 10 Hz (see <a href="#id39"><span class="problematic" id="id40">:pydata:`rate`</span></a>).</p></li>
+<li><p><strong>Distribution</strong> Uniform <a href="#id41"><span class="problematic" id="id42">*</span></a>U*(0, 100) → every tick is independent.
+Swap for a random walk if you prefer smoother traces.</p></li>
+</ul>
+<p>The node ends automatically on ROS shutdown.</p>
+</section>
+</section>
 <dl class="py function">
 <dt class="sig sig-object py" id="encoder_gripper.gripper_encoder">
-<span class="sig-prename descclassname"><span class="pre">encoder_gripper.</span></span><span class="sig-name descname"><span class="pre">gripper_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder_gripper.html#gripper_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_gripper.gripper_encoder" title="Link to this definition"></a></dt>
-<dd><p>Initialize the ROS node and publish simulated gripper encoder values.</p>
-<section id="id1">
-<h2>Process<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<span class="sig-prename descclassname"><span class="pre">encoder_gripper.</span></span><span class="sig-name descname"><span class="pre">gripper_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/encoder_gripper.html#gripper_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_gripper.gripper_encoder" title="Link to this definition"></a></dt>
+<dd><p>Advertise <code class="docutils literal notranslate"><span class="pre">/encoder_gripper</span></code> and publish fake readings forever.</p>
+<section id="id43">
+<h2>Steps<a class="headerlink" href="#id43" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Initialize ROS node ‘encoder_gripper’.</p></li>
-<li><p>Create a Publisher on ‘/encoder_gripper’ for Int32 messages.</p></li>
-<li><p>Loop at 10 Hz until shutdown:
-a. Generate a random float between 0 and 5.
-b. Wrap the value in an Int32 message and publish.
-c. Sleep to maintain loop rate.</p></li>
+<li><p>Initialise the node as <strong>encoder_gripper</strong>.</p></li>
+<li><p>Create an <a href="#id44"><span class="problematic" id="id45">:pyclass:`Int32`</span></a> publisher.</p></li>
+<li><p>In a 10 Hz loop generate a number in [0, 100], publish, sleep.</p></li>
 </ol>
 </section>
 </dd></dl>
 
-<p id="module-encoder_wheel">encoder_wheel.py</p>
-<p>ROS node that simulates wheel encoder readings. Publishes random encoder counts
-on ‘/encoder_wheel’ at 10 Hz for testing movement controllers.</p>
+<section id="encoder-wheel-py">
+<span id="module-encoder_wheel"></span><h2>encoder_wheel.py<a class="headerlink" href="#encoder-wheel-py" title="Link to this heading"></a></h2>
+<section id="synthetic-wheel-odometry-source-for-base-controller-development">
+<h3>Synthetic <strong>wheel-odometry source</strong> for base-controller development<a class="headerlink" href="#synthetic-wheel-odometry-source-for-base-controller-development" title="Link to this heading"></a></h3>
+<p>In simulation or on hardware-less CI runners, the movement stack still needs a
+continuous stream of wheel encoder ticks so that dead-reckoning, PID loops and
+logging tools stay active.
+<cite>encoder_wheel.py</cite> fulfils that role by broadcasting <em>pseudo-random</em> tick
+counts at a fixed rate.</p>
+<section id="id46">
+<h4>ROS interface<a class="headerlink" href="#id46" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/encoder_wheel</span></code></p></td>
+<td><p>Raw tick count <strong>per wheel revolution</strong> (0 – 999)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="node-behaviour">
+<h3>Node behaviour<a class="headerlink" href="#node-behaviour" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Frequency</strong> 10 Hz (controlled by <a href="#id47"><span class="problematic" id="id48">:pydata:`rate`</span></a>).</p></li>
+<li><p><strong>Tick generator</strong> Uniform <em>U*(0, 999) – every message is independent.
+For smoother traces swap the one-liner for a *random-walk</em> or sine table.</p></li>
+</ul>
+<p>The node exits cleanly when ROS is shut down.</p>
+</section>
+</section>
 <dl class="py function">
 <dt class="sig sig-object py" id="encoder_wheel.wheel_encoder">
-<span class="sig-prename descclassname"><span class="pre">encoder_wheel.</span></span><span class="sig-name descname"><span class="pre">wheel_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encoder_wheel.html#wheel_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_wheel.wheel_encoder" title="Link to this definition"></a></dt>
-<dd><p>Initialize the ROS node and publish simulated wheel encoder values.</p>
-<section id="id2">
-<h2>Process<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<span class="sig-prename descclassname"><span class="pre">encoder_wheel.</span></span><span class="sig-name descname"><span class="pre">wheel_encoder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/encoder_wheel.html#wheel_encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encoder_wheel.wheel_encoder" title="Link to this definition"></a></dt>
+<dd><p>Publish fake wheel-encoder ticks until ROS shutdown.</p>
+<section id="id49">
+<h2>Steps<a class="headerlink" href="#id49" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Initialize ROS node ‘encoder_wheel’.</p></li>
-<li><p>Advertise ‘/encoder_wheel’ for Int32 messages.</p></li>
-<li><p>Loop at 10 Hz:
-a. Generate a random float between 0 and 5.
-b. Wrap the value in an Int32 message and publish.
-c. Sleep to maintain loop rate.</p></li>
+<li><p>Initialise the node as <strong>encoder_wheel</strong>.</p></li>
+<li><p>Advertise <code class="docutils literal notranslate"><span class="pre">/encoder_wheel</span></code>.</p></li>
+<li><p>Loop at 10 Hz → generate a tick count, publish, sleep.</p></li>
 </ol>
 </section>
 </dd></dl>
 
-<p id="module-force">force.py</p>
-<p>ROS node that simulates a force sensor by publishing random force readings.
-Publishes Float32 messages on ‘/force’ at 10 Hz for testing manipulation tasks.</p>
+<section id="force-py">
+<span id="module-force"></span><h2>force.py<a class="headerlink" href="#force-py" title="Link to this heading"></a></h2>
+<section id="synthetic-end-effector-force-sensor-for-manipulation-pipelines">
+<h3>Synthetic <strong>end-effector force sensor</strong> for manipulation pipelines<a class="headerlink" href="#synthetic-end-effector-force-sensor-for-manipulation-pipelines" title="Link to this heading"></a></h3>
+<p>Grasp controllers, compliant planners and safety monitors often rely on a
+continuous force signal.  When real hardware is absent (desktop development,
+CI/CD, remote teaching) this node publishes <em>pseudo-random</em> force values so
+that the rest of the stack can still run and be exercised.</p>
+<section id="id50">
+<h4>ROS interface<a class="headerlink" href="#id50" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Float32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/force</span></code></p></td>
+<td><p>Simulated contact force <strong>in Newtons</strong> (0 – 50 N)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id51">
+<h3>Characteristics<a class="headerlink" href="#id51" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Rate</strong> 10 Hz (set by <a href="#id52"><span class="problematic" id="id53">:pydata:`rate`</span></a>).</p></li>
+<li><p><strong>Distribution</strong> Uniform <a href="#id54"><span class="problematic" id="id55">*</span></a>U*(0 N, 50 N).
+Swap for a Gaussian or a replay from a CSV file if you need repeatable
+sequences or more realistic dynamics.</p></li>
+</ul>
+<p>The node shuts down automatically on Ctrl-C or <code class="docutils literal notranslate"><span class="pre">rosnode</span> <span class="pre">kill</span></code>.</p>
+</section>
+</section>
 <dl class="py function">
 <dt class="sig sig-object py" id="force.force_sensor">
-<span class="sig-prename descclassname"><span class="pre">force.</span></span><span class="sig-name descname"><span class="pre">force_sensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/force.html#force_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#force.force_sensor" title="Link to this definition"></a></dt>
-<dd><p>Initialize the ROS node and publish simulated force sensor values.</p>
-<section id="id3">
-<h2>Process<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<span class="sig-prename descclassname"><span class="pre">force.</span></span><span class="sig-name descname"><span class="pre">force_sensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/force.html#force_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#force.force_sensor" title="Link to this definition"></a></dt>
+<dd><p>Emit fake force values at 10 Hz until ROS shutdown.</p>
+<section id="id56">
+<h2>Steps<a class="headerlink" href="#id56" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Initialize ROS node ‘force’.</p></li>
-<li><p>Advertise ‘/force’ for Float32 messages.</p></li>
-<li><p>Loop at 10 Hz:
-a. Generate a random force value between 0 and 5 Newtons.
-b. Wrap the value in a Float32 message and publish.
-c. Sleep to maintain loop rate.</p></li>
+<li><p>Initialise the node as <strong>force</strong>.</p></li>
+<li><p>Advertise <code class="docutils literal notranslate"><span class="pre">/force</span></code>.</p></li>
+<li><p>In the main loop generate a random float, publish it, sleep.</p></li>
 </ol>
 </section>
 </dd></dl>

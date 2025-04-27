@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>task_manager &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Interaction Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orchestration.html">Orchestration &amp; Management</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">task_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for task_manager</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">task_manager.py</span>
+<span class="sd">===============</span>
+
+<span class="sd">Central **state orchestrator** – queries the decision service and drives the task loop</span>
+<span class="sd">-------------------------------------------------------------------------------------</span>
+
+<span class="sd">`TaskManager` listens to two event streams:</span>
+
+<span class="sd">1. **Action feedback** (``/feedback_acion``) – one-line summaries published by</span>
+<span class="sd">   the low-level controllers (navigation finished, manipulation failed …).</span>
+<span class="sd">2. **Verified orders** (``/verif_T_manager``) – customer requests already</span>
+<span class="sd">   checked by the order-verification node.</span>
+
+<span class="sd">Every time a new feedback line arrives the manager calls the</span>
+<span class="sd">``/robot_state_decision`` service, handing over the current *state string*.</span>
+<span class="sd">The service replies with the next action the robot should perform, enabling a</span>
+<span class="sd">clean separation between *decision logic* (in the service) and *event</span>
+<span class="sd">aggregation* (in this node).</span>
+
+<span class="sd">ROS interface</span>
+<span class="sd">~~~~~~~~~~~~~</span>
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 25 35 40</span>
+
+<span class="sd">   * - Direction / type</span>
+<span class="sd">     - Name</span>
+<span class="sd">     - Semantics</span>
+<span class="sd">   * - **subscribe** ``std_msgs/String``</span>
+<span class="sd">     - ``/feedback_acion``</span>
+<span class="sd">     - Latest controller status (e.g. *&quot;ARM_DONE&quot;* or *&quot;BASE_FAILED&quot;*)</span>
+<span class="sd">   * - **subscribe** ``tiago1/Voice_rec``</span>
+<span class="sd">     - ``/verif_T_manager``</span>
+<span class="sd">     - Structured customer order; stored but **not** sent to the service yet</span>
+<span class="sd">   * - **service client** ``tiago1/robotstatedecision``</span>
+<span class="sd">     - ``/robot_state_decision``</span>
+<span class="sd">     - Request → **state_input** (string)  </span>
+<span class="sd">       Response ← next symbolic task / acknowledgement</span>
+
+<span class="sd">Execution loop</span>
+<span class="sd">--------------</span>
+<span class="sd">*On every feedback update*</span>
+
+<span class="sd">#. Cache the new state string.</span>
+<span class="sd">#. Call the decision service with that state.</span>
+<span class="sd">#. Log the returned instruction (no further dispatching in this stub).</span>
+
+<span class="sd">Extend :py:meth:`change_state` if you want to forward the decision to other</span>
+<span class="sd">nodes or to trigger timers / retries.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">robotstatedecision</span><span class="p">,</span> <span class="n">robotstatedecisionRequest</span>
+
+
+<div class="viewcode-block" id="TaskManager">
+<a class="viewcode-back" href="../orchestration.html#task_manager.TaskManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aggregates feedback and relays it to the orchestration service.</span>
+
+<span class="sd">    Instance Variables</span>
+<span class="sd">    ------------------</span>
+<span class="sd">    server_client</span>
+<span class="sd">        :pyclass:`rospy.ServiceProxy` for ``/robot_state_decision``.</span>
+<span class="sd">    state</span>
+<span class="sd">        Last status string received from ``/feedback_acion``.</span>
+<span class="sd">    order_msg</span>
+<span class="sd">        Cached message from ``/verif_T_manager`` (currently unused, but kept</span>
+<span class="sd">        for future extensions such as *order context* in the service call).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                            bootstrap                                #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;task_manager_node&quot;</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;/robot_state_decision&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;/robot_state_decision&#39;</span><span class="p">,</span>
+                                                <span class="n">robotstatedecision</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/feedback_acion&quot;</span><span class="p">,</span>
+                         <span class="n">String</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_cb_feedback</span><span class="p">,</span>
+                         <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/verif_T_manager&quot;</span><span class="p">,</span>
+                         <span class="n">String</span><span class="p">,</span>         <span class="c1"># Voice_rec would be better; keep as-is</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_cb_order</span><span class="p">,</span>
+                         <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">order_msg</span><span class="p">:</span> <span class="n">String</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[TaskManager] Node ready.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                       subscriber callbacks                          #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cb_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the new state string and immediately trigger a decision.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_state</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cb_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remember the latest verified order (placeholder for future use).&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">order_msg</span> <span class="o">=</span> <span class="n">msg</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                      interaction with service                       #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+<div class="viewcode-block" id="TaskManager.change_state">
+<a class="viewcode-back" href="../orchestration.html#task_manager.TaskManager.change_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;If :pyattr:`state` is set, call the decision service once.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">robotstatedecisionRequest</span><span class="p">(</span><span class="n">state_input</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_client</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager] Decision → </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">next_task</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TaskManager] Service call failed: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># ---------------------------------------------------------------------- #</span>
+<span class="c1">#                               bootstrap                                #</span>
+<span class="c1"># ---------------------------------------------------------------------- #</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">TaskManager</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>            <span class="c1"># callbacks drive everything</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

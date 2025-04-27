@@ -17,6 +17,7 @@
       <script src="_static/documentation_options.js?v=f2a433a1"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -142,46 +143,43 @@ rosservice<span class="w"> </span>call<span class="w"> </span>/cancel_order<span
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="perception.html">Perception Components</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="perception.html#camera-py">camera.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#camera.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="perception.html#camera-preprocessing-py">camera_preprocessing.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#camera_preprocessing.CameraPreprocessing"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="perception.html#lidar-py">lidar.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#lidar.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="perception.html#sonar-py">sonar.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#sonar.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="perception.html#object-detection-py">object_detection.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#object_detection.ObjectDetector"><code class="docutils literal notranslate"><span class="pre">ObjectDetector</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="perception.html#sensor-fusion-py">sensor_fusion.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#sensor_fusion.Adapter"><code class="docutils literal notranslate"><span class="pre">Adapter</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#sensor_fusion.SensorFusionNode"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="perception.html#distance-estimation-py">distance_estimation.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.ClearingStrategy"><code class="docutils literal notranslate"><span class="pre">ClearingStrategy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.DistanceEstimator"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.FindPlacementStrategy"><code class="docutils literal notranslate"><span class="pre">FindPlacementStrategy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.TableAnalysisStrategy"><code class="docutils literal notranslate"><span class="pre">TableAnalysisStrategy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="perception.html#distance_estimation.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#path_planning.PathPlanner"><code class="docutils literal notranslate"><span class="pre">PathPlanner</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning_table_placement.ReasoningTablePlacement"><code class="docutils literal notranslate"><span class="pre">ReasoningTablePlacement</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning_table_placement.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reasoning.html#slam.SLAM"><code class="docutils literal notranslate"><span class="pre">SLAM</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#path-planning-py">path_planning.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning-action-py">reasoning_action.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning-order-verification-py">reasoning_order_verification.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#reasoning-table-placement-py">reasoning_table_placement.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#speech-generator-py">speech_generator.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reasoning.html#slam-py">slam.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder_arm.arm_encoder"><code class="docutils literal notranslate"><span class="pre">arm_encoder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder_gripper.gripper_encoder"><code class="docutils literal notranslate"><span class="pre">gripper_encoder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder_wheel.wheel_encoder"><code class="docutils literal notranslate"><span class="pre">wheel_encoder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="actuation.html#force.force_sensor"><code class="docutils literal notranslate"><span class="pre">force_sensor()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#control-arm-py">control_arm.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#control-gripper-py">control_gripper.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#control-wheel-py">control_wheel.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder-arm-py">encoder_arm.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder-gripper-py">encoder_gripper.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#encoder-wheel-py">encoder_wheel.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actuation.html#force-py">force.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="interaction.html#voice_recognition.VoiceRecognition"><code class="docutils literal notranslate"><span class="pre">VoiceRecognition</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="interaction.html#speaker.Speaker"><code class="docutils literal notranslate"><span class="pre">Speaker</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#voice-recognition-py">voice_recognition.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#speaker-py">speaker.py</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="orchestration.html">Orchestration &amp; Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="orchestration.html#orchestration-and-coordination-py">orchestration_and_coordination.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orchestration.html#task-manager-py">task_manager.py</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>

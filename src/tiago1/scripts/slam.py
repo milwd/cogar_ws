@@ -1,10 +1,45 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 """
 slam.py
+=======
 
-ROS node stub for Simultaneous Localization and Mapping (SLAM). Subscribes to
-fused LaserScan data, publishes an empty OccupancyGrid map and Odometry message.
-Replace stub logic with actual SLAM algorithms to update map and robot pose.
+Minimal **SLAM façade** — publishes a blank map + identity odometry so the
+navigation stack can launch before the real SLAM backend is ready.
+
+Purpose
+-------
+* **Bring-up**: rviz, move_base and other consumers expect `/map` and `/odom`
+  to exist; this stub unblocks integration work in early project stages.
+* **Interface contract**: documents *exactly* which message types and frames
+  the future SLAM solution must honour.
+
+Topic interface
+---------------
+**Subscribes**
+
+* ``/fused_scan`` (``sensor_msgs/LaserScan``) – pre-filtered 2-D scan produced
+  by the sensor-fusion node.
+
+**Publishes**
+
+* ``/map``  (``nav_msgs/OccupancyGrid``) – 10 × 10 cell grid, 5 cm resolution,
+  centred at 0,0; currently all *unknown/free* (value 0).  
+* ``/odom`` (``nav_msgs/Odometry``) – identity pose in ``odom`` frame, zero
+  twist; child frame ``base_link``.
+
+Coordinate frames
+-----------------
+``map``  ←— identity TF —→ ``odom``  ←— [[ real TF broadcaster ]] —→ ``base_link``
+
+The stub does **not** broadcast TF transforms; downstream nodes must rely on
+static transforms or their own broadcasters until a full SLAM stack replaces
+this script.
+
+Replace-me sections
+-------------------
+* ``update_map(data)`` – insert occupancy grid update from scan + pose.
+* ``update_pose(data)`` – insert state-estimation output (EKF, graph-SLAM…).
+
 """
 
 import rospy
@@ -13,25 +48,34 @@ from nav_msgs.msg import OccupancyGrid, Odometry
 import sys
 
 
+
 class SLAM:
     """
-    SLAM node that generates and publishes map and odometry from sensor data.
+    Straight-forward container for publishers + subscriber.
 
-    Attributes
+    Variables
     ----------
-    map_pub : rospy.Publisher
-        Publisher for the OccupancyGrid map on '/map'.
-    odom_pub : rospy.Publisher
-        Publisher for Odometry messages on '/odom'.
+    map_pub
+        Latched publisher for the occupancy grid so late subscribers
+        receive the most recent map instantly.
+    odom_pub
+        Latched publisher for odometry for the same reason.
     """
 
+    # ------------------------------------------------------------------ #
+    #                               SET-UP                               #
+    # ------------------------------------------------------------------ #
     def __init__(self):
         """
-        Initialize the SLAM node:
+        Initialise the ROS node and wire its single input + two outputs.
 
-        - Initialize ROS node 'slam_node'.
-        - Subscribe to '/fused_scan' topic for LaserScan messages.
-        - Advertise '/map' and '/odom' topics.
+        Steps
+        -----
+        1. Call :pyfunc:`rospy.init_node` with a descriptive name.
+        2. Subscribe to the pre-filtered **fused** laser scan.  Queue size 1
+           keeps latency low while scans stream in (20–30 Hz typical).
+        3. Advertise both outputs with *latch=True* so tools like rviz see
+           the very first map/odom without waiting a full second.
         """
         self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
         rospy.init_node(f'{self.robot_number}_slam_node')
@@ -44,41 +88,54 @@ class SLAM:
         self.vel = data
         # self.odom_pub.publish(data)
 
+        rospy.Subscriber("/fused_scan", LaserScan, self.callback,  queue_size=1)
 
-    def callback(self, data):
+        self.map_pub = rospy.Publisher(
+            "/map",  OccupancyGrid, queue_size=1, latch=True)
+        self.odom_pub = rospy.Publisher(
+            "/odom", Odometry,        queue_size=1, latch=True)
+
+        rospy.loginfo("[SLAM] Stub node running — publishing blank map + odom.")
+
+    # ------------------------------------------------------------------ #
+    #                             CALLBACK                               #
+    # ------------------------------------------------------------------ #
+    def callback(self, scan_msg):
         """
-        Callback for incoming fused LaserScan data.
+        Handle each incoming fused scan.
 
         Parameters
         ----------
-        data : sensor_msgs.msg.LaserScan
-            Incoming fused scan to be used for SLAM.
+        scan_msg : sensor_msgs.msg.LaserScan
+            Currently ignored; present to show where real SLAM would ingest
+            range data.
+            
 
-        Process
-        -------
-        1. Create an empty OccupancyGrid with fixed resolution, size, and origin.
-        2. Initialize map_msg.data as zeros (unknown/free space).
-        3. Create an empty Odometry message with identity pose and zero twist.
-        4. Publish both map_msg and odom_msg.
-        5. Notes in code indicate where to replace with real SLAM updates.
+        Pipeline
+        --------
+        1. **Blank map** – 10 × 10 cells, 0.05 m resolution, centred at
+           (-2.5, -2.5) so (0,0) lies roughly in the middle.  All cell values
+           initialised to *0* (free/unknown).  
+        2. **Identity odometry** – pose = (0,0,0) + unit quaternion,
+           twist = (0,0,0).  
+        3. Publish both messages.  In a real implementation steps 1 & 2 would
+           be replaced by *update_map* and *update_pose* respectively.
         """
-        # Build empty map
+        # ---------- 1. Build blank occupancy grid ----------------------- #
         map_msg = OccupancyGrid()
         map_msg.header.stamp = rospy.Time.now()
         map_msg.header.frame_id = "map"
-        map_msg.info.resolution = 0.05
-        map_msg.info.width = 10
+
+        map_msg.info.resolution = 0.05          # 5 cm per grid cell
+        map_msg.info.width  = 10                # 10 cells → 0.5 m
         map_msg.info.height = 10
-        map_msg.info.origin.position.x = -2.5
+        map_msg.info.origin.position.x = -2.5   # centre map around (0,0)
         map_msg.info.origin.position.y = -2.5
-        map_msg.info.origin.position.z = 0
-        map_msg.info.origin.orientation.x = 0
-        map_msg.info.origin.orientation.y = 0
-        map_msg.info.origin.orientation.z = 0
         map_msg.info.origin.orientation.w = 1
+
         map_msg.data = [0] * (map_msg.info.width * map_msg.info.height)
 
-        # Build empty odometry
+        # ---------- 2. Build identity odometry -------------------------- #
         odom_msg = Odometry()
         odom_msg.header.stamp = rospy.Time.now()
         odom_msg.header.frame_id = "odom"
@@ -104,16 +161,15 @@ class SLAM:
         self.odom_pub.publish(self.vel)
         self.map_pub.publish(map_msg)
 
-if __name__ == '__main__':
-    """
-    Main entrypoint: instantiate SLAM node and publish map+odom at 1 Hz.
-    """
+
+# ---------------------------------------------------------------------- #
+#                               MAIN LOOP                                #
+# ---------------------------------------------------------------------- #
+if __name__ == "__main__":
     slam = SLAM()
-    rate = rospy.Rate(1)
+    rate = rospy.Rate(1)  # keep script alive; real scans drive updates
     try:
         while not rospy.is_shutdown():
-            # Force callback with dummy data if needed, or rely on incoming scans
-            # slam.callback(dummy_data)  # remove if real scans drive updates
             rate.sleep()
     except rospy.ROSInterruptException:
         pass

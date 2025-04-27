@@ -153,7 +153,7 @@ class DistanceEstimator:
         4. Run both strategies, merge their keywords, publish.  
         5. Clear stored detections to avoid duplicate processing.
 
-    Public attributes are intentionally *not* exposed; everything is internal
+    Public variables are intentionally *not* exposed; everything is internal
     to the node.
     """
 

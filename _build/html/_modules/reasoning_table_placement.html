@@ -40,7 +40,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
@@ -76,89 +77,168 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">reasoning_table_placement.py</span>
+<span class="sd">============================</span>
 
-<span class="sd">ROS node that listens to placement decisions and publishes table</span>
-<span class="sd">commands accordingly. Converts high-level decisions (&quot;PLACE&quot;, &quot;CLEAR&quot;)</span>
-<span class="sd">into low-level commands (&quot;PLACE_DISH&quot;, &quot;CLEAR_TABLE&quot;) for execution.</span>
+<span class="sd">Node purpose</span>
+<span class="sd">------------</span>
+<span class="sd">*Bridge from cognition to manipulation.*  </span>
+<span class="sd">It listens to high-level placement **decisions** coming from</span>
+<span class="sd">``/placement_decision`` (produced by *distance_estimator*) and converts</span>
+<span class="sd">them into low-level **commands** that the manipulation stack</span>
+<span class="sd">understands.</span>
+
+<span class="sd">Decision → Command mapping</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">=========  ===============  ==========================================</span>
+<span class="sd">Decision   Command sent     Rationale</span>
+<span class="sd">=========  ===============  ==========================================</span>
+<span class="sd">``PLACE``  ``PLACE_DISH``   There is room for one more plate on the table.</span>
+<span class="sd">``CLEAR``  ``CLEAR_TABLE``  Table is finished; remove crockery.</span>
+<span class="sd">*other*    ``NO_ACTION``    Either “FULL” or “IGNORE” → do nothing now.</span>
+<span class="sd">=========  ===============  ==========================================</span>
+
+<span class="sd">Why a dedicated mapper?</span>
+<span class="sd">-----------------------</span>
+<span class="sd">* **Decoupling** – you can swap in a smarter reasoning algorithm without</span>
+<span class="sd">  touching the gripper driver, or vice-versa.</span>
+<span class="sd">* **Future proof** – if the execution layer later moves from simple</span>
+<span class="sd">  string commands to, e.g., action goals or behaviour-tree ticks, only</span>
+<span class="sd">  *this* file needs editing.</span>
+
+<span class="sd">ROS topic interface</span>
+<span class="sd">-------------------</span>
+<span class="sd">**Subscribes**</span>
+
+<span class="sd">* ``/placement_decision``  : ``std_msgs/String``  </span>
+<span class="sd">  Example payload → ``&quot;Decision: PLACE, IGNORE&quot;``</span>
+
+<span class="sd">**Publishes**</span>
+
+<span class="sd">* ``/table_reasoning_commands``  : ``std_msgs/String``  </span>
+<span class="sd">  One of ``&quot;PLACE_DISH&quot;``, ``&quot;CLEAR_TABLE&quot;``, ``&quot;NO_ACTION&quot;``.</span>
+
+
+<span class="sd">Implementation notes</span>
+<span class="sd">--------------------</span>
+<span class="sd">* A simple *substring* check keeps the logic robust against future</span>
+<span class="sd">  additions to the decision string (timestamps, confidence scores …).</span>
+<span class="sd">* The publisher queues **10** messages to absorb short bursts without</span>
+<span class="sd">  back-pressure.</span>
+<span class="sd">* All log lines are throttled or filtered to keep the ROS console tidy.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
 
+
 <div class="viewcode-block" id="ReasoningTablePlacement">
 <a class="viewcode-back" href="../reasoning.html#reasoning_table_placement.ReasoningTablePlacement">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ReasoningTablePlacement</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Subscribes to placement decisions and publishes table placement commands.</span>
+<span class="sd">    Runtime object that wires subscribers → callbacks → publisher.</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    decision_sub : rospy.Subscriber</span>
-<span class="sd">        Subscriber to &#39;/placement_decision&#39; for receiving decisions.</span>
-<span class="sd">    command_pub : rospy.Publisher</span>
-<span class="sd">        Publisher to &#39;/table_reasoning_commands&#39; for sending commands.</span>
+<span class="sd">    Public API consists solely of the constructor; the rest is handled</span>
+<span class="sd">    internally until ROS shuts down.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                              SET-UP                                #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the reasoning_table_placement node.</span>
+<span class="sd">        Launch the node and register its single pub/sub pair.</span>
 
-<span class="sd">        - Initialize ROS node &#39;reasoning_table_placement_node&#39;.</span>
-<span class="sd">        - Subscribe to &#39;/placement_decision&#39; to receive decisions.</span>
-<span class="sd">        - Advertise &#39;/table_reasoning_commands&#39; to send commands.</span>
+<span class="sd">        Steps</span>
+<span class="sd">        -----</span>
+<span class="sd">        1. Initialise ROS with the node name</span>
+<span class="sd">           ``reasoning_table_placement_node``.</span>
+<span class="sd">        2. Subscribe to high-level decisions on ``/placement_decision``.</span>
+<span class="sd">        3. Advertise low-level commands on ``/table_reasoning_commands``.</span>
+<span class="sd">        4. Log a start-up banner so launch files can confirm health.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;reasoning_table_placement_node&quot;</span><span class="p">)</span>
 
+        <span class="c1"># Subscriber: high-level decision stream</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decision_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-            <span class="s2">&quot;/placement_decision&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">decision_callback</span><span class="p">)</span>
+            <span class="s2">&quot;/placement_decision&quot;</span><span class="p">,</span>
+            <span class="n">String</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">decision_callback</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Publisher: low-level command stream</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">command_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
-            <span class="s2">&quot;/table_reasoning_commands&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="s2">&quot;/table_reasoning_commands&quot;</span><span class="p">,</span>
+            <span class="n">String</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ReasoningTablePlacement] Node started.&quot;</span><span class="p">)</span>
 
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                            CALLBACK                                #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ReasoningTablePlacement.decision_callback">
 <a class="viewcode-back" href="../reasoning.html#reasoning_table_placement.ReasoningTablePlacement.decision_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">decision_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Process incoming placement decisions and publish corresponding commands.</span>
+<span class="sd">        Translate *cognitive* decision → *motor* command.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        msg : std_msgs.msg.String</span>
-<span class="sd">            The incoming decision message containing decision keywords.</span>
+<span class="sd">            Expected payload examples::</span>
 
-<span class="sd">        Process</span>
-<span class="sd">        -------</span>
-<span class="sd">        - Parse msg.data for keywords &quot;PLACE&quot; or &quot;CLEAR&quot;.</span>
-<span class="sd">        - Map decisions to commands: &quot;PLACE_DISH&quot;, &quot;CLEAR_TABLE&quot;, or &quot;NO_ACTION&quot;.</span>
-<span class="sd">        - Publish the appropriate command on &#39;/table_reasoning_commands&#39;.</span>
+<span class="sd">                &quot;Decision: PLACE, CLEAR&quot;</span>
+<span class="sd">                &quot;Decision: FULL, IGNORE&quot;</span>
+
+
+<span class="sd">        Translation logic</span>
+<span class="sd">        -----------------</span>
+<span class="sd">        * If the string contains **``&quot;PLACE&quot;``** → emit ``&quot;PLACE_DISH&quot;``.  </span>
+<span class="sd">        * Else if it contains **``&quot;CLEAR&quot;``** → emit ``&quot;CLEAR_TABLE&quot;``.  </span>
+<span class="sd">        * Otherwise emit ``&quot;NO_ACTION&quot;`` so downstream nodes know the</span>
+<span class="sd">          message was processed but no physical action is required.</span>
+
+<span class="sd">        The simple *contains* check is intentionally robust: future</span>
+<span class="sd">        reasoning nodes may prepend extra metadata (timestamps, scores,</span>
+<span class="sd">        etc.) without breaking this mapper.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">decision</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ReasoningTablePlacement] Received decision: </span><span class="si">{</span><span class="n">decision</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">decision_raw</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ReasoningTablePlacement] Received: </span><span class="si">{</span><span class="n">decision_raw</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;PLACE&quot;</span> <span class="ow">in</span> <span class="n">decision</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;PLACE&quot;</span> <span class="ow">in</span> <span class="n">decision_raw</span><span class="p">:</span>
             <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;PLACE_DISH&quot;</span>
-        <span class="k">elif</span> <span class="s2">&quot;CLEAR&quot;</span> <span class="ow">in</span> <span class="n">decision</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="s2">&quot;CLEAR&quot;</span> <span class="ow">in</span> <span class="n">decision_raw</span><span class="p">:</span>
             <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;CLEAR_TABLE&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;NO_ACTION&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">command_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">command</span><span class="p">))</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ReasoningTablePlacement] Sent command: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ReasoningTablePlacement] Published: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 </div>
 
 
+
+<span class="c1"># ---------------------------------------------------------------------- #</span>
+<span class="c1">#                               ENTRY POINT                              #</span>
+<span class="c1"># ---------------------------------------------------------------------- #</span>
 <div class="viewcode-block" id="main">
 <a class="viewcode-back" href="../reasoning.html#reasoning_table_placement.main">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main entry point: instantiate ReasoningTablePlacement and spin ROS.</span>
+<span class="sd">    Instantiate the node object and hand control to ROS.</span>
+
+<span class="sd">    Only `rospy.ROSInterruptException` is swallowed; any other exception</span>
+<span class="sd">    is allowed to propagate with a full traceback for debugging.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ReasoningTablePlacement</span><span class="p">()</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
         <span class="k">pass</span></div>
+
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

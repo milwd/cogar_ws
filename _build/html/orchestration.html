@@ -48,7 +48,11 @@
 <li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="actuation.html">Actuation &amp; Control Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction Components</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Orchestration &amp; Management</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Orchestration &amp; Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#orchestration-and-coordination-py">orchestration_and_coordination.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#task-manager-py">task_manager.py</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -75,8 +79,209 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="orchestration-management">
-<h1>Orchestration &amp; Management<a class="headerlink" href="#orchestration-management" title="Link to this heading"></a></h1>
+  <section id="module-orchestration_and_coordination">
+<span id="orchestration-management"></span><h1>Orchestration &amp; Management<a class="headerlink" href="#module-orchestration_and_coordination" title="Link to this heading"></a></h1>
+<section id="orchestration-and-coordination-py">
+<h2>orchestration_and_coordination.py<a class="headerlink" href="#orchestration-and-coordination-py" title="Link to this heading"></a></h2>
+<section id="order-queue-state-gateway-for-a-fleet-of-sushi-waiter-robots">
+<h3><strong>Order queue + state gateway</strong> for a fleet of sushi-waiter robots<a class="headerlink" href="#order-queue-state-gateway-for-a-fleet-of-sushi-waiter-robots" title="Link to this heading"></a></h3>
+<p>The node owns a <em>persistent</em> FIFO of customer orders and exposes two ROS
+services:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code> – given the current <strong>state</strong> of a robot
+(<code class="docutils literal notranslate"><span class="pre">Free</span></code>, <code class="docutils literal notranslate"><span class="pre">Busy</span></code>, <code class="docutils literal notranslate"><span class="pre">Wait</span></code> …) it returns the <strong>next task</strong> and updates the
+state machine.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code> – appends a freshly verified customer order to
+the queue.</p></li>
+</ul>
+<p>All orders survive restarts thanks to a YAML file on disk.</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>service</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/robotstatedecision</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code></p></td>
+<td><p>Input  → <strong>state_input</strong> (str)
+Output → <strong>state_output</strong> (str), <strong>order</strong> (string list), <strong>success</strong> (bool)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>service</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/send_order</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code></p></td>
+<td><p>Input  → <strong>order.id_client</strong>, <strong>order.list_of_orders</strong>
+Output → <strong>message</strong> (“order added”)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="persistent-storage">
+<h3>Persistent storage<a class="headerlink" href="#persistent-storage" title="Link to this heading"></a></h3>
+<p>Orders are stored in <em>tiago_data.yaml</em> next to this script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">orders</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">id_client</span><span class="p">:</span> <span class="mi">7</span>
+    <span class="n">food_list</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sushi&#39;</span><span class="p">,</span> <span class="s1">&#39;pasta&#39;</span><span class="p">]</span>
+  <span class="o">-</span> <span class="n">id_client</span><span class="p">:</span> <span class="mi">9</span>
+    <span class="n">food_list</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ramen&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The file is loaded on every service call so multiple orchestrators (or manual
+edits) stay in sync.</p>
+</section>
+<section id="decision-rules">
+<h3>Decision rules<a class="headerlink" href="#decision-rules" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>If the queue is <strong>empty</strong> → return <code class="docutils literal notranslate"><span class="pre">state_output</span> <span class="pre">=</span> <span class="pre">&quot;Wait&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">success</span> <span class="pre">=</span> <span class="pre">False</span></code>.</p></li>
+<li><p>If <em>state_input</em> is <code class="docutils literal notranslate"><span class="pre">Free</span></code> or <code class="docutils literal notranslate"><span class="pre">Wait</span></code> and <strong>an order exists</strong> → pop the
+first order, return it with <code class="docutils literal notranslate"><span class="pre">state_output</span> <span class="pre">=</span> <span class="pre">&quot;Busy&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">success</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
+<li><p>Otherwise echo the original state and set <code class="docutils literal notranslate"><span class="pre">success</span> <span class="pre">=</span> <span class="pre">False</span></code>.</p></li>
+</ol>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="orchestration_and_coordination.orchestration_and_coordination">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">orchestration_and_coordination.</span></span><span class="sig-name descname"><span class="pre">orchestration_and_coordination</span></span><a class="reference internal" href="_modules/orchestration_and_coordination.html#orchestration_and_coordination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestration_and_coordination.orchestration_and_coordination" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Persistent order queue + state-transition helper.</p>
+<section id="instance-variables">
+<h2>Instance Variables<a class="headerlink" href="#instance-variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>yaml_path</dt><dd><p>Absolute path to <em>tiago_data.yaml</em>.</p>
+</dd>
+<dt>data</dt><dd><p>Dict in memory; always contains the key <code class="docutils literal notranslate"><span class="pre">&quot;orders&quot;</span></code> mapping to a list.</p>
+</dd>
+<dt>service / service_order</dt><dd><p><a href="#id1"><span class="problematic" id="id2">:pyclass:`rospy.Service`</span></a> handles for the two APIs.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="orchestration_and_coordination.orchestration_and_coordination.handle_request">
+<span class="sig-name descname"><span class="pre">handle_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.srv.robotstatedecision.Request</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tiago1.srv.robotstatedecisionResponse</span></span></span><a class="reference internal" href="_modules/orchestration_and_coordination.html#orchestration_and_coordination.handle_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestration_and_coordination.orchestration_and_coordination.handle_request" title="Link to this definition"></a></dt>
+<dd><p>Implement the finite-state transition described above.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orchestration_and_coordination.orchestration_and_coordination.handle_request_new_order">
+<span class="sig-name descname"><span class="pre">handle_request_new_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.srv.send_order.Request</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tiago1.srv.send_orderResponse</span></span></span><a class="reference internal" href="_modules/orchestration_and_coordination.html#orchestration_and_coordination.handle_request_new_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestration_and_coordination.orchestration_and_coordination.handle_request_new_order" title="Link to this definition"></a></dt>
+<dd><p>Append a new order sent by the order-verification node.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orchestration_and_coordination.orchestration_and_coordination.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/orchestration_and_coordination.html#orchestration_and_coordination.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestration_and_coordination.orchestration_and_coordination.load_data" title="Link to this definition"></a></dt>
+<dd><p>Load the order list from disk (creates an empty one if missing).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orchestration_and_coordination.orchestration_and_coordination.obtain_order">
+<span class="sig-name descname"><span class="pre">obtain_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/orchestration_and_coordination.html#orchestration_and_coordination.obtain_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestration_and_coordination.orchestration_and_coordination.obtain_order" title="Link to this definition"></a></dt>
+<dd><p>Pop and return the <em>oldest</em> order, or <em>None</em> if the queue is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orchestration_and_coordination.orchestration_and_coordination.save_data">
+<span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/orchestration_and_coordination.html#orchestration_and_coordination.save_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestration_and_coordination.orchestration_and_coordination.save_data" title="Link to this definition"></a></dt>
+<dd><p>Write <a href="#id3"><span class="problematic" id="id4">:pyattr:`data`</span></a> back to <em>tiago_data.yaml</em>.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<section id="task-manager-py">
+<span id="module-task_manager"></span><h2>task_manager.py<a class="headerlink" href="#task-manager-py" title="Link to this heading"></a></h2>
+<section id="central-state-orchestrator-queries-the-decision-service-and-drives-the-task-loop">
+<h3>Central <strong>state orchestrator</strong> – queries the decision service and drives the task loop<a class="headerlink" href="#central-state-orchestrator-queries-the-decision-service-and-drives-the-task-loop" title="Link to this heading"></a></h3>
+<p><cite>TaskManager</cite> listens to two event streams:</p>
+<ol class="arabic simple">
+<li><p><strong>Action feedback</strong> (<code class="docutils literal notranslate"><span class="pre">/feedback_acion</span></code>) – one-line summaries published by
+the low-level controllers (navigation finished, manipulation failed …).</p></li>
+<li><p><strong>Verified orders</strong> (<code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code>) – customer requests already
+checked by the order-verification node.</p></li>
+</ol>
+<p>Every time a new feedback line arrives the manager calls the
+<code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code> service, handing over the current <em>state string</em>.
+The service replies with the next action the robot should perform, enabling a
+clean separation between <em>decision logic</em> (in the service) and <em>event
+aggregation</em> (in this node).</p>
+<section id="id5">
+<h4>ROS interface<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>subscribe</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/feedback_acion</span></code></p></td>
+<td><p>Latest controller status (e.g. <em>“ARM_DONE”</em> or <em>“BASE_FAILED”</em>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>subscribe</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/Voice_rec</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code></p></td>
+<td><p>Structured customer order; stored but <strong>not</strong> sent to the service yet</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>service client</strong> <code class="docutils literal notranslate"><span class="pre">tiago1/robotstatedecision</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code></p></td>
+<td><p>Request → <strong>state_input</strong> (string)
+Response ← next symbolic task / acknowledgement</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="execution-loop">
+<h3>Execution loop<a class="headerlink" href="#execution-loop" title="Link to this heading"></a></h3>
+<p><em>On every feedback update</em></p>
+<ol class="arabic simple">
+<li><p>Cache the new state string.</p></li>
+<li><p>Call the decision service with that state.</p></li>
+<li><p>Log the returned instruction (no further dispatching in this stub).</p></li>
+</ol>
+<p>Extend <code class="xref py py-meth docutils literal notranslate"><span class="pre">change_state()</span></code> if you want to forward the decision to other
+nodes or to trigger timers / retries.</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="task_manager.TaskManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">task_manager.</span></span><span class="sig-name descname"><span class="pre">TaskManager</span></span><a class="reference internal" href="_modules/task_manager.html#TaskManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task_manager.TaskManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Aggregates feedback and relays it to the orchestration service.</p>
+<section id="id6">
+<h2>Instance Variables<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>server_client</dt><dd><p><a href="#id7"><span class="problematic" id="id8">:pyclass:`rospy.ServiceProxy`</span></a> for <code class="docutils literal notranslate"><span class="pre">/robot_state_decision</span></code>.</p>
+</dd>
+<dt>state</dt><dd><p>Last status string received from <code class="docutils literal notranslate"><span class="pre">/feedback_acion</span></code>.</p>
+</dd>
+<dt>order_msg</dt><dd><p>Cached message from <code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code> (currently unused, but kept
+for future extensions such as <em>order context</em> in the service call).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="task_manager.TaskManager.change_state">
+<span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/task_manager.html#TaskManager.change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task_manager.TaskManager.change_state" title="Link to this definition"></a></dt>
+<dd><p>If <a href="#id9"><span class="problematic" id="id10">:pyattr:`state`</span></a> is set, call the decision service once.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
 </section>
 
 

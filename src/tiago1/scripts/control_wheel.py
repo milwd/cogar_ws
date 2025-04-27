@@ -1,9 +1,44 @@
 #!/usr/bin/env python
 """
 control_wheel.py
+================
 
-ROS action server for driving the TIAGo robot’s base. Receives a path goal and uses
-a simple proportional controller to publish velocity commands on '/cmd_vel/wheel'.
+Action-level **base controller** for following a coarse navigation path
+-----------------------------------------------------------------------
+
+`ControlMovementServer` exposes the :ros:`tiago1/MovementControlAction`
+namespace.  Each goal carries a complete :rosmsg:`nav_msgs/Path`; the server
+steers the robot towards the **first waypoint only** with a proportional
+controller and then reports *succeeded*.  Replace the placeholder loop with a
+full trajectory tracker when integrating real localisation / odometry.
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 20 30 50
+
+   * - Direction / type
+     - Name
+     - Semantics
+   * - **publish** ``geometry_msgs/Twist``
+     - ``/cmd_vel/wheel``
+     - Linear velocity in the map frame – only ``x``/``y`` are used
+   * - **action server** ``tiago1/MovementControlAction``
+     - ``movement_control``
+     - Goal → ``path`` (``nav_msgs/Path``)  
+       Feedback → **status** (string)  
+       Result → **success** (bool)
+
+Control logic
+-------------
+*Read first waypoint → compute planar error → send velocity*  
+
+:math:`v_x = k_p \cdot \Delta x,\; v_y = k_p \cdot \Delta y` with
+*kₚ = 0.01*.  
+The controller runs **once** per goal (fire-and-forget stub).  Real deployment
+should iterate over every pose, add angular control and stop conditions.
+
 """
 
 import rospy
@@ -17,20 +52,22 @@ import sys
 
 class ControlMovementServer:
     """
-    Action server that follows a given navigation path.
+    Minimal ActionLib wrapper driving the robot base towards the first waypoint.
 
-    Attributes
-    ----------
-    cmd_pub : rospy.Publisher
-        Publishes Twist messages to '/cmd_vel/wheel' for base movement.
-    server : actionlib.SimpleActionServer
-        Handles MovementControlAction goals on the 'movement_control' namespace.
+    Variables
+    ------------------
+    cmd_pub
+        Publishes :rosmsg:`geometry_msgs/Twist` on ``/cmd_vel/wheel``.
+    server
+        Action server handling **movement_control** goals.
     """
 
-    def __init__(self):
-        """
-        Initialize the movement control server.
+    def __init__(self) -> None:
+        """Advertise publisher and bring up the ActionLib server."""
+        self.cmd_pub = rospy.Publisher('/cmd_vel/wheel',
+                                       Twist, queue_size=10)
 
+        """
         - Advertise '/cmd_vel/wheel' for velocity commands.
         - Set up and start the SimpleActionServer for MovementControlAction.
         """
@@ -41,55 +78,60 @@ class ControlMovementServer:
             f'/{self.robot_number}/movement_control',
             MovementControlAction,
             execute_cb=self.execute_cb,
-            auto_start=False
+            auto_start=False,
         )
         self.server.start()
-        rospy.loginfo("[ControlMovement] Action server started")
+        rospy.loginfo("[ControlMovement] Action server ready.")
 
-    def execute_cb(self, path):
+    # ------------------------------------------------------------------ #
+    #                          action logic                               #
+    # ------------------------------------------------------------------ #
+    def execute_cb(self, goal: MovementControlAction.Goal) -> None:
         """
-        Execute a movement goal by following the first waypoint in the path.
+        Drive once towards the first pose in :pyattr:`goal.path`.
 
-        Parameters
-        ----------
-        path : tiago1.msg.MovementControlGoal
-            Contains a nav_msgs/Path in path.path.poses to follow.
-
-        Process
-        -------
-        1. Check for preemption; if requested, cancel and return.
-        2. Create a Twist command using a proportional controller on the first waypoint:
-           - linear.x and linear.y scaled from pose.position.x.
-        3. Publish the command to cmd_pub.
-        4. Publish feedback.status indicating progress.
-        5. Sleep to allow the robot to move to the waypoint.
-        6. On completion, set result.success = True and signal action succeeded.
+        Succeeds after a fixed 2-second actuation delay.
         """
         feedback = MovementControlFeedback()
         result = MovementControlResult()
 
-        rospy.loginfo("[ControlMovement] Received movement command")
-
-        # Handle preemption
-        if self.server.is_preempt_requested():
-            rospy.logwarn("[ControlMovement] Preempted")
+        # Immediate pre-emption check
+        if self.server.is_preempt_requested() or rospy.is_shutdown():
+            rospy.logwarn("[ControlMovement] Pre-empted before start.")
             self.server.set_preempted()
             return
 
-        # Simple P-controller toward first waypoint
+        if not goal.path.poses:
+            rospy.logerr("[ControlMovement] Empty path – aborting.")
+            result.success = False
+            self.server.set_aborted(result)
+            return
+
+        target_pose = goal.path.poses[0].pose.position
+        rospy.loginfo(f"[ControlMovement] Target waypoint → "
+                      f"({target_pose.x:.2f}, {target_pose.y:.2f})")
+
+        # Proportional velocities
+        k_p = 0.01
         cmd = Twist()
-        cmd.linear.x = path.path.poses[0].pose.position.x * 0.01  
-        cmd.linear.y = path.path.poses[0].pose.position.x * 0.01
+        cmd.linear.x = k_p * target_pose.x
+        cmd.linear.y = k_p * target_pose.y
         self.cmd_pub.publish(cmd)
 
-        feedback.status = f"Moving to point 1/{len(path.path.poses)}"
+        feedback.status = (f"Driving to first waypoint "
+                           f"of {len(goal.path.poses)}")
         self.server.publish_feedback(feedback)
         rospy.sleep(2)  # time to reach each point
         time.sleep(3)
 
         result.success = True
         self.server.set_succeeded(result)
+        rospy.loginfo("[ControlMovement] Goal completed.")
 
+
+# ---------------------------------------------------------------------- #
+#                                bootstrap                               #
+# ---------------------------------------------------------------------- #
 if __name__ == '__main__':
     """
     Main entrypoint: initialize ROS node and start ControlMovementServer.

@@ -41,7 +41,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
@@ -75,14 +76,53 @@
              
   <section id="module-encoder_wheel">
 <span id="encoder-wheel"></span><h1>encoder_wheel<a class="headerlink" href="#module-encoder_wheel" title="Link to this heading"></a></h1>
-<p>encoder_wheel.py</p>
-<p>ROS node that simulates wheel encoder readings. Publishes random encoder counts
-on ‘/encoder_wheel’ at 10 Hz for testing movement controllers.</p>
+<section id="encoder-wheel-py">
+<h2>encoder_wheel.py<a class="headerlink" href="#encoder-wheel-py" title="Link to this heading"></a></h2>
+<section id="synthetic-wheel-odometry-source-for-base-controller-development">
+<h3>Synthetic <strong>wheel-odometry source</strong> for base-controller development<a class="headerlink" href="#synthetic-wheel-odometry-source-for-base-controller-development" title="Link to this heading"></a></h3>
+<p>In simulation or on hardware-less CI runners, the movement stack still needs a
+continuous stream of wheel encoder ticks so that dead-reckoning, PID loops and
+logging tools stay active.
+<cite>encoder_wheel.py</cite> fulfils that role by broadcasting <em>pseudo-random</em> tick
+counts at a fixed rate.</p>
+<section id="ros-interface">
+<h4>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction / type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>publish</strong> <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/encoder_wheel</span></code></p></td>
+<td><p>Raw tick count <strong>per wheel revolution</strong> (0 – 999)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="node-behaviour">
+<h3>Node behaviour<a class="headerlink" href="#node-behaviour" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Frequency</strong> 10 Hz (controlled by <a href="#id1"><span class="problematic" id="id2">:pydata:`rate`</span></a>).</p></li>
+<li><p><strong>Tick generator</strong> Uniform <em>U*(0, 999) – every message is independent.
+For smoother traces swap the one-liner for a *random-walk</em> or sine table.</p></li>
+</ul>
+<p>The node exits cleanly when ROS is shut down.</p>
+</section>
+</section>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../actuation.html#encoder_wheel.wheel_encoder" title="encoder_wheel.wheel_encoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wheel_encoder</span></code></a>()</p></td>
-<td><p>Initialize the ROS node and publish simulated wheel encoder values.</p></td>
+<td><p>Publish fake wheel-encoder ticks until ROS shutdown.</p></td>
 </tr>
 </tbody>
 </table>

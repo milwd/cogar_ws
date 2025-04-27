@@ -1,40 +1,99 @@
 #!/usr/bin/env python
 """
 control_arm.py
+==============
 
-ROS action server for controlling the TIAGo robot arm. Receives target angles,
-monitors encoder feedback, and publishes velocity commands until the arm reaches
-the desired position or a timeout/preemption occurs.
+Closed-loop **ActionLib server** for positioning the TIAGo arm
+--------------------------------------------------------------
+
+This node listens for :rosmsg:`tiago1/ArmControlAction` goals that specify a
+single **target joint angle** (in degrees).  It applies a proportional control
+law on the arm’s **angular velocity** until the on-board encoder reports that
+the target, within a configurable tolerance, has been reached or a timeout /  
+pre-emption occurs.
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 25 25 50
+
+   * - Direction / type
+     - Name
+     - Purpose
+   * - **publish** ``geometry_msgs/Twist``
+     - ``/cmd_vel/arm``
+     - Desired angular velocity about the arm’s primary axis  
+       (only :code:`angular.z` is used).
+   * - **subscribe** ``std_msgs/Int32``
+     - ``/encoder_arm``
+     - Current encoder position expressed in **degrees**.
+   * - **action server** ``tiago1/ArmControlAction``
+     - ``arm_control``
+     - Goal: ``degree`` (int), Feedback: **status** (string),  
+       Result: **success** (bool)
+
+Control algorithm
+-----------------
+#. **Goal reception** – store target angle, define *tolerance* (°) and
+   *timeout* (s).  
+#. **10 Hz loop**  
+   • compute error = *target – encoder*  
+   • :math:`\omega_z = k_p \cdot error` with *k\_p = 0.01*  
+   • publish velocity; send feedback string  
+   • exit early if *|error| ≤ tolerance*, timeout expires, node is
+   pre-empted, or ROS shuts down.  
+#. **Outcome** – call :py:meth:`SimpleActionServer.set_succeeded`,
+   :py:meth:`set_aborted` or :py:meth:`set_preempted` with
+   :rosmsg:`tiago1/ArmControlResult`.
+
+Tuning knobs
+------------
+*TOLERANCE* = 5 °  *TIMEOUT* = 10 s  *Kₚ* = 0.01 – tweak in
+:py:meth:`execute_cb` to match your hardware.
+
+Safety
+------
+The node publishes zero velocity immediately after success / abort to stop the
+arm, and it honours standard ActionLib pre-emption so higher layers can
+interrupt motion at any time.
 """
 
+import time
 import rospy
 import actionlib
 from geometry_msgs.msg import Twist
-from tiago1.msg import ArmControlAction, ArmControlFeedback, ArmControlResult
 from std_msgs.msg import Int32
 import time
 import sys
 
 class ControlArmServer:
     """
-    Action server that moves the robot arm to a specified angle.
+    Minimal proportional controller wrapped in an ActionLib server.
 
-    Attributes
-    ----------
-    cmd_pub : rospy.Publisher
-        Publishes Twist commands to '/cmd_vel/arm' for arm movement.
-    encoder_sub : rospy.Subscriber
-        Subscribes to '/encoder_arm' to receive current encoder readings.
-    server : actionlib.SimpleActionServer
-        Handles ArmControlAction goals on the 'arm_control' namespace.
-    encoder_val : int
-        Latest encoder position (in degrees).
+    Variables
+    ------------------
+    cmd_pub
+        :pyclass:`rospy.Publisher` that streams velocity commands to
+        ``/cmd_vel/arm``.
+    encoder_sub
+        :pyclass:`rospy.Subscriber` listening to ``/encoder_arm`` for position
+        feedback.
+    server
+        :pyclass:`actionlib.SimpleActionServer` that exposes the
+        **arm_control** action namespace.
+    encoder_val
+        Latest encoder reading in **degrees**; updated continuously by
+        :py:meth:`encoder_callback`.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Wire publishers/subscribers, start the ActionLib server."""
+        self.cmd_pub = rospy.Publisher('/cmd_vel/arm',
+                                       Twist, queue_size=10)
+        self.encoder_sub = rospy.Subscriber('/encoder_arm',
+                                            Int32, self.encoder_callback)
         """
-        Initialize publishers, subscriber, and action server.
-
         - Advertise '/cmd_vel/arm' for sending velocity commands.
         - Subscribe to '/encoder_arm' for encoder feedback.
         - Set up and start SimpleActionServer for ArmControlAction.
@@ -43,91 +102,82 @@ class ControlArmServer:
         rospy.init_node(f'{self.robot_number}_control_arm_node')
         self.cmd_pub = rospy.Publisher(f'/{self.robot_number}/cmd_vel/arm', Twist, queue_size=10)
         self.encoder_sub = rospy.Subscriber(f'/{self.robot_number}/encoder_arm', Int32, self.encoder_callback)
-        
         self.server = actionlib.SimpleActionServer(
             f'/{self.robot_number}/arm_control',
             ArmControlAction,
             execute_cb=self.execute_cb,
-            auto_start=False
+            auto_start=False,
         )
         self.server.start()
-        rospy.loginfo("[ControlArm] Action server started")
-        self.encoder_val = 0
+        rospy.loginfo("[ControlArm] Action server ready.")
 
-    def encoder_callback(self, value):
-        """
-        Update latest encoder reading.
+        self.encoder_val: int = 0
 
-        Parameters
-        ----------
-        value : std_msgs.msg.Int32
-            Current encoder position message.
-        """
+    # ------------------------------------------------------------------ #
+    #                         encoder feedback                            #
+    # ------------------------------------------------------------------ #
+    def encoder_callback(self, value: Int32) -> None:
+        """Cache the most recent encoder position."""
         self.encoder_val = value.data
 
-    def execute_cb(self, goal):
+    # ------------------------------------------------------------------ #
+    #                           action logic                              #
+    # ------------------------------------------------------------------ #
+    def execute_cb(self, goal: ArmControlAction.Goal) -> None:
         """
-        Handle incoming ArmControlAction goals.
+        Main loop executed per goal.
 
-        Parameters
-        ----------
-        goal : tiago1.msg.ArmControlGoal
-            Contains the 'degree' field specifying the target angle.
-
-        Process
-        -------
-        1. Read target angle and set tolerance and timeout.
-        2. Loop at 10 Hz until |encoder_val - target| <= tolerance:
-           a. Break if ROS is shutting down.
-           b. Preempt if requested.
-           c. Abort on timeout.
-           d. Compute angular velocity ∝ error and publish to cmd_pub.
-           e. Publish feedback.status with current progress.
-        3. On success, set result.success = True and call set_succeeded.
-        4. On failure or preemption, set result.success = False and abort/preempt.
+        Publishes velocities at 10 Hz until the arm reaches *goal.degree*,
+        is pre-empted, or times out.
         """
         feedback = ArmControlFeedback()
         result = ArmControlResult()
+
         target = goal.degree
-        tolerance = 5
-        timeout = 10  # seconds
+        tolerance = 5          # degrees
+        timeout = 10.0         # seconds
+        k_p = 0.01             # proportional gain
+
         start_time = time.time()
+        rospy.loginfo(f"[ControlArm] New goal → {target}°")
 
-        rospy.loginfo(f"[ControlArm] Target degree: {target}")
-
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(10)  # Hz
         while abs(self.encoder_val - target) > tolerance:
+            # ---------- house-keeping checks --------------------------- #
             if rospy.is_shutdown():
-                rospy.logwarn("[ControlArm] ROS shutdown detected")
                 return
-
             if self.server.is_preempt_requested():
-                rospy.logwarn("[ControlArm] Preempted")
+                rospy.logwarn("[ControlArm] Pre-empted.")
                 self.server.set_preempted()
                 return
-
             if time.time() - start_time > timeout:
-                rospy.logwarn("[ControlArm] Timeout reached")
+                rospy.logwarn("[ControlArm] Timeout.")
                 result.success = False
+                self.cmd_pub.publish(Twist())      # stop arm
                 self.server.set_aborted(result)
                 return
 
-            cmd = Twist()
+            # ---------- control law ------------------------------------ #
             error = target - self.encoder_val
-            cmd.angular.z = 0.01 * error
+            cmd = Twist()
+            cmd.angular.z = k_p * error
             self.cmd_pub.publish(cmd)
 
             feedback.positions = [0.1]*7
             feedback.velocities = [0.1]*7
             feedback.efforts = [0.1]*7
             self.server.publish_feedback(feedback)
-
             rate.sleep()
 
-        rospy.loginfo("[ControlArm] Target reached")
+        # ---------- success path --------------------------------------- #
+        self.cmd_pub.publish(Twist())  # zero velocity
         result.success = True
         self.server.set_succeeded(result)
+        rospy.loginfo("[ControlArm] Target reached.")
 
+# ---------------------------------------------------------------------- #
+#                               bootstrap                                #
+# ---------------------------------------------------------------------- #
 if __name__ == '__main__':
     """
     Main entrypoint: initialize ROS node and run ControlArmServer.

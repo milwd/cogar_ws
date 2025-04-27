@@ -1,15 +1,50 @@
 #!/usr/bin/env python
 """
 control_gripper.py
+==================
 
-ROS action server for operating the TIAGo robot’s gripper mechanism.
-Receives grip/release goals via actionlib and publishes Boolean commands on
-'/cmd_vel/gripper'. Provides feedback through the action interface.
+Action-level **binary actuator** for the TIAGo gripper
+-----------------------------------------------------
+
+The node exposes a :ros:`tiago1/GripperControlAction` server that either
+**closes** (grip) or **opens** (release) the end-effector.  
+A single boolean goal, *True* → grip, *False* → release, is converted into a
+:rosmsg:`std_msgs/Bool` command published on ``/cmd_vel/gripper``.  
+After a short configurable delay the server replies with a *succeeded* or
+*pre-empted / aborted* result.
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 20 30 50
+
+   * - Direction / type
+     - Name
+     - Semantics
+   * - **publish** ``std_msgs/Bool``
+     - ``/cmd_vel/gripper``
+     - ``True`` → close, ``False`` → open
+   * - **action server** ``tiago1/GripperControlAction``
+     - ``gripper_control``
+     - Goal → ``gripnogrip`` (bool)  
+       Feedback → **status** (string)  
+       Result → **success** (bool)
+
+Execution logic
+---------------
+#. On goal reception the server checks for an immediate pre-emption request.  
+#. The boolean command is forwarded to the *cmd* topic.  
+#. A short wait (2 s by default) gives the hardware time to settle.  
+#. A success result is returned; if the goal was pre-empted or a ROS shutdown
+   occurred, the appropriate ActionLib state is set instead.
+
+Timing, waiting strategy and topic names are easily changed in
+:py:meth:`execute_cb`.
 """
 
 import rospy
 import actionlib
-from geometry_msgs.msg import Twist
 from std_msgs.msg import Bool
 from nav_msgs.msg import Path, OccupancyGrid, Odometry
 from geometry_msgs.msg import PoseStamped
@@ -20,56 +55,49 @@ import sys
 
 class ControlGripperServer:
     """
-    Action server that opens or closes the robot’s gripper.
+    Lightweight ActionLib wrapper around a boolean gripper command topic.
 
-    Attributes
-    ----------
-    cmd_pub : rospy.Publisher
-        Publishes Bool messages to '/cmd_vel/gripper' (True = grip, False = release).
-    server : actionlib.SimpleActionServer
-        Handles GripperControlAction goals on the 'gripper_control' namespace.
+    Variables
+    ------------------
+    cmd_pub
+        :pyclass:`rospy.Publisher` streaming ``std_msgs/Bool`` to
+        ``/cmd_vel/gripper``.
+    server
+        :pyclass:`actionlib.SimpleActionServer` handling the
+        **gripper_control** namespace.
     """
 
-    def __init__(self):
-        """
-        Initialize the ControlGripperServer.
+    def __init__(self) -> None:
+        """Advertise publisher and start the ActionLib server."""
+        self.cmd_pub = rospy.Publisher('/cmd_vel/gripper',
+                                       Bool, queue_size=10)
 
+        """
         - Advertise '/cmd_vel/gripper' for gripper commands.
         - Set up and start SimpleActionServer for GripperControlAction.
         """
         self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
         rospy.init_node(f'{self.robot_number}_control_gripper_node')
         self.cmd_pub = rospy.Publisher(f'/{self.robot_number}/cmd_vel/gripper', Bool, queue_size=10)
-
         self.server = actionlib.SimpleActionServer(
             f'/{self.robot_number}/gripper_control',
             GripperControlAction,
             execute_cb=self.execute_cb,
-            auto_start=False
+            auto_start=False,
         )
         self.server.start()
-        rospy.loginfo("[ControlGripper] Action server started")
+        rospy.loginfo("[ControlGripper] Action server ready.")
 
-    def execute_cb(self, gripnogrip):
+    # ------------------------------------------------------------------ #
+    #                             callback                                #
+    # ------------------------------------------------------------------ #
+    def execute_cb(self,
+                   goal: GripperControlAction.Goal) -> None:
         """
-        Execute a gripper control goal.
-
-        Parameters
-        ----------
-        gripnogrip : tiago1.msg.GripperControlGoal
-            Contains the desired action: grip (True) or release (False).
-
-        Process
-        -------
-        1. Check for preemption; if requested, set action to preempted.
-        2. Publish the Bool command (True to grip, False to release).
-        3. Publish feedback indicating the gripper status.
-        4. Wait briefly to allow the gripper to actuate.
-        5. Set result.success = True and mark action as succeeded.
+        Act on *goal.gripnogrip* and report the outcome to the Action client.
         """
         feedback = GripperControlFeedback()
         result = GripperControlResult()
-
         rospy.loginfo("[ControlGripper] Received grip command")
 
         # control loop
@@ -87,7 +115,13 @@ class ControlGripperServer:
 
         result.success = True
         self.server.set_succeeded(result)
+        rospy.loginfo("[ControlGripper] Completed: "
+                      f"{'grip' if goal.gripnogrip else 'release'}.")
 
+
+# ---------------------------------------------------------------------- #
+#                                bootstrap                               #
+# ---------------------------------------------------------------------- #
 if __name__ == '__main__':
     ControlGripperServer()
     rospy.spin()

@@ -40,7 +40,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
@@ -73,119 +74,159 @@
            <div itemprop="articleBody">
              
   <h1>Source code for slam</h1><div class="highlight"><pre>
-<span></span><span class="ch">#! /usr/bin/env python</span>
+<span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">slam.py</span>
+<span class="sd">=======</span>
 
-<span class="sd">ROS node stub for Simultaneous Localization and Mapping (SLAM). Subscribes to</span>
-<span class="sd">fused LaserScan data, publishes an empty OccupancyGrid map and Odometry message.</span>
-<span class="sd">Replace stub logic with actual SLAM algorithms to update map and robot pose.</span>
+<span class="sd">Minimal **SLAM façade** — publishes a blank map + identity odometry so the</span>
+<span class="sd">navigation stack can launch before the real SLAM backend is ready.</span>
+
+<span class="sd">Purpose</span>
+<span class="sd">-------</span>
+<span class="sd">* **Bring-up**: rviz, move_base and other consumers expect `/map` and `/odom`</span>
+<span class="sd">  to exist; this stub unblocks integration work in early project stages.</span>
+<span class="sd">* **Interface contract**: documents *exactly* which message types and frames</span>
+<span class="sd">  the future SLAM solution must honour.</span>
+
+<span class="sd">Topic interface</span>
+<span class="sd">---------------</span>
+<span class="sd">**Subscribes**</span>
+
+<span class="sd">* ``/fused_scan`` (``sensor_msgs/LaserScan``) – pre-filtered 2-D scan produced</span>
+<span class="sd">  by the sensor-fusion node.</span>
+
+<span class="sd">**Publishes**</span>
+
+<span class="sd">* ``/map``  (``nav_msgs/OccupancyGrid``) – 10 × 10 cell grid, 5 cm resolution,</span>
+<span class="sd">  centred at 0,0; currently all *unknown/free* (value 0).  </span>
+<span class="sd">* ``/odom`` (``nav_msgs/Odometry``) – identity pose in ``odom`` frame, zero</span>
+<span class="sd">  twist; child frame ``base_link``.</span>
+
+<span class="sd">Coordinate frames</span>
+<span class="sd">-----------------</span>
+<span class="sd">``map``  ←— identity TF —→ ``odom``  ←— [[ real TF broadcaster ]] —→ ``base_link``</span>
+
+<span class="sd">The stub does **not** broadcast TF transforms; downstream nodes must rely on</span>
+<span class="sd">static transforms or their own broadcasters until a full SLAM stack replaces</span>
+<span class="sd">this script.</span>
+
+<span class="sd">Replace-me sections</span>
+<span class="sd">-------------------</span>
+<span class="sd">* ``update_map(data)`` – insert occupancy grid update from scan + pose.</span>
+<span class="sd">* ``update_pose(data)`` – insert state-estimation output (EKF, graph-SLAM…).</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaserScan</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nav_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="n">Odometry</span>
 
+
 <div class="viewcode-block" id="SLAM">
 <a class="viewcode-back" href="../reasoning.html#slam.SLAM">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SLAM</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    SLAM node that generates and publishes map and odometry from sensor data.</span>
+<span class="sd">    Straight-forward container for publishers + subscriber.</span>
 
-<span class="sd">    Attributes</span>
+<span class="sd">    Variables</span>
 <span class="sd">    ----------</span>
-<span class="sd">    map_pub : rospy.Publisher</span>
-<span class="sd">        Publisher for the OccupancyGrid map on &#39;/map&#39;.</span>
-<span class="sd">    odom_pub : rospy.Publisher</span>
-<span class="sd">        Publisher for Odometry messages on &#39;/odom&#39;.</span>
+<span class="sd">    map_pub</span>
+<span class="sd">        Latched publisher for the occupancy grid so late subscribers</span>
+<span class="sd">        receive the most recent map instantly.</span>
+<span class="sd">    odom_pub</span>
+<span class="sd">        Latched publisher for odometry for the same reason.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                               SET-UP                               #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the SLAM node:</span>
+<span class="sd">        Initialise the ROS node and wire its single input + two outputs.</span>
 
-<span class="sd">        - Initialize ROS node &#39;slam_node&#39;.</span>
-<span class="sd">        - Subscribe to &#39;/fused_scan&#39; topic for LaserScan messages.</span>
-<span class="sd">        - Advertise &#39;/map&#39; and &#39;/odom&#39; topics.</span>
+<span class="sd">        Steps</span>
+<span class="sd">        -----</span>
+<span class="sd">        1. Call :pyfunc:`rospy.init_node` with a descriptive name.</span>
+<span class="sd">        2. Subscribe to the pre-filtered **fused** laser scan.  Queue size 1</span>
+<span class="sd">           keeps latency low while scans stream in (20–30 Hz typical).</span>
+<span class="sd">        3. Advertise both outputs with *latch=True* so tools like rviz see</span>
+<span class="sd">           the very first map/odom without waiting a full second.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;slam_node&#39;</span><span class="p">)</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/fused_scan&#39;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">map_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/map&#39;</span><span class="p">,</span> <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">odom_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/odom&#39;</span><span class="p">,</span> <span class="n">Odometry</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;slam_node&quot;</span><span class="p">)</span>
 
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/fused_scan&quot;</span><span class="p">,</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span>  <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">map_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s2">&quot;/map&quot;</span><span class="p">,</span>  <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">latch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">odom_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s2">&quot;/odom&quot;</span><span class="p">,</span> <span class="n">Odometry</span><span class="p">,</span>        <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">latch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[SLAM] Stub node running — publishing blank map + odom.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                             CALLBACK                               #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="SLAM.callback">
 <a class="viewcode-back" href="../reasoning.html#slam.SLAM.callback">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scan_msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Callback for incoming fused LaserScan data.</span>
+<span class="sd">        Handle each incoming fused scan.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        data : sensor_msgs.msg.LaserScan</span>
-<span class="sd">            Incoming fused scan to be used for SLAM.</span>
+<span class="sd">        scan_msg : sensor_msgs.msg.LaserScan</span>
+<span class="sd">            Currently ignored; present to show where real SLAM would ingest</span>
+<span class="sd">            range data.</span>
+<span class="sd">            </span>
 
-<span class="sd">        Process</span>
-<span class="sd">        -------</span>
-<span class="sd">        1. Create an empty OccupancyGrid with fixed resolution, size, and origin.</span>
-<span class="sd">        2. Initialize map_msg.data as zeros (unknown/free space).</span>
-<span class="sd">        3. Create an empty Odometry message with identity pose and zero twist.</span>
-<span class="sd">        4. Publish both map_msg and odom_msg.</span>
-<span class="sd">        5. Notes in code indicate where to replace with real SLAM updates.</span>
+<span class="sd">        Pipeline</span>
+<span class="sd">        --------</span>
+<span class="sd">        1. **Blank map** – 10 × 10 cells, 0.05 m resolution, centred at</span>
+<span class="sd">           (-2.5, -2.5) so (0,0) lies roughly in the middle.  All cell values</span>
+<span class="sd">           initialised to *0* (free/unknown).  </span>
+<span class="sd">        2. **Identity odometry** – pose = (0,0,0) + unit quaternion,</span>
+<span class="sd">           twist = (0,0,0).  </span>
+<span class="sd">        3. Publish both messages.  In a real implementation steps 1 &amp; 2 would</span>
+<span class="sd">           be replaced by *update_map* and *update_pose* respectively.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Build empty map</span>
+        <span class="c1"># ---------- 1. Build blank occupancy grid ----------------------- #</span>
         <span class="n">map_msg</span> <span class="o">=</span> <span class="n">OccupancyGrid</span><span class="p">()</span>
         <span class="n">map_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="n">map_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;map&quot;</span>
-        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="mf">0.05</span>
-        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">10</span>
+
+        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="mf">0.05</span>          <span class="c1"># 5 cm per grid cell</span>
+        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">width</span>  <span class="o">=</span> <span class="mi">10</span>                <span class="c1"># 10 cells → 0.5 m</span>
         <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">10</span>
-        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span>
+        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span>   <span class="c1"># centre map around (0,0)</span>
         <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span>
-        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mi">1</span>
+
         <span class="n">map_msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="n">map_msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
 
-        <span class="c1"># Build empty odometry</span>
+        <span class="c1"># ---------- 2. Build identity odometry -------------------------- #</span>
         <span class="n">odom_msg</span> <span class="o">=</span> <span class="n">Odometry</span><span class="p">()</span>
         <span class="n">odom_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="n">odom_msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;odom&quot;</span>
         <span class="n">odom_msg</span><span class="o">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s2">&quot;base_link&quot;</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">odom_msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">odom_msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># unit quaternion</span>
 
-        <span class="c1"># TODO: replace stub with actual SLAM updates:</span>
-        <span class="c1"># map_msg.data = self.update_map(data)</span>
-        <span class="c1"># odom_msg.pose.pose = self.update_pose(data)</span>
-
+        <span class="c1"># ---------- 3. Publish ----------------------------------------- #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">map_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">map_msg</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">odom_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">odom_msg</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">odom_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">odom_msg</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo_throttle</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;[SLAM] Published stub map + odom.&quot;</span><span class="p">)</span>  <span class="c1"># once/30 s</span></div>
 </div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main entrypoint: instantiate SLAM node and publish map+odom at 1 Hz.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="c1"># ---------------------------------------------------------------------- #</span>
+<span class="c1">#                               MAIN LOOP                                #</span>
+<span class="c1"># ---------------------------------------------------------------------- #</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">slam</span> <span class="o">=</span> <span class="n">SLAM</span><span class="p">()</span>
-    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># keep script alive; real scans drive updates</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-            <span class="c1"># Force callback with dummy data if needed, or rely on incoming scans</span>
-            <span class="c1"># slam.callback(dummy_data)  # remove if real scans drive updates</span>
             <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
         <span class="k">pass</span>

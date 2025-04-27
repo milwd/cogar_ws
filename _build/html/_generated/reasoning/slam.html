@@ -41,7 +41,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
@@ -75,15 +76,54 @@
              
   <section id="module-slam">
 <span id="slam"></span><h1>slam<a class="headerlink" href="#module-slam" title="Link to this heading"></a></h1>
-<p>slam.py</p>
-<p>ROS node stub for Simultaneous Localization and Mapping (SLAM). Subscribes to
-fused LaserScan data, publishes an empty OccupancyGrid map and Odometry message.
-Replace stub logic with actual SLAM algorithms to update map and robot pose.</p>
+<section id="slam-py">
+<h2>slam.py<a class="headerlink" href="#slam-py" title="Link to this heading"></a></h2>
+<p>Minimal <strong>SLAM façade</strong> — publishes a blank map + identity odometry so the
+navigation stack can launch before the real SLAM backend is ready.</p>
+<section id="purpose">
+<h3>Purpose<a class="headerlink" href="#purpose" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Bring-up</strong>: rviz, move_base and other consumers expect <cite>/map</cite> and <cite>/odom</cite>
+to exist; this stub unblocks integration work in early project stages.</p></li>
+<li><p><strong>Interface contract</strong>: documents <em>exactly</em> which message types and frames
+the future SLAM solution must honour.</p></li>
+</ul>
+</section>
+<section id="topic-interface">
+<h3>Topic interface<a class="headerlink" href="#topic-interface" title="Link to this heading"></a></h3>
+<p><strong>Subscribes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code> (<code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code>) – pre-filtered 2-D scan produced
+by the sensor-fusion node.</p></li>
+</ul>
+<p><strong>Publishes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/map</span></code>  (<code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span></code>) – 10 × 10 cell grid, 5 cm resolution,
+centred at 0,0; currently all <em>unknown/free</em> (value 0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/odom</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code>) – identity pose in <code class="docutils literal notranslate"><span class="pre">odom</span></code> frame, zero
+twist; child frame <code class="docutils literal notranslate"><span class="pre">base_link</span></code>.</p></li>
+</ul>
+</section>
+<section id="coordinate-frames">
+<h3>Coordinate frames<a class="headerlink" href="#coordinate-frames" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">map</span></code>  ←— identity TF —→ <code class="docutils literal notranslate"><span class="pre">odom</span></code>  ←— [[ real TF broadcaster ]] —→ <code class="docutils literal notranslate"><span class="pre">base_link</span></code></p>
+<p>The stub does <strong>not</strong> broadcast TF transforms; downstream nodes must rely on
+static transforms or their own broadcasters until a full SLAM stack replaces
+this script.</p>
+</section>
+<section id="replace-me-sections">
+<h3>Replace-me sections<a class="headerlink" href="#replace-me-sections" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">update_map(data)</span></code> – insert occupancy grid update from scan + pose.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_pose(data)</span></code> – insert state-estimation output (EKF, graph-SLAM…).</p></li>
+</ul>
+</section>
+</section>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../reasoning.html#slam.SLAM" title="slam.SLAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SLAM</span></code></a>()</p></td>
-<td><p>SLAM node that generates and publishes map and odometry from sensor data.</p></td>
+<td><p>Straight-forward container for publishers + subscriber.</p></td>
 </tr>
 </tbody>
 </table>

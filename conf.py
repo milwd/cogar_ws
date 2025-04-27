@@ -59,7 +59,10 @@ autodoc_mock_imports = [
     'tiago1.msg',
     'tiago1.srv',
     'cogar_ws',
-    'sklearn'
+    'sklearn',
+    'std_msgs.msg',
+    'tiago1',
+    'os'
 ]
 
 
@@ -72,9 +75,15 @@ highlight_language = 'python'
 source_suffix = '.rst'
 master_doc = 'index'
 html_theme = 'sphinx_rtd_theme'
+html_theme_options = {"navigation_depth": 2}
 html_static_path = ['_static']
 
 autosummary_generate = True 
 
 intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
 todo_include_todos = True
+
+napoleon_google_docstring = True
+napoleon_numpy_docstring  = True 
+autoclass_content = 'both'
+toc_object_entries = False

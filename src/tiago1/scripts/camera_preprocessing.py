@@ -52,7 +52,7 @@ class CameraPreprocessing:
     """
     Perform in-place enhancement of RGB and depth streams.
 
-    Attributes
+    Variables
     ----------
     bridge : cv_bridge.CvBridge
         Zero-copy converter between ``sensor_msgs/Image`` and ``numpy.ndarray``.

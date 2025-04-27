@@ -1,10 +1,39 @@
 #!/usr/bin/env python
 """
 voice_recognition.py
+====================
 
-ROS node that simulates voice recognition by mapping microphone channel integers
-to predefined phrases. Subscribes to '/mic_channel' (Int32) and publishes recognized
-voice strings on '/voice_recogn'.
+Audio-to-text **stub** – turns a numeric microphone channel into canned sentences
+-------------------------------------------------------------------------------
+
+Real ASR engines are heavyweight and sometimes unavailable (e.g. on CI).  
+This node fakes the pipeline by translating an *integer* published on
+``/mic_channel`` into a pre-programmed phrase and emitting it on
+``/voice_recogn``.  Down-stream components can then be developed and tested
+without an actual speech recogniser.
+
+ROS interface
+~~~~~~~~~~~~~
+.. list-table::
+   :header-rows: 1
+   :widths: 25 35 40
+
+   * - Direction / type
+     - Name
+     - Semantics
+   * - **subscribe** ``std_msgs/Int32``
+     - ``/mic_channel``
+     - Encoded microphone “utterance” (key into the lookup table)
+   * - **publish** ``std_msgs/String``
+     - ``/voice_recogn``
+     - Plain UTF-8 sentence selected from the table
+
+Lookup strategy
+---------------
+A *dict[int, str]* supplied at construction time maps each key value to the
+sentence that should be “ recognised ”.  Unknown keys are ignored; the last
+valid utterance remains active until a new recognised value arrives.
+
 """
 
 import rospy
@@ -12,20 +41,20 @@ from std_msgs.msg import Int32, String
 # from tiago1.msg import Voice_rec
 import sys
 
+
 class VoiceRecognition:
     """
-    Node for mapping microphone channel inputs to voice recognition outputs.
+    Minimal, dictionary-based ASR emulator.
 
-    Attributes
-    ----------
-    data : std_msgs.msg.Int32 or None
-        Last received microphone channel message.
-    stringDS : dict of int to str
-        Mapping from microphone channel values to phrases.
-    voice_recognized_pub : rospy.Publisher
-        Publisher for recognized voice strings on '/voice_recogn'.
+    Instance Variables
+    ------------------
+    data
+        Latest :pyclass:`std_msgs.msg.Int32` received on ``/mic_channel``.
+    stringDS
+        User-provided mapping *int → str*.
+    voice_recognized_pub
+        :pyclass:`rospy.Publisher` that emits recognised sentences.
     """
-
     def __init__(self, voice_strings):
         """
         Initialize the VoiceRecognition node.
@@ -43,32 +72,47 @@ class VoiceRecognition:
         self.voice_recognized_pub =rospy.Publisher(f'/{self.robot_number}/voice_recogn', String, queue_size = 10)
         # self.voice_rec_message = Voice_rec()
 
-    def mic_callback(self, msg):
-        """
-        Callback for incoming microphone channel data.
+        rospy.Subscriber('/mic_channel',
+                         Int32,
+                         self._mic_callback,
+                         queue_size=10)
 
-        Parameters
-        ----------
-        msg : std_msgs.msg.Int32
-            The published microphone channel value.
-        """
+        self.voice_recognized_pub = rospy.Publisher('/voice_recogn',
+                                                    String,
+                                                    queue_size=10,
+                                                    latch=True)
+
+        rospy.loginfo("[VoiceRecognition] Node ready – waiting for keys.")
+
+    # ------------------------------------------------------------------ #
+    #                             callback                                #
+    # ------------------------------------------------------------------ #
+    def _mic_callback(self, msg: Int32) -> None:
+        """Cache the most recent key code coming from the “microphone.”"""
         self.data = msg
 
-    def process_data(self):
+    # ------------------------------------------------------------------ #
+    #                           main logic                                #
+    # ------------------------------------------------------------------ #
+    def process_data(self) -> None:
         """
-        Process the latest microphone data and publish the corresponding voice string.
-
-        If self.data is set and maps to a known phrase in stringDS, publish it.
+        If :pyattr:`data` contains a known key, publish the matching sentence.
         """
-        if self.data is not None and self.data.data in self.stringDS:
-            recognized = String(data=self.stringDS[self.data.data])
-            self.voice_recognized_pub.publish(recognized)
+        if self.data is None:
+            return
 
+        phrase = self.stringDS.get(self.data.data)
+        if phrase:
+            self.voice_recognized_pub.publish(String(data=phrase))
+            rospy.loginfo(f"[VoiceRecognition] Recognised: {phrase!r}")
+            # Reset to avoid replaying the same sentence endlessly
+            self.data = None
+
+
+# ---------------------------------------------------------------------- #
+#                                bootstrap                               #
+# ---------------------------------------------------------------------- #
 if __name__ == "__main__":
-    """
-    Main entrypoint: instantiate VoiceRecognition with predefined mappings and
-    repeatedly call process_data() until shutdown.
-    """
     try:
         keys = [0, 1, 2, 3, 4, 5]
         strings =[
@@ -83,7 +127,7 @@ if __name__ == "__main__":
         voiceRecog = VoiceRecognition(voice_strings)
         rate = rospy.Rate(10)  # Adjust rate as needed
         while not rospy.is_shutdown():
-            voiceRecog.process_data()
+            vr.process_data()
             rate.sleep()
     except rospy.ROSInterruptException:
         pass

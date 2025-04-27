@@ -41,7 +41,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../actuation.html">Actuation &amp; Control Components</a></li>
@@ -75,15 +76,80 @@
              
   <section id="module-reasoning_table_placement">
 <span id="reasoning-table-placement"></span><h1>reasoning_table_placement<a class="headerlink" href="#module-reasoning_table_placement" title="Link to this heading"></a></h1>
-<p>reasoning_table_placement.py</p>
-<p>ROS node that listens to placement decisions and publishes table
-commands accordingly. Converts high-level decisions (“PLACE”, “CLEAR”)
-into low-level commands (“PLACE_DISH”, “CLEAR_TABLE”) for execution.</p>
+<section id="reasoning-table-placement-py">
+<h2>reasoning_table_placement.py<a class="headerlink" href="#reasoning-table-placement-py" title="Link to this heading"></a></h2>
+<section id="node-purpose">
+<h3>Node purpose<a class="headerlink" href="#node-purpose" title="Link to this heading"></a></h3>
+<p><em>Bridge from cognition to manipulation.</em>
+It listens to high-level placement <strong>decisions</strong> coming from
+<code class="docutils literal notranslate"><span class="pre">/placement_decision</span></code> (produced by <em>distance_estimator</em>) and converts
+them into low-level <strong>commands</strong> that the manipulation stack
+understands.</p>
+<section id="decision-command-mapping">
+<h4>Decision → Command mapping<a class="headerlink" href="#decision-command-mapping" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Decision</p></th>
+<th class="head"><p>Command sent</p></th>
+<th class="head"><p>Rationale</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PLACE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PLACE_DISH</span></code></p></td>
+<td><p>There is room for one more plate on the table.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CLEAR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLEAR_TABLE</span></code></p></td>
+<td><p>Table is finished; remove crockery.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>other</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NO_ACTION</span></code></p></td>
+<td><p>Either “FULL” or “IGNORE” → do nothing now.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="why-a-dedicated-mapper">
+<h3>Why a dedicated mapper?<a class="headerlink" href="#why-a-dedicated-mapper" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Decoupling</strong> – you can swap in a smarter reasoning algorithm without
+touching the gripper driver, or vice-versa.</p></li>
+<li><p><strong>Future proof</strong> – if the execution layer later moves from simple
+string commands to, e.g., action goals or behaviour-tree ticks, only
+<em>this</em> file needs editing.</p></li>
+</ul>
+</section>
+<section id="ros-topic-interface">
+<h3>ROS topic interface<a class="headerlink" href="#ros-topic-interface" title="Link to this heading"></a></h3>
+<p><strong>Subscribes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/placement_decision</span></code>  : <code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code>
+Example payload → <code class="docutils literal notranslate"><span class="pre">&quot;Decision:</span> <span class="pre">PLACE,</span> <span class="pre">IGNORE&quot;</span></code></p></li>
+</ul>
+<p><strong>Publishes</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/table_reasoning_commands</span></code>  : <code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code>
+One of <code class="docutils literal notranslate"><span class="pre">&quot;PLACE_DISH&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;CLEAR_TABLE&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;NO_ACTION&quot;</span></code>.</p></li>
+</ul>
+</section>
+<section id="implementation-notes">
+<h3>Implementation notes<a class="headerlink" href="#implementation-notes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>A simple <em>substring</em> check keeps the logic robust against future
+additions to the decision string (timestamps, confidence scores …).</p></li>
+<li><p>The publisher queues <strong>10</strong> messages to absorb short bursts without
+back-pressure.</p></li>
+<li><p>All log lines are throttled or filtered to keep the ROS console tidy.</p></li>
+</ul>
+</section>
+</section>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../reasoning.html#reasoning_table_placement.main" title="reasoning_table_placement.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>()</p></td>
-<td><p>Main entry point: instantiate ReasoningTablePlacement and spin ROS.</p></td>
+<td><p>Instantiate the node object and hand control to ROS.</p></td>
 </tr>
 </tbody>
 </table>
@@ -91,7 +157,7 @@ into low-level commands (“PLACE_DISH”, “CLEAR_TABLE”) for execution.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../reasoning.html#reasoning_table_placement.ReasoningTablePlacement" title="reasoning_table_placement.ReasoningTablePlacement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReasoningTablePlacement</span></code></a>()</p></td>
-<td><p>Subscribes to placement decisions and publishes table placement commands.</p></td>
+<td><p>Runtime object that wires subscribers → callbacks → publisher.</p></td>
 </tr>
 </tbody>
 </table>

@@ -40,7 +40,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../perception.html">Perception Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reasoning.html">Reasoning &amp; Planning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../actuation.html">Actuation &amp; Control Components</a></li>
@@ -76,79 +77,115 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">voice_recognition.py</span>
+<span class="sd">====================</span>
 
-<span class="sd">ROS node that simulates voice recognition by mapping microphone channel integers</span>
-<span class="sd">to predefined phrases. Subscribes to &#39;/mic_channel&#39; (Int32) and publishes recognized</span>
-<span class="sd">voice strings on &#39;/voice_recogn&#39;.</span>
+<span class="sd">Audio-to-text **stub** – turns a numeric microphone channel into canned sentences</span>
+<span class="sd">-------------------------------------------------------------------------------</span>
+
+<span class="sd">Real ASR engines are heavyweight and sometimes unavailable (e.g. on CI).  </span>
+<span class="sd">This node fakes the pipeline by translating an *integer* published on</span>
+<span class="sd">``/mic_channel`` into a pre-programmed phrase and emitting it on</span>
+<span class="sd">``/voice_recogn``.  Down-stream components can then be developed and tested</span>
+<span class="sd">without an actual speech recogniser.</span>
+
+<span class="sd">ROS interface</span>
+<span class="sd">~~~~~~~~~~~~~</span>
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 25 35 40</span>
+
+<span class="sd">   * - Direction / type</span>
+<span class="sd">     - Name</span>
+<span class="sd">     - Semantics</span>
+<span class="sd">   * - **subscribe** ``std_msgs/Int32``</span>
+<span class="sd">     - ``/mic_channel``</span>
+<span class="sd">     - Encoded microphone “utterance” (key into the lookup table)</span>
+<span class="sd">   * - **publish** ``std_msgs/String``</span>
+<span class="sd">     - ``/voice_recogn``</span>
+<span class="sd">     - Plain UTF-8 sentence selected from the table</span>
+
+<span class="sd">Lookup strategy</span>
+<span class="sd">---------------</span>
+<span class="sd">A *dict[int, str]* supplied at construction time maps each key value to the</span>
+<span class="sd">sentence that should be “ recognised ”.  Unknown keys are ignored; the last</span>
+<span class="sd">valid utterance remains active until a new recognised value arrives.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Int32</span><span class="p">,</span> <span class="n">String</span>
 
+
 <div class="viewcode-block" id="VoiceRecognition">
 <a class="viewcode-back" href="../interaction.html#voice_recognition.VoiceRecognition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">VoiceRecognition</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Node for mapping microphone channel inputs to voice recognition outputs.</span>
+<span class="sd">    Minimal, dictionary-based ASR emulator.</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    data : std_msgs.msg.Int32 or None</span>
-<span class="sd">        Last received microphone channel message.</span>
-<span class="sd">    stringDS : dict of int to str</span>
-<span class="sd">        Mapping from microphone channel values to phrases.</span>
-<span class="sd">    voice_recognized_pub : rospy.Publisher</span>
-<span class="sd">        Publisher for recognized voice strings on &#39;/voice_recogn&#39;.</span>
+<span class="sd">    Instance Variables</span>
+<span class="sd">    ------------------</span>
+<span class="sd">    data</span>
+<span class="sd">        Latest :pyclass:`std_msgs.msg.Int32` received on ``/mic_channel``.</span>
+<span class="sd">    stringDS</span>
+<span class="sd">        User-provided mapping *int → str*.</span>
+<span class="sd">    voice_recognized_pub</span>
+<span class="sd">        :pyclass:`rospy.Publisher` that emits recognised sentences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voice_strings</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the VoiceRecognition node.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        voice_strings : dict</span>
-<span class="sd">            Predefined mapping from Int32 data values to phrases (str).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                              setup                                  #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voice_strings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;voice_recognition_node&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span> <span class="n">Int32</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stringDS</span> <span class="o">=</span> <span class="n">voice_strings</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/mic_channel&#39;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mic_callback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">voice_recognized_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/voice_recogn&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<div class="viewcode-block" id="VoiceRecognition.mic_callback">
-<a class="viewcode-back" href="../interaction.html#voice_recognition.VoiceRecognition.mic_callback">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">mic_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Callback for incoming microphone channel data.</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/mic_channel&#39;</span><span class="p">,</span>
+                         <span class="n">Int32</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">_mic_callback</span><span class="p">,</span>
+                         <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        msg : std_msgs.msg.Int32</span>
-<span class="sd">            The published microphone channel value.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">msg</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">voice_recognized_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/voice_recogn&#39;</span><span class="p">,</span>
+                                                    <span class="n">String</span><span class="p">,</span>
+                                                    <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                                    <span class="n">latch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[VoiceRecognition] Node ready – waiting for keys.&quot;</span><span class="p">)</span>
 
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                             callback                                #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_mic_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Int32</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cache the most recent key code coming from the “microphone.”&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">msg</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                           main logic                                #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="VoiceRecognition.process_data">
 <a class="viewcode-back" href="../interaction.html#voice_recognition.VoiceRecognition.process_data">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">process_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Process the latest microphone data and publish the corresponding voice string.</span>
-
-<span class="sd">        If self.data is set and maps to a known phrase in stringDS, publish it.</span>
+<span class="sd">        If :pyattr:`data` contains a known key, publish the matching sentence.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stringDS</span><span class="p">:</span>
-            <span class="n">recognized</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stringDS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">voice_recognized_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">recognized</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">phrase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stringDS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">phrase</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">voice_recognized_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">phrase</span><span class="p">))</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[VoiceRecognition] Recognised: </span><span class="si">{</span><span class="n">phrase</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Reset to avoid replaying the same sentence endlessly</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span></div>
 </div>
 
 
+
+<span class="c1"># ---------------------------------------------------------------------- #</span>
+<span class="c1">#                                bootstrap                               #</span>
+<span class="c1"># ---------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main entrypoint: instantiate VoiceRecognition with predefined mappings and</span>
-<span class="sd">    repeatedly call process_data() until shutdown.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[</span>
@@ -156,14 +193,15 @@
             <span class="s2">&quot;Can I have some pasta&quot;</span><span class="p">,</span>
             <span class="s2">&quot;Can I have some pasta, pizza, sushi&quot;</span><span class="p">,</span>
             <span class="s2">&quot;Can I have&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;weee&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Woowwww&quot;</span>
+            <span class="s2">&quot;Weee&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Woowwww&quot;</span><span class="p">,</span>
         <span class="p">]</span>
-        <span class="n">voice_strings</span> <span class="o">=</span> <span class="p">{</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">strings</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">))}</span>
-        <span class="n">voiceRecog</span> <span class="o">=</span> <span class="n">VoiceRecognition</span><span class="p">(</span><span class="n">voice_strings</span><span class="p">)</span>
-        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Adjust rate as needed</span>
+        <span class="n">voice_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">strings</span><span class="p">))</span>
+
+        <span class="n">vr</span> <span class="o">=</span> <span class="n">VoiceRecognition</span><span class="p">(</span><span class="n">voice_map</span><span class="p">)</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>         <span class="c1"># 10 Hz processing loop</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-            <span class="n">voiceRecog</span><span class="o">.</span><span class="n">process_data</span><span class="p">()</span>
+            <span class="n">vr</span><span class="o">.</span><span class="n">process_data</span><span class="p">()</span>
             <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
         <span class="k">pass</span>

@@ -46,103 +46,13 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Perception Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#camera-py">camera.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#synthetic-rgb-depth-sensor-for-rapid-dependency-free-testing">Synthetic <strong>RGB + Depth</strong> sensor for rapid, dependency-free testing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#published-topics">Published topics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#directory-layout">Directory layout</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#camera.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#camera-preprocessing-py">camera_preprocessing.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#topic-contracts">Topic contracts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#node-life-cycle">Node life-cycle</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing.bridge"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing.bridge</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing.rgb_sub"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing.rgb_sub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing.depth_sub"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing.depth_sub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing.rgb_pub"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing.rgb_pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing.depth_pub"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing.depth_pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing.depth_callback"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing.depth_callback()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#camera_preprocessing.CameraPreprocessing.rgb_callback"><code class="docutils literal notranslate"><span class="pre">CameraPreprocessing.rgb_callback()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#lidar-py">lidar.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#synthetic-2-d-lidar-publisher-for-bench-testing-navigation-stacks">Synthetic <strong>2-D LiDAR</strong> publisher for bench-testing navigation stacks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#published-topic">Published topic</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#message-layout">Message layout</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#lidar.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sonar-py">sonar.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#synthetic-ultrasound-range-finder-for-quick-sensor-fusion-prototyping">Synthetic <strong>ultrasound range-finder</strong> for quick sensor-fusion prototyping</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">Published topic</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id12">Message layout</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#sonar.publish"><code class="docutils literal notranslate"><span class="pre">publish()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#object-detection-py">object_detection.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#placeholder-vision-node-that-pretends-to-recognise-objects-in-every-frame">Placeholder <strong>vision node</strong> that pretends to recognise objects in every frame</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id22">Topic contracts</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#object_detection.ObjectDetector"><code class="docutils literal notranslate"><span class="pre">ObjectDetector</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#object_detection.ObjectDetector.image_sub"><code class="docutils literal notranslate"><span class="pre">ObjectDetector.image_sub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#object_detection.ObjectDetector.detect_pub"><code class="docutils literal notranslate"><span class="pre">ObjectDetector.detect_pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#object_detection.ObjectDetector.image_callback"><code class="docutils literal notranslate"><span class="pre">ObjectDetector.image_callback()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#sensor-fusion-py">sensor_fusion.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ros-fusion-node-that-combines-planar-lidar-and-single-beam-sonar">ROS <strong>fusion node</strong> that combines planar LiDAR and single-beam sonar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id32">Topic contracts</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#sensor_fusion.Adapter"><code class="docutils literal notranslate"><span class="pre">Adapter</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sensor_fusion.SensorFusionNode"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.lidar_sub"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.lidar_sub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.sonar_sub"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.sonar_sub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.pub"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.pub</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.lidar_data"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.lidar_data</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.sonar_data"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.sonar_data</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.adapted_sonar"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.adapted_sonar</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.lidar_callback"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.lidar_callback()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.merge_data"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.merge_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.publish_fused"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.publish_fused()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sensor_fusion.SensorFusionNode.sonar_callback"><code class="docutils literal notranslate"><span class="pre">SensorFusionNode.sonar_callback()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#distance-estimation-py">distance_estimation.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#in-1-node-depth-aware-object-localisation-table-state-reasoning">3-in-1 node: <strong>depth-aware object localisation + table-state reasoning</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ros-i-o-summary">ROS I/O summary</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assumptions-limitations">Assumptions &amp; Limitations</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#distance_estimation.ClearingStrategy"><code class="docutils literal notranslate"><span class="pre">ClearingStrategy</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.ClearingStrategy.analyze"><code class="docutils literal notranslate"><span class="pre">ClearingStrategy.analyze()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#distance_estimation.DistanceEstimator"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.DistanceEstimator.depth_callback"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator.depth_callback()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.DistanceEstimator.detection_callback"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator.detection_callback()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.DistanceEstimator.parse_detections"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator.parse_detections()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.DistanceEstimator.project_to_robot_frame"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator.project_to_robot_frame()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.DistanceEstimator.try_estimate_positions"><code class="docutils literal notranslate"><span class="pre">DistanceEstimator.try_estimate_positions()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#distance_estimation.FindPlacementStrategy"><code class="docutils literal notranslate"><span class="pre">FindPlacementStrategy</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.FindPlacementStrategy.analyze"><code class="docutils literal notranslate"><span class="pre">FindPlacementStrategy.analyze()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#distance_estimation.TableAnalysisStrategy"><code class="docutils literal notranslate"><span class="pre">TableAnalysisStrategy</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#distance_estimation.TableAnalysisStrategy.analyze"><code class="docutils literal notranslate"><span class="pre">TableAnalysisStrategy.analyze()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#distance_estimation.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#camera-py">camera.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#camera-preprocessing-py">camera_preprocessing.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lidar-py">lidar.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sonar-py">sonar.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#object-detection-py">object_detection.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sensor-fusion-py">sensor_fusion.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distance-estimation-py">distance_estimation.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning &amp; Planning Components</a></li>
@@ -287,61 +197,23 @@ synchronisation in later stages remains intact.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camera_preprocessing.</span></span><span class="sig-name descname"><span class="pre">CameraPreprocessing</span></span><a class="reference internal" href="_modules/camera_preprocessing.html#CameraPreprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Perform in-place enhancement of RGB and depth streams.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.bridge">
-<span class="sig-name descname"><span class="pre">bridge</span></span><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.bridge" title="Link to this definition"></a></dt>
-<dd><p>Zero-copy converter between <code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>cv_bridge.CvBridge</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>bridge<span class="classifier">cv_bridge.CvBridge</span></dt><dd><p>Zero-copy converter between <code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p>
+</dd>
+<dt>rgb_sub<span class="classifier">rospy.Subscriber</span></dt><dd><p>Subscribes to the raw RGB frames on <code class="docutils literal notranslate"><span class="pre">/camera</span></code>.</p>
+</dd>
+<dt>depth_sub<span class="classifier">rospy.Subscriber</span></dt><dd><p>Subscribes to the raw depth frames on <code class="docutils literal notranslate"><span class="pre">/depth</span></code>.</p>
+</dd>
+<dt>rgb_pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Publishes cleaned RGB frames on <code class="docutils literal notranslate"><span class="pre">/camera_processed</span></code>.</p>
+</dd>
+<dt>depth_pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Publishes cleaned depth maps on <code class="docutils literal notranslate"><span class="pre">/depth_processed</span></code>.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.rgb_sub">
-<span class="sig-name descname"><span class="pre">rgb_sub</span></span><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.rgb_sub" title="Link to this definition"></a></dt>
-<dd><p>Subscribes to the raw RGB frames on <code class="docutils literal notranslate"><span class="pre">/camera</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Subscriber</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.depth_sub">
-<span class="sig-name descname"><span class="pre">depth_sub</span></span><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.depth_sub" title="Link to this definition"></a></dt>
-<dd><p>Subscribes to the raw depth frames on <code class="docutils literal notranslate"><span class="pre">/depth</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Subscriber</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.rgb_pub">
-<span class="sig-name descname"><span class="pre">rgb_pub</span></span><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.rgb_pub" title="Link to this definition"></a></dt>
-<dd><p>Publishes cleaned RGB frames on <code class="docutils literal notranslate"><span class="pre">/camera_processed</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.depth_pub">
-<span class="sig-name descname"><span class="pre">depth_pub</span></span><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.depth_pub" title="Link to this definition"></a></dt>
-<dd><p>Publishes cleaned depth maps on <code class="docutils literal notranslate"><span class="pre">/depth_processed</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p>Register the node, wire the pubs/subs and leave the callbacks running.</p>
+<p>No explicit main loop is necessary; <code class="docutils literal notranslate"><span class="pre">rospy.spin()</span></code> in <em>main</em> keeps the
+process alive and dispatches incoming messages to the callbacks.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="camera_preprocessing.CameraPreprocessing.depth_callback">
 <span class="sig-name descname"><span class="pre">depth_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/camera_preprocessing.html#CameraPreprocessing.depth_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#camera_preprocessing.CameraPreprocessing.depth_callback" title="Link to this definition"></a></dt>
@@ -352,7 +224,7 @@ synchronisation in later stages remains intact.</p>
 </dd>
 </dl>
 <section id="workflow">
-<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
+<h3>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Convert to <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> without altering the encoding.</p></li>
 <li><p>Apply a simple <em>lower threshold</em> – any depth below 0.5 m is set to 0,
@@ -373,7 +245,7 @@ everything else is kept (acts as a near-clipping plane).</p></li>
 </dd>
 </dl>
 <section id="id3">
-<h2>Workflow<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<h3>Workflow<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Convert to <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> using <strong>cv_bridge</strong>.</p></li>
 <li><p>Apply a <em>Gaussian blur</em> (remove salt-and-pepper noise).</p></li>
@@ -385,6 +257,7 @@ frame IDs stay consistent.</p></li>
 </section>
 </dd></dl>
 
+</section>
 </dd></dl>
 
 <section id="lidar-py">
@@ -566,28 +439,17 @@ subscriber timing.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">object_detection.</span></span><span class="sig-name descname"><span class="pre">ObjectDetector</span></span><a class="reference internal" href="_modules/object_detection.html#ObjectDetector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#object_detection.ObjectDetector" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Minimal façade around a future object-detection pipeline.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="object_detection.ObjectDetector.image_sub">
-<span class="sig-name descname"><span class="pre">image_sub</span></span><a class="headerlink" href="#object_detection.ObjectDetector.image_sub" title="Link to this definition"></a></dt>
-<dd><p>Receives frames from <code class="docutils literal notranslate"><span class="pre">/camera_preprocessed</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Subscriber</p>
+<section id="id23">
+<h2>Variables<a class="headerlink" href="#id23" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>image_sub<span class="classifier">rospy.Subscriber</span></dt><dd><p>Receives frames from <code class="docutils literal notranslate"><span class="pre">/camera_preprocessed</span></code>.</p>
+</dd>
+<dt>detect_pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Emits detection results on <code class="docutils literal notranslate"><span class="pre">/camera_detections</span></code>.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="object_detection.ObjectDetector.detect_pub">
-<span class="sig-name descname"><span class="pre">detect_pub</span></span><a class="headerlink" href="#object_detection.ObjectDetector.detect_pub" title="Link to this definition"></a></dt>
-<dd><p>Emits detection results on <code class="docutils literal notranslate"><span class="pre">/camera_detections</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p>Register the subscriber and publisher.</p>
+<p>No additional state is required because the current implementation
+returns a fixed string regardless of the incoming image.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="object_detection.ObjectDetector.image_callback">
 <span class="sig-name descname"><span class="pre">image_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/object_detection.html#ObjectDetector.image_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#object_detection.ObjectDetector.image_callback" title="Link to this definition"></a></dt>
@@ -597,16 +459,17 @@ subscriber timing.</p>
 <dd class="field-odd"><p><strong>_msg</strong> (<em>sensor_msgs.msg.Image</em>) – Ignored content of the pre-processed frame.</p>
 </dd>
 </dl>
-<section id="id23">
-<h2>Workflow<a class="headerlink" href="#id23" title="Link to this heading"></a></h2>
+<section id="id24">
+<h3>Workflow<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Assemble the string <code class="docutils literal notranslate"><span class="pre">&quot;Detected:</span> <span class="pre">Table,</span> <span class="pre">Plate,</span> <span class="pre">Position&quot;</span></code>.</p></li>
-<li><p>Wrap it in <a href="#id24"><span class="problematic" id="id25">:pyclass:`std_msgs.msg.String`</span></a>.</p></li>
+<li><p>Wrap it in <a href="#id25"><span class="problematic" id="id26">:pyclass:`std_msgs.msg.String`</span></a>.</p></li>
 <li><p>Publish on <code class="docutils literal notranslate"><span class="pre">/camera_detections</span></code>.</p></li>
 </ol>
 </section>
 </dd></dl>
 
+</section>
 </dd></dl>
 
 <section id="sensor-fusion-py">
@@ -615,12 +478,12 @@ subscriber timing.</p>
 <h3>ROS <strong>fusion node</strong> that combines planar LiDAR and single-beam sonar<a class="headerlink" href="#ros-fusion-node-that-combines-planar-lidar-and-single-beam-sonar" title="Link to this heading"></a></h3>
 <p>The node listens to</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">/lidar</span></code>   ( <a href="#id26"><span class="problematic" id="id27">:sensor_msgs:`LaserScan`</span></a> )</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/sonar</span></code>  ( <a href="#id28"><span class="problematic" id="id29">:sensor_msgs:`Range`</span></a> — ultrasound )</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/lidar</span></code>   ( <a href="#id27"><span class="problematic" id="id28">:sensor_msgs:`LaserScan`</span></a> )</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/sonar</span></code>  ( <a href="#id29"><span class="problematic" id="id30">:sensor_msgs:`Range`</span></a> — ultrasound )</p></li>
 </ul>
 <p>and emits a <strong>synthetic, fused scan</strong> on</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code>  ( <a href="#id30"><span class="problematic" id="id31">:sensor_msgs:`LaserScan`</span></a> )</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code>  ( <a href="#id31"><span class="problematic" id="id32">:sensor_msgs:`LaserScan`</span></a> )</p></li>
 </ul>
 <p>The fusion strategy is deliberately simple:</p>
 <ol class="arabic simple">
@@ -632,8 +495,8 @@ matches the LiDAR beam count.</p></li>
 <p>This yields a quick placeholder that exercises downstream consumers without
 complex probabilistic filters.</p>
 </section>
-<section id="id32">
-<h3>Topic contracts<a class="headerlink" href="#id32" title="Link to this heading"></a></h3>
+<section id="id33">
+<h3>Topic contracts<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Topic</p></th>
@@ -676,72 +539,24 @@ reading into the LiDAR fan.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sensor_fusion.</span></span><span class="sig-name descname"><span class="pre">SensorFusionNode</span></span><a class="reference internal" href="_modules/sensor_fusion.html#SensorFusionNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Merge LiDAR and sonar information into a single <code class="xref py py-class docutils literal notranslate"><span class="pre">LaserScan</span></code>.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.lidar_sub">
-<span class="sig-name descname"><span class="pre">lidar_sub</span></span><a class="headerlink" href="#sensor_fusion.SensorFusionNode.lidar_sub" title="Link to this definition"></a></dt>
-<dd><p>Receives scans from <code class="docutils literal notranslate"><span class="pre">/lidar</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Subscriber</p>
+<section id="id34">
+<h2>Variables<a class="headerlink" href="#id34" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>lidar_sub<span class="classifier">rospy.Subscriber</span></dt><dd><p>Receives scans from <code class="docutils literal notranslate"><span class="pre">/lidar</span></code>.</p>
+</dd>
+<dt>sonar_sub<span class="classifier">rospy.Subscriber</span></dt><dd><p>Receives ranges from <code class="docutils literal notranslate"><span class="pre">/sonar</span></code>.</p>
+</dd>
+<dt>pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Emits the fused scan on <code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code>.</p>
+</dd>
+<dt>lidar_data<span class="classifier">sensor_msgs.msg.LaserScan | None</span></dt><dd><p>Last LiDAR scan received.</p>
+</dd>
+<dt>sonar_data<span class="classifier">sensor_msgs.msg.Range | None</span></dt><dd><p>Last sonar reading received.</p>
+</dd>
+<dt>adapted_sonar<span class="classifier">list[float]</span></dt><dd><p>Sonar value replicated into a list matching the LiDAR beam count.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.sonar_sub">
-<span class="sig-name descname"><span class="pre">sonar_sub</span></span><a class="headerlink" href="#sensor_fusion.SensorFusionNode.sonar_sub" title="Link to this definition"></a></dt>
-<dd><p>Receives ranges from <code class="docutils literal notranslate"><span class="pre">/sonar</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Subscriber</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.pub">
-<span class="sig-name descname"><span class="pre">pub</span></span><a class="headerlink" href="#sensor_fusion.SensorFusionNode.pub" title="Link to this definition"></a></dt>
-<dd><p>Emits the fused scan on <code class="docutils literal notranslate"><span class="pre">/fused_scan</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>rospy.Publisher</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.lidar_data">
-<span class="sig-name descname"><span class="pre">lidar_data</span></span><a class="headerlink" href="#sensor_fusion.SensorFusionNode.lidar_data" title="Link to this definition"></a></dt>
-<dd><p>Last LiDAR scan received.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>sensor_msgs.msg.LaserScan | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.sonar_data">
-<span class="sig-name descname"><span class="pre">sonar_data</span></span><a class="headerlink" href="#sensor_fusion.SensorFusionNode.sonar_data" title="Link to this definition"></a></dt>
-<dd><p>Last sonar reading received.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>sensor_msgs.msg.Range | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.adapted_sonar">
-<span class="sig-name descname"><span class="pre">adapted_sonar</span></span><a class="headerlink" href="#sensor_fusion.SensorFusionNode.adapted_sonar" title="Link to this definition"></a></dt>
-<dd><p>Sonar value replicated into a list matching the LiDAR beam count.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p>Register the node, wire subscriptions and publisher and
+initialise state containers.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.lidar_callback">
 <span class="sig-name descname"><span class="pre">lidar_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs.msg.LaserScan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/sensor_fusion.html#SensorFusionNode.lidar_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode.lidar_callback" title="Link to this definition"></a></dt>
@@ -771,8 +586,8 @@ reading into the LiDAR fan.</p>
 <dt class="sig sig-object py" id="sensor_fusion.SensorFusionNode.publish_fused">
 <span class="sig-name descname"><span class="pre">publish_fused</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/sensor_fusion.html#SensorFusionNode.publish_fused"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sensor_fusion.SensorFusionNode.publish_fused" title="Link to this definition"></a></dt>
 <dd><p>Produce and publish a fused <code class="xref py py-class docutils literal notranslate"><span class="pre">LaserScan</span></code> if both inputs are ready.</p>
-<section id="id33">
-<h2>Workflow<a class="headerlink" href="#id33" title="Link to this heading"></a></h2>
+<section id="id35">
+<h3>Workflow<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Verify that <strong>both</strong> <code class="docutils literal notranslate"><span class="pre">self.lidar_data</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">self.sonar_data</span></code> are
 populated.</p></li>
@@ -797,6 +612,7 @@ and publish.</p></li>
 </dl>
 </dd></dl>
 
+</section>
 </dd></dl>
 
 <section id="distance-estimation-py">
@@ -926,7 +742,7 @@ depth, back-project to XYZ using pinhole equation.</p></li>
 </dl>
 </li>
 </ul>
-<p>Public attributes are intentionally <em>not</em> exposed; everything is internal
+<p>Public variables are intentionally <em>not</em> exposed; everything is internal
 to the node.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="distance_estimation.DistanceEstimator.depth_callback">
@@ -985,8 +801,8 @@ batch is processed exactly once, regardless of depth FPS.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">distance_estimation.</span></span><span class="sig-name descname"><span class="pre">FindPlacementStrategy</span></span><a class="reference internal" href="_modules/distance_estimation.html#FindPlacementStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#distance_estimation.FindPlacementStrategy" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#distance_estimation.TableAnalysisStrategy" title="distance_estimation.TableAnalysisStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">TableAnalysisStrategy</span></code></a></p>
 <p><em>Minimal-viable</em> placement logic.</p>
-<section id="id34">
-<h2>Heuristic<a class="headerlink" href="#id34" title="Link to this heading"></a></h2>
+<section id="id36">
+<h2>Heuristic<a class="headerlink" href="#id36" title="Link to this heading"></a></h2>
 <p>If the table currently hosts <strong>fewer than three</strong> detected objects, there
 is space for another dish → return <code class="docutils literal notranslate"><span class="pre">&quot;PLACE&quot;</span></code>.  Otherwise return
 <code class="docutils literal notranslate"><span class="pre">&quot;FULL&quot;</span></code>.</p>
