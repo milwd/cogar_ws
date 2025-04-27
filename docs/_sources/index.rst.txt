@@ -4,7 +4,7 @@ Autonomous Waiters – Complete Project Documentation
 ===================================================
 
 :Team Name: **ACM Robatics Solution**  
-:Contributors: Arian, Milad, Christain 
+:Contributors: Arian Tavousi, Milad Rabiei, Christian Negri Ravera
 
 1. Introduction
 ============
