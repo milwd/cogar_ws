@@ -1,6 +1,6 @@
 # Autonomous Waiters
 
-**Team Name:** ACM Robatics Solution  
+**Team Name:** ACM Robotics Solution  
 **Contributors:** Arian Tavousi, Milad Rabiei, Christian Negri Ravera
 
 ## 1. Introduction
