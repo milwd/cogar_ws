@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camera &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">camera</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for camera</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">camera.py</span>
+<span class="sd">=========</span>
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`camera.py` is a *horizontal* **sensor-stub component**: a self-contained</span>
+<span class="sd">software camera that produces deterministic RGB + depth imagery even when no</span>
+<span class="sd">physical sensor is present.  It lets downstream perception, fusion and</span>
+<span class="sd">visualisation nodes run in CI, headless simulation, or early prototyping</span>
+<span class="sd">environments where real hardware is unavailable.</span>
+
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 12 28 25 55</span>
+
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Topic</span>
+<span class="sd">     - Message type</span>
+<span class="sd">     - Notes</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/camera``</span>
+<span class="sd">     - ``sensor_msgs/Image``</span>
+<span class="sd">     - Static BGR8 frame read from *image.jpg*</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/depth``</span>
+<span class="sd">     - ``sensor_msgs/Image``</span>
+<span class="sd">     - 8-bit signed mono array (ones); same resolution as RGB</span>
+
+<span class="sd">Both topics share identical ``header.stamp`` values and are published at</span>
+<span class="sd">**10 Hz**, allowing time-synchronisation filters to treat them as a stereo pair.</span>
+
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
+
+<span class="sd">• The JPEG file exists and is readable.  </span>
+<span class="sd">• Resolution ≤ 1920 × 1080 (soft real-time ceiling).</span>
+
+<span class="sd">**Post-conditions**</span>
+
+<span class="sd">• The depth image’s *height* and *width* match the RGB frame exactly.  </span>
+<span class="sd">• Header fields ``stamp`` and ``frame_id`` are identical between colour and depth messages.</span>
+
+<span class="sd">**Invariants**  </span>
+
+<span class="sd">• Latency (JPEG load → publish) ≤ 8 ms on a 4-core laptop.  </span>
+<span class="sd">• Peak RAM ≤ 2 × (W × H × 3) bytes (one colour buffer + one depth buffer).</span>
+
+<span class="sd">**Protocol** </span>
+
+<span class="sd">This component is *stateless*: each 100 ms cycle publishes fresh, independent</span>
+<span class="sd">messages.</span>
+
+<span class="sd">Lifecycle</span>
+<span class="sd">---------</span>
+<span class="sd">* Node name ``{robot}_camera``  </span>
+<span class="sd">* Ready once its publishers are advertised (no init service).  </span>
+<span class="sd">* Clean shutdown on Ctrl-C or ``rosnode kill``.</span>
+
+<span class="sd">Quality &amp; Reusability metrics</span>
+<span class="sd">-----------------------------</span>
+<span class="sd">Latency &lt; 8 ms | Throughput = 10 Hz | Cyclomatic complexity &lt; 10</span>
+
+<span class="sd">Directory layout</span>
+<span class="sd">----------------</span>
+<span class="sd">``camera.py`` expects the JPEG at  </span>
+
+<span class="sd">``/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg``  </span>
+
+<span class="sd">Update the path if you move the file; no other configuration is required.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cv_bridge</span><span class="w"> </span><span class="kn">import</span> <span class="n">CvBridge</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+
+<div class="viewcode-block" id="publish">
+<a class="viewcode-back" href="../vision_modules/camera.html#camera.publish">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">publish</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bootstrap the node and stream frames until ROS shuts down.</span>
+
+<span class="sd">    Execution flow</span>
+<span class="sd">    --------------</span>
+<span class="sd">    1. **Node init** – registers with the ROS master under</span>
+<span class="sd">       ``{robot}_camera``.</span>
+<span class="sd">    2. **Publisher creation**  </span>
+<span class="sd">       • ``pub_rgb``   → ``/{robot}/camera`` (BGR8 colour)  </span>
+<span class="sd">       • ``pub_depth`` → ``/{robot}/depth``  (8-bit signed mono)</span>
+<span class="sd">    3. **Main loop** (10 Hz)  </span>
+<span class="sd">       a. Load the static JPEG each cycle (immediate visual edits propagate).  </span>
+<span class="sd">       b. Convert to ``sensor_msgs/Image`` via **cv_bridge** and publish.  </span>
+<span class="sd">       c. Allocate a matching depth array filled with ones, convert and</span>
+<span class="sd">          publish.  </span>
+<span class="sd">       d. Sleep the remainder of the 100 ms period.</span>
+<span class="sd">    4. Loop exits cleanly when ``rospy.is_shutdown()`` becomes *True*.</span>
+
+<span class="sd">    Exceptions</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Any non-ROS exception aborts the node and prints a traceback, which is</span>
+<span class="sd">    useful during development.  ROS interruptions are swallowed in *main*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># rospy.get_param(&#39;~robot_number&#39;)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_camera&#39;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># Uncomment the block below to activate the publishers.</span>
+    <span class="c1">#</span>
+    <span class="c1"># pub_rgb   = rospy.Publisher(f&#39;/{robot_number}/camera&#39;, Image, queue_size=10)</span>
+    <span class="c1"># pub_depth = rospy.Publisher(f&#39;/{robot_number}/depth&#39;,  Image, queue_size=10)</span>
+    <span class="c1"># rate      = rospy.Rate(10)  # 10 Hz</span>
+    <span class="c1">#</span>
+    <span class="c1"># bridge  = CvBridge()</span>
+    <span class="c1"># img_path = &#39;/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg&#39;</span>
+    <span class="c1">#</span>
+    <span class="c1"># while not rospy.is_shutdown():</span>
+    <span class="c1">#     original = cv2.imread(img_path, cv2.IMREAD_COLOR)</span>
+    <span class="c1">#     if original is None:</span>
+    <span class="c1">#         rospy.logerr(f&#39;camera.py: failed to read {img_path}&#39;)</span>
+    <span class="c1">#         rate.sleep()</span>
+    <span class="c1">#         continue</span>
+    <span class="c1">#</span>
+    <span class="c1">#     rgb_msg = bridge.cv2_to_imgmsg(original, encoding=&#39;bgr8&#39;)</span>
+    <span class="c1">#     stamp   = rospy.Time.now()</span>
+    <span class="c1">#     rgb_msg.header.stamp = stamp</span>
+    <span class="c1">#     rgb_msg.header.frame_id = &#39;camera_frame&#39;</span>
+    <span class="c1">#     pub_rgb.publish(rgb_msg)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     depth_np  = np.ones(original.shape[:2], dtype=np.int8)</span>
+    <span class="c1">#     depth_msg = bridge.cv2_to_imgmsg(depth_np, encoding=&#39;8SC1&#39;)</span>
+    <span class="c1">#     depth_msg.header.stamp = stamp</span>
+    <span class="c1">#     depth_msg.header.frame_id = &#39;depth_frame&#39;</span>
+    <span class="c1">#     pub_depth.publish(depth_msg)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     rate.sleep()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Entrypoint — start the publisher and swallow *only* ROS interruptions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">publish</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

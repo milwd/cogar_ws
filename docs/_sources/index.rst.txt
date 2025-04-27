@@ -1,0 +1,183 @@
+.. _index:
+
+Autonomous Waiters – Complete Project Documentation
+===================================================
+
+:Team Name: **ACM Robatics Solution**  
+:Contributors: Arian, Milad, Christain 
+
+1. Introduction
+============
+
+This project deploys a fleet of five PAL Robotics TIAGo robots as autonomous waiters in a sushi restaurant, handling order delivery, table clearing, customer interactions and many more.
+
+
+2. System Overview
+------------------
+
+The software follows a classic **perception → reasoning → actuation** pipeline,  
+with a thin orchestration layer balancing the fleet
+
+3. Workflow
+-----------
+
+#. **Customer speaks** – simulated ASR (`voice_recognition.py`) publishes “Can I have sushi”  
+#. **Order verification** – `reasoning_order_verification.py` parses dish names, enqueues via `send_order` service  
+#. **Orchestrator** – a free robot polls `/robot_state_decision`, receives the “sushi” task  
+#. **ReasoningAction** – `reasoning_action.py` turns the plan + table command into ActionLib goals (move, arm, gripper)  
+#. **Execution** – `control_wheel.py`, `control_arm.py`, `control_gripper.py` carry out the motions  
+#. **Feedback loop** – upon completion each controller publishes status; `task_manager.py` feeds back into the orchestrator  
+#. **Table placement** – after delivery `reasoning_table_placement.py` issues PLACE_DISH or CLEAR_TABLE commands  
+#. **Interaction** – `speech_generator.py` & `speaker.py` announce actions to customers  
+
+4. Architectural Diagrams
+-------------------------
+
+Here only component diagram is included due to size restrictions, you can view all the diagrams in full size using the following link:
+https://drive.google.com/file/d/1yGJAAkXFYum7aQUJqAF_S_iSz2Qtz7F8/view?usp=sharing
+
+.. figure:: images/component_diagram.png
+   :alt: Component Diagram
+   :align: center
+
+   **Figure 1.** High-level component interaction.
+
+5. Codebase Tour
+----------------
+
+Each script is grouped by its pipeline layer.  Click through the API docs for details.
+
+Vision
+~~~~~~
+- **camera.py**              – static RGB + synthetic depth generator  
+- **camera_preprocessing.py** – colour-correction & noise reduction  
+- **object_detection.py**     – placeholder object detector (1 Hz)   
+- **distance_estimation.py**  – depth-powered object localization  
+
+Brain
+~~~~~
+- **task_manager.py**       – event aggregator, polls `/robot_state_decision` 
+- **reasoning_action.py**           – translates symbolic plans into ActionLib goals  
+- **reasoning_table_placement.py**  – maps PLACE/CLEAR decisions to commands  
+- **reasoning_speech_generation.py**  – throttles and republishes speech commands at 1 Hz 
+
+Navigation
+~~~~~~~~~~
+- **path_planning.py**              – dummy global planner (1 waypoint)  
+- **slam.py**                       – blank map + identity odom stub  
+- **sensor_fusion.py**        – fuse LiDAR + sonar into a single scan  
+- **lidar.py**, **sonar.py**  – synthetic LiDAR/sonar streams  
+
+Control
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- **control_wheel.py**      – base controller (first waypoint)  
+- **control_arm.py**        – proportional joint controller (ActionLib)  
+- **control_gripper.py**    – binary gripper actuator (ActionLib)  
+- **encoder_wheel.py**, **encoder_arm.py**, **encoder_gripper.py** – synthetic encoders  
+- **force.py**              – fake force sensor for manipulator testing  
+
+Interaction
+~~~~~~~~~~~
+- **speech_generator.py**   – buffers and throttles TTS commands  
+- **speaker.py**            – last-mile relay to TTS backend 
+- **microphone.py**, **voice_recognition.py** – synthetic ASR pipeline  
+- **reasoning_order_verification.py** – validates “Can I have …” orders  
+
+Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- **orchestration_and_coordination.py** – YAML-backed order queue + state gateway   
+
+6. Running the Project
+---------------------
+You need to add the number of Robots you want to launch (the defualt is 2) in order to have sufficent number of nodes created, for this you can edit ROS params, Then use the following to run the project:
+   roslaunch cogar_ws tiago_launch.launch
+
+7. Running the Test
+------------------
+For running the test open the test folder and then run the following:
+   python integration_test.py
+
+8. Live System Demo
+-------------------
+Here we have a live demo of the project, in the right-up we have roslaunch window, in the right-down we have our test window and in the left is customer's orders.
+
+.. figure:: images/run.gif
+   :alt: Animated demo of the Autonomous Waiter in action
+   :align: center
+   :width: 70%
+
+     **Figure 2.** Project Demo.
+
+9. Test Results
+---------------
+Faulty launch:
+
+.. code-block:: console
+
+   [TEST] Expected nodes: 39, Found nodes: 38
+   F[INFO] Integration tests complete.
+
+   ======================================================================
+   FAIL: test_node_count (main.TestIntegration)
+   ----------------------------------------------------------------------
+   Traceback (most recent call last):
+     File "cogar_ws/src/tiago1/test/integration_test.py", line 16, in test_node_count
+       self.assertEqual(len(self.nodes), expected_node_count)
+   AssertionError: 38 != 39
+
+   ----------------------------------------------------------------------
+   Ran 2 tests in 20.607s
+
+   FAILED (failures=1)
+
+Successful launch:
+
+.. code-block:: console
+
+   [TEST] Expected nodes: 39, Found nodes: 39
+   [INFO] Integration tests complete.
+
+   ----------------------------------------------------------------------
+   Ran 2 tests in 20.503s
+
+   OK
+
+
+
+.. rubric:: Contents
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents
+
+   vision
+   vision/vision_modules/camera
+   vision/vision_modules/camera_preprocessing
+   vision/vision_modules/object_detection
+   vision/vision_modules/distance_estimation
+   brain
+   brain/brain_modules/reasoning_action
+   brain/brain_modules/reasoning_table_placement
+   brain/brain_modules/reasoning_speech_generation
+   brain/brain_modules/task_manager
+   navigation
+   navigation/navigation_modules/sonar
+   navigation/navigation_modules/lidar
+   navigation/navigation_modules/sensor_fusion
+   navigation/navigation_modules/slam
+   navigation/navigation_modules/path_planning
+   control
+   control/control_modules/control_wheel
+   control/control_modules/control_arm
+   control/control_modules/control_gripper
+   control/control_modules/encoder_wheel
+   control/control_modules/encoder_arm
+   control/control_modules/encoder_gripper
+   control/control_modules/force
+   interaction
+   interaction/interaction_modules/voice_recognition
+   interaction/interaction_modules/microphone
+   interaction/interaction_modules/reasoning_order_verification
+   interaction/interaction_modules/speaker
+   server
+   server/server_modules/orchestration_and_coordination

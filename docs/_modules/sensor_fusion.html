@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sensor_fusion &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sensor_fusion</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sensor_fusion</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">sensor_fusion.py</span>
+<span class="sd">================</span>
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`sensor_fusion.py` is a **fusion node** that synthesizes data from a planar</span>
+<span class="sd">LiDAR scanner and a single-beam sonar into a unified `sensor_msgs/LaserScan`.</span>
+<span class="sd">This lightweight placeholder lets sensor-fusion and obstacle-avoidance pipelines</span>
+<span class="sd">be exercised without complex probabilistic filters or real hardware.</span>
+
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 12 30 45</span>
+
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Topic</span>
+<span class="sd">     - Message type / Notes</span>
+<span class="sd">   * - **Required** (sub)</span>
+<span class="sd">     - ``/{robot}/lidar``</span>
+<span class="sd">     - ``sensor_msgs/LaserScan`` – 180° planar scan</span>
+<span class="sd">   * - **Required** (sub)</span>
+<span class="sd">     - ``/{robot}/sonar``</span>
+<span class="sd">     - ``sensor_msgs/Range`` – single-beam ultrasound</span>
+<span class="sd">   * - **Provided** (pub)</span>
+<span class="sd">     - ``/{robot}/fused_scan``</span>
+<span class="sd">     - ``sensor_msgs/LaserScan`` – LiDAR + centred sonar reading fused</span>
+
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
+
+<span class="sd">• LiDAR and sonar topics publish at compatible rates (~10 Hz).  </span>
+<span class="sd">• LiDAR `ranges` length matches the pseudo-scan length generated from sonar.</span>
+
+<span class="sd">**Post-conditions**  </span>
+
+<span class="sd">• Each call to `publish_fused()` emits exactly one fused `LaserScan`.  </span>
+<span class="sd">• Fused `ranges` = element-wise sum of LiDAR ranges and the adapted sonar array.</span>
+
+<span class="sd">**Invariants**  </span>
+
+<span class="sd">• Sonar reading is placed at the centre index; all other beam values are unchanged.</span>
+
+<span class="sd">Implementation notes</span>
+<span class="sd">--------------------</span>
+<span class="sd">* Fusion is attempted on every sonar callback and in a fixed-rate loop.  </span>
+<span class="sd">* `Adapter` expands a scalar sonar reading into a zero-filled list with the value</span>
+<span class="sd">  at the centre.  </span>
+<span class="sd">* Holds no extra state beyond the last messages, ideal for hot-reload and tests.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaserScan</span><span class="p">,</span> <span class="n">Range</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+
+<div class="viewcode-block" id="SensorFusionNode">
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SensorFusionNode</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge LiDAR and sonar information into a single LaserScan.</span>
+
+<span class="sd">    Variables</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lidar_data : sensor_msgs.msg.LaserScan | None</span>
+<span class="sd">        Last LiDAR scan received.</span>
+<span class="sd">    sonar_data : sensor_msgs.msg.Range | None</span>
+<span class="sd">        Last sonar reading received.</span>
+<span class="sd">    adapted_sonar : list[float]</span>
+<span class="sd">        Sonar value expanded to match LiDAR beam count.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register the node, wire subscriptions and publisher, and initialise state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_sensor_fusion_node&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sonar_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lidar_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/lidar&#39;</span><span class="p">,</span>
+            <span class="n">LaserScan</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lidar_callback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sonar_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/sonar&#39;</span><span class="p">,</span>
+            <span class="n">Range</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sonar_callback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/fused_scan&#39;</span><span class="p">,</span>
+            <span class="n">LaserScan</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="SensorFusionNode.lidar_callback">
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.lidar_callback">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lidar_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">LaserScan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Store the most recent LiDAR scan.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : sensor_msgs.msg.LaserScan</span>
+<span class="sd">            Scan received from `/lidar`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span> <span class="o">=</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="SensorFusionNode.sonar_callback">
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.sonar_callback">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sonar_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Range</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Store the sonar reading and trigger a fusion attempt.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : sensor_msgs.msg.Range</span>
+<span class="sd">            Range measurement received from `/sonar`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sonar_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publish_fused</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SensorFusionNode.merge_data">
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.merge_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Combine the LiDAR and adapted sonar arrays element-wise.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[float]</span>
+<span class="sd">            Sum of both sensors; length == len(self.lidar_data.ranges).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapted_sonar</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">ranges</span><span class="p">))</span>
+        <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="SensorFusionNode.publish_fused">
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.SensorFusionNode.publish_fused">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">publish_fused</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Produce and publish a fused LaserScan if both inputs are ready.</span>
+
+<span class="sd">        Workflow</span>
+<span class="sd">        --------</span>
+<span class="sd">        1. Verify both `self.lidar_data` and `self.sonar_data` are present.  </span>
+<span class="sd">        2. Use `Adapter` to expand the scalar sonar reading into a list</span>
+<span class="sd">           matching the LiDAR beam count.  </span>
+<span class="sd">        3. Call `merge_data()` to sum the two arrays.  </span>
+<span class="sd">        4. Populate a new `LaserScan`, copy LiDAR header and geometry fields,</span>
+<span class="sd">           attach fused `ranges`, and publish.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sonar_data</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="n">beams</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">ranges</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adapted_sonar</span> <span class="o">=</span> <span class="n">Adapter</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">sonar_data</span><span class="o">.</span><span class="n">range</span><span class="p">,</span> <span class="n">beams</span><span class="p">)</span>
+
+        <span class="n">fused</span> <span class="o">=</span> <span class="n">LaserScan</span><span class="p">()</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">header</span>          <span class="c1"># reuse timestamp/frame</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">angle_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">angle_min</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">angle_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">angle_max</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">angle_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">angle_increment</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">time_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">time_increment</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">range_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">range_min</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">range_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_data</span><span class="o">.</span><span class="n">range_max</span>
+        <span class="n">fused</span><span class="o">.</span><span class="n">ranges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_data</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">fused</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Adapter">
+<a class="viewcode-back" href="../navigation_modules/sensor_fusion.html#sensor_fusion.Adapter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Adapter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Expand a scalar sonar range into a list matching the LiDAR beam count.</span>
+
+<span class="sd">    The sonar value is inserted at the centre index; all other positions</span>
+<span class="sd">    are zero so that simple addition embeds the sonar reading into the LiDAR fan.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sonar_range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sonar_range : float</span>
+<span class="sd">            Distance reported by the ultrasound sensor.</span>
+<span class="sd">        length : int</span>
+<span class="sd">            Desired output length (number of LiDAR beams).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[float]</span>
+<span class="sd">            Zero-filled list with `sonar_range` at index `length // 2`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">length</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sonar_range</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Instantiate `SensorFusionNode` and publish fused scans at 10 Hz.</span>
+
+<span class="sd">    The explicit loop guarantees output even if sonar readings arrive slower</span>
+<span class="sd">    than LiDAR.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">SensorFusionNode</span><span class="p">()</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 10 Hz</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">publish_fused</span><span class="p">()</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

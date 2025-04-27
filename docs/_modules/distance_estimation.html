@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>distance_estimation &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">distance_estimation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for distance_estimation</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">distance_estimation.py</span>
+<span class="sd">======================</span>
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`distance_estimation.py` is a **vertical sensor-fusion component** that combines</span>
+<span class="sd">semantic detections with depth imagery to deliver both *metric positions* and</span>
+<span class="sd">a high-level *table-state* decision (place, clear, etc.).  Internally it uses</span>
+<span class="sd">the **Strategy pattern** so placement and clearing logic can evolve</span>
+<span class="sd">independently.</span>
+
+<span class="sd">Why split placement vs clearing?</span>
+<span class="sd">--------------------------------</span>
+<span class="sd">• Placement cares only about *free space* (≤ 3 items).  </span>
+<span class="sd">• Clearing cares only about *specific* dirty items (*plate + cup*).  </span>
+<span class="sd">Two interchangeable strategies let you tune or replace each behaviour without</span>
+<span class="sd">touching the other.</span>
+
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">   :header-rows: 1</span>
+<span class="sd">   :widths: 12 30 25 58</span>
+
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Topic</span>
+<span class="sd">     - Message type</span>
+<span class="sd">     - Notes</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/camera_detections``</span>
+<span class="sd">     - ``std_msgs/String``</span>
+<span class="sd">     - Example: ``&quot;Detected: cup, plate&quot;``</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/depth_processed``</span>
+<span class="sd">     - ``sensor_msgs/Image``</span>
+<span class="sd">     - 32-bit float depth (same resolution as RGB)</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/object_positions``</span>
+<span class="sd">     - ``std_msgs/String``</span>
+<span class="sd">     - XYZ list – e.g. ``&quot;cup @ [x,y,z]; plate @ [x,y,z]&quot;``</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/placement_decision``</span>
+<span class="sd">     - ``std_msgs/String``</span>
+<span class="sd">     - ``&quot;Decision: PLACE, CLEAR&quot;`` (keywords from both strategies)</span>
+
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
+
+<span class="sd">• Depth topic and detection topic share the same resolution and optical frame.  </span>
+
+<span class="sd">**Post-conditions**</span>
+
+<span class="sd">• For every detection batch exactly **one** positions message and **one**</span>
+<span class="sd">  decision string are published.  </span>
+<span class="sd">• Each XYZ entry is based on the *centre pixel* (placeholder) until real</span>
+<span class="sd">  bounding-box projection is implemented.</span>
+
+<span class="sd">**Invariants**</span>
+
+<span class="sd">• Publication latency (both topics present → decision publish) &lt; 40 ms.  </span>
+<span class="sd">• Strategy keywords are always one of: *PLACE, FULL, CLEAR, IGNORE*.</span>
+
+<span class="sd">**Protocol**</span>
+<span class="sd">  </span>
+<span class="sd">1. Cache the latest depth and detection messages.  </span>
+<span class="sd">2. When both are available, fuse → publish → reset detection cache.  </span>
+<span class="sd">   (Depth can arrive faster; each batch of detections is used once.)</span>
+
+<span class="sd">Assumptions &amp; Limitations</span>
+<span class="sd">-------------------------</span>
+<span class="sd">* One RGB-D camera with pinhole intrinsics (fx, fy, cx, cy hard-coded).  </span>
+<span class="sd">* Only the *centre pixel* depth is sampled – replace with bounding-box → 3-D</span>
+<span class="sd">  projection for production.  </span>
+<span class="sd">* Detections arrive as a simple string; switch to</span>
+<span class="sd">  ``vision_msgs/Detection2DArray`` when a real detector is online.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cv_bridge</span><span class="w"> </span><span class="kn">import</span> <span class="n">CvBridge</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+
+<span class="c1"># --------------------------------------------------------------------------- #</span>
+<span class="c1">#                           STRATEGY PATTERN                                  #</span>
+<span class="c1"># --------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="TableAnalysisStrategy">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.TableAnalysisStrategy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TableAnalysisStrategy</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base for table-state reasoning.</span>
+
+<span class="sd">    ``analyze(objects: list[str]) -&gt; str`` must return **one** of</span>
+
+<span class="sd">    * ``&quot;PLACE&quot;`` – safe to put another plate  </span>
+<span class="sd">    * ``&quot;FULL&quot;``  – table crowded; do nothing  </span>
+<span class="sd">    * ``&quot;CLEAR&quot;`` – fetch dirty items  </span>
+<span class="sd">    * ``&quot;IGNORE&quot;`` – no action needed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TableAnalysisStrategy.analyze">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.TableAnalysisStrategy.analyze">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objects</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="FindPlacementStrategy">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.FindPlacementStrategy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FindPlacementStrategy</span><span class="p">(</span><span class="n">TableAnalysisStrategy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return *PLACE* when &lt; 3 objects present, else *FULL*.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FindPlacementStrategy.analyze">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.FindPlacementStrategy.analyze">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objects</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;PLACE&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="k">else</span> <span class="s2">&quot;FULL&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ClearingStrategy">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.ClearingStrategy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClearingStrategy</span><span class="p">(</span><span class="n">TableAnalysisStrategy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return *CLEAR* if both ``plate`` and ``cup`` present, else *IGNORE*.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ClearingStrategy.analyze">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.ClearingStrategy.analyze">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objects</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;CLEAR&quot;</span> <span class="k">if</span> <span class="p">{</span><span class="s2">&quot;plate&quot;</span><span class="p">,</span> <span class="s2">&quot;cup&quot;</span><span class="p">}</span> <span class="o">&lt;=</span> <span class="nb">set</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;IGNORE&quot;</span></div>
+</div>
+
+
+
+<span class="c1"># --------------------------------------------------------------------------- #</span>
+<span class="c1">#                               MAIN NODE                                     #</span>
+<span class="c1"># --------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="DistanceEstimator">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DistanceEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fuse detections + depth into XYZ positions and table-state keywords.</span>
+
+<span class="sd">    Internal State</span>
+<span class="sd">    --------------</span>
+<span class="sd">    latest_detections : str or None</span>
+<span class="sd">        Raw detection string awaiting fusion.</span>
+<span class="sd">    latest_depth : ndarray or None</span>
+<span class="sd">        Most recent depth frame (32-bit float).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ------------------------- initialisation ----------------------------- #</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>              <span class="c1"># namespace for multi-robot</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">_distance_estimator_node&quot;</span><span class="p">)</span>
+
+        <span class="c1"># -- ROS wiring ---------------------------------------------------- #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detection_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/camera_detections&quot;</span><span class="p">,</span>
+            <span class="n">String</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">detection_callback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/depth_processed&quot;</span><span class="p">,</span>
+            <span class="n">Image</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth_callback</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">position_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/object_positions&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/placement_decision&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># (legacy non-namespaced publishers – remove when all consumers migrate)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/object_positions&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/placement_decision&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># -- state &amp; helpers ----------------------------------------------- #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latest_detections</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latest_depth</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span> <span class="o">=</span> <span class="n">CvBridge</span><span class="p">()</span>
+
+        <span class="c1"># -- strategy objects ---------------------------------------------- #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">placement_strategy</span> <span class="o">=</span> <span class="n">FindPlacementStrategy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearing_strategy</span> <span class="o">=</span> <span class="n">ClearingStrategy</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------- subscribers -------------------------------- #</span>
+<div class="viewcode-block" id="DistanceEstimator.detection_callback">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.detection_callback">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">detection_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store detection string then attempt fusion.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latest_detections</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">try_estimate_positions</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="DistanceEstimator.depth_callback">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.depth_callback">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">depth_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert depth image → ndarray then attempt fusion.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">latest_depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">imgmsg_to_cv2</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">try_estimate_positions</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[distance_estimator] depth conversion failed: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ------------------------- core fusion -------------------------------- #</span>
+<div class="viewcode-block" id="DistanceEstimator.try_estimate_positions">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.try_estimate_positions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">try_estimate_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run localisation + reasoning once both depth and detections exist.</span>
+
+<span class="sd">        Steps</span>
+<span class="sd">        -----</span>
+<span class="sd">        1. Parse detection string → list of class names.  </span>
+<span class="sd">        2. For each name, sample the *centre pixel* depth (placeholder) and</span>
+<span class="sd">           back-project to XYZ.  </span>
+<span class="sd">        3. Publish formatted XYZ list.  </span>
+<span class="sd">        4. Run placement + clearing strategies, publish decision string.  </span>
+<span class="sd">        5. Clear detections cache so each batch is processed exactly once.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_detections</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">latest_depth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">objects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_detections</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latest_detections</span><span class="p">)</span>
+
+        <span class="c1"># Placeholder: one XYZ for all objects (centre pixel)</span>
+        <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">240</span>
+        <span class="n">depth_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latest_depth</span><span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="p">])</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_to_robot_frame</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth_val</span><span class="p">)</span>
+
+        <span class="n">xyz_entries</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2"> @ [</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">z</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]&quot;</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xyz_entries</span><span class="p">)))</span>
+
+        <span class="n">place_kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">placement_strategy</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+        <span class="n">clear_kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clearing_strategy</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reasoning_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Decision: </span><span class="si">{</span><span class="n">place_kw</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">clear_kw</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Reset so new depth won’t reuse stale detections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latest_detections</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="c1"># ------------------------- helper funcs ------------------------------- #</span>
+<div class="viewcode-block" id="DistanceEstimator.parse_detections">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.parse_detections">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_detections</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert ``&quot;Detected: cup, plate&quot;`` → ``[&#39;cup&#39;, &#39;plate&#39;]``.</span>
+
+<span class="sd">        Any parsing error returns an empty list so the node keeps running.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">raw</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Detected:&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parse_detections failed: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="DistanceEstimator.project_to_robot_frame">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.DistanceEstimator.project_to_robot_frame">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">project_to_robot_frame</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Back-project pixel (u, v, depth) → metric XYZ in camera frame.</span>
+
+<span class="sd">        Hard-coded intrinsics (fx, fy, cx, cy) assume a 640×480 pinhole model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple[float, float, float]</span>
+<span class="sd">            Coordinates (x, y, z) in metres.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fx</span> <span class="o">=</span> <span class="n">fy</span> <span class="o">=</span> <span class="mf">525.0</span>
+        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">240</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">cx</span><span class="p">)</span> <span class="o">*</span> <span class="n">depth</span> <span class="o">/</span> <span class="n">fx</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">cy</span><span class="p">)</span> <span class="o">*</span> <span class="n">depth</span> <span class="o">/</span> <span class="n">fy</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">depth</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span></div>
+</div>
+
+
+
+<span class="c1"># --------------------------------------------------------------------------- #</span>
+<span class="c1">#                                    MAIN                                     #</span>
+<span class="c1"># --------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../vision_modules/distance_estimation.html#distance_estimation.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register node and spin until shutdown.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">DistanceEstimator</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

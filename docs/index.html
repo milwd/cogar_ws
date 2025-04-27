@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomous Waiters – Complete Project Documentation &mdash; cogar_ass1 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Subsystem Vision" href="vision.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            cogar_ass1
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">cogar_ass1</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Autonomous Waiters – Complete Project Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="autonomous-waiters-complete-project-documentation">
+<span id="index"></span><h1>Autonomous Waiters – Complete Project Documentation<a class="headerlink" href="#autonomous-waiters-complete-project-documentation" title="Link to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Team Name<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ACM Robatics Solution</strong></p>
+</dd>
+<dt class="field-even">Contributors<span class="colon">:</span></dt>
+<dd class="field-even"><p>Arian, Milad, Christain</p>
+</dd>
+</dl>
+</section>
+<section id="introduction">
+<h1>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
+<p>This project deploys a fleet of five PAL Robotics TIAGo robots as autonomous waiters in a sushi restaurant, handling order delivery, table clearing, customer interactions and many more.</p>
+<section id="system-overview">
+<h2>2. System Overview<a class="headerlink" href="#system-overview" title="Link to this heading"></a></h2>
+<p>The software follows a classic <strong>perception → reasoning → actuation</strong> pipeline,
+with a thin orchestration layer balancing the fleet</p>
+</section>
+<section id="workflow">
+<h2>3. Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Customer speaks</strong> – simulated ASR (<cite>voice_recognition.py</cite>) publishes “Can I have sushi”</p></li>
+<li><p><strong>Order verification</strong> – <cite>reasoning_order_verification.py</cite> parses dish names, enqueues via <cite>send_order</cite> service</p></li>
+<li><p><strong>Orchestrator</strong> – a free robot polls <cite>/robot_state_decision</cite>, receives the “sushi” task</p></li>
+<li><p><strong>ReasoningAction</strong> – <cite>reasoning_action.py</cite> turns the plan + table command into ActionLib goals (move, arm, gripper)</p></li>
+<li><p><strong>Execution</strong> – <cite>control_wheel.py</cite>, <cite>control_arm.py</cite>, <cite>control_gripper.py</cite> carry out the motions</p></li>
+<li><p><strong>Feedback loop</strong> – upon completion each controller publishes status; <cite>task_manager.py</cite> feeds back into the orchestrator</p></li>
+<li><p><strong>Table placement</strong> – after delivery <cite>reasoning_table_placement.py</cite> issues PLACE_DISH or CLEAR_TABLE commands</p></li>
+<li><p><strong>Interaction</strong> – <cite>speech_generator.py</cite> &amp; <cite>speaker.py</cite> announce actions to customers</p></li>
+</ol>
+</section>
+<section id="architectural-diagrams">
+<h2>4. Architectural Diagrams<a class="headerlink" href="#architectural-diagrams" title="Link to this heading"></a></h2>
+<p>Here only component diagram is included due to size restrictions, you can view all the diagrams in full size using the following link:
+<a class="reference external" href="https://drive.google.com/file/d/1yGJAAkXFYum7aQUJqAF_S_iSz2Qtz7F8/view?usp=sharing">https://drive.google.com/file/d/1yGJAAkXFYum7aQUJqAF_S_iSz2Qtz7F8/view?usp=sharing</a></p>
+<figure class="align-center" id="id1">
+<img alt="Component Diagram" src="_images/component_diagram.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure 1.</strong> High-level component interaction.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="codebase-tour">
+<h2>5. Codebase Tour<a class="headerlink" href="#codebase-tour" title="Link to this heading"></a></h2>
+<p>Each script is grouped by its pipeline layer.  Click through the API docs for details.</p>
+<section id="vision">
+<h3>Vision<a class="headerlink" href="#vision" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>camera.py</strong>              – static RGB + synthetic depth generator</p></li>
+<li><p><strong>camera_preprocessing.py</strong> – colour-correction &amp; noise reduction</p></li>
+<li><p><strong>object_detection.py</strong>     – placeholder object detector (1 Hz)</p></li>
+<li><p><strong>distance_estimation.py</strong>  – depth-powered object localization</p></li>
+</ul>
+</section>
+<section id="brain">
+<h3>Brain<a class="headerlink" href="#brain" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>task_manager.py</strong>       – event aggregator, polls <cite>/robot_state_decision</cite></p></li>
+<li><p><strong>reasoning_action.py</strong>           – translates symbolic plans into ActionLib goals</p></li>
+<li><p><strong>reasoning_table_placement.py</strong>  – maps PLACE/CLEAR decisions to commands</p></li>
+<li><p><strong>reasoning_speech_generation.py</strong>  – throttles and republishes speech commands at 1 Hz</p></li>
+</ul>
+</section>
+<section id="navigation">
+<h3>Navigation<a class="headerlink" href="#navigation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>path_planning.py</strong>              – dummy global planner (1 waypoint)</p></li>
+<li><p><strong>slam.py</strong>                       – blank map + identity odom stub</p></li>
+<li><p><strong>sensor_fusion.py</strong>        – fuse LiDAR + sonar into a single scan</p></li>
+<li><p><strong>lidar.py</strong>, <strong>sonar.py</strong>  – synthetic LiDAR/sonar streams</p></li>
+</ul>
+</section>
+<section id="control">
+<h3>Control<a class="headerlink" href="#control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>control_wheel.py</strong>      – base controller (first waypoint)</p></li>
+<li><p><strong>control_arm.py</strong>        – proportional joint controller (ActionLib)</p></li>
+<li><p><strong>control_gripper.py</strong>    – binary gripper actuator (ActionLib)</p></li>
+<li><p><strong>encoder_wheel.py</strong>, <strong>encoder_arm.py</strong>, <strong>encoder_gripper.py</strong> – synthetic encoders</p></li>
+<li><p><strong>force.py</strong>              – fake force sensor for manipulator testing</p></li>
+</ul>
+</section>
+<section id="interaction">
+<h3>Interaction<a class="headerlink" href="#interaction" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>speech_generator.py</strong>   – buffers and throttles TTS commands</p></li>
+<li><p><strong>speaker.py</strong>            – last-mile relay to TTS backend</p></li>
+<li><p><strong>microphone.py</strong>, <strong>voice_recognition.py</strong> – synthetic ASR pipeline</p></li>
+<li><p><strong>reasoning_order_verification.py</strong> – validates “Can I have …” orders</p></li>
+</ul>
+</section>
+<section id="server">
+<h3>Server<a class="headerlink" href="#server" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>orchestration_and_coordination.py</strong> – YAML-backed order queue + state gateway</p></li>
+</ul>
+</section>
+</section>
+<section id="running-the-project">
+<h2>6. Running the Project<a class="headerlink" href="#running-the-project" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>You need to add the number of Robots you want to launch (the defualt is 2) in order to have sufficent number of nodes created, for this you can edit ROS params, Then use the following to run the project:</dt><dd><p>roslaunch cogar_ws tiago_launch.launch</p>
+</dd>
+</dl>
+</section>
+<section id="running-the-test">
+<h2>7. Running the Test<a class="headerlink" href="#running-the-test" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>For running the test open the test folder and then run the following:</dt><dd><p>python integration_test.py</p>
+</dd>
+</dl>
+</section>
+<section id="live-system-demo">
+<h2>8. Live System Demo<a class="headerlink" href="#live-system-demo" title="Link to this heading"></a></h2>
+<p>Here we have a live demo of the project, in the right-up we have roslaunch window, in the right-down we have our test window and in the left is customer’s orders.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/run.gif"><img alt="Animated demo of the Autonomous Waiter in action" src="_images/run.gif" style="width: 70%;" />
+</a>
+</figure>
+</section>
+<section id="test-results">
+<h2>9. Test Results<a class="headerlink" href="#test-results" title="Link to this heading"></a></h2>
+<p>Faulty launch:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[TEST] Expected nodes: 39, Found nodes: 38</span>
+<span class="go">F[INFO] Integration tests complete.</span>
+
+<span class="go">======================================================================</span>
+<span class="go">FAIL: test_node_count (main.TestIntegration)</span>
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">  File &quot;cogar_ws/src/tiago1/test/integration_test.py&quot;, line 16, in test_node_count</span>
+<span class="go">    self.assertEqual(len(self.nodes), expected_node_count)</span>
+<span class="go">AssertionError: 38 != 39</span>
+
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">Ran 2 tests in 20.607s</span>
+
+<span class="go">FAILED (failures=1)</span>
+</pre></div>
+</div>
+<p>Successful launch:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[TEST] Expected nodes: 39, Found nodes: 39</span>
+<span class="go">[INFO] Integration tests complete.</span>
+
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">Ran 2 tests in 20.503s</span>
+
+<span class="go">OK</span>
+</pre></div>
+</div>
+<p class="rubric">Contents</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Subsystem Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brain.html">Subsystem Brain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="navigation.html">Subsystem Navigation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control.html">Subsystem Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Subsystem Interaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Subsystem Server</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vision.html" class="btn btn-neutral float-right" title="Subsystem Vision" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arian Tavousi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
