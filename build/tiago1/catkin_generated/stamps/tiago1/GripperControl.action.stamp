@@ -1,8 +1,0 @@
-# Goal
-bool gripnogrip
----
-# Result
-bool success
----
-# Feedback
-string status

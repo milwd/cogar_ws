@@ -1,2 +1,0 @@
-tiago1
--DCATKIN_DEVEL_PREFIX=/root/Desktop/cogar_ass1/cogar_ws/devel -DCMAKE_INSTALL_PREFIX=/root/Desktop/cogar_ass1/cogar_ws/install -G Unix Makefiles

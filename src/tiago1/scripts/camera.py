@@ -12,8 +12,8 @@ def publish():
     rospy.init_node(f'{robot_number}_camera')
     # pub_rgb = rospy.Publisher('/camera', Image, queue_size=10)
     # pub_depth = rospy.Publisher('/depth', Image, queue_size=10)
-    # rate = rospy.Rate(10)  
-    # while not rospy.is_shutdown():
+    rate = rospy.Rate(10)  
+    while not rospy.is_shutdown():
     #     original = cv2.imread('/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg')
     #     bridge = CvBridge()
     #     image = bridge.cv2_to_imgmsg(original, encoding="bgr8")
@@ -24,7 +24,7 @@ def publish():
     #     depth_image.header.stamp = rospy.Time.now()
     #     depth_image.header.frame_id = 'depth_frame'
     #     pub_depth.publish(depth_image)
-    #     rate.sleep()
+        rate.sleep()
 
 
 if __name__ == "__main__":    

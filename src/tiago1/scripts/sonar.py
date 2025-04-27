@@ -8,8 +8,8 @@ def publish():
     robot_number = sys.argv[1]#rospy.get_param('~robot_number')
     rospy.init_node(f'{robot_number}_sonar_node', anonymous=True)
     pub = rospy.Publisher(f'/{robot_number}/sonar', Range, queue_size=10)
-    # rate = rospy.Rate(10)  # 10hz
-    # while not rospy.is_shutdown():
+    rate = rospy.Rate(10)  # 10hz
+    while not rospy.is_shutdown():
     #     sonar = Range()
     #     sonar.header.stamp = rospy.Time.now()
     #     sonar.header.frame_id = "sonar"
@@ -19,7 +19,7 @@ def publish():
     #     sonar.max_range = 4.0
     #     sonar.range = 3.0
     #     pub.publish(sonar)
-    #     rate.sleep()
+        rate.sleep()
 
 
 if __name__ == "__main__":

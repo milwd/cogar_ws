@@ -10,8 +10,8 @@ def publish():
     robot_number = sys.argv[1]#rospy.get_param('~robot_number')
     rospy.init_node(f"{robot_number}_lidar_node", anonymous=True)
     pub = rospy.Publisher(f"/{robot_number}/lidar", LaserScan, queue_size=10)
-    # rate = rospy.Rate(10)  
-    # while not rospy.is_shutdown():
+    rate = rospy.Rate(10)  
+    while not rospy.is_shutdown():
     #     scan = LaserScan()
     #     scan.header = Header()
     #     scan.header.stamp = rospy.Time.now()
@@ -24,7 +24,7 @@ def publish():
     #     scan.range_max = 10.0
     #     scan.ranges = [5.0] * int((scan.angle_max - scan.angle_min) / scan.angle_increment)
     #     pub.publish(scan)
-    #     rate.sleep()
+        rate.sleep()
 
 
 if __name__ == "__main__":

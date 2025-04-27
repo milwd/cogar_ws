@@ -11,7 +11,7 @@ class TestIntegration(unittest.TestCase):
         cls.nodes = subprocess.check_output(["rosnode", "list"]).decode().split()
 
     def test_node_count(self):
-        expected_node_count = 100 
+        expected_node_count = 124 
         print(f"[TEST] Expected nodes: {expected_node_count}, Found nodes: {len(self.nodes)}")
         self.assertEqual(len(self.nodes), expected_node_count)
 

@@ -1,8 +1,0 @@
-# Goal
-nav_msgs/Path path
----
-# Result
-bool success
----
-# Feedback
-string status

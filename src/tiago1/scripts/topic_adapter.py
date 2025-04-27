@@ -4,6 +4,7 @@ from sensor_msgs.msg import Image
 from control_msgs.msg import JointTrajectoryControllerState
 from geometry_msgs.msg import WrenchStamped
 from nav_msgs.msg import Odometry
+from std_msgs.msg import Int32
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import Range
 import sys
@@ -41,7 +42,7 @@ if __name__ == '__main__':
     robot_number = sys.argv[1]#rospy.get_param('~robot_number')
     rospy.init_node('topic_adapter', anonymous=True)
 
-    pub1 = rospy.Publisher('', JointTrajectoryControllerState, queue_size=10)
+    pub1 = rospy.Publisher(f'/{robot_number}/encoder_arm', Int32, queue_size=10)
     pub2 = rospy.Publisher(f'/{robot_number}/depth', Image, queue_size=10)
     pub3 = rospy.Publisher(f'/{robot_number}/force', WrenchStamped, queue_size=10)
     pub4 = rospy.Publisher(f'/{robot_number}/odom_proc', Odometry, queue_size=10)
