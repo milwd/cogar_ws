@@ -80,42 +80,81 @@
 <span class="sd">object_detection.py</span>
 <span class="sd">===================</span>
 
-<span class="sd">Placeholder **vision node** that pretends to recognise objects in every frame</span>
-<span class="sd">--------------------------------------------------------------------------</span>
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`object_detection.py` is a **vertical perception component** that will</span>
+<span class="sd">eventually wrap a real convolutional object–detection network.  </span>
+<span class="sd">The current stub publishes a fixed textual description so the rest of the</span>
+<span class="sd">pipeline (sensor fusion, reasoning, speech) can be integrated long before</span>
+<span class="sd">GPU-heavy models are available.</span>
 
-<span class="sd">The node listens to the *already-preprocessed* RGB stream and emits a constant</span>
-<span class="sd">string describing three items.  It runs at **1 Hz**, slow enough to be replaced</span>
-<span class="sd">later by a real detector running on GPU/CPU accelerators without affecting</span>
-<span class="sd">subscriber timing.</span>
+<span class="sd">Why ship a stub early?</span>
+<span class="sd">----------------------</span>
+<span class="sd">• **Parallel development** – downstream nodes can be written and tested today.  </span>
+<span class="sd">• **Determinism** – CI runs don’t depend on ML randomness or model files.  </span>
+<span class="sd">• **Drop-in replacement** – swap this for a real detector without contract</span>
+<span class="sd">  changes.</span>
 
-<span class="sd">ROS topics</span>
-<span class="sd">----------</span>
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
+
 <span class="sd">.. list-table::</span>
 <span class="sd">   :header-rows: 1</span>
-<span class="sd">   :widths: 30 25 45</span>
+<span class="sd">   :widths: 12 30 25 55</span>
 
-<span class="sd">   * - Topic</span>
-<span class="sd">     - Type</span>
-<span class="sd">     - Direction / Meaning</span>
-<span class="sd">   * - ``/camera_preprocessed``</span>
+<span class="sd">   * - Direction</span>
+<span class="sd">     - Topic</span>
+<span class="sd">     - Message type</span>
+<span class="sd">     - Notes</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/camera_preprocessed``</span>
 <span class="sd">     - ``sensor_msgs/Image``</span>
-<span class="sd">     - **Subscribed** — cleaned RGB image fed into the detector</span>
-<span class="sd">   * - ``/camera_detections``</span>
+<span class="sd">     - Cleaned RGB frames (content ignored by this stub)</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/camera_detections``</span>
 <span class="sd">     - ``std_msgs/String``</span>
-<span class="sd">     - **Published** — placeholder JSON string describing detections</span>
+<span class="sd">     - Always publishes ``&quot;Detected: Table, Plate, Position&quot;`` (1 Hz)</span>
 
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
 
-<span class="sd">The published text follows the simple format:</span>
+<span class="sd">• A publisher is already emitting images on ``/{robot}/camera_preprocessed``.  </span>
+<span class="sd">• Subscribers tolerate a 1 Hz detection rate.</span>
 
-<span class="sd">``Detected: &lt;object1&gt;, &lt;object2&gt;, &lt;object3&gt;``</span>
+<span class="sd">**Post-conditions**  </span>
 
-<span class="sd">Feel free to replace the hard-coded list or switch to structured messages</span>
-<span class="sd">(e.g. ``vision_msgs/Detection2DArray``) once a real model is available.</span>
+<span class="sd">• Each published message is a UTF-8 string following the pattern  </span>
+<span class="sd">  ``&quot;Detected: &lt;obj1&gt;, &lt;obj2&gt;, &lt;obj3&gt;&quot;``.  </span>
+<span class="sd">• Header timing is irrelevant; no synchronisation required.</span>
+
+<span class="sd">**Invariants**  </span>
+
+<span class="sd">• Publication interval exactly 1 s (±10 ms).  </span>
+<span class="sd">• CPU usage ≈ 0 % (no image processing).</span>
+
+<span class="sd">**Protocol**  </span>
+
+<span class="sd">Stateless: every second the component publishes a fresh detection string,</span>
+<span class="sd">independent of any previous frames.</span>
+
+<span class="sd">Lifecycle</span>
+<span class="sd">---------</span>
+<span class="sd">* Node name ``{robot}_object_detection_node``  </span>
+<span class="sd">* Ready once its publisher is advertised.  </span>
+<span class="sd">* Clean shutdown on Ctrl-C or ``rosnode kill``.</span>
+
+<span class="sd">Extensibility roadmap</span>
+<span class="sd">---------------------</span>
+<span class="sd">Replace `image_callback` with real inference, switch the output to</span>
+<span class="sd">``vision_msgs/Detection2DArray`` or a custom strongly-typed message, and delete</span>
+<span class="sd">the explicit 1 Hz loop (the network’s runtime will throttle the topic naturally).</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>  
+<span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
@@ -124,49 +163,36 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">ObjectDetector</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Minimal façade around a future object-detection pipeline.</span>
-
-<span class="sd">    Variables</span>
-<span class="sd">    ----------</span>
-<span class="sd">    image_sub : rospy.Subscriber</span>
-<span class="sd">        Receives frames from ``/camera_preprocessed``.</span>
-<span class="sd">    detect_pub : rospy.Publisher</span>
-<span class="sd">        Emits detection results on ``/camera_detections``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Register the subscriber and publisher.</span>
-
-<span class="sd">        No additional state is required because the current implementation</span>
-<span class="sd">        returns a fixed string regardless of the incoming image.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="c1"># Namespace via CLI for multi-robot simulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># rospy.get_param(&#39;~robot_number&#39;)</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_object_detection_node&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/camera_preprocessed&quot;</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_callback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">detect_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/camera_detections&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/camera_preprocessed&quot;</span><span class="p">,</span>
+            <span class="n">Image</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_callback</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">detect_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s2">/camera_detections&quot;</span><span class="p">,</span>
+            <span class="n">String</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1"># Callback                                                            #</span>
+    <span class="c1"># Callback                                                           #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ObjectDetector.image_callback">
 <a class="viewcode-back" href="../vision_modules/object_detection.html#object_detection.ObjectDetector.image_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">image_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_msg</span><span class="p">:</span> <span class="n">Image</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Produce and publish a constant detection result.</span>
+<span class="sd">        Publish a constant detection string.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        _msg : sensor_msgs.msg.Image</span>
-<span class="sd">            Ignored content of the pre-processed frame.</span>
-
-
-<span class="sd">        Workflow</span>
-<span class="sd">        --------</span>
-<span class="sd">        1. Assemble the string ``&quot;Detected: Table, Plate, Position&quot;``. </span>
-
-<span class="sd">        2. Wrap it in :pyclass:`std_msgs.msg.String`.  </span>
-
-<span class="sd">        3. Publish on ``/camera_detections``.</span>
+<span class="sd">        Current stub ignores incoming frames; swap implementation when a</span>
+<span class="sd">        trained model is ready.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">detection</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;Detected: Table, Plate, Position&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detect_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">detection</span><span class="p">)</span></div>
@@ -175,22 +201,21 @@
 
 
 <span class="c1"># -------------------------------------------------------------------- #</span>
-<span class="c1"># Main                                                                  #</span>
+<span class="c1"># Main                                                                 #</span>
 <span class="c1"># -------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Initialise the node, instantiate :class:`ObjectDetector` and tick at 1 Hz.</span>
+<span class="sd">    Initialise the node, create :class:`ObjectDetector`, and tick at 1 Hz.</span>
 
-<span class="sd">    The explicit loop guarantees a steady publication rate even if images arrive</span>
-<span class="sd">    faster; remove the loop once the real detector’s processing time naturally</span>
-<span class="sd">    throttles the output.</span>
+<span class="sd">    The explicit loop guarantees a steady publication rate while the stub does</span>
+<span class="sd">    zero work; delete the loop once real inference time dictates the rate.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">detector</span> <span class="o">=</span> <span class="n">ObjectDetector</span><span class="p">()</span>
     <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1 Hz</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-            <span class="n">detector</span><span class="o">.</span><span class="n">image_callback</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>   <span class="c1"># invoke manually to keep the rate</span>
+            <span class="n">detector</span><span class="o">.</span><span class="n">image_callback</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># manual trigger</span>
             <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Object detection node terminated.&quot;</span><span class="p">)</span>

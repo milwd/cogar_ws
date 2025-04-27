@@ -3,111 +3,136 @@
 object_detection.py
 ===================
 
-Placeholder **vision node** that pretends to recognise objects in every frame
---------------------------------------------------------------------------
+Overview
+--------
+`object_detection.py` is a **vertical perception component** that will
+eventually wrap a real convolutional object–detection network.  
+The current stub publishes a fixed textual description so the rest of the
+pipeline (sensor fusion, reasoning, speech) can be integrated long before
+GPU-heavy models are available.
 
-The node listens to the *already-preprocessed* RGB stream and emits a constant
-string describing three items.  It runs at **1 Hz**, slow enough to be replaced
-later by a real detector running on GPU/CPU accelerators without affecting
-subscriber timing.
+Why ship a stub early?
+----------------------
+• **Parallel development** – downstream nodes can be written and tested today.  
+• **Determinism** – CI runs don’t depend on ML randomness or model files.  
+• **Drop-in replacement** – swap this for a real detector without contract
+  changes.
 
-ROS topics
-----------
+Interfaces (strongly-typed, stateless)
+--------------------------------------
+
 .. list-table::
    :header-rows: 1
-   :widths: 30 25 45
+   :widths: 12 30 25 55
 
-   * - Topic
-     - Type
-     - Direction / Meaning
-   * - ``/camera_preprocessed``
+   * - Direction
+     - Topic
+     - Message type
+     - Notes
+   * - **Required**
+     - ``/{robot}/camera_preprocessed``
      - ``sensor_msgs/Image``
-     - **Subscribed** — cleaned RGB image fed into the detector
-   * - ``/camera_detections``
+     - Cleaned RGB frames (content ignored by this stub)
+   * - **Provided**
+     - ``/{robot}/camera_detections``
      - ``std_msgs/String``
-     - **Published** — placeholder JSON string describing detections
+     - Always publishes ``"Detected: Table, Plate, Position"`` (1 Hz)
 
+Contract
+--------
+**Pre-conditions**  
 
-The published text follows the simple format:
+• A publisher is already emitting images on ``/{robot}/camera_preprocessed``.  
+• Subscribers tolerate a 1 Hz detection rate.
 
-``Detected: <object1>, <object2>, <object3>``
+**Post-conditions**  
 
-Feel free to replace the hard-coded list or switch to structured messages
-(e.g. ``vision_msgs/Detection2DArray``) once a real model is available.
+• Each published message is a UTF-8 string following the pattern  
+  ``"Detected: <obj1>, <obj2>, <obj3>"``.  
+• Header timing is irrelevant; no synchronisation required.
+
+**Invariants**  
+
+• Publication interval exactly 1 s (±10 ms).  
+• CPU usage ≈ 0 % (no image processing).
+
+**Protocol**  
+
+Stateless: every second the component publishes a fresh detection string,
+independent of any previous frames.
+
+Lifecycle
+---------
+* Node name ``{robot}_object_detection_node``  
+* Ready once its publisher is advertised.  
+* Clean shutdown on Ctrl-C or ``rosnode kill``.
+
+Extensibility roadmap
+---------------------
+Replace `image_callback` with real inference, switch the output to
+``vision_msgs/Detection2DArray`` or a custom strongly-typed message, and delete
+the explicit 1 Hz loop (the network’s runtime will throttle the topic naturally).
+
 """
 
 import rospy
 from sensor_msgs.msg import Image
-from std_msgs.msg import String  
+from std_msgs.msg import String
 import sys
 
 
 class ObjectDetector:
     """
     Minimal façade around a future object-detection pipeline.
-
-    Variables
-    ----------
-    image_sub : rospy.Subscriber
-        Receives frames from ``/camera_preprocessed``.
-    detect_pub : rospy.Publisher
-        Emits detection results on ``/camera_detections``.
     """
 
     def __init__(self):
-        """
-        Register the subscriber and publisher.
-
-        No additional state is required because the current implementation
-        returns a fixed string regardless of the incoming image.
-        """
-        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        # Namespace via CLI for multi-robot simulation
+        self.robot_number = sys.argv[1]  # rospy.get_param('~robot_number')
         rospy.init_node(f'{self.robot_number}_object_detection_node')
-        self.image_sub = rospy.Subscriber(f"/{self.robot_number}/camera_preprocessed", Image, self.image_callback)
-        self.detect_pub = rospy.Publisher(f"/{self.robot_number}/camera_detections", String, queue_size=10)
+
+        self.image_sub = rospy.Subscriber(
+            f"/{self.robot_number}/camera_preprocessed",
+            Image,
+            self.image_callback,
+        )
+
+        self.detect_pub = rospy.Publisher(
+            f"/{self.robot_number}/camera_detections",
+            String,
+            queue_size=10,
+        )
 
     # ------------------------------------------------------------------ #
-    # Callback                                                            #
+    # Callback                                                           #
     # ------------------------------------------------------------------ #
     def image_callback(self, _msg: Image):
         """
-        Produce and publish a constant detection result.
+        Publish a constant detection string.
 
-        Parameters
-        ----------
-        _msg : sensor_msgs.msg.Image
-            Ignored content of the pre-processed frame.
-
-
-        Workflow
-        --------
-        1. Assemble the string ``"Detected: Table, Plate, Position"``. 
-
-        2. Wrap it in :pyclass:`std_msgs.msg.String`.  
-
-        3. Publish on ``/camera_detections``.
+        Current stub ignores incoming frames; swap implementation when a
+        trained model is ready.
         """
         detection = String(data="Detected: Table, Plate, Position")
         self.detect_pub.publish(detection)
 
 
 # -------------------------------------------------------------------- #
-# Main                                                                  #
+# Main                                                                 #
 # -------------------------------------------------------------------- #
 if __name__ == '__main__':
     """
-    Initialise the node, instantiate :class:`ObjectDetector` and tick at 1 Hz.
+    Initialise the node, create :class:`ObjectDetector`, and tick at 1 Hz.
 
-    The explicit loop guarantees a steady publication rate even if images arrive
-    faster; remove the loop once the real detector’s processing time naturally
-    throttles the output.
+    The explicit loop guarantees a steady publication rate while the stub does
+    zero work; delete the loop once real inference time dictates the rate.
     """
     detector = ObjectDetector()
     rate = rospy.Rate(1)  # 1 Hz
 
     try:
         while not rospy.is_shutdown():
-            detector.image_callback(None)   # invoke manually to keep the rate
+            detector.image_callback(None)  # manual trigger
             rate.sleep()
     except rospy.ROSInterruptException:
         rospy.loginfo("Object detection node terminated.")

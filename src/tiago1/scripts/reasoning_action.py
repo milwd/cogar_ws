@@ -3,62 +3,78 @@
 reasoning_action.py
 ===================
 
-High-level **task orchestrator** – turns symbolic plans into concrete ActionLib goals
-------------------------------------------------------------------------------------
+Overview
+--------
+`reasoning_action.py` is a **high-level task orchestrator** that converts
+symbolic “table commands” (*PLACE*, *CLEAR*, …) and a navigation *path* into
+three concrete ROS Action goals:
 
-`ReasoningAction` sits at the interface between *planning* (which decides *what*
-the robot should do) and *execution* (which knows *how* to move).  
-It ingests a *navigation path* plus a *table-level command* and then drives the
-three low-level ActionLib servers that move the base, position the arm and open
-/ close the gripper.  When the whole sequence finishes – or when any part fails
-– the node emits a single feedback string for downstream logging or GUI use.
+* **movement_control** – drives the mobile base along the path  
+* **arm_control**      – moves the wrist / forearm to the working pose  
+* **gripper_control**  – opens or closes the gripper
 
-ROS interface
-~~~~~~~~~~~~~
+When the whole macro succeeds—or when **any** step fails—the node emits one
+human-readable feedback message for GUIs, loggers, or supervisor FSMs.
+
+Interfaces (strongly-typed, partially stateful)
+-----------------------------------------------
+
 .. list-table::
    :header-rows: 1
-   :widths: 20 30 50
+   :widths: 12 26 27 55
 
    * - Direction
      - Name
-     - Type / semantics
-   * - **subscribe**
-     - ``/planned_path``
-     - ``nav_msgs/Path`` – global or local path from the planner
-   * - **subscribe**
-     - ``/table_reasoning_commands``
-     - ``std_msgs/String`` – symbolic action at table (*PLACE*, *CLEAR*, …)
-   * - **publish**
-     - ``task_feedback``
-     - ``std_msgs/String`` – human-readable success / failure status
-   * - **action client**
-     - ``movement_control``
-     - ``tiago1/MovementControlAction`` – follow the path
-   * - **action client**
-     - ``arm_control``
-     - ``tiago1/ArmControlAction`` – position forearm / wrist
-   * - **action client**
-     - ``gripper_control``
-     - ``tiago1/GripperControlAction`` – grasp or release the dish
+     - Type
+     - Notes
+   * - **Required**
+     - ``/{robot}/planned_path``
+     - ``nav_msgs/Path``
+     - Global or local path from the planner
+   * - **Required**
+     - ``/{robot}/table_reasoning_commands``
+     - ``std_msgs/String``
+     - Symbolic keyword (*PLACE*, *CLEAR*, …)
+   * - **Provided**
+     - ``/{robot}/feedback_acion``
+     - ``std_msgs/String``
+     - “Busy” → doing a task, “Free” → finished/failed
+   * - **Action client**
+     - ``/{robot}/movement_control``
+     - ``tiago1/MovementControlAction``
+     - Executes the navigation path
+   * - **Action client**
+     - ``/{robot}/arm_control``
+     - ``tiago1/ArmControlAction``
+     - Positions forearm / wrist
+   * - **Action client**
+     - ``/{robot}/gripper_control``
+     - ``tiago1/GripperControlAction``
+     - Grips or releases the dish
 
-Execution pipeline
-------------------
-#. **Path reception** – as soon as a new ``nav_msgs/Path`` arrives, flag
-   :pyattr:`path_received` becomes *True*.  
-#. **Movement phase** – a `MovementControlGoal` with the full path is sent to
-   the base controller.  The node blocks until a result appears.  
-#. **Conditional manipulation** – only if the base reports *success* does the
-   node dispatch the arm and gripper goals, ensuring the robot is in position
-   before manipulating objects.  
-#. **Feedback** – a single sentence is published to ``task_feedback`` summarising
-   the outcome.  UI widgets, loggers or higher-level reasoners can subscribe to
-   that topic to update state machines or dashboards.
+Contract
+--------
+*Pre-conditions*
+
+• All three Action servers are running (checked at startup).  
+• Path and command topics share the same robot namespace.
+
+*Post-conditions*
+
+• Exactly **one** feedback line per task: “Busy” at start, “Free” when done.  
+• Arm & gripper goals are sent *only if* base motion succeeds.
+
+*Statefulness*
+
+The node keeps an internal flag ``path_received`` so each incoming path is
+executed **once**; after completion the flag resets.
 
 Customisation hooks
 -------------------
-*Override* :py:meth:`perform_table_command` to translate each symbolic table
-command (PLACE, CLEAR, INSPECT…) into a concrete sequence of arm / gripper
-actions.  The default implementation is a stub.
+Override :py:meth:`perform_table_command` (or the private
+:meth:`_run_manipulation_sequence`) to map each symbolic keyword onto a custom
+sequence of arm/gripper goals.
+
 """
 
 import rospy
@@ -70,150 +86,156 @@ from tiago1.msg import ArmControlAction, ArmControlGoal
 from tiago1.msg import GripperControlAction, GripperControlGoal
 import sys
 
+
 class ReasoningAction:
     """
-    Coordinates navigation and manipulation through three ActionLib clients.
+    Coordinates navigation + manipulation through three ActionLib clients.
 
     Variables
     ----------
-    path_received
-        *True* as soon as a new path arrives; the flag is cleared after the
-        path has been processed.
-    path_msg
-        Latest ``nav_msgs/Path`` received from the planner.
-    task_feedback_pub
-        Latched publisher used by GUIs or loggers to track high-level task
-        completion.
-    movement_client / arm_client / gripper_client
-        Pre-connected ActionLib clients; connection is verified in
-        :py:meth:`wait_for_servers`.
+    path_received : bool
+        Becomes ``True`` when a new path topic arrives; cleared after use.
+    path_msg : nav_msgs.msg.Path | None
+        The most recent path waiting to be executed.
+    task_feedback_pub : rospy.Publisher
+        Latched channel for GUIs / loggers → “Busy” / “Free”.
+    movement_client / arm_client / gripper_client : actionlib.SimpleActionClient
+        Pre-connected clients; :py:meth:`wait_for_servers` blocks until ready.
     """
 
+    # ------------------------------------------------------------------ #
+    # initialise                                                         #
+    # ------------------------------------------------------------------ #
     def __init__(self):
-        """
-        Bring up the node, connect to topics and block until all three action
-        servers are online.
-        """
-        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        self.robot_number = sys.argv[1]  # rospy.get_param('~robot_number')
         rospy.init_node(f'{self.robot_number}_reasoning_action_node')
 
-        # ------------------- runtime state --------------------------------- #
+        # ---------- runtime state ------------------------------------- #
         self.path_received: bool = False
         self.path_msg: Path | None = None
 
-        rospy.Subscriber(f'/{self.robot_number}/planned_path', Path, self.path_callback)
-        rospy.Subscriber(f'/{self.robot_number}/table_reasoning_commands', String, self.table_command_callback)
-        self.task_feedback_pub = rospy.Publisher(f'/{self.robot_number}/feedback_acion', String, queue_size=1)
+        # ---------- topic wiring -------------------------------------- #
+        rospy.Subscriber(
+            f'/{self.robot_number}/planned_path',
+            Path,
+            self.path_callback,
+        )
+        rospy.Subscriber(
+            f'/{self.robot_number}/table_reasoning_commands',
+            String,
+            self.table_command_callback,
+        )
+        self.task_feedback_pub = rospy.Publisher(
+            f'/{self.robot_number}/feedback_acion', String, queue_size=1, latch=True
+        )
 
-        self.movement_client = actionlib.SimpleActionClient(f'/{self.robot_number}/movement_control', MovementControlAction)
-        self.arm_client = actionlib.SimpleActionClient(f'/{self.robot_number}/arm_control', ArmControlAction)
-        self.gripper_client = actionlib.SimpleActionClient(f'/{self.robot_number}/gripper_control', GripperControlAction)
-
+        # ---------- action clients ------------------------------------ #
+        self.movement_client = actionlib.SimpleActionClient(
+            f'/{self.robot_number}/movement_control',
+            MovementControlAction,
+        )
+        self.arm_client = actionlib.SimpleActionClient(
+            f'/{self.robot_number}/arm_control',
+            ArmControlAction,
+        )
+        self.gripper_client = actionlib.SimpleActionClient(
+            f'/{self.robot_number}/gripper_control',
+            GripperControlAction,
+        )
         self.wait_for_servers()
 
-    # --------------------------------------------------------------------- #
-    #                       connection helper                               #
-    # --------------------------------------------------------------------- #
+    # ------------------------------------------------------------------ #
+    # helper: wait for all servers                                       #
+    # ------------------------------------------------------------------ #
     def wait_for_servers(self) -> None:
         """
-        Poll each ActionLib server at 1 Hz until the trio is ready.  Startup
-        proceeds only when base, arm **and** gripper controllers are up; this
-        prevents goal loss at boot.
+        Poll each ActionLib server at 1 Hz until base, arm **and** gripper
+        controllers are ready.  Prevents goal loss at boot.
         """
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():
-            if not self.movement_client.wait_for_server(rospy.Duration(1.0)):
-                rospy.logwarn("Waiting for movement_control action server…")
+            if not self.movement_client.wait_for_server(rospy.Duration(1)):
+                rospy.logwarn("Waiting for *movement_control* server…")
                 continue
-            if not self.arm_client.wait_for_server(rospy.Duration(1.0)):
-                rospy.logwarn("Waiting for arm_control action server…")
+            if not self.arm_client.wait_for_server(rospy.Duration(1)):
+                rospy.logwarn("Waiting for *arm_control* server…")
                 continue
-            if not self.gripper_client.wait_for_server(rospy.Duration(1.0)):
-                rospy.logwarn("Waiting for gripper_control action server…")
+            if not self.gripper_client.wait_for_server(rospy.Duration(1)):
+                rospy.logwarn("Waiting for *gripper_control* server…")
                 continue
             rospy.loginfo("[ReasoningAction] All action servers connected.")
             break
         rate.sleep()
 
-    # --------------------------------------------------------------------- #
-    #                       subscriber callbacks                            #
-    # --------------------------------------------------------------------- #
+    # ------------------------------------------------------------------ #
+    # subscriber callbacks                                               #
+    # ------------------------------------------------------------------ #
     def path_callback(self, msg: Path) -> None:
-        """Store the incoming path for deferred execution in the main loop."""
+        """Store the planner path for use in the main loop."""
         self.path_received = True
         self.path_msg = msg
 
     def table_command_callback(self, msg: String) -> None:
-        """Forward the symbolic command to :py:meth:`perform_table_command`."""
-        decision = msg.data
-        rospy.loginfo(f"[ReasoningAction] Table command → {decision}")
-        self.perform_table_command(decision)
+        """
+        Forward symbolic keyword (*PLACE*, *CLEAR*, …) to
+        :py:meth:`perform_table_command`.
+        """
+        self.perform_table_command(msg.data)
 
-    # --------------------------------------------------------------------- #
-    #                      command execution hooks                          #
-    # --------------------------------------------------------------------- #
+    # ------------------------------------------------------------------ #
+    # override point                                                     #
+    # ------------------------------------------------------------------ #
     def perform_table_command(self, decision: str) -> None:
         """
-        Translate *decision* into arm / gripper goals.
+        Map symbolic command to arm/gripper macros.
 
-        Override this stub in subclasses to implement behaviour such as:
+        Stub does nothing so the example compiles; override in subclasses:
 
-        * **PLACE** – lower arm to 3 cm above table, open gripper.
-        * **CLEAR** – close gripper, raise arm to carry height.
-
-        The default implementation does nothing so the example still compiles.
+        * **PLACE** → lower arm, open gripper  
+        * **CLEAR** → close gripper, raise arm
         """
-        pass
+        rospy.loginfo(f"[ReasoningAction] Table command received → {decision}")
 
-    # --------------------------------------------------------------------- #
-    #                               main loop                               #
-    # --------------------------------------------------------------------- #
+    # ------------------------------------------------------------------ #
+    # main loop                                                          #
+    # ------------------------------------------------------------------ #
     def loop(self) -> None:
         """
-        Run a 1 Hz cycle:
-
-        * if a fresh path is queued, send it to the base controller and wait  
-          synchronously for completion;  
-        * if movement succeeds, execute arm and gripper macros;  
-        * publish a one-line summary on ``task_feedback``.
-
-        The method blocks until ROS shutdown.
+        0.3 Hz cycle (≈ every 3 s):
+            • if a new path is queued → send to base, wait blocking;  
+            • on success → run arm & gripper macros;  
+            • publish “Busy” / “Free” to feedback topic.
         """
-        rate = rospy.Rate(0.3)
+        rate = rospy.Rate(0.3)  # ≈ 3-second iteration
         while not rospy.is_shutdown():
             if self.path_received:
                 self.task_feedback_pub.publish("Busy")
-                rospy.loginfo("[ReasoningAction] Received planned path, sending to ControlMovement.")
+
+                # ---------- 1. Move base -------------------------------- #
                 move_goal = MovementControlGoal(path=self.path_msg)
                 self.movement_client.send_goal(move_goal)
                 self.movement_client.wait_for_result()
-                move_result = self.movement_client.get_result()
-                if move_result.success:
-                    rospy.loginfo("[ReasoningAction] Movement succeeded. Sending commands to arm and gripper.")
-                    arm_goal = ArmControlGoal(degree=3)
-                    self.arm_client.send_goal(arm_goal)
-                    self.arm_client.wait_for_result()
+                move_ok = self.movement_client.get_result().success
 
-                    gripper_goal = GripperControlGoal(gripnogrip=True)
-                    self.gripper_client.send_goal(gripper_goal)
-                    self.gripper_client.wait_for_result()
-
-                    self.task_feedback_pub.publish("Free")
+                if move_ok:
+                    rospy.loginfo("[ReasoningAction] Base reached goal.")
+                    self._run_manipulation_sequence()
                 else:
-                    rospy.logwarn("[ReasoningAction] Movement failed, not sending arm/gripper commands.")
-                    self.task_feedback_pub.publish("Free")
+                    rospy.logwarn("[ReasoningAction] Base motion failed; skipping manipulation.")
 
+                self.task_feedback_pub.publish("Free")
                 self.path_received = False
+
             rate.sleep()
 
-    # --------------------------------------------------------------------- #
-    #                       internal helper                                 #
-    # --------------------------------------------------------------------- #
+    # ------------------------------------------------------------------ #
+    # default manipulation macro                                         #
+    # ------------------------------------------------------------------ #
     def _run_manipulation_sequence(self) -> None:
         """
-        Default manipulation macro: simple arm lower + gripper toggle.
+        Demo macro: **lower arm 3 deg** + **open gripper**.
 
-        Adapt the goal parameters to match your real controller interface.
+        Adjust goal fields to match your real controllers.
         """
         arm_goal = ArmControlGoal(degree=3)
         self.arm_client.send_goal(arm_goal)
@@ -224,9 +246,9 @@ class ReasoningAction:
         self.gripper_client.wait_for_result()
 
 
-# ------------------------------------------------------------------------- #
-#                                   entry                                   #
-# ------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------- #
+# entry                                                                  #
+# ---------------------------------------------------------------------- #
 if __name__ == '__main__':
     try:
         node = ReasoningAction()

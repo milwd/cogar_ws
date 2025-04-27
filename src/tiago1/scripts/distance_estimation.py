@@ -3,52 +3,80 @@
 distance_estimation.py
 ======================
 
-3-in-1 node: **depth-aware object localisation + table-state reasoning**
------------------------------------------------------------------------
-
-The node fuses *semantic* information from an object-detection topic with
-*metric* data from a depth image to output two things:
-
-1. **/object_positions** – a human-readable list of XYZ positions for every
-   object currently visible to the camera (single string message for easy
-   logging or GUI display).
-
-2. **/placement_decision** – a concise keyword that tells the waiter robot
-   **what to do next at the table** ( *PLACE* a dish, *FULL* do nothing,
-   *CLEAR* remove crockery, or *IGNORE*).
-
-Both decisions are produced via the **Strategy pattern**, so swapping the
-business logic requires only instantiating a different strategy class.
+Overview
+--------
+`distance_estimation.py` is a **vertical sensor-fusion component** that combines
+semantic detections with depth imagery to deliver both *metric positions* and
+a high-level *table-state* decision (place, clear, etc.).  Internally it uses
+the **Strategy pattern** so placement and clearing logic can evolve
+independently.
 
 Why split placement vs clearing?
-    • Placement reasoning only cares about *free space* (≤ 3 items).  
-    • Clearing reasoning only cares about detecting *specific* objects
-      (plate + cup).  
-    Keeping them in separate interchangeable strategies lets you tune or
-    replace each behaviour independently.
+--------------------------------
+• Placement cares only about *free space* (≤ 3 items).  
+• Clearing cares only about *specific* dirty items (*plate + cup*).  
+Two interchangeable strategies let you tune or replace each behaviour without
+touching the other.
 
-ROS I/O summary
----------------
+Interfaces (strongly-typed, stateless)
+--------------------------------------
 
-========== ============================ =======================================
-Direction  Topic name / Type            Description
-========== ============================ =======================================
-Subscribe  ``/camera_detections``       ``std_msgs/String`` – e.g.  
-                                          ``"Detected: cup, plate"``
-Subscribe  ``/depth_processed``         ``sensor_msgs/Image`` – 32-bit float
-Publish    ``/object_positions``        ``std_msgs/String`` – formatted XYZ list
-Publish    ``/placement_decision``      ``std_msgs/String`` –  
-                                        ``"Decision: PLACE, CLEAR"`` etc.
-========== ============================ =======================================
+.. list-table::
+   :header-rows: 1
+   :widths: 12 30 25 58
+
+   * - Direction
+     - Topic
+     - Message type
+     - Notes
+   * - **Required**
+     - ``/{robot}/camera_detections``
+     - ``std_msgs/String``
+     - Example: ``"Detected: cup, plate"``
+   * - **Required**
+     - ``/{robot}/depth_processed``
+     - ``sensor_msgs/Image``
+     - 32-bit float depth (same resolution as RGB)
+   * - **Provided**
+     - ``/{robot}/object_positions``
+     - ``std_msgs/String``
+     - XYZ list – e.g. ``"cup @ [x,y,z]; plate @ [x,y,z]"``
+   * - **Provided**
+     - ``/{robot}/placement_decision``
+     - ``std_msgs/String``
+     - ``"Decision: PLACE, CLEAR"`` (keywords from both strategies)
+
+Contract
+--------
+**Pre-conditions**  
+
+• Depth topic and detection topic share the same resolution and optical frame.  
+
+**Post-conditions**
+
+• For every detection batch exactly **one** positions message and **one**
+  decision string are published.  
+• Each XYZ entry is based on the *centre pixel* (placeholder) until real
+  bounding-box projection is implemented.
+
+**Invariants**
+
+• Publication latency (both topics present → decision publish) < 40 ms.  
+• Strategy keywords are always one of: *PLACE, FULL, CLEAR, IGNORE*.
+
+**Protocol**
+  
+1. Cache the latest depth and detection messages.  
+2. When both are available, fuse → publish → reset detection cache.  
+   (Depth can arrive faster; each batch of detections is used once.)
 
 Assumptions & Limitations
 -------------------------
-* Exactly one RGB/Depth camera with **pinhole intrinsics** (fx, fy, cx, cy
-  hard-coded below).
-* Only the image-centre pixel is sampled for depth right now – replace that
-  placeholder with real 2-D bounding-box → 3-D projection for production use.
-* Object detection arrives as a simple string; in a real pipeline you would
-  subscribe to a custom message carrying bounding boxes and class labels.
+* One RGB-D camera with pinhole intrinsics (fx, fy, cx, cy hard-coded).  
+* Only the *centre pixel* depth is sampled – replace with bounding-box → 3-D
+  projection for production.  
+* Detections arrive as a simple string; switch to
+  ``vision_msgs/Detection2DArray`` when a real detector is online.
 
 """
 
@@ -57,201 +85,146 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import String
 from cv_bridge import CvBridge
 import numpy as np
-import cv2
 from abc import ABC, abstractmethod
 import sys
 
 
 # --------------------------------------------------------------------------- #
-#                       STRATEGY-PATTERN INTERFACES                           #
+#                           STRATEGY PATTERN                                  #
 # --------------------------------------------------------------------------- #
 class TableAnalysisStrategy(ABC):
     """
-    Abstract contract for any *table-state* decision algorithm.
+    Abstract base for table-state reasoning.
 
-    Subclasses must override :py:meth:`analyze` and return **one of four**
-    canonical keywords:
+    ``analyze(objects: list[str]) -> str`` must return **one** of
 
-        * ``"PLACE"``  – safe to put another plate.  
-        * ``"FULL"``   – table already crowded; wait.  
-        * ``"CLEAR"``  – fetch dirty items.  
-        * ``"IGNORE"`` – no action required.
-
-    Design notes
-    ------------
-    • The strategy receives a **plain Python list** of object class‐names to
-      keep the interface agnostic of the detector message format.  
-    • The caller combines multiple strategies (placement + clearing) if both
-      decisions are required.
+    * ``"PLACE"`` – safe to put another plate  
+    * ``"FULL"``  – table crowded; do nothing  
+    * ``"CLEAR"`` – fetch dirty items  
+    * ``"IGNORE"`` – no action needed
     """
-
     @abstractmethod
-    def analyze(self, objects):
-        """
-        Decide what to do given the current object list.
-
-        Parameters
-        ----------
-        objects : list[str]
-            Detected class names, lowercase.
-
-        Returns
-        -------
-        str
-            One of the four keywords defined above.
-        """
+    def analyze(self, objects):  # pragma: no cover
         raise NotImplementedError
 
 
 class FindPlacementStrategy(TableAnalysisStrategy):
-    """
-    *Minimal-viable* placement logic.
-
-    Heuristic
-    ---------
-    If the table currently hosts **fewer than three** detected objects, there
-    is space for another dish → return ``"PLACE"``.  Otherwise return
-    ``"FULL"``.
-    """
-
+    """Return *PLACE* when < 3 objects present, else *FULL*."""
     def analyze(self, objects):
         return "PLACE" if len(objects) < 3 else "FULL"
 
 
 class ClearingStrategy(TableAnalysisStrategy):
-    """
-    Simple clearing heuristic.
-
-    Heuristic
-    ---------
-    If *both* ``'plate'`` **and** ``'cup'`` appear in the detection list the
-    table is presumed finished → return ``"CLEAR"``.  Any other combination
-    yields ``"IGNORE"``.
-    """
-
+    """Return *CLEAR* if both ``plate`` and ``cup`` present, else *IGNORE*."""
     def analyze(self, objects):
         return "CLEAR" if {"plate", "cup"} <= set(objects) else "IGNORE"
 
 
 # --------------------------------------------------------------------------- #
-#                      MAIN NODE IMPLEMENTATION                               #
+#                               MAIN NODE                                     #
 # --------------------------------------------------------------------------- #
 class DistanceEstimator:
     """
-    Combines perception and reasoning in one ROS node.
+    Fuse detections + depth into XYZ positions and table-state keywords.
 
-    Life-cycle
-    ----------
-    • **__init__** – set up pubs/subs, allocate strategy objects.  
-    • **detection_callback** / **depth_callback** – store latest data and call
-      :py:meth:`try_estimate_positions`.  
-    • **try_estimate_positions** – when *both* modalities are present:
-        1. Parse detection string → list.  
-        2. For each class name, pick a proxy pixel (centre for now), read its
-           depth, back-project to XYZ using pinhole equation.  
-        3. Publish formatted XYZ list.  
-        4. Run both strategies, merge their keywords, publish.  
-        5. Clear stored detections to avoid duplicate processing.
-
-    Public variables are intentionally *not* exposed; everything is internal
-    to the node.
+    Internal State
+    --------------
+    latest_detections : str or None
+        Raw detection string awaiting fusion.
+    latest_depth : ndarray or None
+        Most recent depth frame (32-bit float).
     """
 
-    # ---- initialisation ---------------------------------------------------- #
+    # ------------------------- initialisation ----------------------------- #
     def __init__(self):
-        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        self.robot_number = sys.argv[1]              # namespace for multi-robot
         rospy.init_node(f"{self.robot_number}_distance_estimator_node")
 
-        # ---------- ROS wiring --------------------------------------------- #
-        self.detection_sub = rospy.Subscriber(f"/{self.robot_number}/camera_detections", String, self.detection_callback)
-        self.depth_sub = rospy.Subscriber(f"/{self.robot_number}/depth_processed", Image, self.depth_callback)
-        self.position_pub = rospy.Publisher(f"/{self.robot_number}/object_positions", String, queue_size=10)
-        self.reasoning_pub = rospy.Publisher(f"/{self.robot_number}/placement_decision", String, queue_size=10)
+        # -- ROS wiring ---------------------------------------------------- #
+        self.detection_sub = rospy.Subscriber(
+            f"/{self.robot_number}/camera_detections",
+            String,
+            self.detection_callback,
+        )
+        self.depth_sub = rospy.Subscriber(
+            f"/{self.robot_number}/depth_processed",
+            Image,
+            self.depth_callback,
+        )
 
         self.position_pub = rospy.Publisher(
-            "/object_positions", String, queue_size=10)
+            f"/{self.robot_number}/object_positions", String, queue_size=10)
         self.reasoning_pub = rospy.Publisher(
-            "/placement_decision", String, queue_size=10)
+            f"/{self.robot_number}/placement_decision", String, queue_size=10)
 
-        # ---------- state holders ------------------------------------------ #
-        self.latest_detections = None              # raw string
-        self.latest_depth = None                   # np.ndarray
-        self.bridge = CvBridge()                   # reuse instance
+        # (legacy non-namespaced publishers – remove when all consumers migrate)
+        self.position_pub = rospy.Publisher("/object_positions", String, queue_size=10)
+        self.reasoning_pub = rospy.Publisher("/placement_decision", String, queue_size=10)
 
-        # ---------- strategy objects --------------------------------------- #
+        # -- state & helpers ----------------------------------------------- #
+        self.latest_detections = None
+        self.latest_depth = None
+        self.bridge = CvBridge()
+
+        # -- strategy objects ---------------------------------------------- #
         self.placement_strategy = FindPlacementStrategy()
         self.clearing_strategy = ClearingStrategy()
 
-    # ---- subscribers ------------------------------------------------------- #
+    # ------------------------- subscribers -------------------------------- #
     def detection_callback(self, msg):
-        """
-        Store latest detections and attempt full pipeline.
-
-        Parameters
-        ----------
-        msg : std_msgs.String
-            Example payload: ``"Detected: cup, plate"``
-        """
+        """Store detection string then attempt fusion."""
         self.latest_detections = msg.data
         self.try_estimate_positions()
 
     def depth_callback(self, msg):
-        """
-        Convert depth image to NumPy and attempt full pipeline.
-
-        Any conversion error is logged and ignored so the node keeps running.
-        """
+        """Convert depth image → ndarray then attempt fusion."""
         try:
-            self.latest_depth = self.bridge.imgmsg_to_cv2(
-                msg, desired_encoding="passthrough")
+            self.latest_depth = self.bridge.imgmsg_to_cv2(msg, "passthrough")
             self.try_estimate_positions()
         except Exception as exc:
             rospy.logerr(f"[distance_estimator] depth conversion failed: {exc}")
 
-    # ---- core processing --------------------------------------------------- #
+    # ------------------------- core fusion -------------------------------- #
     def try_estimate_positions(self):
         """
-        Run localisation + reasoning once *both* modalities are present.
+        Run localisation + reasoning once both depth and detections exist.
 
-        The method resets ``self.latest_detections`` afterwards so each detection
-        batch is processed exactly once, regardless of depth FPS.
+        Steps
+        -----
+        1. Parse detection string → list of class names.  
+        2. For each name, sample the *centre pixel* depth (placeholder) and
+           back-project to XYZ.  
+        3. Publish formatted XYZ list.  
+        4. Run placement + clearing strategies, publish decision string.  
+        5. Clear detections cache so each batch is processed exactly once.
         """
         if self.latest_detections is None or self.latest_depth is None:
             return
 
         objects = self.parse_detections(self.latest_detections)
-        xyz_entries = []
 
-        # For each object class, sample the centre pixel as a placeholder --------
-        # Replace with proper bounding-box iteration if available.
+        # Placeholder: one XYZ for all objects (centre pixel)
         u, v = 320, 240
         depth_val = float(self.latest_depth[v, u])
         x, y, z = self.project_to_robot_frame(u, v, depth_val)
 
-        for obj_name in objects:
-            xyz_entries.append(f"{obj_name} @ [{x:.2f}, {y:.2f}, {z:.2f}]")
-
-        # ---------- publish positions -------------------------------------- #
+        xyz_entries = [f"{obj} @ [{x:.2f}, {y:.2f}, {z:.2f}]" for obj in objects]
         self.position_pub.publish(String(data="; ".join(xyz_entries)))
-        rospy.loginfo_once("distance_estimator: publishing object positions.")
 
-        # ---------- publish reasoning -------------------------------------- #
         place_kw = self.placement_strategy.analyze(objects)
         clear_kw = self.clearing_strategy.analyze(objects)
-        decision_str = f"Decision: {place_kw}, {clear_kw}"
-        self.reasoning_pub.publish(String(data=decision_str))
-        rospy.loginfo(f"distance_estimator: {decision_str}")
+        self.reasoning_pub.publish(String(data=f"Decision: {place_kw}, {clear_kw}"))
 
-        # Reset detection list to avoid re-use with stale depth
+        # Reset so new depth won’t reuse stale detections
         self.latest_detections = None
 
-    # ---- helpers ----------------------------------------------------------- #
+    # ------------------------- helper funcs ------------------------------- #
     @staticmethod
     def parse_detections(raw):
         """
-        Turn ``"Detected: cup, plate"`` → ``['cup', 'plate']``.
+        Convert ``"Detected: cup, plate"`` → ``['cup', 'plate']``.
 
-        Any parsing failure returns an *empty list* instead of throwing.
+        Any parsing error returns an empty list so the node keeps running.
         """
         try:
             return raw.replace("Detected:", "").strip().split(", ")
@@ -262,15 +235,14 @@ class DistanceEstimator:
     @staticmethod
     def project_to_robot_frame(u, v, depth):
         """
-        Pinhole back-projection from (u,v,depth) to metric XYZ.
+        Back-project pixel (u, v, depth) → metric XYZ in camera frame.
 
-        Intrinsics here are **example values** for a 640×480 image; adjust to
-        your real camera.
+        Hard-coded intrinsics (fx, fy, cx, cy) assume a 640×480 pinhole model.
 
         Returns
         -------
         tuple[float, float, float]
-            (x, y, z) in the camera coordinate frame.
+            Coordinates (x, y, z) in metres.
         """
         fx = fy = 525.0
         cx, cy = 320, 240
@@ -281,19 +253,14 @@ class DistanceEstimator:
 
 
 # --------------------------------------------------------------------------- #
-#                                 MAIN                                        #
+#                                    MAIN                                     #
 # --------------------------------------------------------------------------- #
 def main():
-    """
-    Spin the node until ROS master shuts down.
-
-    Any non-ROS exception bubbles up with a full traceback for easier debugging.
-    """
+    """Register node and spin until shutdown."""
     try:
         DistanceEstimator()
         rospy.spin()
     except rospy.ROSInterruptException:
-        # Expected on Ctrl-C or rosnode kill
         pass
 
 

@@ -79,42 +79,88 @@
 <span id="object-detection"></span><h1>object_detection<a class="headerlink" href="#module-object_detection" title="Link to this heading"></a></h1>
 <section id="object-detection-py">
 <h2>object_detection.py<a class="headerlink" href="#object-detection-py" title="Link to this heading"></a></h2>
-<section id="placeholder-vision-node-that-pretends-to-recognise-objects-in-every-frame">
-<h3>Placeholder <strong>vision node</strong> that pretends to recognise objects in every frame<a class="headerlink" href="#placeholder-vision-node-that-pretends-to-recognise-objects-in-every-frame" title="Link to this heading"></a></h3>
-<p>The node listens to the <em>already-preprocessed</em> RGB stream and emits a constant
-string describing three items.  It runs at <strong>1 Hz</strong>, slow enough to be replaced
-later by a real detector running on GPU/CPU accelerators without affecting
-subscriber timing.</p>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>object_detection.py</cite> is a <strong>vertical perception component</strong> that will
+eventually wrap a real convolutional object–detection network.
+The current stub publishes a fixed textual description so the rest of the
+pipeline (sensor fusion, reasoning, speech) can be integrated long before
+GPU-heavy models are available.</p>
 </section>
-<section id="ros-topics">
-<h3>ROS topics<a class="headerlink" href="#ros-topics" title="Link to this heading"></a></h3>
+<section id="why-ship-a-stub-early">
+<h3>Why ship a stub early?<a class="headerlink" href="#why-ship-a-stub-early" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Parallel development</strong> – downstream nodes can be written and tested today.</p></li>
+<li><p><strong>Determinism</strong> – CI runs don’t depend on ML randomness or model files.</p></li>
+<li><p><strong>Drop-in replacement</strong> – swap this for a real detector without contract
+changes.</p></li>
+</ul>
+</section>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 25.0%" />
-<col style="width: 45.0%" />
+<col style="width: 9.8%" />
+<col style="width: 24.6%" />
+<col style="width: 20.5%" />
+<col style="width: 45.1%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Topic</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Direction / Meaning</p></th>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Message type</p></th>
+<th class="head"><p>Notes</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/camera_preprocessed</span></code></p></td>
+<tr class="row-even"><td><p><strong>Required</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/camera_preprocessed</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
-<td><p><strong>Subscribed</strong> — cleaned RGB image fed into the detector</p></td>
+<td><p>Cleaned RGB frames (content ignored by this stub)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/camera_detections</span></code></p></td>
+<tr class="row-odd"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/camera_detections</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code></p></td>
-<td><p><strong>Published</strong> — placeholder JSON string describing detections</p></td>
+<td><p>Always publishes <code class="docutils literal notranslate"><span class="pre">&quot;Detected:</span> <span class="pre">Table,</span> <span class="pre">Plate,</span> <span class="pre">Position&quot;</span></code> (1 Hz)</p></td>
 </tr>
 </tbody>
 </table>
-<p>The published text follows the simple format:</p>
-<p><code class="docutils literal notranslate"><span class="pre">Detected:</span> <span class="pre">&lt;object1&gt;,</span> <span class="pre">&lt;object2&gt;,</span> <span class="pre">&lt;object3&gt;</span></code></p>
-<p>Feel free to replace the hard-coded list or switch to structured messages
-(e.g. <code class="docutils literal notranslate"><span class="pre">vision_msgs/Detection2DArray</span></code>) once a real model is available.</p>
+</section>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p><strong>Pre-conditions</strong></p>
+<ul class="simple">
+<li><p>A publisher is already emitting images on <code class="docutils literal notranslate"><span class="pre">/{robot}/camera_preprocessed</span></code>.</p></li>
+<li><p>Subscribers tolerate a 1 Hz detection rate.</p></li>
+</ul>
+<p><strong>Post-conditions</strong></p>
+<ul class="simple">
+<li><p>Each published message is a UTF-8 string following the pattern
+<code class="docutils literal notranslate"><span class="pre">&quot;Detected:</span> <span class="pre">&lt;obj1&gt;,</span> <span class="pre">&lt;obj2&gt;,</span> <span class="pre">&lt;obj3&gt;&quot;</span></code>.</p></li>
+<li><p>Header timing is irrelevant; no synchronisation required.</p></li>
+</ul>
+<p><strong>Invariants</strong></p>
+<ul class="simple">
+<li><p>Publication interval exactly 1 s (±10 ms).</p></li>
+<li><p>CPU usage ≈ 0 % (no image processing).</p></li>
+</ul>
+<p><strong>Protocol</strong></p>
+<p>Stateless: every second the component publishes a fresh detection string,
+independent of any previous frames.</p>
+</section>
+<section id="lifecycle">
+<h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Node name <code class="docutils literal notranslate"><span class="pre">{robot}_object_detection_node</span></code></p></li>
+<li><p>Ready once its publisher is advertised.</p></li>
+<li><p>Clean shutdown on Ctrl-C or <code class="docutils literal notranslate"><span class="pre">rosnode</span> <span class="pre">kill</span></code>.</p></li>
+</ul>
+</section>
+<section id="extensibility-roadmap">
+<h3>Extensibility roadmap<a class="headerlink" href="#extensibility-roadmap" title="Link to this heading"></a></h3>
+<p>Replace <cite>image_callback</cite> with real inference, switch the output to
+<code class="docutils literal notranslate"><span class="pre">vision_msgs/Detection2DArray</span></code> or a custom strongly-typed message, and delete
+the explicit 1 Hz loop (the network’s runtime will throttle the topic naturally).</p>
 </section>
 </section>
 <p class="rubric">Classes</p>

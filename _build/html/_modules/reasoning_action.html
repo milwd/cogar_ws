@@ -80,62 +80,78 @@
 <span class="sd">reasoning_action.py</span>
 <span class="sd">===================</span>
 
-<span class="sd">High-level **task orchestrator** – turns symbolic plans into concrete ActionLib goals</span>
-<span class="sd">------------------------------------------------------------------------------------</span>
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`reasoning_action.py` is a **high-level task orchestrator** that converts</span>
+<span class="sd">symbolic “table commands” (*PLACE*, *CLEAR*, …) and a navigation *path* into</span>
+<span class="sd">three concrete ROS Action goals:</span>
 
-<span class="sd">`ReasoningAction` sits at the interface between *planning* (which decides *what*</span>
-<span class="sd">the robot should do) and *execution* (which knows *how* to move).  </span>
-<span class="sd">It ingests a *navigation path* plus a *table-level command* and then drives the</span>
-<span class="sd">three low-level ActionLib servers that move the base, position the arm and open</span>
-<span class="sd">/ close the gripper.  When the whole sequence finishes – or when any part fails</span>
-<span class="sd">– the node emits a single feedback string for downstream logging or GUI use.</span>
+<span class="sd">* **movement_control** – drives the mobile base along the path  </span>
+<span class="sd">* **arm_control**      – moves the wrist / forearm to the working pose  </span>
+<span class="sd">* **gripper_control**  – opens or closes the gripper</span>
 
-<span class="sd">ROS interface</span>
-<span class="sd">~~~~~~~~~~~~~</span>
+<span class="sd">When the whole macro succeeds—or when **any** step fails—the node emits one</span>
+<span class="sd">human-readable feedback message for GUIs, loggers, or supervisor FSMs.</span>
+
+<span class="sd">Interfaces (strongly-typed, partially stateful)</span>
+<span class="sd">-----------------------------------------------</span>
+
 <span class="sd">.. list-table::</span>
 <span class="sd">   :header-rows: 1</span>
-<span class="sd">   :widths: 20 30 50</span>
+<span class="sd">   :widths: 12 26 27 55</span>
 
 <span class="sd">   * - Direction</span>
 <span class="sd">     - Name</span>
-<span class="sd">     - Type / semantics</span>
-<span class="sd">   * - **subscribe**</span>
-<span class="sd">     - ``/planned_path``</span>
-<span class="sd">     - ``nav_msgs/Path`` – global or local path from the planner</span>
-<span class="sd">   * - **subscribe**</span>
-<span class="sd">     - ``/table_reasoning_commands``</span>
-<span class="sd">     - ``std_msgs/String`` – symbolic action at table (*PLACE*, *CLEAR*, …)</span>
-<span class="sd">   * - **publish**</span>
-<span class="sd">     - ``task_feedback``</span>
-<span class="sd">     - ``std_msgs/String`` – human-readable success / failure status</span>
-<span class="sd">   * - **action client**</span>
-<span class="sd">     - ``movement_control``</span>
-<span class="sd">     - ``tiago1/MovementControlAction`` – follow the path</span>
-<span class="sd">   * - **action client**</span>
-<span class="sd">     - ``arm_control``</span>
-<span class="sd">     - ``tiago1/ArmControlAction`` – position forearm / wrist</span>
-<span class="sd">   * - **action client**</span>
-<span class="sd">     - ``gripper_control``</span>
-<span class="sd">     - ``tiago1/GripperControlAction`` – grasp or release the dish</span>
+<span class="sd">     - Type</span>
+<span class="sd">     - Notes</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/planned_path``</span>
+<span class="sd">     - ``nav_msgs/Path``</span>
+<span class="sd">     - Global or local path from the planner</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/table_reasoning_commands``</span>
+<span class="sd">     - ``std_msgs/String``</span>
+<span class="sd">     - Symbolic keyword (*PLACE*, *CLEAR*, …)</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/feedback_acion``</span>
+<span class="sd">     - ``std_msgs/String``</span>
+<span class="sd">     - “Busy” → doing a task, “Free” → finished/failed</span>
+<span class="sd">   * - **Action client**</span>
+<span class="sd">     - ``/{robot}/movement_control``</span>
+<span class="sd">     - ``tiago1/MovementControlAction``</span>
+<span class="sd">     - Executes the navigation path</span>
+<span class="sd">   * - **Action client**</span>
+<span class="sd">     - ``/{robot}/arm_control``</span>
+<span class="sd">     - ``tiago1/ArmControlAction``</span>
+<span class="sd">     - Positions forearm / wrist</span>
+<span class="sd">   * - **Action client**</span>
+<span class="sd">     - ``/{robot}/gripper_control``</span>
+<span class="sd">     - ``tiago1/GripperControlAction``</span>
+<span class="sd">     - Grips or releases the dish</span>
 
-<span class="sd">Execution pipeline</span>
-<span class="sd">------------------</span>
-<span class="sd">#. **Path reception** – as soon as a new ``nav_msgs/Path`` arrives, flag</span>
-<span class="sd">   :pyattr:`path_received` becomes *True*.  </span>
-<span class="sd">#. **Movement phase** – a `MovementControlGoal` with the full path is sent to</span>
-<span class="sd">   the base controller.  The node blocks until a result appears.  </span>
-<span class="sd">#. **Conditional manipulation** – only if the base reports *success* does the</span>
-<span class="sd">   node dispatch the arm and gripper goals, ensuring the robot is in position</span>
-<span class="sd">   before manipulating objects.  </span>
-<span class="sd">#. **Feedback** – a single sentence is published to ``task_feedback`` summarising</span>
-<span class="sd">   the outcome.  UI widgets, loggers or higher-level reasoners can subscribe to</span>
-<span class="sd">   that topic to update state machines or dashboards.</span>
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">*Pre-conditions*</span>
+
+<span class="sd">• All three Action servers are running (checked at startup).  </span>
+<span class="sd">• Path and command topics share the same robot namespace.</span>
+
+<span class="sd">*Post-conditions*</span>
+
+<span class="sd">• Exactly **one** feedback line per task: “Busy” at start, “Free” when done.  </span>
+<span class="sd">• Arm &amp; gripper goals are sent *only if* base motion succeeds.</span>
+
+<span class="sd">*Statefulness*</span>
+
+<span class="sd">The node keeps an internal flag ``path_received`` so each incoming path is</span>
+<span class="sd">executed **once**; after completion the flag resets.</span>
 
 <span class="sd">Customisation hooks</span>
 <span class="sd">-------------------</span>
-<span class="sd">*Override* :py:meth:`perform_table_command` to translate each symbolic table</span>
-<span class="sd">command (PLACE, CLEAR, INSPECT…) into a concrete sequence of arm / gripper</span>
-<span class="sd">actions.  The default implementation is a stub.</span>
+<span class="sd">Override :py:meth:`perform_table_command` (or the private</span>
+<span class="sd">:meth:`_run_manipulation_sequence`) to map each symbolic keyword onto a custom</span>
+<span class="sd">sequence of arm/gripper goals.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
@@ -147,83 +163,99 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">tiago1.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">GripperControlAction</span><span class="p">,</span> <span class="n">GripperControlGoal</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
+
 <div class="viewcode-block" id="ReasoningAction">
 <a class="viewcode-back" href="../brain_modules/reasoning_action.html#reasoning_action.ReasoningAction">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ReasoningAction</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Coordinates navigation and manipulation through three ActionLib clients.</span>
+<span class="sd">    Coordinates navigation + manipulation through three ActionLib clients.</span>
 
 <span class="sd">    Variables</span>
 <span class="sd">    ----------</span>
-<span class="sd">    path_received</span>
-<span class="sd">        *True* as soon as a new path arrives; the flag is cleared after the</span>
-<span class="sd">        path has been processed.</span>
-<span class="sd">    path_msg</span>
-<span class="sd">        Latest ``nav_msgs/Path`` received from the planner.</span>
-<span class="sd">    task_feedback_pub</span>
-<span class="sd">        Latched publisher used by GUIs or loggers to track high-level task</span>
-<span class="sd">        completion.</span>
-<span class="sd">    movement_client / arm_client / gripper_client</span>
-<span class="sd">        Pre-connected ActionLib clients; connection is verified in</span>
-<span class="sd">        :py:meth:`wait_for_servers`.</span>
+<span class="sd">    path_received : bool</span>
+<span class="sd">        Becomes ``True`` when a new path topic arrives; cleared after use.</span>
+<span class="sd">    path_msg : nav_msgs.msg.Path | None</span>
+<span class="sd">        The most recent path waiting to be executed.</span>
+<span class="sd">    task_feedback_pub : rospy.Publisher</span>
+<span class="sd">        Latched channel for GUIs / loggers → “Busy” / “Free”.</span>
+<span class="sd">    movement_client / arm_client / gripper_client : actionlib.SimpleActionClient</span>
+<span class="sd">        Pre-connected clients; :py:meth:`wait_for_servers` blocks until ready.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1"># initialise                                                         #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Bring up the node, connect to topics and block until all three action</span>
-<span class="sd">        servers are online.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># rospy.get_param(&#39;~robot_number&#39;)</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_reasoning_action_node&#39;</span><span class="p">)</span>
 
-        <span class="c1"># ------------------- runtime state --------------------------------- #</span>
+        <span class="c1"># ---------- runtime state ------------------------------------- #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_received</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_msg</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/planned_path&#39;</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_callback</span><span class="p">)</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/table_reasoning_commands&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_command_callback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">task_feedback_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/feedback_acion&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># ---------- topic wiring -------------------------------------- #</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/planned_path&#39;</span><span class="p">,</span>
+            <span class="n">Path</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path_callback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/table_reasoning_commands&#39;</span><span class="p">,</span>
+            <span class="n">String</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table_command_callback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_feedback_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/feedback_acion&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">latch</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/movement_control&#39;</span><span class="p">,</span> <span class="n">MovementControlAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">arm_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/arm_control&#39;</span><span class="p">,</span> <span class="n">ArmControlAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gripper_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/gripper_control&#39;</span><span class="p">,</span> <span class="n">GripperControlAction</span><span class="p">)</span>
-
+        <span class="c1"># ---------- action clients ------------------------------------ #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/movement_control&#39;</span><span class="p">,</span>
+            <span class="n">MovementControlAction</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arm_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/arm_control&#39;</span><span class="p">,</span>
+            <span class="n">ArmControlAction</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gripper_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/gripper_control&#39;</span><span class="p">,</span>
+            <span class="n">GripperControlAction</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_servers</span><span class="p">()</span>
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                       connection helper                               #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1"># helper: wait for all servers                                       #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ReasoningAction.wait_for_servers">
 <a class="viewcode-back" href="../brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.wait_for_servers">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">wait_for_servers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Poll each ActionLib server at 1 Hz until the trio is ready.  Startup</span>
-<span class="sd">        proceeds only when base, arm **and** gripper controllers are up; this</span>
-<span class="sd">        prevents goal loss at boot.</span>
+<span class="sd">        Poll each ActionLib server at 1 Hz until base, arm **and** gripper</span>
+<span class="sd">        controllers are ready.  Prevents goal loss at boot.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)):</span>
-                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Waiting for movement_control action server…&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">)):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Waiting for *movement_control* server…&quot;</span><span class="p">)</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">arm_client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)):</span>
-                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Waiting for arm_control action server…&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">arm_client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">)):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Waiting for *arm_control* server…&quot;</span><span class="p">)</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gripper_client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)):</span>
-                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Waiting for gripper_control action server…&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gripper_client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">)):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Waiting for *gripper_control* server…&quot;</span><span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ReasoningAction] All action servers connected.&quot;</span><span class="p">)</span>
             <span class="k">break</span>
         <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
 
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                       subscriber callbacks                            #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1"># subscriber callbacks                                               #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ReasoningAction.path_callback">
 <a class="viewcode-back" href="../brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.path_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">path_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the incoming path for deferred execution in the main loop.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the planner path for use in the main loop.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_received</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_msg</span> <span class="o">=</span> <span class="n">msg</span></div>
 
@@ -231,83 +263,73 @@
 <div class="viewcode-block" id="ReasoningAction.table_command_callback">
 <a class="viewcode-back" href="../brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.table_command_callback">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">table_command_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward the symbolic command to :py:meth:`perform_table_command`.&quot;&quot;&quot;</span>
-        <span class="n">decision</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ReasoningAction] Table command → </span><span class="si">{</span><span class="n">decision</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">perform_table_command</span><span class="p">(</span><span class="n">decision</span><span class="p">)</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward symbolic keyword (*PLACE*, *CLEAR*, …) to</span>
+<span class="sd">        :py:meth:`perform_table_command`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perform_table_command</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
 
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                      command execution hooks                          #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1"># override point                                                     #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ReasoningAction.perform_table_command">
 <a class="viewcode-back" href="../brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.perform_table_command">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">perform_table_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decision</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Translate *decision* into arm / gripper goals.</span>
+<span class="sd">        Map symbolic command to arm/gripper macros.</span>
 
-<span class="sd">        Override this stub in subclasses to implement behaviour such as:</span>
+<span class="sd">        Stub does nothing so the example compiles; override in subclasses:</span>
 
-<span class="sd">        * **PLACE** – lower arm to 3 cm above table, open gripper.</span>
-<span class="sd">        * **CLEAR** – close gripper, raise arm to carry height.</span>
-
-<span class="sd">        The default implementation does nothing so the example still compiles.</span>
+<span class="sd">        * **PLACE** → lower arm, open gripper  </span>
+<span class="sd">        * **CLEAR** → close gripper, raise arm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[ReasoningAction] Table command received → </span><span class="si">{</span><span class="n">decision</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                               main loop                               #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1"># main loop                                                          #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="ReasoningAction.loop">
 <a class="viewcode-back" href="../brain_modules/reasoning_action.html#reasoning_action.ReasoningAction.loop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Run a 1 Hz cycle:</span>
-
-<span class="sd">        * if a fresh path is queued, send it to the base controller and wait  </span>
-<span class="sd">          synchronously for completion;  </span>
-<span class="sd">        * if movement succeeds, execute arm and gripper macros;  </span>
-<span class="sd">        * publish a one-line summary on ``task_feedback``.</span>
-
-<span class="sd">        The method blocks until ROS shutdown.</span>
+<span class="sd">        0.3 Hz cycle (≈ every 3 s):</span>
+<span class="sd">            • if a new path is queued → send to base, wait blocking;  </span>
+<span class="sd">            • on success → run arm &amp; gripper macros;  </span>
+<span class="sd">            • publish “Busy” / “Free” to feedback topic.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>  <span class="c1"># ≈ 3-second iteration</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_received</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">task_feedback_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s2">&quot;Busy&quot;</span><span class="p">)</span>
-                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ReasoningAction] Received planned path, sending to ControlMovement.&quot;</span><span class="p">)</span>
+
+                <span class="c1"># ---------- 1. Move base -------------------------------- #</span>
                 <span class="n">move_goal</span> <span class="o">=</span> <span class="n">MovementControlGoal</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path_msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">move_goal</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span><span class="o">.</span><span class="n">wait_for_result</span><span class="p">()</span>
-                <span class="n">move_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">move_result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
-                    <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ReasoningAction] Movement succeeded. Sending commands to arm and gripper.&quot;</span><span class="p">)</span>
-                    <span class="n">arm_goal</span> <span class="o">=</span> <span class="n">ArmControlGoal</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">arm_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">arm_goal</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">arm_client</span><span class="o">.</span><span class="n">wait_for_result</span><span class="p">()</span>
+                <span class="n">move_ok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">movement_client</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span><span class="o">.</span><span class="n">success</span>
 
-                    <span class="n">gripper_goal</span> <span class="o">=</span> <span class="n">GripperControlGoal</span><span class="p">(</span><span class="n">gripnogrip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">gripper_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">gripper_goal</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">gripper_client</span><span class="o">.</span><span class="n">wait_for_result</span><span class="p">()</span>
-
-                    <span class="bp">self</span><span class="o">.</span><span class="n">task_feedback_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s2">&quot;Free&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">move_ok</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[ReasoningAction] Base reached goal.&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_run_manipulation_sequence</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ReasoningAction] Movement failed, not sending arm/gripper commands.&quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">task_feedback_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s2">&quot;Free&quot;</span><span class="p">)</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;[ReasoningAction] Base motion failed; skipping manipulation.&quot;</span><span class="p">)</span>
 
+                <span class="bp">self</span><span class="o">.</span><span class="n">task_feedback_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s2">&quot;Free&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">path_received</span> <span class="o">=</span> <span class="kc">False</span>
+
             <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span></div>
 
 
-    <span class="c1"># --------------------------------------------------------------------- #</span>
-    <span class="c1">#                       internal helper                                 #</span>
-    <span class="c1"># --------------------------------------------------------------------- #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1"># default manipulation macro                                         #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_run_manipulation_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Default manipulation macro: simple arm lower + gripper toggle.</span>
+<span class="sd">        Demo macro: **lower arm 3 deg** + **open gripper**.</span>
 
-<span class="sd">        Adapt the goal parameters to match your real controller interface.</span>
+<span class="sd">        Adjust goal fields to match your real controllers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">arm_goal</span> <span class="o">=</span> <span class="n">ArmControlGoal</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arm_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">arm_goal</span><span class="p">)</span>
@@ -319,9 +341,9 @@
 
 
 
-<span class="c1"># ------------------------------------------------------------------------- #</span>
-<span class="c1">#                                   entry                                   #</span>
-<span class="c1"># ------------------------------------------------------------------------- #</span>
+<span class="c1"># ---------------------------------------------------------------------- #</span>
+<span class="c1"># entry                                                                  #</span>
+<span class="c1"># ---------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">node</span> <span class="o">=</span> <span class="n">ReasoningAction</span><span class="p">()</span>

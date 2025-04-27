@@ -79,57 +79,100 @@
 <span id="camera"></span><h1>camera<a class="headerlink" href="#module-camera" title="Link to this heading"></a></h1>
 <section id="camera-py">
 <h2>camera.py<a class="headerlink" href="#camera-py" title="Link to this heading"></a></h2>
-<section id="synthetic-rgb-depth-sensor-for-rapid-dependency-free-testing">
-<h3>Synthetic <strong>RGB + Depth</strong> sensor for rapid, dependency-free testing<a class="headerlink" href="#synthetic-rgb-depth-sensor-for-rapid-dependency-free-testing" title="Link to this heading"></a></h3>
-<p>This script pretends to be a camera node even when no real hardware is
-attached.  It continuously publishes <strong>one static RGB frame</strong> together with a
-<strong>mock depth map</strong> so that downstream perception, fusion or visualisation
-nodes can start development immediately.</p>
-<dl class="simple">
-<dt>Why a dummy camera?</dt><dd><ul class="simple">
-<li><p><em>Deterministic output</em> – unit tests and integration pipelines do not rely
-on external devices or recorded ROS bags.</p></li>
-<li><p><em>Speed</em> – a single JPEG on disk avoids the overhead of connecting to
-physical sensors.</p></li>
-<li><p><em>Isolation</em> – failures in consumer nodes are never due to flaky hardware.</p></li>
-</ul>
-</dd>
-</dl>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>camera.py</cite> is a <em>horizontal</em> <strong>sensor-stub component</strong>: a self-contained
+software camera that produces deterministic RGB + depth imagery even when no
+physical sensor is present.  It lets downstream perception, fusion and
+visualisation nodes run in CI, headless simulation, or early prototyping
+environments where real hardware is unavailable.</p>
 </section>
-<section id="ros-topics">
-<h3>ROS topics<a class="headerlink" href="#ros-topics" title="Link to this heading"></a></h3>
+<section id="why-a-dummy-camera">
+<h3>Why a dummy camera?<a class="headerlink" href="#why-a-dummy-camera" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Deterministic output</strong> – unit tests and integration pipelines never change
+behaviour because of lighting or hardware drift.</p></li>
+<li><p><strong>Speed &amp; simplicity</strong> – a single JPEG on disk avoids costly device drivers
+and UVC initialisation.</p></li>
+<li><p><strong>Isolation</strong> – consumer failures are provably unrelated to flaky hardware.</p></li>
+</ul>
+</section>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 25.0%" />
-<col style="width: 25.0%" />
-<col style="width: 50.0%" />
+<col style="width: 10.0%" />
+<col style="width: 23.3%" />
+<col style="width: 20.8%" />
+<col style="width: 45.8%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Topic name</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Content</p></th>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Message type</p></th>
+<th class="head"><p>Notes</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">/camera</span></code></p></td>
+<tr class="row-even"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/camera</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
-<td><p>24-bit BGR image read from <em>image.jpg</em></p></td>
+<td><p>Static BGR8 frame read from <em>image.jpg</em></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/depth</span></code></p></td>
+<tr class="row-odd"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/depth</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code></p></td>
-<td><p>8-bit signed mono array (all ones) – same resolution as RGB</p></td>
+<td><p>8-bit signed mono array (ones); same resolution as RGB</p></td>
 </tr>
 </tbody>
 </table>
-<p>Both messages share <em>wall-clock</em> time stamps and are published at <strong>10 Hz</strong> so
-that synchronisation filters (e.g. message_filters) treat them as a stereo
-pair.</p>
+<p>Both topics share identical <code class="docutils literal notranslate"><span class="pre">header.stamp</span></code> values and are published at
+<strong>10 Hz</strong>, allowing time-synchronisation filters to treat them as a stereo pair.</p>
+</section>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p><strong>Pre-conditions</strong></p>
+<ul class="simple">
+<li><p>The JPEG file exists and is readable.</p></li>
+<li><p>Resolution ≤ 1920 × 1080 (soft real-time ceiling).</p></li>
+</ul>
+<p><strong>Post-conditions</strong></p>
+<ul class="simple">
+<li><p>The depth image’s <em>height</em> and <em>width</em> match the RGB frame exactly.</p></li>
+<li><p>Header fields <code class="docutils literal notranslate"><span class="pre">stamp</span></code> and <code class="docutils literal notranslate"><span class="pre">frame_id</span></code> are identical between colour and depth messages.</p></li>
+</ul>
+<p><strong>Invariants</strong></p>
+<ul class="simple">
+<li><p>Latency (JPEG load → publish) ≤ 8 ms on a 4-core laptop.</p></li>
+<li><p>Peak RAM ≤ 2 × (W × H × 3) bytes (one colour buffer + one depth buffer).</p></li>
+</ul>
+<p><strong>Protocol</strong></p>
+<p>This component is <em>stateless</em>: each 100 ms cycle publishes fresh, independent
+messages.</p>
+</section>
+<section id="lifecycle">
+<h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Node name <code class="docutils literal notranslate"><span class="pre">{robot}_camera</span></code></p></li>
+<li><p>Ready once its publishers are advertised (no init service).</p></li>
+<li><p>Clean shutdown on Ctrl-C or <code class="docutils literal notranslate"><span class="pre">rosnode</span> <span class="pre">kill</span></code>.</p></li>
+</ul>
+</section>
+<section id="quality-reusability-metrics">
+<h3>Quality &amp; Reusability metrics<a class="headerlink" href="#quality-reusability-metrics" title="Link to this heading"></a></h3>
+<p>Latency &lt; 8 ms | Throughput = 10 Hz | Cyclomatic complexity &lt; 10</p>
+</section>
+<section id="extensibility">
+<h3>Extensibility<a class="headerlink" href="#extensibility" title="Link to this heading"></a></h3>
+<p>The <em>minimal interface</em> (publish two topics) is already implemented.  A <em>complete
+interface</em> could add a <cite>dynamic_reconfigure</cite> server for frame-rate, resolution
+or simulated noise without breaking existing clients.</p>
 </section>
 <section id="directory-layout">
 <h3>Directory layout<a class="headerlink" href="#directory-layout" title="Link to this heading"></a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">camera.py</span></code> expects the JPEG at
-<code class="docutils literal notranslate"><span class="pre">/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg</span></code>.
-Change the path if you move the file; no other configuration is required.</p>
+<p><code class="docutils literal notranslate"><span class="pre">camera.py</span></code> expects the JPEG at</p>
+<p><code class="docutils literal notranslate"><span class="pre">/root/Desktop/cogar_ass1/cogar_ws/src/tiago1/scripts/image.jpg</span></code></p>
+<p>Update the path if you move the file; no other configuration is required.</p>
 </section>
 </section>
 <p class="rubric">Functions</p>

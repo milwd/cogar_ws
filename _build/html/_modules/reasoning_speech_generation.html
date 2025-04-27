@@ -80,43 +80,61 @@
 <span class="sd">speech_generator.py</span>
 <span class="sd">===================</span>
 
-<span class="sd">Text-to-Speech **relay node** for restaurant announcements</span>
-<span class="sd">----------------------------------------------------------</span>
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+<span class="sd">`speech_generator.py` is a **text-to-speech relay**: it takes plain UTF-8</span>
+<span class="sd">sentences from the cognitive layer and republishes them on the loud-speaker</span>
+<span class="sd">channel at a steady 1 Hz.  The node is intentionally agnostic about the actual</span>
+<span class="sd">TTS backend—you can plug in Festival, `sound_play`, a cloud API, or a</span>
+<span class="sd">proprietary amplifier as long as it subscribes to ``/{robot}/speaker_channel``.</span>
 
-<span class="sd">The cognitive layer of the sushi-waiter architecture thinks in sentences:</span>
-<span class="sd">*“Table 3, your Dragon Roll is here”*, *“Apologies for the delay”*, *“Order</span>
-<span class="sd">cancelled, returning to station”*.  Something has to turn those strings into</span>
-<span class="sd">audible sound.  **speech_generator.py** fills that gap while staying totally</span>
-<span class="sd">agnostic about *how* the audio is produced.</span>
+<span class="sd">Design goals</span>
+<span class="sd">------------</span>
+<span class="sd">* **Decoupling** – reasoning publishes text once; TTS drivers only care about</span>
+<span class="sd">  a single downstream topic.  </span>
+<span class="sd">* **State buffering** – latest sentence is cached so late subscribers (e.g.,</span>
+<span class="sd">  a driver that just restarted) still get the current utterance.  </span>
+<span class="sd">* **Rate control** – re-emits at 1 Hz, protecting slow audio pipelines from</span>
+<span class="sd">  bursty upstream chatter.</span>
 
-<span class="sd">Design philosophy</span>
-<span class="sd">-----------------</span>
-<span class="sd">* **Decoupling** – upstream reasoning nodes push text to a *single* topic</span>
-<span class="sd">  (``/task_speech_command``).  Downstream, you may connect *any* TTS driver</span>
-<span class="sd">  (Festival, `sound_play`, cloud API, proprietary speaker), as long as it</span>
-<span class="sd">  listens to ``/speaker_channel``.  </span>
-<span class="sd">* **State buffering** – the latest line is cached so that late-joining</span>
-<span class="sd">  subscribers (e.g. the speaker driver restarting) still receive the current</span>
-<span class="sd">  sentence.  </span>
-<span class="sd">* **Rate control** – messages are re-emitted at **1 Hz** to avoid flooding the</span>
-<span class="sd">  audio backend while giving it enough chances to catch up.</span>
+<span class="sd">Interfaces (strongly-typed, stateless)</span>
+<span class="sd">--------------------------------------</span>
 
-<span class="sd">ROS topics</span>
-<span class="sd">~~~~~~~~~~</span>
-<span class="sd">.. list-table:: Node interface</span>
+<span class="sd">.. list-table::</span>
 <span class="sd">   :header-rows: 1</span>
-<span class="sd">   :widths: 15 25 60</span>
+<span class="sd">   :widths: 12 30 25 55</span>
 
 <span class="sd">   * - Direction</span>
 <span class="sd">     - Topic</span>
-<span class="sd">     - Type / semantics</span>
-<span class="sd">   * - **subscribe**</span>
-<span class="sd">     - ``/task_speech_command``</span>
-<span class="sd">     - ``std_msgs/String`` – UTF-8 input from the cognitive layer</span>
-<span class="sd">   * - **publish**</span>
-<span class="sd">     - ``/speaker_channel``</span>
-<span class="sd">     - ``std_msgs/String`` – identical text, forwarded once per second</span>
+<span class="sd">     - Message type</span>
+<span class="sd">     - Notes</span>
+<span class="sd">   * - **Required**</span>
+<span class="sd">     - ``/{robot}/task_speech_command``</span>
+<span class="sd">     - ``std_msgs/String``</span>
+<span class="sd">     - Sentences from cognition, e.g. *“Table 3, your dragon roll is ready!”*</span>
+<span class="sd">   * - **Provided**</span>
+<span class="sd">     - ``/{robot}/speaker_channel``</span>
+<span class="sd">     - ``std_msgs/String``</span>
+<span class="sd">     - Same text, forwarded once every second</span>
 
+<span class="sd">Contract</span>
+<span class="sd">--------</span>
+<span class="sd">**Pre-conditions**  </span>
+
+<span class="sd">• Upstream publishes valid UTF-8 strings.</span>
+
+<span class="sd">**Post-conditions**  </span>
+
+<span class="sd">• Latest received sentence is re-sent every second until a new one arrives.  </span>
+<span class="sd">• If no sentence has ever been received the node publishes **nothing** (avoids</span>
+<span class="sd">  empty utterances).</span>
+
+<span class="sd">Implementation summary</span>
+<span class="sd">----------------------</span>
+<span class="sd">1. Subscriber callback caches incoming message → ``self.msg``.  </span>
+<span class="sd">2. Main loop publishes ``self.msg`` once/second if present.  </span>
+<span class="sd">3. Holds **no additional state**, so the node can be hot-reloaded or replaced</span>
+<span class="sd">   in unit tests without side-effects.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -125,63 +143,62 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 
-
 <div class="viewcode-block" id="SpeechGenerator">
 <a class="viewcode-back" href="../brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SpeechGenerator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Thin, timer-driven **republisher**.</span>
+<span class="sd">    Thin, timer-driven **republisher** that buffers the latest sentence.</span>
 
-<span class="sd">    Workflow</span>
-<span class="sd">    --------</span>
-<span class="sd">    1. A subscriber callback stores the newest incoming sentence</span>
-<span class="sd">       in :pyattr:`self.msg`.</span>
-<span class="sd">    2. The main loop publishes that stored message once every second.</span>
-<span class="sd">       If no message has been received yet, it publishes nothing,</span>
-<span class="sd">       thereby avoiding empty utterances.</span>
-
-<span class="sd">    The class holds no additional state – perfect for hot-reloading or</span>
-<span class="sd">    replacement in unit tests.</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    msg : std_msgs.msg.String | None</span>
+<span class="sd">        Cached sentence; ``None`` until the first message arrives.</span>
+<span class="sd">    pub_speak : rospy.Publisher</span>
+<span class="sd">        Outgoing channel for TTS drivers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                      NODE INITIALISATION                           #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the SpeechGenerator node:</span>
-
-<span class="sd">        - Initialize ROS node &#39;speech_gen_node&#39;.</span>
-<span class="sd">        - Subscribe to &#39;/task_speech_command&#39; for speech commands.</span>
-<span class="sd">        - Advertise &#39;/speaker_channel&#39; for speaking output.</span>
+<span class="sd">        1. Initialise ROS under ``{robot}_speech_gen_node``.  </span>
+<span class="sd">        2. Subscribe to upstream speech commands.  </span>
+<span class="sd">        3. Advertise speaker channel.  </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="c1">#rospy.get_param(&#39;~robot_number&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>            <span class="c1"># namespace for multi-robot</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">_speech_gen_node&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/task_speech_command&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">speaker_callback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pub_speak</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/speaker_channel&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-        
-<div class="viewcode-block" id="SpeechGenerator.speaker_callback">
-<a class="viewcode-back" href="../brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator.speaker_callback">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">speaker_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Store the newest sentence.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        msg : std_msgs.msg.String</span>
-<span class="sd">            UTF-8 text coming from the cognitive layer.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
-        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[SpeechGenerator] Buffered: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">:</span> <span class="n">String</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/task_speech_command&#39;</span><span class="p">,</span>
+            <span class="n">String</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cb_speaker</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub_speak</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_number</span><span class="si">}</span><span class="s1">/speaker_channel&#39;</span><span class="p">,</span>
+            <span class="n">String</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;[SpeechGenerator] Node ready.&quot;</span><span class="p">)</span>
 
     <span class="c1"># ------------------------------------------------------------------ #</span>
-    <span class="c1">#                         periodic publisher                          #</span>
+    <span class="c1">#                           CALLBACK                                 #</span>
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cb_speaker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cache newest sentence for periodic replay.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[SpeechGenerator] Buffered: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------ #</span>
+    <span class="c1">#                      PERIODIC REPUBLISHER                          #</span>
     <span class="c1"># ------------------------------------------------------------------ #</span>
 <div class="viewcode-block" id="SpeechGenerator.publish_msg">
 <a class="viewcode-back" href="../brain_modules/reasoning_speech_generation.html#reasoning_speech_generation.SpeechGenerator.publish_msg">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">publish_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Republish the buffered sentence (if any) at the current loop tick.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward cached sentence if available.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pub_speak</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span></div>
 </div>
@@ -189,22 +206,19 @@
 
 
 <span class="c1"># ---------------------------------------------------------------------- #</span>
-<span class="c1">#                               main loop                                #</span>
+<span class="c1">#                               MAIN LOOP                                #</span>
 <span class="c1"># ---------------------------------------------------------------------- #</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Spin until ROS is shut down by Ctrl-C, master failure, or ``rosnode kill``.</span>
-<span class="sd">    Any non-ROS exception will propagate and show a traceback, which is useful</span>
-<span class="sd">    during development.</span>
+<span class="sd">    One-line while-spin at 1 Hz until ROS is shut down.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">bridge</span> <span class="o">=</span> <span class="n">SpeechGenerator</span><span class="p">()</span>
-        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># one publish attempt per second</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">SpeechGenerator</span><span class="p">()</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1 Hz</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-            <span class="n">bridge</span><span class="o">.</span><span class="n">publish_msg</span><span class="p">()</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">publish_msg</span><span class="p">()</span>
             <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
-        <span class="c1"># Expected when the node is stopped gracefully – no special handling.</span>
         <span class="k">pass</span>
 </pre></div>
 

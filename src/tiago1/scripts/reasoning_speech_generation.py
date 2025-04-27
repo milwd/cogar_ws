@@ -3,43 +3,61 @@
 speech_generator.py
 ===================
 
-Text-to-Speech **relay node** for restaurant announcements
-----------------------------------------------------------
+Overview
+--------
+`speech_generator.py` is a **text-to-speech relay**: it takes plain UTF-8
+sentences from the cognitive layer and republishes them on the loud-speaker
+channel at a steady 1 Hz.  The node is intentionally agnostic about the actual
+TTS backend—you can plug in Festival, `sound_play`, a cloud API, or a
+proprietary amplifier as long as it subscribes to ``/{robot}/speaker_channel``.
 
-The cognitive layer of the sushi-waiter architecture thinks in sentences:
-*“Table 3, your Dragon Roll is here”*, *“Apologies for the delay”*, *“Order
-cancelled, returning to station”*.  Something has to turn those strings into
-audible sound.  **speech_generator.py** fills that gap while staying totally
-agnostic about *how* the audio is produced.
+Design goals
+------------
+* **Decoupling** – reasoning publishes text once; TTS drivers only care about
+  a single downstream topic.  
+* **State buffering** – latest sentence is cached so late subscribers (e.g.,
+  a driver that just restarted) still get the current utterance.  
+* **Rate control** – re-emits at 1 Hz, protecting slow audio pipelines from
+  bursty upstream chatter.
 
-Design philosophy
------------------
-* **Decoupling** – upstream reasoning nodes push text to a *single* topic
-  (``/task_speech_command``).  Downstream, you may connect *any* TTS driver
-  (Festival, `sound_play`, cloud API, proprietary speaker), as long as it
-  listens to ``/speaker_channel``.  
-* **State buffering** – the latest line is cached so that late-joining
-  subscribers (e.g. the speaker driver restarting) still receive the current
-  sentence.  
-* **Rate control** – messages are re-emitted at **1 Hz** to avoid flooding the
-  audio backend while giving it enough chances to catch up.
+Interfaces (strongly-typed, stateless)
+--------------------------------------
 
-ROS topics
-~~~~~~~~~~
-.. list-table:: Node interface
+.. list-table::
    :header-rows: 1
-   :widths: 15 25 60
+   :widths: 12 30 25 55
 
    * - Direction
      - Topic
-     - Type / semantics
-   * - **subscribe**
-     - ``/task_speech_command``
-     - ``std_msgs/String`` – UTF-8 input from the cognitive layer
-   * - **publish**
-     - ``/speaker_channel``
-     - ``std_msgs/String`` – identical text, forwarded once per second
+     - Message type
+     - Notes
+   * - **Required**
+     - ``/{robot}/task_speech_command``
+     - ``std_msgs/String``
+     - Sentences from cognition, e.g. *“Table 3, your dragon roll is ready!”*
+   * - **Provided**
+     - ``/{robot}/speaker_channel``
+     - ``std_msgs/String``
+     - Same text, forwarded once every second
 
+Contract
+--------
+**Pre-conditions**  
+
+• Upstream publishes valid UTF-8 strings.
+
+**Post-conditions**  
+
+• Latest received sentence is re-sent every second until a new one arrives.  
+• If no sentence has ever been received the node publishes **nothing** (avoids
+  empty utterances).
+
+Implementation summary
+----------------------
+1. Subscriber callback caches incoming message → ``self.msg``.  
+2. Main loop publishes ``self.msg`` once/second if present.  
+3. Holds **no additional state**, so the node can be hot-reloaded or replaced
+   in unit tests without side-effects.
 
 """
 
@@ -48,75 +66,74 @@ from std_msgs.msg import String
 import sys
 
 
-
 class SpeechGenerator:
     """
-    Thin, timer-driven **republisher**.
+    Thin, timer-driven **republisher** that buffers the latest sentence.
 
-    Workflow
-    --------
-    1. A subscriber callback stores the newest incoming sentence
-       in :pyattr:`self.msg`.
-    2. The main loop publishes that stored message once every second.
-       If no message has been received yet, it publishes nothing,
-       thereby avoiding empty utterances.
-
-    The class holds no additional state – perfect for hot-reloading or
-    replacement in unit tests.
+    Attributes
+    ----------
+    msg : std_msgs.msg.String | None
+        Cached sentence; ``None`` until the first message arrives.
+    pub_speak : rospy.Publisher
+        Outgoing channel for TTS drivers.
     """
 
+    # ------------------------------------------------------------------ #
+    #                      NODE INITIALISATION                           #
+    # ------------------------------------------------------------------ #
     def __init__(self):
         """
-        Initialize the SpeechGenerator node:
-
-        - Initialize ROS node 'speech_gen_node'.
-        - Subscribe to '/task_speech_command' for speech commands.
-        - Advertise '/speaker_channel' for speaking output.
+        1. Initialise ROS under ``{robot}_speech_gen_node``.  
+        2. Subscribe to upstream speech commands.  
+        3. Advertise speaker channel.  
         """
-        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        self.robot_number = sys.argv[1]            # namespace for multi-robot
         rospy.init_node(f'{self.robot_number}_speech_gen_node')
-        self.msg = None
-        rospy.Subscriber(f'/{self.robot_number}/task_speech_command', String, self.speaker_callback)
-        self.pub_speak = rospy.Publisher(f'/{self.robot_number}/speaker_channel', String, queue_size=10)
-        
-    def speaker_callback(self, msg):
-        """
-        Store the newest sentence.
 
-        Parameters
-        ----------
-        msg : std_msgs.msg.String
-            UTF-8 text coming from the cognitive layer.
-        """
+        self.msg: String | None = None
+
+        rospy.Subscriber(
+            f'/{self.robot_number}/task_speech_command',
+            String,
+            self._cb_speaker,
+        )
+        self.pub_speak = rospy.Publisher(
+            f'/{self.robot_number}/speaker_channel',
+            String,
+            queue_size=10,
+        )
+
+        rospy.loginfo("[SpeechGenerator] Node ready.")
+
+    # ------------------------------------------------------------------ #
+    #                           CALLBACK                                 #
+    # ------------------------------------------------------------------ #
+    def _cb_speaker(self, msg: String):
+        """Cache newest sentence for periodic replay."""
         self.msg = msg
         rospy.loginfo(f"[SpeechGenerator] Buffered: {msg.data!r}")
 
     # ------------------------------------------------------------------ #
-    #                         periodic publisher                          #
+    #                      PERIODIC REPUBLISHER                          #
     # ------------------------------------------------------------------ #
     def publish_msg(self) -> None:
-        """
-        Republish the buffered sentence (if any) at the current loop tick.
-        """
+        """Forward cached sentence if available."""
         if self.msg is not None:
             self.pub_speak.publish(self.msg)
 
 
 # ---------------------------------------------------------------------- #
-#                               main loop                                #
+#                               MAIN LOOP                                #
 # ---------------------------------------------------------------------- #
 if __name__ == "__main__":
     """
-    Spin until ROS is shut down by Ctrl-C, master failure, or ``rosnode kill``.
-    Any non-ROS exception will propagate and show a traceback, which is useful
-    during development.
+    One-line while-spin at 1 Hz until ROS is shut down.
     """
     try:
-        bridge = SpeechGenerator()
-        rate = rospy.Rate(1)  # one publish attempt per second
+        node = SpeechGenerator()
+        rate = rospy.Rate(1)  # 1 Hz
         while not rospy.is_shutdown():
-            bridge.publish_msg()
+            node.publish_msg()
             rate.sleep()
     except rospy.ROSInterruptException:
-        # Expected when the node is stopped gracefully – no special handling.
         pass

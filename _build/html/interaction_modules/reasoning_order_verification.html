@@ -93,142 +93,110 @@
 <h1>Reasoning Order Verification<a class="headerlink" href="#reasoning-order-verification" title="Link to this heading"></a></h1>
 <section id="reasoning-order-verification-py">
 <span id="module-reasoning_order_verification"></span><h2>reasoning_order_verification.py<a class="headerlink" href="#reasoning-order-verification-py" title="Link to this heading"></a></h2>
-<p>Natural–language <strong>order gatekeeper</strong> between speech recognition
-and the orchestration layer
-—————————————————————-</p>
-<p>When a customer speaks, the voice-recognition pipeline converts the sentence
-into plain text and publishes it on <code class="docutils literal notranslate"><span class="pre">/voice_recogn</span></code>.  This node checks that
-the sentence <strong>1) actually requests something</strong> and <strong>2) mentions a dish that
-exists</strong>, then forwards the structured order to the task-manager while
-reporting any problems on a dedicated error channel.</p>
-<section id="ros-interface">
-<h3>ROS interface<a class="headerlink" href="#ros-interface" title="Link to this heading"></a></h3>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>reasoning_order_verification.py</cite> is the <strong>natural-language gatekeeper</strong> that
+stands between automatic speech recognition (ASR) and the orchestration layer.</p>
+<section id="workflow">
+<h4>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h4>
+<ol class="arabic simple">
+<li><p><strong>ASR sentence</strong> arrives on <code class="docutils literal notranslate"><span class="pre">/{robot}/voice_recogn</span></code>.</p></li>
+<li><p>The node validates the text:</p>
+<ul class="simple">
+<li><p>contains the polite fragment <strong>“Can I have”</strong></p></li>
+<li><p>mentions at least one item from <em>food_list</em></p></li>
+</ul>
+</li>
+<li><p>If valid → build a structured <a href="#id1"><span class="problematic" id="id2">:pyclass:`tiago1.msg.Voice_rec`</span></a> order, publish
+it to the task-manager <strong>and</strong> push the same order into the shared
+orchestration queue via the <code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code> service.</p></li>
+<li><p>If invalid → emit an integer error code on the interaction error channel.</p></li>
+</ol>
+</section>
+</section>
+<section id="interfaces-strongly-typed-stateless">
+<h3>Interfaces (strongly-typed, stateless)<a class="headerlink" href="#interfaces-strongly-typed-stateless" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 20.0%" />
-<col style="width: 25.0%" />
-<col style="width: 55.0%" />
+<col style="width: 9.8%" />
+<col style="width: 24.6%" />
+<col style="width: 20.5%" />
+<col style="width: 45.1%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Direction</p></th>
 <th class="head"><p>Name</p></th>
-<th class="head"><p>Type / semantics</p></th>
+<th class="head"><p>ROS type</p></th>
+<th class="head"><p>Notes</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>subscribe</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">/voice_recogn</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code> – raw text captured by ASR</p></td>
+<tr class="row-even"><td><p><strong>Required</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/voice_recogn</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code></p></td>
+<td><p>Raw ASR text, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;Can</span> <span class="pre">I</span> <span class="pre">have</span> <span class="pre">sushi</span> <span class="pre">please&quot;</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>publish</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">/verif_T_manager</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/Voice_rec</span></code> – validated order, ready for planning</p></td>
+<tr class="row-odd"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/verif_T_manager</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/Voice_rec</span></code></p></td>
+<td><p>Structured, validated order (id + list_of_orders).</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>publish</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">/error_from_interaction</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code> – 1 = unknown dish, 2 = missing <em>“Can I have”</em></p></td>
+<tr class="row-even"><td><p><strong>Provided</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/error_from_interaction</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code> → unknown dish  <code class="docutils literal notranslate"><span class="pre">2</span></code> → missing “Can I have”.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>service client</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">/robot_state_decision_add</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/send_order</span></code> – push the order into the orchestration FIFO</p></td>
+<tr class="row-odd"><td><p><strong>Service client</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/robot_state_decision_add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/send_order</span></code></p></td>
+<td><p>Appends the order to the orchestration FIFO.</p></td>
 </tr>
 </tbody>
 </table>
+</section>
 <section id="validation-policy">
-<h4>Validation policy<a class="headerlink" href="#validation-policy" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><p><strong>Syntax guard</strong> – the sentence <em>must</em> contain the polite request
-fragment <em>“Can I have”</em>.  Anything else is ignored to prevent false
-triggers such as background chatter.</p></li>
-<li><p><strong>Menu match</strong> – at least one entry from <em>food_list</em> must appear in the
-remainder of the sentence.  The match is <em>substring-based</em> and therefore
-case-sensitive; tailor <em>food_list</em> accordingly (e.g. use lowercase if your
-ASR outputs lowercase).</p></li>
-<li><p><strong>Multi-dish support</strong> – if the customer orders several items in one
-breath (“Can I have <strong>sushi</strong> and <strong>pasta</strong> please”), all matches are packed
-into a single <code class="docutils literal notranslate"><span class="pre">Voice_rec</span></code> message so that the kitchen receives a single
-ticket.</p></li>
-</ol>
+<h3>Validation policy<a class="headerlink" href="#validation-policy" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Syntax guard</strong> – sentence <em>must</em> include “Can I have”.</p></li>
+<li><p><strong>Menu match</strong> – at least one substring from <em>food_list</em> must be present.</p></li>
+<li><p><strong>Multi-dish support</strong> – all matches packed into a single order message.</p></li>
+</ul>
 </section>
 <section id="error-codes">
-<h4>Error codes<a class="headerlink" href="#error-codes" title="Link to this heading"></a></h4>
-<ul class="simple">
-<li><p><strong>1</strong> – no recognised dish in the sentence</p></li>
-<li><p><strong>2</strong> – polite request fragment not found</p></li>
-</ul>
-<p>Both errors are <em>recoverable</em>: the waiter robot simply prompts the customer to
-repeat or rephrase the order.</p>
-</section>
+<h3>Error codes<a class="headerlink" href="#error-codes" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">1</span></code> – no recognised dish</p>
+<p><code class="docutils literal notranslate"><span class="pre">2</span></code> – polite fragment missing
+Both are recoverable; waiter simply prompts the customer to repeat.</p>
 </section>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_order_verification.</span></span><span class="sig-name descname"><span class="pre">ReasoningOrderVerification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_robots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">food_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reasoning_order_verification.html#ReasoningOrderVerification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reasoning_order_verification.</span></span><span class="sig-name descname"><span class="pre">ReasoningOrderVerification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_robots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">food_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reasoning_order_verification.html#ReasoningOrderVerification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Parse spoken orders, validate them, publish structured messages and
-interact with the orchestration queue.</p>
+<p>Parse spoken orders → validate → publish structured order or error code.</p>
 <section id="variables">
 <h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
 <dl class="simple">
-<dt>server_robots<span class="classifier">int</span></dt><dd><p>Numerical identifier for the target orchestration queue (kept for
-future use – the current implementation always contacts the same
-service).</p>
+<dt>server_client<span class="classifier">rospy.ServiceProxy</span></dt><dd><p>Link to <code class="docutils literal notranslate"><span class="pre">/{robot}/robot_state_decision_add</span></code> (FIFO enqueue).</p>
 </dd>
-<dt>food_list<span class="classifier">list[str]</span></dt><dd><p>Canonical dish names; matching is <strong>substring-based</strong> and therefore
-case-sensitive.</p>
+<dt>food_list<span class="classifier">list[str]</span></dt><dd><p>Canonical dish names; matching is <strong>substring-based</strong> (case-sensitive).</p>
 </dd>
-</dl>
-</section>
-<section id="id1">
-<h2>Variables<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<dl class="simple">
-<dt>msg<span class="classifier">std_msgs.msg.String | None</span></dt><dd><p>Buffer holding the most recent sentence received from the ASR.</p>
+<dt>msg<span class="classifier">std_msgs.msg.String | None</span></dt><dd><p>Latest ASR sentence waiting to be parsed.</p>
 </dd>
-<dt>counter_id<span class="classifier">int</span></dt><dd><p>Auto-incrementing ticket number attached to every successful order.</p>
-</dd>
-<dt>error_code<span class="classifier">int</span></dt><dd><p>Last error reported (0 = no error).</p>
-</dd>
-</dl>
-<p>Initialize the ReasoningOrderVerification node.</p>
-<dl class="field-list simple">
-<dt class="field-odd">param server_robots<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Placeholder for robot server identifier.</p>
-</dd>
-<dt class="field-even">type server_robots<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">param food_list<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of valid dishes to match in voice commands.</p>
-</dd>
-<dt class="field-even">type food_list<span class="colon">:</span></dt>
-<dd class="field-even"><p>list of str</p>
+<dt>counter_id<span class="classifier">int</span></dt><dd><p>Auto-incremented ticket number for each accepted order.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification.parse_order">
 <span class="sig-name descname"><span class="pre">parse_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reasoning_order_verification.html#ReasoningOrderVerification.parse_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification.parse_order" title="Link to this definition"></a></dt>
-<dd><p>Inspect <a href="#id2"><span class="problematic" id="id3">:pyattr:`self.msg`</span></a>; if valid, publish a <code class="docutils literal notranslate"><span class="pre">Voice_rec</span></code> order and
-forward it to the orchestration queue.  Otherwise emit an error code.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification.send_request">
-<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.msg.Voice_rec</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/reasoning_order_verification.html#ReasoningOrderVerification.send_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification.send_request" title="Link to this definition"></a></dt>
-<dd><p>Forward the validated order to the orchestration service.</p>
-<p>The service appends the ticket to a FIFO consumed by the task manager,
-allowing multiple robots to share a common queue without race
-conditions.</p>
+<dd><p>Validate <a href="#id3"><span class="problematic" id="id4">:pyattr:`self.msg`</span></a>; publish order or error.</p>
+<p>Called once per second from the main loop.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="reasoning_order_verification.ReasoningOrderVerification.string_callback">
-<span class="sig-name descname"><span class="pre">string_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reasoning_order_verification.html#ReasoningOrderVerification.string_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification.string_callback" title="Link to this definition"></a></dt>
-<dd><p>Callback invoked when a voice recognition message arrives.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>msg</strong> (<em>std_msgs.msg.String</em>) – The raw voice recognition output.</p>
-</dd>
-</dl>
+<span class="sig-name descname"><span class="pre">string_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg.String</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reasoning_order_verification.html#ReasoningOrderVerification.string_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reasoning_order_verification.ReasoningOrderVerification.string_callback" title="Link to this definition"></a></dt>
+<dd><p>Cache latest ASR string for validation in main loop.</p>
 </dd></dl>
 
 </section>

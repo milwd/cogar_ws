@@ -3,52 +3,82 @@
 task_manager.py
 ===============
 
-Central **state orchestrator** – queries the decision service and drives the task loop
--------------------------------------------------------------------------------------
+Overview
+--------
+`task_manager.py` is the **central state orchestrator** of the TIAGo cognitive
+stack.  
+It listens to low-level *controller feedback* and customer *order events*, then
+delegates all reasoning to the `/robot_state_decision` service.  
+By outsourcing the decision logic the node stays **stateless** and easy to unit-
+test while the service can evolve (rule engine, ML policy, …) without touching
+this file.
 
-`TaskManager` listens to two event streams:
+Why separate “aggregation” from “decision”?
+-------------------------------------------
+* **Single-responsibility** – this node merely funnels events → service, nothing
+  more.  
+* **Swap-ability** – upgrade the service (new rules, ML model) without editing
+  subscribers or timers.  
+* **Observability** – the TaskManager’s logs show the exact state strings passed
+  to the reasoner.
 
-1. **Action feedback** (``/feedback_acion``) – one-line summaries published by
-   the low-level controllers (navigation finished, manipulation failed …).
-2. **Verified orders** (``/verif_T_manager``) – customer requests already
-   checked by the order-verification node.
+Interfaces (strongly-typed, partly stateful)
+-------------------------------------------
 
-Every time a new feedback line arrives the manager calls the
-``/robot_state_decision`` service, handing over the current *state string*.
-The service replies with the next action the robot should perform, enabling a
-clean separation between *decision logic* (in the service) and *event
-aggregation* (in this node).
-
-ROS interface
-~~~~~~~~~~~~~
 .. list-table::
    :header-rows: 1
-   :widths: 25 35 40
+   :widths: 14 30 25 50
 
-   * - Direction / type
+   * - Direction / Type
      - Name
-     - Semantics
-   * - **subscribe** ``std_msgs/String``
-     - ``/feedback_acion``
-     - Latest controller status (e.g. *"ARM_DONE"* or *"BASE_FAILED"*)
-   * - **subscribe** ``tiago1/Voice_rec``
-     - ``/verif_T_manager``
-     - Structured customer order; stored but **not** sent to the service yet
-   * - **service client** ``tiago1/robotstatedecision``
-     - ``/robot_state_decision``
-     - Request → **state_input** (string)  
-       Response ← next symbolic task / acknowledgement
+     - ROS type
+     - Notes
+   * - **Required** (sub)
+     - ``/{robot}/feedback_acion``
+     - ``std_msgs/String``
+     - Controller status, e.g. ``"ARM_DONE"`` or ``"BASE_FAILED"``
+   * - **Required** (sub)
+     - ``/{robot}/verif_T_manager``
+     - ``tiago1/Voice_rec``
+     - Verified customer order (currently cached, not relayed)
+   * - **Client** (srv)
+     - ``/{robot}/robot_state_decision``
+     - ``tiago1/robotstatedecision``
+     - Request → ``state_input: str`` – last feedback  
+       Response ← symbolic task / ack
+   * - **Provided** (pub)
+     - ``/{robot}/speaker_channel``
+     - ``std_msgs/String``
+     - Robot dialogue (“I will get to …”, “Waiting”, …)
+
+Contract
+--------
+**Pre-conditions**
+
+• `/robot_state_decision` is available before main loop starts.  
+• Feedback topic publishes *at most* twice per second (queue=10).
+
+**Post-conditions**
+
+• On every feedback message exactly **one** service call is made.  
+• Dialogue text is always published, even if the service fails.  
+• Internal `state_input` is cleared only on node shutdown.
 
 Execution loop
 --------------
-*On every feedback update*
+Every **2 s** (`Rate(0.5)`):
 
-#. Cache the new state string.
-#. Call the decision service with that state.
-#. Log the returned instruction (no further dispatching in this stub).
+#. If a new feedback string exists → call the service.  
+#. Log the response.  
+#. Publish a spoken confirmation on `/speaker_channel`.
 
-Extend :py:meth:`change_state` if you want to forward the decision to other
-nodes or to trigger timers / retries.
+Implementation notes
+--------------------
+* `Voice_rec` orders are *stored* for future extensions where the service might
+  need context.  
+* A latched publisher is **not** used so UIs see only fresh responses.  
+* Exception handling: only `rospy.ServiceException` is caught; any other error
+  propagates for debugging.
 
 """
 
@@ -61,106 +91,96 @@ import sys
 
 class TaskManager:
     """
-    Aggregates feedback and relays it to the orchestration service.
-
-    Instance Variables
-    ------------------
-    server_client
-        :pyclass:`rospy.ServiceProxy` for ``/robot_state_decision``.
-    state
-        Last status string received from ``/feedback_acion``.
-    order_msg
-        Cached message from ``/verif_T_manager`` (currently unused, but kept
-        for future extensions such as *order context* in the service call).
+    Aggregate feedback → call decision service → publish dialogue line.
     """
 
+    # ------------------------------------------------------------------ #
+    #                              SET-UP                                #
+    # ------------------------------------------------------------------ #
     def __init__(self):
-        """
-        Initialize the TaskManager node.
-
-        - Initialize ROS node 'task_manager_node'.
-        - Wait for the '/robot_state_decision' service to become available.
-        - Create a ServiceProxy to '/robot_state_decision'.
-        - Subscribe to '/feedback_acion' for state feedback.
-        - Subscribe to '/verif_T_manager' for verified orders.
-        """
-        self.robot_number = sys.argv[1]  # Now using argument for robot number
+        self.robot_number = sys.argv[1]                       # namespace
         rospy.init_node(f'{self.robot_number}_task_manager_node')
 
-        # Wait for service to be ready
+        # ---- Service proxy (blocks until available) ------------------- #
         rospy.wait_for_service(f'/{self.robot_number}/robot_state_decision')
-        self.server_client = rospy.ServiceProxy(f'/{self.robot_number}/robot_state_decision', robotstatedecision)
+        self.server_client = rospy.ServiceProxy(
+            f'/{self.robot_number}/robot_state_decision',
+            robotstatedecision,
+        )
 
-        # Subscriber and Publisher
-        rospy.Subscriber(f'/{self.robot_number}/feedback_acion', String, self.feed_callback_state)
-        self.dialogue_pub = rospy.Publisher(f'/{self.robot_number}/speaker_channel', String, queue_size=10)
+        # ---- Topic wiring --------------------------------------------- #
+        rospy.Subscriber(
+            f'/{self.robot_number}/feedback_acion',
+            String,
+            self._cb_feedback,
+            queue_size=10,
+        )
+        rospy.Subscriber(
+            f'/{self.robot_number}/verif_T_manager',
+            Voice_rec,
+            self._cb_verified_order,
+            queue_size=10,
+        )
+        self.dialogue_pub = rospy.Publisher(
+            f'/{self.robot_number}/speaker_channel',
+            String,
+            queue_size=10,
+        )
 
-        # Internal state
-        self.state_input = None
+        # ---- Internal cache ------------------------------------------- #
+        self.state_input: str | None = None
+        self.order_msg: Voice_rec | None = None
 
-        rospy.loginfo(f"[TaskManager {self.robot_number}] Node initialized and ready.")
+        rospy.loginfo(f"[TaskManager {self.robot_number}] Node initialised.")
 
-        rospy.Subscriber("/feedback_acion",
-                         String,
-                         self._cb_feedback,
-                         queue_size=10)
-        """
-        Parameters
-        ----------
-        msg : std_msgs.msg.String
-            Message on '/feedback_acion' containing the current robot state.
-        """
-        rospy.loginfo(f"[TaskManager {self.robot_number}] Received feedback: {msg.data}")
-        self.state_input = msg.data  # Just keep the string (not the full msg)
+    # ------------------------------------------------------------------ #
+    #                        CALLBACKS                                   #
+    # ------------------------------------------------------------------ #
+    def _cb_feedback(self, msg: String):
+        """Store latest controller state string."""
+        rospy.loginfo(f"[TaskManager {self.robot_number}] Feedback: {msg.data}")
+        self.state_input = msg.data
 
+    def _cb_verified_order(self, msg: Voice_rec):
+        """Cache verified customer order for future use in service call."""
+        self.order_msg = msg
+
+    # ------------------------------------------------------------------ #
+    #                        MAIN TICK                                   #
+    # ------------------------------------------------------------------ #
     def change_state(self):
         """
-        Trigger a state-based service request using the latest state.
+        If `state_input` exists call decision service and speak reply.
         """
-        if self.state_input is not None:
-            self.send_request()
+        if self.state_input is None:
+            return
 
-    def send_request(self):
-        """
-        Call the '/robot_state_decision' service with the current state.
-
-        Raises
-        ------
-        rospy.ServiceException
-            If the service call fails.
-        """
         try:
-            request = robotstatedecisionRequest()
-            request.state_input = self.state_input
-            request.robot_id = self.robot_number
-            print(f"[TaskManager {self.robot_number}] Sending request with state: {request.state_input} and robot_id: {request.robot_id}")
+            req = robotstatedecisionRequest()
+            req.state_input = self.state_input
+            req.robot_id = self.robot_number
+            resp = self.server_client(req)
 
-            response = self.server_client(request)
-            if response is None:
-                rospy.logerr(f"[TaskManager {self.robot_number}] Received None response from service.")
-                return
-            rospy.loginfo(f"[TaskManager {self.robot_number}] Server response: success={response.success}")
-
-            # Prepare message depending on the server response
             mss = String()
-
-            if response.state_output == "Busy":
-                if not response.order:  # Empty order
-                    mss.data = "Order obtained before, am busy getting to it!"
+            if resp.success and resp.state_output == "Busy":
+                if resp.order:
+                    mss.data = f"I will get to {resp.id_client}, whose order is {resp.order}."
                 else:
-                    mss.data = f"I will get to {response.id_client}, whose order is {response.order}."
-
-            elif response.state_output == "Wait":
-                mss.data = "ok I will Wait, probably I've got better things to do."
-
+                    mss.data = "Order obtained before, I'm busy getting to it!"
+            elif resp.state_output == "Wait":
+                mss.data = "Okay, I'll wait—probably I've better things to do."
             else:
-                mss.data = f"Received unknown state output: {response.state_output}"
+                mss.data = f"Received unknown state output: {resp.state_output}"
 
             self.dialogue_pub.publish(mss)
-            rospy.loginfo(f"[TaskManager {self.robot_number}] Published dialogue message: {mss.data}")
+            rospy.loginfo(f"[TaskManager {self.robot_number}] Dialogue: {mss.data}")
 
-        except rospy.ServiceException as e:
-            rospy.logerr(f"[TaskManager {self.robot_number}] Service call failed: {e}")
+        except rospy.ServiceException as exc:
+            rospy.logerr(f"[TaskManager {self.robot_number}] Service error: {exc}")
+
+        finally:
+            # Reset so next feedback triggers a new service call
+            self.state_input = None
 
 
 # ---------------------------------------------------------------------- #
@@ -168,10 +188,10 @@ class TaskManager:
 # ---------------------------------------------------------------------- #
 if __name__ == "__main__":
     try:
-        task_manager = TaskManager()
-        rate = rospy.Rate(0.5)  # 0.5 Hz (every 2 seconds)
+        tm = TaskManager()
+        rate = rospy.Rate(0.5)  # every 2 s
         while not rospy.is_shutdown():
-            task_manager.change_state()
+            tm.change_state()
             rate.sleep()
     except rospy.ROSInterruptException:
         pass

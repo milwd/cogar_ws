@@ -3,53 +3,80 @@
 reasoning_table_placement.py
 ============================
 
-Node purpose
-------------
-*Bridge from cognition to manipulation.*  
-It listens to high-level placement **decisions** coming from
-``/placement_decision`` (produced by *distance_estimator*) and converts
-them into low-level **commands** that the manipulation stack
-understands.
+Overview
+--------
+`reasoning_table_placement.py` is a **bridge** between *cognition* and the
+*manipulation stack*.  
+It listens to high-level **decisions** on ``/{robot}/placement_decision`` and
+maps them onto low-level **commands** that the arm / gripper planners
+understand.
+
+Why a dedicated mapper?
+-----------------------
+• **Decoupling** – swap in smarter reasoning or a different execution layer
+  without editing gripper code.  
+• **Future-proof** – if execution later moves from strings to Action goals or
+  BT ticks, only this node changes.
+
+Interfaces (strongly-typed, stateless)
+--------------------------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 12 28 25 55
+
+   * - Direction
+     - Topic
+     - Message type
+     - Notes
+   * - **Required**
+     - ``/{robot}/placement_decision``
+     - ``std_msgs/String``
+     - e.g. ``"Decision: PLACE, IGNORE"``
+   * - **Provided**
+     - ``/{robot}/table_reasoning_commands``
+     - ``std_msgs/String``
+     - ``"PLACE_DISH" | "CLEAR_TABLE" | "NO_ACTION"``
 
 Decision → Command mapping
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-=========  ===============  ==========================================
-Decision   Command sent     Rationale
-=========  ===============  ==========================================
-``PLACE``  ``PLACE_DISH``   There is room for one more plate on the table.
-``CLEAR``  ``CLEAR_TABLE``  Table is finished; remove crockery.
-*other*    ``NO_ACTION``    Either “FULL” or “IGNORE” → do nothing now.
-=========  ===============  ==========================================
+.. list-table:: Decision Mapping
+   :widths: 15 25 60
+   :header-rows: 1
 
-Why a dedicated mapper?
------------------------
-* **Decoupling** – you can swap in a smarter reasoning algorithm without
-  touching the gripper driver, or vice-versa.
-* **Future proof** – if the execution layer later moves from simple
-  string commands to, e.g., action goals or behaviour-tree ticks, only
-  *this* file needs editing.
+   * - Decision
+     - Published cmd
+     - Rationale
+   * - ``PLACE``
+     - ``PLACE_DISH``
+     - Room for one more plate
+   * - ``CLEAR``
+     - ``CLEAR_TABLE``
+     - Table finished; remove crockery
+   * - *other*
+     - ``NO_ACTION``
+     - Either “FULL” or “IGNORE” → do nothing
 
-ROS topic interface
--------------------
-**Subscribes**
 
-* ``/placement_decision``  : ``std_msgs/String``  
-  Example payload → ``"Decision: PLACE, IGNORE"``
+Contract
+--------
+**Pre-conditions**
 
-**Publishes**
+• Upstream decision topic must contain “Decision:” and one keyword.
 
-* ``/table_reasoning_commands``  : ``std_msgs/String``  
-  One of ``"PLACE_DISH"``, ``"CLEAR_TABLE"``, ``"NO_ACTION"``.
+**Post-conditions** 
 
+• Exactly one command published per decision message.  
+• Mapper never blocks; if queue is full older commands drop first (`queue_size=10`).
 
 Implementation notes
 --------------------
-* A simple *substring* check keeps the logic robust against future
-  additions to the decision string (timestamps, confidence scores …).
-* The publisher queues **10** messages to absorb short bursts without
-  back-pressure.
-* All log lines are throttled or filtered to keep the ROS console tidy.
+* Uses simple substring checks so future metadata (timestamps, scores) won’t
+  break parsing.  
+* Publisher is latched at **10** messages to absorb bursts.  
+* All log lines throttled or filtered to keep console tidy.
+
 """
 
 import rospy
@@ -57,13 +84,9 @@ from std_msgs.msg import String
 import sys
 
 
-
 class ReasoningTablePlacement:
     """
-    Runtime object that wires subscribers → callbacks → publisher.
-
-    Public API consists solely of the constructor; the rest is handled
-    internally until ROS shuts down.
+    Runtime object that wires subscriber → callback → publisher.
     """
 
     # ------------------------------------------------------------------ #
@@ -71,21 +94,23 @@ class ReasoningTablePlacement:
     # ------------------------------------------------------------------ #
     def __init__(self):
         """
-        Launch the node and register its single pub/sub pair.
-
-        Steps
-        -----
-        1. Initialise ROS with the node name
-           ``reasoning_table_placement_node``.
-        2. Subscribe to high-level decisions on ``/placement_decision``.
-        3. Advertise low-level commands on ``/table_reasoning_commands``.
-        4. Log a start-up banner so launch files can confirm health.
+        1. Initialise ROS under ``{robot}_reasoning_table_placement_node``  
+        2. Subscribe to high-level decisions.  
+        3. Advertise low-level commands.  
         """
-        self.robot_number = sys.argv[1]#rospy.get_param('~robot_number')
+        self.robot_number = sys.argv[1]  # rospy.get_param('~robot_number')
         rospy.init_node(f"{self.robot_number}_reasoning_table_placement_node")
 
-        self.decision_sub = rospy.Subscriber(f"/{self.robot_number}/placement_decision", String, self.decision_callback)
-        self.command_pub = rospy.Publisher(f"/{self.robot_number}/table_reasoning_commands", String, queue_size=10)
+        self.decision_sub = rospy.Subscriber(
+            f"/{self.robot_number}/placement_decision",
+            String,
+            self.decision_callback,
+        )
+        self.command_pub = rospy.Publisher(
+            f"/{self.robot_number}/table_reasoning_commands",
+            String,
+            queue_size=10,
+        )
 
         rospy.loginfo("[ReasoningTablePlacement] Node started.")
 
@@ -94,27 +119,13 @@ class ReasoningTablePlacement:
     # ------------------------------------------------------------------ #
     def decision_callback(self, msg):
         """
-        Translate *cognitive* decision → *motor* command.
-
-        Parameters
-        ----------
-        msg : std_msgs.msg.String
-            Expected payload examples::
-
-                "Decision: PLACE, CLEAR"
-                "Decision: FULL, IGNORE"
-
+        Translate *Decision* → *Command*.
 
         Translation logic
         -----------------
-        * If the string contains **``"PLACE"``** → emit ``"PLACE_DISH"``.  
-        * Else if it contains **``"CLEAR"``** → emit ``"CLEAR_TABLE"``.  
-        * Otherwise emit ``"NO_ACTION"`` so downstream nodes know the
-          message was processed but no physical action is required.
-
-        The simple *contains* check is intentionally robust: future
-        reasoning nodes may prepend extra metadata (timestamps, scores,
-        etc.) without breaking this mapper.
+        * contains **PLACE**  → ``PLACE_DISH``  
+        * else contains **CLEAR** → ``CLEAR_TABLE``  
+        * otherwise → ``NO_ACTION``
         """
         decision_raw = msg.data
         rospy.loginfo(f"[ReasoningTablePlacement] Received: {decision_raw}")
@@ -135,10 +146,7 @@ class ReasoningTablePlacement:
 # ---------------------------------------------------------------------- #
 def main():
     """
-    Instantiate the node object and hand control to ROS.
-
-    Only `rospy.ROSInterruptException` is swallowed; any other exception
-    is allowed to propagate with a full traceback for debugging.
+    Instantiate node and hand control to ROS spin loop.
     """
     try:
         ReasoningTablePlacement()
