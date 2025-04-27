@@ -7,44 +7,16 @@ Autonomous Waiters – Complete Project Documentation
 :Contributors: Arian, Milad, Christain 
 
 1. Introduction
----------------
+============
 
-**Problem Statement**  
-Busy sushi restaurants lose revenue when diners wait too long or receive the wrong dish.  
-Our solution deploys **five PAL Robotics TIAGo robots** to handle order delivery, table clearing,  
-and basic customer interaction—freeing staff for tasks that need a human touch.
+This project deploys a fleet of five PAL Robotics TIAGo robots as autonomous waiters in a sushi restaurant, handling order delivery, table clearing, customer interactions and many more.
 
-**Objectives**  
-
-- **Timely delivery**: dispatch the closest available robot, plan obstacle‐free paths, adapt on the fly  
-
-- **Error-free serving**: detect and recover from mis-orders gracefully  
-
-- **Scalability**: coordinate multiple robots without a central bottleneck  
-
-- **Recoverability**: every component is restart-safe; no single point of failure  
 
 2. System Overview
 ------------------
 
 The software follows a classic **perception → reasoning → actuation** pipeline,  
-with a thin orchestration layer balancing the fleet:
-
-.. mermaid::
-   :caption: System overview
-
-   graph TD
-     A[Orchestration<br/>(task_manager.py,<br/>orchestration_and_coordination.py)]
-     B[Perception<br/>(camera.py …)]
-     C[Reasoning<br/>(path_planning.py,<br/>reasoning_action.py …)]
-     D[Actuation<br/>(control_wheel.py,<br/>control_arm.py,<br/>control_gripper.py)]
-     E[Feedback<br/>(encoder_* , force.py ,<br/>speech_generator.py)]
-     A -->|verified order| C
-     C -->|path + table cmd| D
-     D -->|status| A
-     D -->|raw encoders| E
-     E -->|status| C
-
+with a thin orchestration layer balancing the fleet
 
 3. Workflow
 -----------
@@ -61,21 +33,14 @@ with a thin orchestration layer balancing the fleet:
 4. Architectural Diagrams
 -------------------------
 
-4.1 Component Diagram
+Here only component diagram is included due to size restrictions, you can view all the diagrams in full size using the following link:
+https://drive.google.com/file/d/1yGJAAkXFYum7aQUJqAF_S_iSz2Qtz7F8/view?usp=sharing
 
 .. figure:: images/component_diagram.png
    :alt: Component Diagram
    :align: center
 
-   **Figure X.** High-level component interaction.
-
-4.2 Behavioral Diagram
-
-.. figure:: diagrams/behavioral_diagram.png
-   :alt: Behavioral Sequence Diagram
-   :align: center
-
-   **Figure Y.** Sequence of messages and actions from order to delivery.
+   **Figure 1.** High-level component interaction.
 
 5. Codebase Tour
 ----------------
@@ -122,26 +87,27 @@ Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - **orchestration_and_coordination.py** – YAML-backed order queue + state gateway   
 
-6. Running the System
+6. Running the Project
 ---------------------
+You need to add the number of Robots you want to launch (the defualt is 2) in order to have sufficent number of nodes created, for this you can edit ROS params, Then use the following to run the project:
+   roslaunch cogar_ws tiago_launch.launch
 
-.. code-block:: bash
-
-   # Launch Gazebo, RViz and the full stack
-   roslaunch cogar_ws sushi_fleet.launch
-
-   # Alternatively, bring up orchestrator then robot 1
-   rosrun cogar_ws orchestration_and_coordination.py &
-   roslaunch cogar_ws tiago_bringup.launch robot_id:=1
-
-.. warning::
-   A map must exist in ``$(rospack find cogar_ws)/maps/``.  
-   Run ``slam.py --save`` on the first layout.
-
-7. Further Reading
+7. Running the Test
 ------------------
-- Detailed component diagrams & behavioral models under each module’s API page  
-- Assignment brief slides embedded in ``docs/assets`` for reference  
+For running the test open the test folder and then run the following:
+   python integration_test.py
+
+8. Live System Demo
+-------------------
+Here we have a live demo of the project, in the right-up we have roslaunch window, in the right-down we have our test window and in the left is customer's orders.
+
+.. figure:: images/run.gif
+   :alt: Animated demo of the Autonomous Waiter in action
+   :align: center
+   :width: 70%
+
+     **Figure 2.** Project Demo.
+
 
 .. rubric:: Contents
 

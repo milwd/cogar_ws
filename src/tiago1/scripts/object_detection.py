@@ -60,12 +60,6 @@ Lifecycle
 * Ready once its publisher is advertised.  
 * Clean shutdown on Ctrl-C or ``rosnode kill``.
 
-Extensibility roadmap
----------------------
-Replace `image_callback` with real inference, switch the output to
-``vision_msgs/Detection2DArray`` or a custom strongly-typed message, and delete
-the explicit 1 Hz loop (the network’s runtime will throttle the topic naturally).
-
 """
 
 import rospy

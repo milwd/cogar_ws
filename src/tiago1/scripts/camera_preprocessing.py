@@ -74,14 +74,6 @@ Quality & Reusability Metrics
 - **Throughput** ≥ camera frame-rate (default 30 Hz).  
 - **Cyclomatic complexity** < 15 → easy to maintain / extend.
 
-Extensibility
--------------
-The minimal interface is already in place.  A *complete* variant may expose a
-`dynamic_reconfigure` server for:
-- blur kernel size / σ  
-- depth threshold  
-- optional resize scale or JPEG quality
-
 Adding such a server is orthogonal to the current contract and does not break
 existing clients.
 

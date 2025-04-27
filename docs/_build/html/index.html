@@ -17,13 +17,6 @@
       <script src="_static/documentation_options.js?v=f2a433a1"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
-      <script type="module">
-import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
-window.addEventListener("load", () => mermaid.run());
-</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -93,39 +86,14 @@ window.addEventListener("load", () => mermaid.run());
 <dd class="field-even"><p>Arian, Milad, Christain</p>
 </dd>
 </dl>
-<section id="introduction">
-<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p><strong>Problem Statement</strong>
-Busy sushi restaurants lose revenue when diners wait too long or receive the wrong dish.
-Our solution deploys <strong>five PAL Robotics TIAGo robots</strong> to handle order delivery, table clearing,
-and basic customer interaction—freeing staff for tasks that need a human touch.</p>
-<p><strong>Objectives</strong></p>
-<ul class="simple">
-<li><p><strong>Timely delivery</strong>: dispatch the closest available robot, plan obstacle‐free paths, adapt on the fly</p></li>
-<li><p><strong>Error-free serving</strong>: detect and recover from mis-orders gracefully</p></li>
-<li><p><strong>Scalability</strong>: coordinate multiple robots without a central bottleneck</p></li>
-<li><p><strong>Recoverability</strong>: every component is restart-safe; no single point of failure</p></li>
-</ul>
 </section>
+<section id="introduction">
+<h1>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
+<p>This project deploys a fleet of five PAL Robotics TIAGo robots as autonomous waiters in a sushi restaurant, handling order delivery, table clearing, customer interactions and many more.</p>
 <section id="system-overview">
 <h2>2. System Overview<a class="headerlink" href="#system-overview" title="Link to this heading"></a></h2>
 <p>The software follows a classic <strong>perception → reasoning → actuation</strong> pipeline,
-with a thin orchestration layer balancing the fleet:</p>
-<figure class="align-default" id="id1">
-graph TD
-  A[Orchestration&lt;br/&gt;(task_manager.py,&lt;br/&gt;orchestration_and_coordination.py)]
-  B[Perception&lt;br/&gt;(camera.py …)]
-  C[Reasoning&lt;br/&gt;(path_planning.py,&lt;br/&gt;reasoning_action.py …)]
-  D[Actuation&lt;br/&gt;(control_wheel.py,&lt;br/&gt;control_arm.py,&lt;br/&gt;control_gripper.py)]
-  E[Feedback&lt;br/&gt;(encoder_* , force.py ,&lt;br/&gt;speech_generator.py)]
-  A --&gt;|verified order| C
-  C --&gt;|path + table cmd| D
-  D --&gt;|status| A
-  D --&gt;|raw encoders| E
-  E --&gt;|status| C<figcaption>
-<p><span class="caption-text">System overview</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
-</figcaption>
-</figure>
+with a thin orchestration layer balancing the fleet</p>
 </section>
 <section id="workflow">
 <h2>3. Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
@@ -142,18 +110,12 @@ graph TD
 </section>
 <section id="architectural-diagrams">
 <h2>4. Architectural Diagrams<a class="headerlink" href="#architectural-diagrams" title="Link to this heading"></a></h2>
-<p>4.1 Component Diagram</p>
-<figure class="align-center" id="id2">
+<p>Here only component diagram is included due to size restrictions, you can view all the diagrams in full size using the following link:
+<a class="reference external" href="https://drive.google.com/file/d/1yGJAAkXFYum7aQUJqAF_S_iSz2Qtz7F8/view?usp=sharing">https://drive.google.com/file/d/1yGJAAkXFYum7aQUJqAF_S_iSz2Qtz7F8/view?usp=sharing</a></p>
+<figure class="align-center" id="id1">
 <img alt="Component Diagram" src="_images/component_diagram.png" />
 <figcaption>
-<p><span class="caption-text"><strong>Figure X.</strong> High-level component interaction.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
-</figcaption>
-</figure>
-<p>4.2 Behavioral Diagram</p>
-<figure class="align-center" id="id3">
-<img alt="Behavioral Sequence Diagram" src="diagrams/behavioral_diagram.png" />
-<figcaption>
-<p><span class="caption-text"><strong>Figure Y.</strong> Sequence of messages and actions from order to delivery.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-text"><strong>Figure 1.</strong> High-level component interaction.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -213,28 +175,27 @@ graph TD
 </ul>
 </section>
 </section>
-<section id="running-the-system">
-<h2>6. Running the System<a class="headerlink" href="#running-the-system" title="Link to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch Gazebo, RViz and the full stack</span>
-roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>sushi_fleet.launch
-
-<span class="c1"># Alternatively, bring up orchestrator then robot 1</span>
-rosrun<span class="w"> </span>cogar_ws<span class="w"> </span>orchestration_and_coordination.py<span class="w"> </span><span class="p">&amp;</span>
-roslaunch<span class="w"> </span>cogar_ws<span class="w"> </span>tiago_bringup.launch<span class="w"> </span>robot_id:<span class="o">=</span><span class="m">1</span>
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>A map must exist in <code class="docutils literal notranslate"><span class="pre">$(rospack</span> <span class="pre">find</span> <span class="pre">cogar_ws)/maps/</span></code>.
-Run <code class="docutils literal notranslate"><span class="pre">slam.py</span> <span class="pre">--save</span></code> on the first layout.</p>
-</div>
+<section id="running-the-project">
+<h2>6. Running the Project<a class="headerlink" href="#running-the-project" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>You need to add the number of Robots you want to launch (the defualt is 2) in order to have sufficent number of nodes created, for this you can edit ROS params, Then use the following to run the project:</dt><dd><p>roslaunch cogar_ws tiago_launch.launch</p>
+</dd>
+</dl>
 </section>
-<section id="further-reading">
-<h2>7. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>Detailed component diagrams &amp; behavioral models under each module’s API page</p></li>
-<li><p>Assignment brief slides embedded in <code class="docutils literal notranslate"><span class="pre">docs/assets</span></code> for reference</p></li>
-</ul>
+<section id="running-the-test">
+<h2>7. Running the Test<a class="headerlink" href="#running-the-test" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>For running the test open the test folder and then run the following:</dt><dd><p>python integration_test.py</p>
+</dd>
+</dl>
+</section>
+<section id="live-system-demo">
+<h2>8. Live System Demo<a class="headerlink" href="#live-system-demo" title="Link to this heading"></a></h2>
+<p>Here we have a live demo of the project, in the right-up we have roslaunch window, in the right-down we have our test window and in the left is customer’s orders.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/run.gif"><img alt="Animated demo of the Autonomous Waiter in action" src="_images/run.gif" style="width: 70%;" />
+</a>
+</figure>
 <p class="rubric">Contents</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>

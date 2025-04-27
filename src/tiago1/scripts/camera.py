@@ -66,12 +66,6 @@ Quality & Reusability metrics
 -----------------------------
 Latency < 8 ms | Throughput = 10 Hz | Cyclomatic complexity < 10
 
-Extensibility
--------------
-The *minimal interface* (publish two topics) is already implemented.  A *complete
-interface* could add a `dynamic_reconfigure` server for frame-rate, resolution
-or simulated noise without breaking existing clients.
-
 Directory layout
 ----------------
 ``camera.py`` expects the JPEG at  
