@@ -94,8 +94,138 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="control-arm">
-<h1>Control Arm<a class="headerlink" href="#control-arm" title="Link to this heading"></a></h1>
+  <section id="module-control_arm">
+<span id="control-arm"></span><h1>Control Arm<a class="headerlink" href="#module-control_arm" title="Link to this heading"></a></h1>
+<section id="control-arm-py">
+<h2>control_arm.py<a class="headerlink" href="#control-arm-py" title="Link to this heading"></a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p><cite>control_arm.py</cite> is a <strong>closed-loop ActionLib server</strong> that positions the TIAGo
+manipulator to a target joint angle (in degrees).  It applies a proportional
+control law on the arm’s angular velocity until the on-board encoder reports
+the target is reached within tolerance, or a timeout/pre-emption occurs.</p>
+</section>
+<section id="design-goals">
+<h3>Design goals<a class="headerlink" href="#design-goals" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Precise control</strong> – proportional feedback on encoder readings.</p></li>
+<li><p><strong>Safety</strong> – zero velocity published immediately on success, abort or pre-emption.</p></li>
+<li><p><strong>Responsiveness</strong> – honours ActionLib pre-emption so higher layers can interrupt.</p></li>
+</ul>
+</section>
+<section id="interfaces-strongly-typed-stateful">
+<h3>Interfaces (strongly-typed, stateful)<a class="headerlink" href="#interfaces-strongly-typed-stateful" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.7%" />
+<col style="width: 26.8%" />
+<col style="width: 22.3%" />
+<col style="width: 40.2%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Direction</p></th>
+<th class="head"><p>Name / Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Subscribe</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/encoder_arm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code></p></td>
+<td><p>Current encoder position in degrees</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Publish</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/cmd_vel/arm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Twist</span></code></p></td>
+<td><p>Desired angular velocity (<cite>angular.z</cite> only)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Action server</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/{robot}/arm_control</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tiago1/ArmControlAction</span></code></p></td>
+<td><p>Goal: <cite>degree</cite> (int)
+Feedback: joint status lists
+Result: <cite>success</cite> (bool)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h3>
+<p><strong>Pre-conditions</strong></p>
+<ul class="simple">
+<li><p>Encoder publishes valid degree readings on <cite>/encoder_arm</cite>.</p></li>
+<li><p>Action server is started before accepting goals.</p></li>
+</ul>
+<p><strong>Post-conditions</strong></p>
+<ul class="simple">
+<li><p>On success: publishes zero velocity, sets Action to succeeded.</p></li>
+<li><p>On timeout or encoder never reaches target: publishes zero velocity, sets aborted.</p></li>
+<li><p>On pre-emption: stops control, sets pre-empted.</p></li>
+<li><p>Feedback published at 10 Hz during execution.</p></li>
+</ul>
+<p><strong>Invariants</strong></p>
+<ul class="simple">
+<li><p>Loop frequency = 10 Hz ± ROS scheduler jitter.</p></li>
+<li><p>Velocity obeys <cite>ω = k_p · error</cite> with <cite>k_p</cite> constant.</p></li>
+</ul>
+</section>
+<section id="tuning-knobs">
+<h3>Tuning knobs<a class="headerlink" href="#tuning-knobs" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>TOLERANCE = 5 °</p></li>
+<li><p>TIMEOUT   = 10 s</p></li>
+<li><p>Kₚ        = 0.01</p></li>
+</ul>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">control_arm.</span></span><span class="sig-name descname"><span class="pre">ControlArmServer</span></span><a class="reference internal" href="../_modules/control_arm.html#ControlArmServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>ActionLib server exposing the <cite>arm_control</cite> namespace with a proportional
+joint controller.</p>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>encoder_val<span class="classifier">int</span></dt><dd><p>Latest encoder reading (degrees).</p>
+</dd>
+<dt>cmd_pub<span class="classifier">rospy.Publisher</span></dt><dd><p>Publishes <cite>Twist</cite> on <cite>/cmd_vel/arm</cite> to drive angular velocity.</p>
+</dd>
+<dt>server<span class="classifier">actionlib.SimpleActionServer</span></dt><dd><p>Handles <cite>ArmControlAction</cite> goals, feedback, and results.</p>
+</dd>
+</dl>
+<ol class="arabic simple">
+<li><p>Read <cite>robot_number</cite> from CLI.</p></li>
+<li><p>Initialise ROS node <cite>&lt;robot&gt;_control_arm_node</cite>.</p></li>
+<li><p>Advertise <cite>/cmd_vel/arm</cite> and subscribe to <cite>/encoder_arm</cite>.</p></li>
+<li><p>Set up and start the ActionLib server on <cite>/arm_control</cite>.</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer.encoder_callback">
+<span class="sig-name descname"><span class="pre">encoder_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">std_msgs.msg.Int32</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/control_arm.html#ControlArmServer.encoder_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer.encoder_callback" title="Link to this definition"></a></dt>
+<dd><p>Cache the most recent encoder position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>std_msgs.msg.Int32</em>) – Encoder reading in degrees.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="control_arm.ControlArmServer.execute_cb">
+<span class="sig-name descname"><span class="pre">execute_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tiago1.msg.ArmControlAction.Goal</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/control_arm.html#ControlArmServer.execute_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#control_arm.ControlArmServer.execute_cb" title="Link to this definition"></a></dt>
+<dd><p>Execute a proportional control loop to reach <cite>goal.degree</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>goal</strong> (<em>ArmControlAction.Goal</em>) – Contains <cite>degree</cite> target angle.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
 </section>
 
 

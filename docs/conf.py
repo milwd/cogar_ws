@@ -8,7 +8,7 @@
 import os
 import subprocess
 import sys
-sys.path.insert(0, os.path.abspath('src/tiago1/scripts'))
+sys.path.insert(0, os.path.abspath('../src/tiago1/scripts'))
 #subprocess.call('doxygen Doxyfile.in', shell=True)
 show_authors = True
 
