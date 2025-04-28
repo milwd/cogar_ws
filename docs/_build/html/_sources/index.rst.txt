@@ -3,8 +3,8 @@
 Autonomous Waiters – Complete Project Documentation
 ===================================================
 
-:Team Name: **ACM Robatics Solution**  
-:Contributors: Arian, Milad, Christain 
+:Team Name: **ACM Robotics Solution**  
+:Contributors: Arian Tavousi, Milad Rabiei, Christian Negri Ravera
 
 1. Introduction
 ============
@@ -41,6 +41,24 @@ https://drive.google.com/file/d/1yGJAAkXFYum7aQUJqAF_S_iSz2Qtz7F8/view?usp=shari
    :align: center
 
    **Figure 1.** High-level component interaction.
+
+.. figure:: images/behavioral1_diagram.png
+   :alt: Behavioral Diagram
+   :align: center
+
+   **Figure 2.** Behavioral Diagram.
+
+.. figure:: images/behavioral2_diagram.png
+   :alt: Behavioral Diagram
+   :align: center
+
+   **Figure 3.** Behavioral Diagram.
+
+.. figure:: images/state_machine_diagram.png
+   :alt: State Machine Diagram
+   :align: center
+
+   **Figure 4.** State Machine Diagram.
 
 5. Codebase Tour
 ----------------
@@ -85,7 +103,8 @@ Interaction
 
 Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- **orchestration_and_coordination.py** – YAML-backed order queue + state gateway   
+- **orchestration_and_coordination.py** – YAML-backed order queue + state gateway  
+- **id_counter_server.py** – Globally update the client numbering 
 
 6. Running the Project
 ---------------------
@@ -106,7 +125,7 @@ Here we have a live demo of the project, in the right-up we have roslaunch windo
    :align: center
    :width: 70%
 
-     **Figure 2.** Project Demo.
+   **Figure 5.** Project Demo.
 
 9. Test Results
 ---------------

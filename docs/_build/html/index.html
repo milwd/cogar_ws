@@ -80,10 +80,10 @@
 <span id="index"></span><h1>Autonomous Waiters – Complete Project Documentation<a class="headerlink" href="#autonomous-waiters-complete-project-documentation" title="Link to this heading"></a></h1>
 <dl class="field-list simple">
 <dt class="field-odd">Team Name<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ACM Robatics Solution</strong></p>
+<dd class="field-odd"><p><strong>ACM Robotics Solution</strong></p>
 </dd>
 <dt class="field-even">Contributors<span class="colon">:</span></dt>
-<dd class="field-even"><p>Arian, Milad, Christain</p>
+<dd class="field-even"><p>Arian Tavousi, Milad Rabiei, Christian Negri Ravera</p>
 </dd>
 </dl>
 </section>
@@ -116,6 +116,24 @@ with a thin orchestration layer balancing the fleet</p>
 <img alt="Component Diagram" src="_images/component_diagram.png" />
 <figcaption>
 <p><span class="caption-text"><strong>Figure 1.</strong> High-level component interaction.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id2">
+<img alt="Behavioral Diagram" src="_images/behavioral1_diagram.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure 2.</strong> Behavioral Diagram.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id3">
+<img alt="Behavioral Diagram" src="_images/behavioral2_diagram.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure 3.</strong> Behavioral Diagram.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4">
+<img alt="State Machine Diagram" src="_images/state_machine_diagram.png" />
+<figcaption>
+<p><span class="caption-text"><strong>Figure 4.</strong> State Machine Diagram.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -172,6 +190,7 @@ with a thin orchestration layer balancing the fleet</p>
 <h3>Server<a class="headerlink" href="#server" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>orchestration_and_coordination.py</strong> – YAML-backed order queue + state gateway</p></li>
+<li><p><strong>id_counter_server.py</strong> – Globally update the client numbering</p></li>
 </ul>
 </section>
 </section>
@@ -192,9 +211,12 @@ with a thin orchestration layer balancing the fleet</p>
 <section id="live-system-demo">
 <h2>8. Live System Demo<a class="headerlink" href="#live-system-demo" title="Link to this heading"></a></h2>
 <p>Here we have a live demo of the project, in the right-up we have roslaunch window, in the right-down we have our test window and in the left is customer’s orders.</p>
-<figure class="align-center">
+<figure class="align-center" id="id5">
 <a class="reference internal image-reference" href="_images/run.gif"><img alt="Animated demo of the Autonomous Waiter in action" src="_images/run.gif" style="width: 70%;" />
 </a>
+<figcaption>
+<p><span class="caption-text"><strong>Figure 5.</strong> Project Demo.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
 </figure>
 </section>
 <section id="test-results">
